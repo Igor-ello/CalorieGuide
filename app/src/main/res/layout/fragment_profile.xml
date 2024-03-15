@@ -3,12 +3,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ProfileFragment">
+    tools:context=".ProfileFragment"
+    android:layout_margin="10dp">
 
-    <!-- TODO: Update blank fragment layout -->
+    <FrameLayout
+        android:id="@+id/fragment_nav_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom">
+    </FrameLayout>
     <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:text="Profile"
+        android:gravity="center_horizontal"/>
 
 </FrameLayout>

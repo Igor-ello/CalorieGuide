@@ -1,23 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainFragment"
-    android:layout_margin="10dp">
+    android:layout_margin="10dp"
+    tools:context=".MainFragment">
 
-    <include layout="@layout/ln_arrow_back"></include>
-
-    <LinearLayout
+    <FrameLayout
+        android:id="@+id/fragment_nav_bar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom">
+    </FrameLayout>
 
-        <TextView
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="@string/hello_blank_fragment">
-        </TextView>
+            android:orientation="horizontal"
+            android:layout_margin="10dp">
 
-    </LinearLayout>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center_horizontal"
+                android:text="@string/hello_blank_fragment">
+            </TextView>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+            <ImageButton
+                android:id="@+id/settingsButton"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:background="@drawable/settings_icon">
+            </ImageButton>
+        </LinearLayout>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
