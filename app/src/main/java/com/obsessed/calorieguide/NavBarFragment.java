@@ -7,6 +7,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.navigation.NavController;
+import androidx.navigation.NavOptions;
 import androidx.navigation.Navigation;
 
 import android.util.Log;
@@ -38,16 +39,27 @@ public class NavBarFragment extends Fragment {
 		NavController navController = Navigation.findNavController(viewFragment);
 
 		view.findViewById(R.id.home_icon).setOnClickListener(v -> {
-			navController.navigate(R.id.mainFragment);
-			Log.d("mlg", "Tapped home icon");
+			navController.navigate(R.id.mainFragment, null,
+					new NavOptions.Builder()
+							.setPopUpTo(R.id.mainFragment, true)
+							.build());
+			Log.d("mlg", "Переход на mainFragment");
 		});
+
 		view.findViewById(R.id.profile_icon).setOnClickListener(v -> {
-			navController.navigate(R.id.profileFragment);
-			Log.d("mlg", "Tapped profile icon");
+			navController.navigate(R.id.profileFragment, null,
+					new NavOptions.Builder()
+							.setPopUpTo(R.id.profileFragment, true)
+							.build());
+			Log.d("mlg", "Переход на profileFragment");
 		});
+
 		view.findViewById(R.id.recipe_icon).setOnClickListener(v -> {
-			navController.navigate(R.id.libraryFragment);
-			Log.d("mlg", "Tapped recipe icon");
+			navController.navigate(R.id.libraryFragment, null,
+					new NavOptions.Builder()
+							.setPopUpTo(R.id.libraryFragment, true)
+							.build());
+			Log.d("mlg", "Переход на libraryFragment");
 		});
 		return view;
 	}
