@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".LibraryFragment"
-    android:layout_margin="10dp">
+    android:layout_margin="@dimen/marginStandard">
 
     <FrameLayout
         android:id="@+id/fragment_nav_bar"
@@ -14,9 +14,8 @@
     </FrameLayout>
 
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Library" 
-        android:gravity="center_horizontal"/>
+        style="@style/TextHeaderStyle"
+        android:text="@string/fragment_library_header">
+    </TextView>
 
 </FrameLayout>
