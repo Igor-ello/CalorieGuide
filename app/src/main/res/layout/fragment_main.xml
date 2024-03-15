@@ -16,8 +16,7 @@
 
     <FrameLayout
         android:id="@+id/settingsButton"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
+        style="@style/IconStyle"
         android:layout_gravity="end"
         android:background="@drawable/settings_icon">
     </FrameLayout>

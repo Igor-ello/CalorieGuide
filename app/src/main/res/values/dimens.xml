@@ -4,4 +4,7 @@
     
     <dimen name="textHeaderDimen">20sp</dimen>
     <dimen name="textDimen">18sp</dimen>
+
+    <dimen name="icon_height">24dp</dimen>
+    <dimen name="icon_width">24dp</dimen>
 </resources>
