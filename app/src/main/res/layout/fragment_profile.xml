@@ -3,10 +3,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ProfileFragment">
+    tools:context=".ProfileFragment"
+    android:layout_margin="10dp">
 
-    <include layout="@layout/ln_arrow_back"></include>
-    <!-- TODO: Update blank fragment layout -->
+    <FrameLayout
+        android:id="@+id/fragment_nav_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom">
+    </FrameLayout>
     <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
