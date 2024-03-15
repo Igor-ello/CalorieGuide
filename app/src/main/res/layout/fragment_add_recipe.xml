@@ -3,12 +3,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".AddRecipeFragment">
+    tools:context=".AddRecipeFragment"
+    android:layout_margin="@dimen/marginStandard">
 
-    <!-- TODO: Update blank fragment layout -->
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        style="@style/TextHeaderStyle"
+        android:text="@string/fragment_recipe_header">
+    </TextView>
 
 </FrameLayout>
