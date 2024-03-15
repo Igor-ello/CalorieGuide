@@ -5,9 +5,12 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,11 +37,17 @@ public class MainFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+//        Log.d("mlg", "logs");
+        NavBarFragment nvb = new NavBarFragment(view);
+
+        FragmentManager fragmentManager = getParentFragmentManager();
+        FragmentTransaction ft = fragmentManager.beginTransaction();
+        ft.add(R.id.fragment_nav_bar, nvb);
+        ft.commit();
 
         NavController navController = Navigation.findNavController(view);
-
-//        view.findViewById(R.id.arrow_back).setOnClickListener(v -> {
-//            navController.navigate(R.id.action_loginFragment_to_mainFragment);
-//        });
+        view.findViewById(R.id.settingsButton).setOnClickListener(v -> {
+            navController.navigate(R.id.action_mainFragment_to_settingsFragment);
+        });
     }
 }
