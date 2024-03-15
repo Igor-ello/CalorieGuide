@@ -5,10 +5,13 @@
     android:layout_height="match_parent"
     tools:context=".LibraryFragment">
 
+    <include layout="@layout/ln_arrow_back"></include>
+
     <!-- TODO: Update blank fragment layout -->
     <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:text="Library" 
+        android:gravity="center_horizontal"/>
 
 </FrameLayout>
