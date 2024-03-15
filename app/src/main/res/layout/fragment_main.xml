@@ -28,14 +28,13 @@
                 android:text="@string/hello_blank_fragment">
             </TextView>
 
-            <ImageButton
+            <ImageView
                 android:id="@+id/settingsButton"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
+                style="@style/IconStyle"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                android:background="@drawable/settings_icon">
-            </ImageButton>
+                android:src="@drawable/settings_icon">
+            </ImageView>
         </LinearLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
