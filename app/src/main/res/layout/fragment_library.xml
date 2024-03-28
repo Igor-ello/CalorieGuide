@@ -13,9 +13,28 @@
         android:layout_gravity="bottom">
     </FrameLayout>
 
-    <TextView
-        style="@style/TextHeaderStyle"
-        android:text="@string/fragment_library_header">
-    </TextView>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
+        <TextView
+            style="@style/TextHeaderStyle"
+            android:text="@string/fragment_library_header">
+        </TextView>
+
+        <TextView
+            android:id="@+id/text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Some text">
+        </TextView>
+
+        <TextView
+            android:id="@+id/text2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Some text2">
+        </TextView>
+    </LinearLayout>
 </FrameLayout>

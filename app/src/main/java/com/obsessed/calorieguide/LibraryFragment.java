@@ -51,13 +51,20 @@ public class LibraryFragment extends Fragment implements FoodCallback {
         requireActivity().runOnUiThread(() -> {
             FoodCall foodCall = new FoodCall(this); // Передаем экземпляр FoodCallback в конструктор FoodCall
             foodCall.getFoodById(2);
+            foodCall.getAllFood();
         });
     }
 
     @Override
-    public void onFoodReceived(String foodName) {
+    public void onFoodByIdReceived(String foodName) {
         // Обновляем UI с полученным foodName
         TextView textView = requireView().findViewById(R.id.text);
         textView.setText(foodName);
+    }
+
+    @Override
+    public void onAllFoodReceived(String allFood) {
+        TextView textView = requireView().findViewById(R.id.text2);
+        textView.setText(allFood);
     }
 }

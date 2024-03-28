@@ -27,4 +27,8 @@ public class Food {
     String category;
     String thumbnail;
     List<String> images;
+
+    public String getTitle() {
+        return title;
+    }
 }

@@ -1,5 +1,6 @@
 package com.obsessed.calorieguide.retrofit;
 
 public interface FoodCallback {
-    void onFoodReceived(String foodName);
+    void onFoodByIdReceived(String foodName);
+    void onAllFoodReceived(String allFood);
 }
