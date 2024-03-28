@@ -14,8 +14,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
-public class LibraryFragment extends Fragment {
+import com.obsessed.calorieguide.retrofit.FoodCall;
+import com.obsessed.calorieguide.retrofit.FoodCallback;
+
+public class LibraryFragment extends Fragment implements FoodCallback {
     public LibraryFragment() {
         // Required empty public constructor
     }
@@ -42,6 +46,18 @@ public class LibraryFragment extends Fragment {
         FragmentManager fragmentManager = getParentFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.add(R.id.fragment_nav_bar, nvb);
-        fragmentTransaction .commit();
+        fragmentTransaction.commit();
+
+        requireActivity().runOnUiThread(() -> {
+            FoodCall foodCall = new FoodCall(this); // Передаем экземпляр FoodCallback в конструктор FoodCall
+            foodCall.getFoodById(2);
+        });
+    }
+
+    @Override
+    public void onFoodReceived(String foodName) {
+        // Обновляем UI с полученным foodName
+        TextView textView = requireView().findViewById(R.id.text);
+        textView.setText(foodName);
     }
 }

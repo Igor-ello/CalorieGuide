@@ -21,9 +21,23 @@
         android:background="@drawable/settings_icon">
     </FrameLayout>
 
-    <TextView
-        style="@style/TextHeaderStyle"
-        android:text="@string/fragment_main_header">
-    </TextView>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            style="@style/TextHeaderStyle"
+            android:text="@string/fragment_main_header">
+        </TextView>
+
+        <TextView
+            android:id="@+id/text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Some text">
+        </TextView>
+
+    </LinearLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
