@@ -33,6 +33,30 @@ public class FoodCall {
         foodApi = retrofit.create(FoodApi.class);
     }
 
+    public void getFoodById(int foodId) {
+        Call<Food> call = foodApi.getFoodById(foodId);
+        // Запуск асинхронного запроса в другом потоке
+        call.enqueue(new Callback<Food>() {
+            @Override
+            public void onResponse(Call<Food> call, Response<Food> response) {
+                if (response.isSuccessful()) {
+                    Food food = response.body();
+                    if (food != null) { //TODO взять необходимые поля
+                        // String foodName = food.food_name;
+                        String foodName = food.title;
+                        foodCallback.onFoodByIdReceived(foodName);
+                        Log.d("MyLog", "Response getFoodById is successful!");
+                    } else Log.d("MyLog", "food is not null!");
+                } else Log.d("MyLog", "ERROR response getFoodById is not successful!!!");
+            }
+
+            @Override
+            public void onFailure(Call<Food> call, Throwable t) {
+                Log.d("MyLog", "ERROR in Call!!!");
+            }
+        });
+    }
+
     public void getAllFood(){
         Call<JsonObject> call = foodApi.getAllFood(); // JsonObject из библиотеки Gson
         call.enqueue(new Callback<JsonObject>() {
@@ -40,7 +64,7 @@ public class FoodCall {
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
                 if (response.isSuccessful()) {
                     JsonObject jsonObject = response.body();
-                    if (jsonObject != null && jsonObject.has("products")) {
+                    if (jsonObject != null && jsonObject.has("products")) { //TODO взять необходимые поля
                         JsonArray productsArray = jsonObject.getAsJsonArray("products");
                         List<Food> allFood = new Gson().fromJson(productsArray, new TypeToken<List<Food>>() {}.getType());
 
@@ -65,28 +89,4 @@ public class FoodCall {
         });
     }
 
-
-    public void getFoodById(int foodId) {
-        Call<Food> call = foodApi.getFoodById(foodId);
-        // Запуск асинхронного запроса в другом потоке
-        call.enqueue(new Callback<Food>() {
-            @Override
-            public void onResponse(Call<Food> call, Response<Food> response) {
-                if (response.isSuccessful()) {
-                    Food food = response.body();
-                    if (food != null) { //TODO взять необходимые поля
-                        // String foodName = food.food_name;
-                        String foodName = food.title;
-                        foodCallback.onFoodByIdReceived(foodName);
-                        Log.d("MyLog", "Response getFoodById is successful!");
-                    } else Log.d("MyLog", "food is not null!");
-                } else Log.d("MyLog", "ERROR response getFoodById is not successful!!!");
-            }
-
-            @Override
-            public void onFailure(Call<Food> call, Throwable t) {
-                Log.d("MyLog", "ERROR in Call!!!");
-            }
-        });
-    }
 }
