@@ -14,10 +14,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.TextView;
 
-import com.obsessed.calorieguide.adapters.FoodAdapter;
+import com.obsessed.calorieguide.adapters.FoodAdapterV1;
+import com.obsessed.calorieguide.adapters.FoodAdapterV2;
+import com.obsessed.calorieguide.databinding.FragmentLibraryBinding;
 import com.obsessed.calorieguide.retrofit.Food;
 import com.obsessed.calorieguide.retrofit.FoodCall;
 import com.obsessed.calorieguide.retrofit.FoodCallback;
@@ -26,8 +27,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class LibraryFragment extends Fragment implements FoodCallback {
+    FragmentLibraryBinding binding;
+    boolean switchState;
+
     public LibraryFragment() {
-        // Required empty public constructor
+        Bundle bundle = getArguments();
+        if (bundle != null) {
+            switchState = bundle.getBoolean("switchState", true);
+        }
+        Log.d("MyLog", String.valueOf(switchState));
     }
 
     @Override
@@ -46,7 +54,8 @@ public class LibraryFragment extends Fragment implements FoodCallback {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        Log.d("mlg", "Libra " + String.valueOf(this.hashCode()));
+
+        binding = FragmentLibraryBinding.bind(view);
 
         NavBarFragment nvb = new NavBarFragment(view);
         FragmentManager fragmentManager = getParentFragmentManager();
@@ -56,42 +65,32 @@ public class LibraryFragment extends Fragment implements FoodCallback {
 
         requireActivity().runOnUiThread(() -> {
             FoodCall foodCall = new FoodCall(this); // Передаем экземпляр FoodCallback в конструктор FoodCall
-            //foodCall.getFoodById(2);
-            //foodCall.getAllFoodName();
             foodCall.getAllFood();
         });
     }
 
     @Override
-    public void onFoodByIdReceived(String foodName) {
+    public void onFoodByIdReceived(Food food) {
         // Обновляем UI с полученным foodName
         TextView textView = requireView().findViewById(R.id.text);
-        textView.setText(foodName);
-    }
-
-    @Override
-    public void onAllFoodNameReceived(String allFoodName) {
-        TextView textView = requireView().findViewById(R.id.text2);
-        textView.setText(allFoodName);
+        textView.setText(food.getTitle());
     }
 
     @Override
     public void onAllFoodReceived(List<Food> foodList) {
-        FoodAdapter foodAdapter = new FoodAdapter();
-        foodAdapter.foodArrayList = (ArrayList<Food>) foodList;
+        switchState = Boolean.TRUE; //TODO
+        if(switchState) {
+            FoodAdapterV2 foodAdapter = new FoodAdapterV2();
+            foodAdapter.foodArrayList = (ArrayList<Food>) foodList;
 
-        RecyclerView rcView = requireView().findViewById(R.id.rcView);
-        rcView.setLayoutManager(new GridLayoutManager(requireContext(), 2));
-        rcView.setAdapter(foodAdapter);
+            binding.rcView.setLayoutManager(new GridLayoutManager(requireContext(), 1));
+            binding.rcView.setAdapter(foodAdapter);
+        } else {
+            FoodAdapterV1 foodAdapter = new FoodAdapterV1();
+            foodAdapter.foodArrayList = (ArrayList<Food>) foodList;
 
-
-
-//        Button buttonAdd = requireView().findViewById(R.id.buttonAdd);
-//        buttonAdd.setOnClickListener(view -> {
-//            List<String> ingredients = new ArrayList<>();
-//            ingredients.add(String.valueOf(R.drawable.block_flipped));
-//            foodAdapter.addFood(new Food("Чай-бутерброд", ingredients));
-//        });
-
+            binding.rcView.setLayoutManager(new GridLayoutManager(requireContext(), 2));
+            binding.rcView.setAdapter(foodAdapter);
+        }
     }
 }

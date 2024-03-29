@@ -41,10 +41,8 @@ public class FoodCall {
             public void onResponse(Call<Food> call, Response<Food> response) {
                 if (response.isSuccessful()) {
                     Food food = response.body();
-                    if (food != null) { //TODO взять необходимые поля
-                        // String foodName = food.food_name;
-                        String foodName = food.title;
-                        foodCallback.onFoodByIdReceived(foodName);
+                    if (food != null) {
+                        foodCallback.onFoodByIdReceived(food);
                         Log.d("MyLog", "Response getFoodById is successful!");
                     } else Log.d("MyLog", "food is not null!");
                 } else Log.d("MyLog", "ERROR response getFoodById is not successful!!!");
@@ -53,38 +51,6 @@ public class FoodCall {
             @Override
             public void onFailure(Call<Food> call, Throwable t) {
                 Log.d("MyLog", "ERROR in Call!!!");
-            }
-        });
-    }
-
-    public void getAllFoodName(){
-        Call<JsonObject> call = foodApi.getAllFood(); // JsonObject из библиотеки Gson
-        call.enqueue(new Callback<JsonObject>() {
-            @Override
-            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
-                if (response.isSuccessful()) {
-                    JsonObject jsonObject = response.body();
-                    if (jsonObject != null && jsonObject.has("products")) { //TODO взять необходимые поля
-                        JsonArray productsArray = jsonObject.getAsJsonArray("products");
-                        List<Food> allFood = new Gson().fromJson(productsArray, new TypeToken<List<Food>>() {}.getType());
-
-                        String allFoodStr = allFood.stream()
-                                .map(Food::getTitle)
-                                .collect(Collectors.joining(", "));
-                        foodCallback.onAllFoodNameReceived(allFoodStr);
-
-                        Log.d("MyLog", "Response getAllFood is successful!");
-                    } else {
-                        Log.d("MyLog", "No products found in response!");
-                    }
-                } else {
-                    Log.d("MyLog", "ERROR response getAllFood is not successful!!!");
-                }
-            }
-
-            @Override
-            public void onFailure(Call<JsonObject> call, Throwable t) {
-                Log.d("MyLog", "ERROR in Call!!! \n" + call + "\n" + t);
             }
         });
     }

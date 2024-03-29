@@ -38,6 +38,14 @@
             android:text="Some text">
         </TextView>
 
+        <Switch
+            android:id="@+id/switchTheme"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Theme"
+            tools:ignore="UseSwitchCompatOrMaterialXml">
+        </Switch>
+
     </LinearLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
