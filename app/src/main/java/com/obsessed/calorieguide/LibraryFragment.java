@@ -7,17 +7,23 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
+import com.obsessed.calorieguide.adapters.FoodAdapter;
+import com.obsessed.calorieguide.retrofit.Food;
 import com.obsessed.calorieguide.retrofit.FoodCall;
 import com.obsessed.calorieguide.retrofit.FoodCallback;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class LibraryFragment extends Fragment implements FoodCallback {
     public LibraryFragment() {
@@ -50,7 +56,8 @@ public class LibraryFragment extends Fragment implements FoodCallback {
 
         requireActivity().runOnUiThread(() -> {
             FoodCall foodCall = new FoodCall(this); // Передаем экземпляр FoodCallback в конструктор FoodCall
-            foodCall.getFoodById(2);
+            //foodCall.getFoodById(2);
+            //foodCall.getAllFoodName();
             foodCall.getAllFood();
         });
     }
@@ -63,8 +70,28 @@ public class LibraryFragment extends Fragment implements FoodCallback {
     }
 
     @Override
-    public void onAllFoodReceived(String allFood) {
+    public void onAllFoodNameReceived(String allFoodName) {
         TextView textView = requireView().findViewById(R.id.text2);
-        textView.setText(allFood);
+        textView.setText(allFoodName);
+    }
+
+    @Override
+    public void onAllFoodReceived(List<Food> foodList) {
+        FoodAdapter foodAdapter = new FoodAdapter();
+        foodAdapter.foodArrayList = (ArrayList<Food>) foodList;
+
+        RecyclerView rcView = requireView().findViewById(R.id.rcView);
+        rcView.setLayoutManager(new GridLayoutManager(requireContext(), 2));
+        rcView.setAdapter(foodAdapter);
+
+
+
+//        Button buttonAdd = requireView().findViewById(R.id.buttonAdd);
+//        buttonAdd.setOnClickListener(view -> {
+//            List<String> ingredients = new ArrayList<>();
+//            ingredients.add(String.valueOf(R.drawable.block_flipped));
+//            foodAdapter.addFood(new Food("Чай-бутерброд", ingredients));
+//        });
+
     }
 }

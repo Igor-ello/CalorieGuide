@@ -57,7 +57,7 @@ public class FoodCall {
         });
     }
 
-    public void getAllFood(){
+    public void getAllFoodName(){
         Call<JsonObject> call = foodApi.getAllFood(); // JsonObject из библиотеки Gson
         call.enqueue(new Callback<JsonObject>() {
             @Override
@@ -71,7 +71,35 @@ public class FoodCall {
                         String allFoodStr = allFood.stream()
                                 .map(Food::getTitle)
                                 .collect(Collectors.joining(", "));
-                        foodCallback.onAllFoodReceived(allFoodStr);
+                        foodCallback.onAllFoodNameReceived(allFoodStr);
+
+                        Log.d("MyLog", "Response getAllFood is successful!");
+                    } else {
+                        Log.d("MyLog", "No products found in response!");
+                    }
+                } else {
+                    Log.d("MyLog", "ERROR response getAllFood is not successful!!!");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<JsonObject> call, Throwable t) {
+                Log.d("MyLog", "ERROR in Call!!! \n" + call + "\n" + t);
+            }
+        });
+    }
+
+    public void getAllFood(){
+        Call<JsonObject> call = foodApi.getAllFood(); // JsonObject из библиотеки Gson
+        call.enqueue(new Callback<JsonObject>() {
+            @Override
+            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+                if (response.isSuccessful()) {
+                    JsonObject jsonObject = response.body();
+                    if (jsonObject != null && jsonObject.has("products")) { //TODO взять необходимые поля
+                        JsonArray productsArray = jsonObject.getAsJsonArray("products");
+                        List<Food> allFood = new Gson().fromJson(productsArray, new TypeToken<List<Food>>() {}.getType());
+                        foodCallback.onAllFoodReceived(allFood);
 
                         Log.d("MyLog", "Response getAllFood is successful!");
                     } else {
