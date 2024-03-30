@@ -18,19 +18,30 @@
             android:text="@string/fragment_library_header">
         </TextView>
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rcView"
+        <ScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-        </androidx.recyclerview.widget.RecyclerView>
 
-        <Button
-            android:id="@+id/buttonAdd"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="Add food">
-        </Button>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rcView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                </androidx.recyclerview.widget.RecyclerView>
+
+                <Button
+                    android:id="@+id/buttonAdd"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="Add food">
+                </Button>
+            </LinearLayout>
+        </ScrollView>
     </LinearLayout>
 
     <FrameLayout
