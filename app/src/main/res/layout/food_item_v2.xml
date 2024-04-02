@@ -38,6 +38,15 @@
                     android:fontFamily="sans-serif-condensed">
                 </TextView>
 
+                <TextView
+                    android:id="@+id/tv_calories"
+                    style="@style/TextHeaderStyle"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:fontFamily="sans-serif-condensed">
+                </TextView>
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -46,7 +55,7 @@
                     android:gravity="center">
 
                     <TextView
-                        android:id="@+id/tvPrice"
+                        android:id="@+id/tv_proteins"
                         style="@style/TextHeaderStyle"
                         android:gravity="center"
                         android:layout_weight="1"
@@ -54,22 +63,21 @@
                     </TextView>
 
                     <TextView
-                        android:id="@+id/tvStock"
+                        android:id="@+id/tv_carbohydrates"
+                        style="@style/TextHeaderStyle"
+                        android:gravity="center"
+                        android:layout_weight="1"
+                        android:fontFamily="sans-serif-condensed">
+                    </TextView>
+
+                    <TextView
+                        android:id="@+id/tv_fats"
                         style="@style/TextHeaderStyle"
                         android:gravity="center"
                         android:layout_weight="1"
                         android:fontFamily="sans-serif-condensed">
                     </TextView>
                 </LinearLayout>
-
-                <TextView
-                    android:id="@+id/tvBrand"
-                    style="@style/TextHeaderStyle"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:fontFamily="sans-serif-condensed">
-                </TextView>
 
             </LinearLayout>
 

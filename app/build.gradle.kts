@@ -36,9 +36,6 @@ android {
 
 dependencies {
 
-    //Picasso
-    implementation ("com.squareup.picasso:picasso:2.71828")
-
     //Retrofit2
     implementation ("com.squareup.retrofit2:retrofit:2.9.0")
     implementation ("com.squareup.retrofit2:converter-gson:2.9.0")

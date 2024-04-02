@@ -17,7 +17,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class FoodCall {
-    private String baseUrl = "https://dummyjson.com/"; // TODO поменять адрес
+    private String baseUrl = "http://95.174.92.190:8088/";
     private FoodCallback foodCallback; //интерфейс для возврата результата запроса
     private Retrofit retrofit;
     private FoodApi foodApi;
@@ -62,7 +62,7 @@ public class FoodCall {
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
                 if (response.isSuccessful()) {
                     JsonObject jsonObject = response.body();
-                    if (jsonObject != null && jsonObject.has("products")) { //TODO взять необходимые поля
+                    if (jsonObject != null && jsonObject.has("products")) {
                         JsonArray productsArray = jsonObject.getAsJsonArray("products");
                         List<Food> allFood = new Gson().fromJson(productsArray, new TypeToken<List<Food>>() {}.getType());
                         foodCallback.onAllFoodReceived(allFood);

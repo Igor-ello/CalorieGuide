@@ -8,7 +8,6 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -73,12 +72,12 @@ public class LibraryFragment extends Fragment implements FoodCallback {
     public void onFoodByIdReceived(Food food) {
         // Обновляем UI с полученным foodName
         TextView textView = requireView().findViewById(R.id.text);
-        textView.setText(food.getTitle());
+        textView.setText(food.getFood_name());
     }
 
     @Override
     public void onAllFoodReceived(List<Food> foodList) {
-        switchState = Boolean.TRUE; //TODO
+        switchState = Boolean.FALSE; //TODO
         if(switchState) {
             FoodAdapterV2 foodAdapter = new FoodAdapterV2();
             foodAdapter.foodArrayList = (ArrayList<Food>) foodList;

@@ -10,7 +10,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.obsessed.calorieguide.R;
 import com.obsessed.calorieguide.databinding.FoodItemV2Binding;
 import com.obsessed.calorieguide.retrofit.Food;
-import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -23,12 +22,15 @@ public class FoodAdapterV2 extends RecyclerView.Adapter<FoodAdapterV2.FoodHolder
             super(item);
         }
         public void bind(Food food) {
-            binding.tvName.setText(food.getTitle());
-            binding.tvPrice.setText("Price: " + food.getPrice());
-            binding.tvStock.setText("Stock: " + food.getStock());
-            binding.tvBrand.setText("Brand: " + food.getBrand());
-            // Загрузка изображения с помощью Picasso
-            Picasso.get().load(food.getImage()).into(binding.imageView);
+            binding.tvName.setText(food.getFood_name());
+            binding.tvCalories.setText("Calories: " + food.getCalories());
+            binding.tvProteins.setText("p: " + food.getProteins());
+            binding.tvCarbohydrates.setText("c: " + food.getCarbohydrates());
+            binding.tvFats.setText("f: " + food.getFats());
+
+            if(food.getPicture() != null)
+                binding.imageView.setImageBitmap(food.getPicture());
+            else binding.imageView.setImageResource(R.drawable.block_flipped);
         }
     }
 
