@@ -12,10 +12,10 @@ public class Food {
     int carbohydrates;
     int fats;
     int likes;
-    Bitmap picture;
+    byte[] picture;
 
 
-    public Food(String food_name, String description, int calories, int proteins, int carbohydrates, int fats, Bitmap picture) {
+    public Food(String food_name, String description, int calories, int proteins, int carbohydrates, int fats, byte[] picture) {
         this.food_name = food_name;
         this.description = description;
         this.calories = calories;
@@ -57,7 +57,7 @@ public class Food {
         return likes;
     }
 
-    public Bitmap getPicture() {
+    public byte[] getPicture() {
         return picture;
     }
 }

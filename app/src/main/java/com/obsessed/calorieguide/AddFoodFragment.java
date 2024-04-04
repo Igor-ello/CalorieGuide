@@ -16,6 +16,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.obsessed.calorieguide.retrofit.Food;
@@ -27,6 +28,7 @@ import java.util.ArrayList;
 
 
 public class AddFoodFragment extends Fragment {
+    ImageView imageView;
     ArrayList<EditText> edList;
     byte[] byteArray;
 
@@ -60,7 +62,8 @@ public class AddFoodFragment extends Fragment {
         requireView().findViewById(R.id.btSave).setOnClickListener(v -> {
             int counter = 0;
             for (EditText ed: edList){
-                if (ed != null)
+                String text = ed.getText().toString().trim(); // Получаем текст из EditText и удаляем пробелы по краям
+                if (!text.isEmpty())
                     counter++;
             }
             if(counter == 6) {
@@ -71,7 +74,7 @@ public class AddFoodFragment extends Fragment {
                         Integer.parseInt(edList.get(3).getText().toString()),
                         Integer.parseInt(edList.get(4).getText().toString()),
                         Integer.parseInt(edList.get(5).getText().toString()),
-                        null);
+                        byteArray);
                 FoodCallPost foodCall = new FoodCallPost();
                 foodCall.postFood(food);
 
@@ -82,8 +85,8 @@ public class AddFoodFragment extends Fragment {
         });
     }
 
-
     private void init(View view){
+        imageView = view.findViewById(R.id.image);
         edList = new ArrayList<>();
         edList.add(view.findViewById(R.id.edFoodName));
         edList.add(view.findViewById(R.id.edDescription));
@@ -108,8 +111,8 @@ public class AddFoodFragment extends Fragment {
             try {
                 // Получаем Bitmap из URI выбранного изображения
                 Bitmap bitmap = MediaStore.Images.Media.getBitmap(requireContext().getContentResolver(), selectedImageUri);
+                imageView.setImageBitmap(bitmap);
 
-                // Преобразуем Bitmap в массив байтов (byte[])
                 ByteArrayOutputStream stream = new ByteArrayOutputStream();
                 bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
                 byteArray = stream.toByteArray();
