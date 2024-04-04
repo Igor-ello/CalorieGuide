@@ -1,6 +1,7 @@
 package com.obsessed.calorieguide.retrofit;
 
 import android.graphics.Bitmap;
+import android.text.Editable;
 
 public class Food {
     int id;
@@ -14,15 +15,13 @@ public class Food {
     Bitmap picture;
 
 
-    public Food(int id, String food_name, String description, int calories, int proteins, int carbohydrates, int fats, int likes, Bitmap picture) {
-        this.id = id;
+    public Food(String food_name, String description, int calories, int proteins, int carbohydrates, int fats, Bitmap picture) {
         this.food_name = food_name;
         this.description = description;
         this.calories = calories;
         this.proteins = proteins;
         this.carbohydrates = carbohydrates;
         this.fats = fats;
-        this.likes = likes;
         this.picture = picture;
     }
 

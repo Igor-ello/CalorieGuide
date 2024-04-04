@@ -3,7 +3,7 @@
 
     <!-- Fragments -->
     <string name="fragment_main_header">Main</string>
-    <string name="fragment_recipe_header">Recipe</string>
+    <string name="fragment_food_header">Food</string>
     <string name="fragment_library_header">Library</string>
     <string name="fragment_profile_header">Profile</string>
     <string name="fragment_registration_header">Registration</string>

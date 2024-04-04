@@ -7,6 +7,8 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.GridLayoutManager;
 
 import android.util.Log;
@@ -65,6 +67,11 @@ public class LibraryFragment extends Fragment implements FoodCallback {
         requireActivity().runOnUiThread(() -> {
             FoodCall foodCall = new FoodCall(this); // Передаем экземпляр FoodCallback в конструктор FoodCall
             foodCall.getAllFood();
+        });
+
+        requireView().findViewById(R.id.buttonAdd).setOnClickListener(v -> {
+            NavController navController = Navigation.findNavController(requireView());
+            navController.navigate(R.id.action_libraryFragment_to_addFoodFragment);
         });
     }
 
