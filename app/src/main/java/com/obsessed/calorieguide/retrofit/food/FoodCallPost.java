@@ -1,11 +1,11 @@
-package com.obsessed.calorieguide.retrofit;
+package com.obsessed.calorieguide.retrofit.food;
 
 import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import com.obsessed.calorieguide.retrofit.MainApi;
 
-import okhttp3.Interceptor;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.RequestBody;
@@ -19,7 +19,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class FoodCallPost {
     private String baseUrl = "http://95.174.92.190:8088/";
     private Retrofit retrofit;
-    private FoodApi foodApi;
+    private MainApi mainApi;
 
     public FoodCallPost() {
         HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
@@ -34,7 +34,7 @@ public class FoodCallPost {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
-        foodApi = retrofit.create(FoodApi.class);
+        mainApi = retrofit.create(MainApi.class);
     }
 
     public void postFood(Food food) {
@@ -44,7 +44,7 @@ public class FoodCallPost {
         RequestBody requestBody = RequestBody.create(MediaType.parse("application/json"), json);
 
         // Выполняем POST-запрос на сервер
-        Call<JsonObject> call = foodApi.postFood(requestBody);
+        Call<JsonObject> call = mainApi.postFood(requestBody);
         call.enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {

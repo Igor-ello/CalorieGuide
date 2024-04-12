@@ -2,7 +2,6 @@ package com.obsessed.calorieguide.adapters;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,8 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.obsessed.calorieguide.R;
 import com.obsessed.calorieguide.databinding.FoodItemV2Binding;
-import com.obsessed.calorieguide.retrofit.Food;
-import com.squareup.picasso.Picasso;
+import com.obsessed.calorieguide.retrofit.food.Food;
 
 import java.util.ArrayList;
 

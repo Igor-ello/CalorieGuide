@@ -1,4 +1,4 @@
-package com.obsessed.calorieguide.retrofit;
+package com.obsessed.calorieguide.retrofit.food;
 
 import android.util.Log;
 
@@ -6,12 +6,10 @@ import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
+import com.obsessed.calorieguide.retrofit.MainApi;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
-import okhttp3.MediaType;
-import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -22,7 +20,7 @@ public class FoodCall {
     private String baseUrl = "http://95.174.92.190:8088/";
     private FoodCallback foodCallback; //интерфейс для возврата результата запроса
     private Retrofit retrofit;
-    private FoodApi foodApi;
+    private MainApi mainApi;
 
     public FoodCall(FoodCallback foodCallback) {
         this.foodCallback = foodCallback;
@@ -32,11 +30,11 @@ public class FoodCall {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
-        foodApi = retrofit.create(FoodApi.class);
+        mainApi = retrofit.create(MainApi.class);
     }
 
     public void getFoodById(int foodId) {
-        Call<Food> call = foodApi.getFoodById(foodId);
+        Call<Food> call = mainApi.getFoodById(foodId);
         // Запуск асинхронного запроса в другом потоке
         call.enqueue(new Callback<Food>() {
             @Override
@@ -58,7 +56,7 @@ public class FoodCall {
     }
 
     public void getAllFood(){
-        Call<JsonObject> call = foodApi.getAllFood(); // JsonObject из библиотеки Gson
+        Call<JsonObject> call = mainApi.getAllFood(); // JsonObject из библиотеки Gson
         call.enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {

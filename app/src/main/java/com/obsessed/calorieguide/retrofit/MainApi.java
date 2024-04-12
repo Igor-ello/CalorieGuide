@@ -1,8 +1,8 @@
 package com.obsessed.calorieguide.retrofit;
 
 import com.google.gson.JsonObject;
-
-import java.util.List;
+import com.obsessed.calorieguide.retrofit.food.Food;
+import com.obsessed.calorieguide.retrofit.user.AuthRequest;
 
 import okhttp3.RequestBody;
 import retrofit2.Call;
@@ -11,7 +11,7 @@ import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
 
-public interface FoodApi {
+public interface MainApi {
     @GET("products/{id}")
     Call<Food> getFoodById(@Path("id") int foodId);
 
@@ -20,4 +20,7 @@ public interface FoodApi {
 
     @POST("/product")
     Call<JsonObject> postFood(@Body RequestBody requestBody);
+
+    @GET("/login")
+    Call<JsonObject> auth(@Body AuthRequest authRequest);
 }

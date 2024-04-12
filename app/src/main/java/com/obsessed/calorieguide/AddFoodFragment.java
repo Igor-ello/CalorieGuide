@@ -19,8 +19,8 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.obsessed.calorieguide.retrofit.Food;
-import com.obsessed.calorieguide.retrofit.FoodCallPost;
+import com.obsessed.calorieguide.retrofit.food.Food;
+import com.obsessed.calorieguide.retrofit.food.FoodCallPost;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;

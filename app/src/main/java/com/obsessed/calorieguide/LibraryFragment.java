@@ -20,9 +20,9 @@ import android.widget.TextView;
 import com.obsessed.calorieguide.adapters.FoodAdapterV1;
 import com.obsessed.calorieguide.adapters.FoodAdapterV2;
 import com.obsessed.calorieguide.databinding.FragmentLibraryBinding;
-import com.obsessed.calorieguide.retrofit.Food;
-import com.obsessed.calorieguide.retrofit.FoodCall;
-import com.obsessed.calorieguide.retrofit.FoodCallback;
+import com.obsessed.calorieguide.retrofit.food.Food;
+import com.obsessed.calorieguide.retrofit.food.FoodCall;
+import com.obsessed.calorieguide.retrofit.food.FoodCallback;
 
 import java.util.ArrayList;
 import java.util.List;
