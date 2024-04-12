@@ -21,6 +21,6 @@ public interface MainApi {
     @POST("/product")
     Call<JsonObject> postFood(@Body RequestBody requestBody);
 
-    @GET("/login")
+    @POST("/login")
     Call<JsonObject> auth(@Body AuthRequest authRequest);
 }
