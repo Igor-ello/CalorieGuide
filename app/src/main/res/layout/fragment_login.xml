@@ -54,4 +54,18 @@
         </Button>
     </LinearLayout>
 
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom">
+
+        <Button
+            android:id="@+id/btRegistration"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="Not Registration Yet?">
+        </Button>
+    </FrameLayout>
+
 </FrameLayout>

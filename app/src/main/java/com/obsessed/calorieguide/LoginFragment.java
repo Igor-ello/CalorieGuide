@@ -5,6 +5,8 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -13,7 +15,7 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 
 import com.google.gson.JsonObject;
-import com.obsessed.calorieguide.retrofit.user.AuthCall;
+import com.obsessed.calorieguide.retrofit.user.UserCall;
 import com.obsessed.calorieguide.retrofit.user.AuthRequest;
 
 import retrofit2.Call;
@@ -46,35 +48,43 @@ public class LoginFragment extends Fragment {
 
         EditText edEmail = requireView().findViewById(R.id.edEmail);
         EditText edPassword = requireView().findViewById(R.id.edPassword);
+        NavController navController = Navigation.findNavController(view);
 
         requireView().findViewById(R.id.btSignIn).setOnClickListener(v -> {
-            String username = edEmail.getText().toString();
-            String password = edPassword.getText().toString();
+            authRequest(edEmail, edPassword);
+        });
 
-            AuthRequest authRequest = new AuthRequest(username, password);
-            AuthCall authCall = new AuthCall();
-            Call<JsonObject> call = authCall.auth(authRequest);
-            call.enqueue(new Callback<JsonObject>() {
-                @Override
-                public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
-                    if (response.isSuccessful()) {
-                        // Обработка успешного ответа
-                        JsonObject jsonObject = response.body();
-                        Log.e("MyLog", "Authentication successful: " + response.message());
-                        // Ваши действия с jsonObject
-                    } else {
-                        // Обработка ошибки аутентификации
-                        Log.e("MyLog", "Authentication failed: " + response.message());
-                    }
+        requireView().findViewById(R.id.btRegistration).setOnClickListener(v -> {
+            navController.navigate(R.id.action_loginFragment_to_registrationFragment);
+        });
+    }
+
+    private void authRequest(EditText edEmail, EditText edPassword) {
+        String username = edEmail.getText().toString();
+        String password = edPassword.getText().toString();
+
+        AuthRequest authRequest = new AuthRequest(username, password);
+        UserCall userCall = new UserCall();
+        Call<JsonObject> call = userCall.auth(authRequest);
+        call.enqueue(new Callback<JsonObject>() {
+            @Override
+            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+                if (response.isSuccessful()) {
+                    // Обработка успешного ответа
+                    JsonObject jsonObject = response.body();
+                    Log.d("MyLog", "Authentication successful: " + response.message());
+                    // Ваши действия с jsonObject
+                } else {
+                    // Обработка ошибки аутентификации
+                    Log.d("MyLog", "Authentication failed: " + response.message());
                 }
+            }
 
-                @Override
-                public void onFailure(Call<JsonObject> call, Throwable t) {
-                    // Обработка ошибки сети или других ошибок
-                    Log.e("MyLog", "Authentication error: " + t.getMessage());
-                }
-            });
-
+            @Override
+            public void onFailure(Call<JsonObject> call, Throwable t) {
+                // Обработка ошибки сети или других ошибок
+                Log.e("MyLog", "Authentication error: " + t.getMessage());
+            }
         });
     }
 }

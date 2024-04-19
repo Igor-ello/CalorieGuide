@@ -3,6 +3,7 @@ package com.obsessed.calorieguide.retrofit;
 import com.google.gson.JsonObject;
 import com.obsessed.calorieguide.retrofit.food.Food;
 import com.obsessed.calorieguide.retrofit.user.AuthRequest;
+import com.obsessed.calorieguide.retrofit.user.RegistrationRequest;
 
 import okhttp3.RequestBody;
 import retrofit2.Call;
@@ -23,4 +24,7 @@ public interface MainApi {
 
     @POST("/login")
     Call<JsonObject> auth(@Body AuthRequest authRequest);
+
+    @POST("/user")
+    Call<JsonObject> registerUser(@Body RegistrationRequest registrationRequest);
 }

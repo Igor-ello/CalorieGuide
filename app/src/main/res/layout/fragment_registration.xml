@@ -6,9 +6,67 @@
     tools:context=".RegistrationFragment"
     android:layout_margin="@dimen/marginStandard">
 
-    <TextView
-        style="@style/TextHeaderStyle"
-        android:text="@string/fragment_registration_header">
-    </TextView>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            style="@style/TextHeaderStyle"
+            android:text="@string/fragment_registration_header">
+        </TextView>
+
+        <TextView
+            style="@style/TextStyle"
+            android:text="Name"
+            android:textStyle="bold">
+        </TextView>
+
+        <EditText
+            android:id="@+id/etName"
+            style="@style/EditTextStyle">
+        </EditText>
+
+        <TextView
+            style="@style/TextStyle"
+            android:text="Surname"
+            android:textStyle="bold">
+        </TextView>
+
+        <EditText
+            android:id="@+id/etSurname"
+            style="@style/EditTextStyle">
+        </EditText>
+
+        <TextView
+            style="@style/TextStyle"
+            android:text="Email"
+            android:textStyle="bold">
+        </TextView>
+
+        <EditText
+            android:id="@+id/etEmail"
+            style="@style/EditTextStyle">
+        </EditText>
+
+        <TextView
+            style="@style/TextStyle"
+            android:text="Password"
+            android:textStyle="bold">
+        </TextView>
+
+        <EditText
+            android:id="@+id/etPassword"
+            style="@style/EditTextStyle">
+        </EditText>
+
+        <Button
+            android:id="@+id/btSend"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="send">
+        </Button>
+
+    </LinearLayout>
 
 </FrameLayout>
