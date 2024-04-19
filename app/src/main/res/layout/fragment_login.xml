@@ -48,8 +48,7 @@
 
         <Button
             android:id="@+id/btSignIn"
-            android:layout_width="100dp"
-            android:layout_height="50dp"
+            style="@style/ButtonStyle"
             android:text="Sign in">
         </Button>
     </LinearLayout>
@@ -61,9 +60,7 @@
 
         <Button
             android:id="@+id/btRegistration"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
+            style="@style/ButtonStyle"
             android:text="Not Registration Yet?">
         </Button>
     </FrameLayout>

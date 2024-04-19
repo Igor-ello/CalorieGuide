@@ -13,9 +13,32 @@
         android:layout_gravity="bottom">
     </FrameLayout>
 
-    <TextView
-        style="@style/TextHeaderStyle"
-        android:text="@string/fragment_profile_header">
-    </TextView>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            style="@style/TextHeaderStyle"
+            android:text="@string/fragment_profile_header">
+        </TextView>
+
+        <include layout="@layout/user_params" />
+
+        <Button
+            android:id="@+id/btEdit"
+            style="@style/ButtonStyle"
+            android:text="Edit fields">
+        </Button>
+
+        <Button
+            android:id="@+id/btSave"
+            style="@style/ButtonStyle"
+            android:text="Save fields"
+            android:visibility="gone">
+        </Button>
+
+    </LinearLayout>
+
 
 </FrameLayout>

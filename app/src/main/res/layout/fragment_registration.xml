@@ -16,54 +16,11 @@
             android:text="@string/fragment_registration_header">
         </TextView>
 
-        <TextView
-            style="@style/TextStyle"
-            android:text="Name"
-            android:textStyle="bold">
-        </TextView>
-
-        <EditText
-            android:id="@+id/etName"
-            style="@style/EditTextStyle">
-        </EditText>
-
-        <TextView
-            style="@style/TextStyle"
-            android:text="Surname"
-            android:textStyle="bold">
-        </TextView>
-
-        <EditText
-            android:id="@+id/etSurname"
-            style="@style/EditTextStyle">
-        </EditText>
-
-        <TextView
-            style="@style/TextStyle"
-            android:text="Email"
-            android:textStyle="bold">
-        </TextView>
-
-        <EditText
-            android:id="@+id/etEmail"
-            style="@style/EditTextStyle">
-        </EditText>
-
-        <TextView
-            style="@style/TextStyle"
-            android:text="Password"
-            android:textStyle="bold">
-        </TextView>
-
-        <EditText
-            android:id="@+id/etPassword"
-            style="@style/EditTextStyle">
-        </EditText>
+        <include layout="@layout/user_params"/>
 
         <Button
             android:id="@+id/btSend"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            style="@style/ButtonStyle"
             android:text="send">
         </Button>
 
