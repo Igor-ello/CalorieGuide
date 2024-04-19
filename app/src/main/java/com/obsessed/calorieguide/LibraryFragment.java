@@ -51,20 +51,22 @@ public class LibraryFragment extends Fragment implements FoodCallback {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
         binding = FragmentLibraryBinding.bind(view);
 
+        //NavBarFragment
         NavBarFragment nvb = new NavBarFragment(view);
         FragmentManager fragmentManager = getParentFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.add(R.id.fragment_nav_bar, nvb);
         fragmentTransaction.commit();
 
+        //Подгрузка данных
         requireActivity().runOnUiThread(() -> {
             FoodCall foodCall = new FoodCall(this); // Передаем экземпляр FoodCallback в конструктор FoodCall
             foodCall.getAllFood();
         });
 
+        //Кнопка для добавления нового фрукта
         requireView().findViewById(R.id.buttonAdd).setOnClickListener(v -> {
             NavController navController = Navigation.findNavController(requireView());
             navController.navigate(R.id.action_libraryFragment_to_addFoodFragment);
