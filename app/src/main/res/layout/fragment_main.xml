@@ -21,9 +21,31 @@
         android:background="@drawable/settings_icon">
     </FrameLayout>
 
-    <TextView
-        style="@style/TextHeaderStyle"
-        android:text="@string/fragment_main_header">
-    </TextView>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            style="@style/TextHeaderStyle"
+            android:text="@string/fragment_main_header">
+        </TextView>
+
+        <TextView
+            android:id="@+id/text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Some text">
+        </TextView>
+
+        <Switch
+            android:id="@+id/switchTheme"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Theme"
+            tools:ignore="UseSwitchCompatOrMaterialXml">
+        </Switch>
+
+    </LinearLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

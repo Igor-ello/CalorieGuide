@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Switch;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -55,12 +56,20 @@ public class NavBarFragment extends Fragment {
 		});
 
 		view.findViewById(R.id.recipe_icon).setOnClickListener(v -> {
+			Switch switchTheme = viewFragment.findViewById(R.id.switchTheme);
+			Log.d("MyLog", String.valueOf(switchTheme.isChecked()));
+
+//			Bundle bundle = new Bundle(); //TODO
+//			bundle.putBoolean("switchState", switchTheme.isChecked());
+
 			navController.navigate(R.id.libraryFragment, null,
 					new NavOptions.Builder()
 							.setPopUpTo(R.id.libraryFragment, true)
 							.build());
+
 			Log.d("mlg", "Переход на libraryFragment");
 		});
+
 		return view;
 	}
 
