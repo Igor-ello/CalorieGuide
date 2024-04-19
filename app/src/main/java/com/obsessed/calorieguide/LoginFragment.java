@@ -85,7 +85,7 @@ public class LoginFragment extends Fragment {
                         User user = JsonToClass.getUser(jsonObject);
                         Data.getInstance().setUser(user);
 
-                        Toast.makeText(getContext(), "Welcome!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(requireContext(), "Welcome!", Toast.LENGTH_SHORT).show();
                         NavController navController = Navigation.findNavController(view);
                         navController.navigate(R.id.action_loginFragment_to_mainFragment);
                     }

@@ -76,7 +76,7 @@ public class RegistrationFragment extends Fragment {
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
                 if (response.isSuccessful()) {
                     Log.d("MyLog", "Authentication successful: " + response.message());
-                    Toast.makeText(getContext(), "Successful!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(requireContext(), "Successful!", Toast.LENGTH_SHORT).show();
 
                     NavController navController = Navigation.findNavController(view);
                     navController.popBackStack();
