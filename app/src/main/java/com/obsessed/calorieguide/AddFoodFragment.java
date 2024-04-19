@@ -19,6 +19,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.obsessed.calorieguide.data.Data;
 import com.obsessed.calorieguide.retrofit.food.Food;
 import com.obsessed.calorieguide.retrofit.food.FoodCallPost;
 
@@ -28,6 +29,8 @@ import java.util.ArrayList;
 
 
 public class AddFoodFragment extends Fragment {
+    // Константа для определения requestCode
+    private static final int GALLERY_REQUEST_CODE = 100;
     ImageView imageView;
     ArrayList<EditText> edList;
     byte[] byteArray;
@@ -74,8 +77,9 @@ public class AddFoodFragment extends Fragment {
                         Integer.parseInt(edList.get(3).getText().toString()),
                         Integer.parseInt(edList.get(4).getText().toString()),
                         Integer.parseInt(edList.get(5).getText().toString()),
+                        Data.getInstance().getUser().getId(),
                         byteArray);
-                FoodCallPost foodCall = new FoodCallPost();
+                FoodCallPost foodCall = new FoodCallPost(Data.getInstance().getUser().getBearerToken());
                 foodCall.postFood(food);
 
                 Navigation.findNavController(view).popBackStack();
@@ -96,8 +100,7 @@ public class AddFoodFragment extends Fragment {
         edList.add(view.findViewById(R.id.edFats));
     }
 
-    // Константа для определения requestCode
-    private static final int GALLERY_REQUEST_CODE = 100;
+
 
     // Метод для обработки результата выбора изображения из галереи или камеры
     @Override
