@@ -21,6 +21,7 @@ import com.obsessed.calorieguide.retrofit.JsonToClass;
 import com.obsessed.calorieguide.retrofit.user.User;
 import com.obsessed.calorieguide.retrofit.user.UserCall;
 import com.obsessed.calorieguide.retrofit.user.AuthRequest;
+import com.obsessed.calorieguide.save.ShPrefs;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -49,6 +50,13 @@ public class LoginFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        //Проверка на выполнный вход в аккаунт
+        if(ShPrefs.getUser(requireContext())!= null) {
+            Data.getInstance().setUser(ShPrefs.getUser(requireContext()));
+            NavController navController = Navigation.findNavController(view);
+            navController.navigate(R.id.action_loginFragment_to_mainFragment);
+        }
 
         EditText edEmail = requireView().findViewById(R.id.edEmail);
         EditText edPassword = requireView().findViewById(R.id.edPassword);
