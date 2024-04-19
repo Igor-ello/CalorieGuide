@@ -1,20 +1,24 @@
 package com.obsessed.calorieguide.retrofit.user;
 
 public class User {
-    String name;
+    int id;
+    String user_name;
     String surname;
     String email;
     String password;
+    String BearerToken;
 
-    public User(String name, String surname, String email, String password) {
-        this.name = name;
+    public User(int id, String name, String surname, String email, String password, String BearerToken) {
+        this.id = id;
+        this.user_name = name;
         this.surname = surname;
         this.email = email;
         this.password = password;
+        this.BearerToken = BearerToken;
     }
 
     public String getName() {
-        return name;
+        return user_name;
     }
 
     public String getSurname() {
@@ -27,5 +31,13 @@ public class User {
 
     public String getPassword() {
         return password;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public String getBearerToken() {
+        return BearerToken;
     }
 }

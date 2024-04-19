@@ -6,6 +6,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
+import com.obsessed.calorieguide.data.Data;
 import com.obsessed.calorieguide.retrofit.MainApi;
 
 import java.util.List;
@@ -17,7 +18,6 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class FoodCall {
-    private String baseUrl = "http://95.174.92.190:8088/";
     private FoodCallback foodCallback; //интерфейс для возврата результата запроса
     private Retrofit retrofit;
     private MainApi mainApi;
@@ -26,7 +26,7 @@ public class FoodCall {
         this.foodCallback = foodCallback;
 
         retrofit = new Retrofit.Builder()
-                .baseUrl(baseUrl)
+                .baseUrl(Data.getInstance().getBaseUrl()) //ссылка на сервер
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 

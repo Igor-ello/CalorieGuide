@@ -1,6 +1,7 @@
 package com.obsessed.calorieguide.retrofit.user;
 
 import com.google.gson.JsonObject;
+import com.obsessed.calorieguide.data.Data;
 import com.obsessed.calorieguide.retrofit.MainApi;
 
 import retrofit2.Call;
@@ -8,13 +9,12 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class UserCall {
-    private String baseUrl = "http://95.174.92.190:8088/";
     private Retrofit retrofit;
     private MainApi mainApi;
 
     public UserCall() {
         retrofit = new Retrofit.Builder()
-                .baseUrl(baseUrl)
+                .baseUrl(Data.getInstance().getBaseUrl()) // сылка на сервер
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 

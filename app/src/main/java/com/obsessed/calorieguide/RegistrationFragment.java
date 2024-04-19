@@ -5,15 +5,21 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.google.gson.JsonObject;
+import com.obsessed.calorieguide.data.Data;
+import com.obsessed.calorieguide.retrofit.JsonToClass;
 import com.obsessed.calorieguide.retrofit.user.RegistrationRequest;
+import com.obsessed.calorieguide.retrofit.user.User;
 import com.obsessed.calorieguide.retrofit.user.UserCall;
 
 import retrofit2.Call;
@@ -48,11 +54,11 @@ public class RegistrationFragment extends Fragment {
         EditText etPassword = view.findViewById(R.id.etPassword);
 
         view.findViewById(R.id.btSend).setOnClickListener(v -> {
-            registerRequest(etName, etSurname, etEmail, etPassword);
+            registerRequest(view, etName, etSurname, etEmail, etPassword);
         });
     }
 
-    private void registerRequest(EditText etName, EditText etSurname, EditText etEmail, EditText etPassword) {
+    private void registerRequest(View view, EditText etName, EditText etSurname, EditText etEmail, EditText etPassword) {
         String name = etName.getText().toString();
         String surname = etSurname.getText().toString();
         String email = etEmail.getText().toString();
@@ -69,19 +75,18 @@ public class RegistrationFragment extends Fragment {
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
                 if (response.isSuccessful()) {
-                    // Обработка успешного ответа
-                    JsonObject jsonObject = response.body();
                     Log.d("MyLog", "Authentication successful: " + response.message());
-                    // Ваши действия с jsonObject
+                    Toast.makeText(getContext(), "Successful!", Toast.LENGTH_SHORT).show();
+
+                    NavController navController = Navigation.findNavController(view);
+                    navController.popBackStack();
                 } else {
-                    // Обработка ошибки аутентификации
                     Log.d("MyLog", "Authentication failed: " + response.message());
                 }
             }
 
             @Override
             public void onFailure(Call<JsonObject> call, Throwable t) {
-                // Обработка ошибки сети или других ошибок
                 Log.e("MyLog", "Authentication error: " + t.getMessage());
             }
         });
