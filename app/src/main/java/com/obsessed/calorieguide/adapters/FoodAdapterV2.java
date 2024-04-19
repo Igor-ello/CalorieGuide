@@ -35,7 +35,7 @@ public class FoodAdapterV2 extends RecyclerView.Adapter<FoodAdapterV2.FoodHolder
                 Bitmap bitmap = BitmapFactory.decodeByteArray(imageData, 0, imageData.length);
                 binding.imageView.setImageBitmap(bitmap);
             } else {
-                binding.imageView.setImageResource(R.drawable.block_flipped);
+                binding.imageView.setImageResource(R.drawable.grass_icon);
             }
         }
     }
