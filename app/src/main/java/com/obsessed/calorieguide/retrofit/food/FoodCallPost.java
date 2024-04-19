@@ -2,12 +2,18 @@ package com.obsessed.calorieguide.retrofit.food;
 
 import android.util.Log;
 
+import androidx.annotation.NonNull;
+
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.obsessed.calorieguide.retrofit.MainApi;
 
+import java.io.IOException;
+
+import okhttp3.Interceptor;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
+import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
@@ -21,12 +27,24 @@ public class FoodCallPost {
     private Retrofit retrofit;
     private MainApi mainApi;
 
-    public FoodCallPost() {
+    public FoodCallPost(String ACCESS_TOKEN) {
         HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
         loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
 
         OkHttpClient client = new OkHttpClient.Builder()
                 .addInterceptor(loggingInterceptor) // Добавление Interceptor для логирования
+                .addInterceptor(chain -> {
+                    Request originalRequest = chain.request();
+
+                    Log.d("FoodCallPost", ACCESS_TOKEN);
+                    // Добавляем заголовок к исходному запросу
+                    Request newRequest = originalRequest.newBuilder()
+                            .addHeader("Authorization", "Bearer " + ACCESS_TOKEN)
+                            .build();
+
+                    // Продолжаем выполнение запроса с добавленным заголовком
+                    return chain.proceed(newRequest);
+                })
                 .build();
 
         retrofit = new Retrofit.Builder()
