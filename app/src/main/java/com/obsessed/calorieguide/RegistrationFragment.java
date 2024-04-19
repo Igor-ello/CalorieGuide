@@ -16,10 +16,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.google.gson.JsonObject;
-import com.obsessed.calorieguide.data.Data;
-import com.obsessed.calorieguide.retrofit.JsonToClass;
 import com.obsessed.calorieguide.retrofit.user.RegistrationRequest;
-import com.obsessed.calorieguide.retrofit.user.User;
 import com.obsessed.calorieguide.retrofit.user.UserCall;
 
 import retrofit2.Call;
@@ -54,20 +51,20 @@ public class RegistrationFragment extends Fragment {
         EditText etPassword = view.findViewById(R.id.etPassword);
 
         view.findViewById(R.id.btSend).setOnClickListener(v -> {
-            registerRequest(view, etName, etSurname, etEmail, etPassword);
+            String name = etName.getText().toString().trim();
+            String surname = etSurname.getText().toString().trim();
+            String email = etEmail.getText().toString().trim();
+            String password = etPassword.getText().toString().trim();
+
+            if (name.isEmpty() || email.isEmpty() || password.isEmpty() || surname.isEmpty()) {
+                Toast.makeText(requireContext(), "Please fill all the fields", Toast.LENGTH_SHORT).show();
+            } else {
+                registerRequest(view, name, surname, email, password);
+            }
         });
     }
 
-    private void registerRequest(View view, EditText etName, EditText etSurname, EditText etEmail, EditText etPassword) {
-        String name = etName.getText().toString();
-        String surname = etSurname.getText().toString();
-        String email = etEmail.getText().toString();
-        String password = etPassword.getText().toString();
-
-        if (name.isEmpty() || email.isEmpty() || password.isEmpty() || surname.isEmpty()) {
-            return;
-        }
-
+    private void registerRequest(View view, String name, String surname, String email, String password) {
         RegistrationRequest registerRequest = new RegistrationRequest(name, surname, email, password);
         UserCall userCall = new UserCall();
         Call<JsonObject> call = userCall.registerUser(registerRequest);
@@ -78,8 +75,7 @@ public class RegistrationFragment extends Fragment {
                     Log.d("MyLog", "Authentication successful: " + response.message());
                     Toast.makeText(requireContext(), "Successful!", Toast.LENGTH_SHORT).show();
 
-                    NavController navController = Navigation.findNavController(view);
-                    navController.popBackStack();
+                    Navigation.findNavController(view).popBackStack();
                 } else {
                     Log.d("MyLog", "Authentication failed: " + response.message());
                 }

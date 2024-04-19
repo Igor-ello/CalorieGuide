@@ -17,7 +17,7 @@ import android.widget.Toast;
 
 import com.google.gson.JsonObject;
 import com.obsessed.calorieguide.data.Data;
-import com.obsessed.calorieguide.retrofit.JsonToClass;
+import com.obsessed.calorieguide.convert.JsonToClass;
 import com.obsessed.calorieguide.retrofit.user.User;
 import com.obsessed.calorieguide.retrofit.user.UserCall;
 import com.obsessed.calorieguide.retrofit.user.AuthRequest;
@@ -58,27 +58,27 @@ public class LoginFragment extends Fragment {
             navController.navigate(R.id.action_loginFragment_to_mainFragment);
         }
 
+        //Инициализация переменных
         EditText edEmail = requireView().findViewById(R.id.edEmail);
         EditText edPassword = requireView().findViewById(R.id.edPassword);
-        NavController navController = Navigation.findNavController(view);
 
         requireView().findViewById(R.id.btSignIn).setOnClickListener(v -> {
-            authRequest(view, edEmail, edPassword);
+            String username = edEmail.getText().toString().trim();
+            String password = edPassword.getText().toString().trim();
+
+            if(username.isEmpty() || password.isEmpty()) {
+                Toast.makeText(requireContext(), "Введите все данные", Toast.LENGTH_SHORT).show();
+            } else {
+                authRequest(view, username, password);
+            }
         });
 
         requireView().findViewById(R.id.btRegistration).setOnClickListener(v -> {
-            navController.navigate(R.id.action_loginFragment_to_registrationFragment);
+            Navigation.findNavController(view).navigate(R.id.action_loginFragment_to_registrationFragment);
         });
     }
 
-    private void authRequest(View view, EditText edEmail, EditText edPassword) {
-        String username = edEmail.getText().toString();
-        String password = edPassword.getText().toString();
-
-        if (username.isEmpty() || password.isEmpty()) {
-            return;
-        }
-
+    private void authRequest(View view, String username, String password) {
         AuthRequest authRequest = new AuthRequest(username, password);
         UserCall userCall = new UserCall();
         Call<JsonObject> call = userCall.auth(authRequest);

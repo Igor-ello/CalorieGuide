@@ -1,4 +1,4 @@
-package com.obsessed.calorieguide.retrofit;
+package com.obsessed.calorieguide.convert;
 
 import com.google.gson.JsonObject;
 import com.obsessed.calorieguide.retrofit.user.User;

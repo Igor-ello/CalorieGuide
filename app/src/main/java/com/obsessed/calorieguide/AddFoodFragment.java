@@ -19,8 +19,8 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.obsessed.calorieguide.convert.FillClass;
 import com.obsessed.calorieguide.data.Data;
-import com.obsessed.calorieguide.retrofit.food.Food;
 import com.obsessed.calorieguide.retrofit.food.FoodCallPost;
 
 import java.io.ByteArrayOutputStream;
@@ -32,7 +32,7 @@ public class AddFoodFragment extends Fragment {
     // Константа для определения requestCode
     private static final int GALLERY_REQUEST_CODE = 100;
     ImageView imageView;
-    ArrayList<EditText> edList;
+    ArrayList<EditText> etList;
     byte[] byteArray;
 
     public AddFoodFragment() {
@@ -58,29 +58,21 @@ public class AddFoodFragment extends Fragment {
         init(requireView());
 
         requireView().findViewById(R.id.image).setOnClickListener(v -> {
-            Intent galleryIntent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+            Intent galleryIntent = new Intent(Intent.ACTION_PICK,
+                    android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
             startActivityForResult(galleryIntent, GALLERY_REQUEST_CODE);
         });
 
         requireView().findViewById(R.id.btSave).setOnClickListener(v -> {
             int counter = 0;
-            for (EditText ed: edList){
-                String text = ed.getText().toString().trim(); // Получаем текст из EditText и удаляем пробелы по краям
-                if (!text.isEmpty())
+            for (EditText et: etList){
+                et.setText(et.getText().toString().trim());
+                if (!et.getText().toString().isEmpty())
                     counter++;
             }
-            if(counter == 6) {
-                Food food = new Food(
-                        edList.get(0).getText().toString(),
-                        edList.get(1).getText().toString(),
-                        Integer.parseInt(edList.get(2).getText().toString()),
-                        Integer.parseInt(edList.get(3).getText().toString()),
-                        Integer.parseInt(edList.get(4).getText().toString()),
-                        Integer.parseInt(edList.get(5).getText().toString()),
-                        Data.getInstance().getUser().getId(),
-                        byteArray);
+            if(counter == etList.size()){
                 FoodCallPost foodCall = new FoodCallPost(Data.getInstance().getUser().getBearerToken());
-                foodCall.postFood(food);
+                foodCall.postFood(FillClass.fillFood(etList, byteArray));
 
                 Navigation.findNavController(view).popBackStack();
             } else {
@@ -91,13 +83,13 @@ public class AddFoodFragment extends Fragment {
 
     private void init(View view){
         imageView = view.findViewById(R.id.image);
-        edList = new ArrayList<>();
-        edList.add(view.findViewById(R.id.edFoodName));
-        edList.add(view.findViewById(R.id.edDescription));
-        edList.add(view.findViewById(R.id.edCalories));
-        edList.add(view.findViewById(R.id.edProteins));
-        edList.add(view.findViewById(R.id.edCarbohydrates));
-        edList.add(view.findViewById(R.id.edFats));
+        etList = new ArrayList<>();
+        etList.add(view.findViewById(R.id.edFoodName));
+        etList.add(view.findViewById(R.id.edDescription));
+        etList.add(view.findViewById(R.id.edCalories));
+        etList.add(view.findViewById(R.id.edProteins));
+        etList.add(view.findViewById(R.id.edCarbohydrates));
+        etList.add(view.findViewById(R.id.edFats));
     }
 
 
