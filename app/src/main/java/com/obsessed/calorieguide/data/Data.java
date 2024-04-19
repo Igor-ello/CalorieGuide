@@ -8,6 +8,7 @@ public class Data {
     static Data uniqueInstance = new Data();
     static final String baseUrl = "http://95.174.92.190:8088/";
     User user = null;
+    int adapterType = 1;
 
     private Data() {}
 
@@ -22,12 +23,19 @@ public class Data {
         return baseUrl;
     }
 
+    public int getAdapterType() {
+        return adapterType;
+    }
+
+    public void setAdapterType(int adapterType) {
+        this.adapterType = adapterType;
+    }
+
     public User getUser() {
         return user;
     }
 
     public void setUser(User user) {
         this.user = user;
-        Log.d("User", user.getId() + " " + user.getName() + " " + user.getSurname()  + " " + user.getEmail() + " " + user.getPassword() + " " + user.getBearerToken());
     }
 }

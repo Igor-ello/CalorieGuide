@@ -19,6 +19,7 @@ import android.widget.TextView;
 
 import com.obsessed.calorieguide.adapters.FoodAdapterV1;
 import com.obsessed.calorieguide.adapters.FoodAdapterV2;
+import com.obsessed.calorieguide.data.Data;
 import com.obsessed.calorieguide.databinding.FragmentLibraryBinding;
 import com.obsessed.calorieguide.retrofit.food.Food;
 import com.obsessed.calorieguide.retrofit.food.FoodCall;
@@ -29,14 +30,9 @@ import java.util.List;
 
 public class LibraryFragment extends Fragment implements FoodCallback {
     FragmentLibraryBinding binding;
-    boolean switchState;
 
     public LibraryFragment() {
-        Bundle bundle = getArguments();
-        if (bundle != null) {
-            switchState = bundle.getBoolean("switchState", true);
-        }
-        Log.d("MyLog", String.valueOf(switchState));
+        // Required empty public constructor
     }
 
     @Override
@@ -84,8 +80,7 @@ public class LibraryFragment extends Fragment implements FoodCallback {
 
     @Override
     public void onAllFoodReceived(List<Food> foodList) {
-        switchState = Boolean.FALSE; //TODO
-        if(switchState) {
+        if(Data.getInstance().getAdapterType() == 2) {
             FoodAdapterV2 foodAdapter = new FoodAdapterV2();
             foodAdapter.foodArrayList = (ArrayList<Food>) foodList;
 

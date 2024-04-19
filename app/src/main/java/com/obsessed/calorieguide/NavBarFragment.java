@@ -44,7 +44,7 @@ public class NavBarFragment extends Fragment {
 					new NavOptions.Builder()
 							.setPopUpTo(R.id.mainFragment, true)
 							.build());
-			Log.d("mlg", "Переход на mainFragment");
+			Log.d("nav", "Переход на mainFragment");
 		});
 
 		view.findViewById(R.id.profile_icon).setOnClickListener(v -> {
@@ -52,22 +52,16 @@ public class NavBarFragment extends Fragment {
 					new NavOptions.Builder()
 							.setPopUpTo(R.id.profileFragment, true)
 							.build());
-			Log.d("mlg", "Переход на profileFragment");
+			Log.d("nav", "Переход на profileFragment");
 		});
 
 		view.findViewById(R.id.recipe_icon).setOnClickListener(v -> {
-			Switch switchTheme = viewFragment.findViewById(R.id.switchTheme);
-			Log.d("MyLog", String.valueOf(switchTheme.isChecked()));
-
-//			Bundle bundle = new Bundle(); //TODO
-//			bundle.putBoolean("switchState", switchTheme.isChecked());
-
 			navController.navigate(R.id.libraryFragment, null,
 					new NavOptions.Builder()
 							.setPopUpTo(R.id.libraryFragment, true)
 							.build());
 
-			Log.d("mlg", "Переход на libraryFragment");
+			Log.d("nav", "Переход на libraryFragment");
 		});
 
 		return view;
