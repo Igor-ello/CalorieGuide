@@ -10,9 +10,11 @@ import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Path;
 
 public interface MainApi {
+    //Food
     @GET("products/{id}")
     Call<Food> getFoodById(@Path("id") int foodId);
 
@@ -22,9 +24,14 @@ public interface MainApi {
     @POST("/product")
     Call<JsonObject> postFood(@Body RequestBody requestBody);
 
+
+    //User
     @POST("/login")
     Call<JsonObject> auth(@Body AuthRequest authRequest);
 
     @POST("/user")
     Call<JsonObject> registerUser(@Body RegistrationRequest registrationRequest);
+
+    @PUT("/user/{user_id}")
+    Call<JsonObject> updateUser(@Path("user_id") int userId, @Body RegistrationRequest registrationRequest);
 }

@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import com.obsessed.calorieguide.data.Data;
 import com.obsessed.calorieguide.retrofit.MainApi;
 
 import java.io.IOException;
@@ -23,7 +24,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class FoodCallPost {
-    private String baseUrl = "http://95.174.92.190:8088/";
+    private String baseUrl = Data.getInstance().getBaseUrl();
     private Retrofit retrofit;
     private MainApi mainApi;
 
@@ -36,7 +37,6 @@ public class FoodCallPost {
                 .addInterceptor(chain -> {
                     Request originalRequest = chain.request();
 
-                    Log.d("FoodCallPost", ACCESS_TOKEN);
                     // Добавляем заголовок к исходному запросу
                     Request newRequest = originalRequest.newBuilder()
                             .addHeader("Authorization", "Bearer " + ACCESS_TOKEN)

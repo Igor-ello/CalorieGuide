@@ -17,8 +17,11 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.obsessed.calorieguide.convert.FillClass;
 import com.obsessed.calorieguide.data.Data;
+import com.obsessed.calorieguide.retrofit.food.FoodCallPost;
 import com.obsessed.calorieguide.retrofit.user.User;
+import com.obsessed.calorieguide.retrofit.user.UserCall;
 
 import java.util.ArrayList;
 
@@ -97,6 +100,9 @@ public class ProfileFragment extends Fragment {
             user.setSurname(etSurname.getText().toString().trim());
             user.setEmail(etEmail.getText().toString().trim());
             user.setPassword(etPassword.getText().toString().trim());
+
+            UserCall userCall = new UserCall(Data.getInstance().getUser().getBearerToken());
+            userCall.updateUser(user.getId(), FillClass.fillRegistrationRequest(user));
 
             btEdit.setVisibility(View.VISIBLE);
             btSave.setVisibility(View.GONE);
