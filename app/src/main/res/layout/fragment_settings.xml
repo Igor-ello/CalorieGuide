@@ -6,7 +6,7 @@
     tools:context=".SettingsFragment"
     android:layout_margin="@dimen/marginStandard">
 
-    <include layout="@layout/ln_arrow_back"></include>
+    <include layout="@layout/arrow_back"></include>
 
     <TextView
         style="@style/TextHeaderStyle"

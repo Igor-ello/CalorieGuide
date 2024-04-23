@@ -82,18 +82,20 @@ public class LibraryFragment extends Fragment implements FoodCallback {
 
     @Override
     public void onAllFoodReceived(List<Food> foodList) {
-        if(Data.getInstance().getAdapterType() == 2) {
-            FoodAdapterV2 foodAdapter = new FoodAdapterV2();
-            foodAdapter.foodArrayList = (ArrayList<Food>) foodList;
+        if (isAdded()) { // Проверяем, привязан ли фрагмент к активности
+            if (Data.getInstance().getAdapterType() == 2) {
+                FoodAdapterV2 foodAdapter = new FoodAdapterV2();
+                foodAdapter.foodArrayList = (ArrayList<Food>) foodList;
 
-            binding.rcView.setLayoutManager(new GridLayoutManager(requireContext(), 1));
-            binding.rcView.setAdapter(foodAdapter);
-        } else {
-            FoodAdapterV1 foodAdapter = new FoodAdapterV1();
-            foodAdapter.foodArrayList = (ArrayList<Food>) foodList;
+                binding.rcView.setLayoutManager(new GridLayoutManager(requireContext(), 1));
+                binding.rcView.setAdapter(foodAdapter);
+            } else {
+                FoodAdapterV1 foodAdapter = new FoodAdapterV1();
+                foodAdapter.foodArrayList = (ArrayList<Food>) foodList;
 
-            binding.rcView.setLayoutManager(new GridLayoutManager(requireContext(), 2));
-            binding.rcView.setAdapter(foodAdapter);
+                binding.rcView.setLayoutManager(new GridLayoutManager(requireContext(), 2));
+                binding.rcView.setAdapter(foodAdapter);
+            }
         }
     }
 }

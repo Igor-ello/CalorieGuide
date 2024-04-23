@@ -51,13 +51,6 @@ public class LoginFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        //Проверка на выполнный вход в аккаунт
-        if(ShPrefs.getUser(requireContext())!= null) {
-            Data.getInstance().setUser(ShPrefs.getUser(requireContext()));
-            NavController navController = Navigation.findNavController(view);
-            navController.navigate(R.id.action_loginFragment_to_mainFragment);
-        }
-
         //Инициализация переменных
         EditText edEmail = requireView().findViewById(R.id.edEmail);
         EditText edPassword = requireView().findViewById(R.id.edPassword);
@@ -91,11 +84,11 @@ public class LoginFragment extends Fragment {
 
                     if (jsonObject!= null) {
                         User user = JsonToClass.getUser(jsonObject);
-                        Data.getInstance().setUser(user);
+                        ShPrefs.saveUser(user, requireContext());
 
                         Toast.makeText(requireContext(), "Welcome!", Toast.LENGTH_SHORT).show();
-                        NavController navController = Navigation.findNavController(view);
-                        navController.navigate(R.id.action_loginFragment_to_mainFragment);
+                        Navigation.findNavController(view).popBackStack();
+                        Navigation.findNavController(view).navigate(R.id.mainFragment);
                     }
                 } else {
                     Log.d("MyLog", "Authentication failed: " + response.message());

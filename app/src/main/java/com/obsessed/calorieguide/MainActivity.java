@@ -4,6 +4,7 @@ package com.obsessed.calorieguide;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.util.Log;
 
 import com.obsessed.calorieguide.data.Data;
 import com.obsessed.calorieguide.save.ShPrefs;
@@ -19,7 +20,14 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStop() {
         super.onStop();
-        ShPrefs shPrefs = new ShPrefs();
-        shPrefs.saveUser(Data.getInstance().getUser(), this);
+        ShPrefs.saveUser(Data.getInstance().getUser(), this);
+        Log.d("Lifecycle", "onStop: User saved to SharedPreferences");
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        ShPrefs.saveUser(Data.getInstance().getUser(), this);
+        Log.d("Lifecycle", "onDestroy: User saved to SharedPreferences");
     }
 }
