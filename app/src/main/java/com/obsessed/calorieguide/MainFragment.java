@@ -15,6 +15,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.obsessed.calorieguide.data.Data;
+import com.obsessed.calorieguide.save.ShPrefs;
+
 
 public class MainFragment extends Fragment {
 
@@ -38,16 +41,41 @@ public class MainFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        //NavBarFragment
+        // Проверка пользователя на наличие авторизации
+        if(checkUserLogin(view))
+            setupNavBarFragment(view);
+
+        view.findViewById(R.id.arrow_back).setOnClickListener(v -> {
+            Data.getInstance().setUser(null);
+            Navigation.findNavController(view).popBackStack();
+            Navigation.findNavController(view).navigate(R.id.loginFragment);
+        });
+
+        view.findViewById(R.id.settingsButton).setOnClickListener(v -> {
+            Navigation.findNavController(view).navigate(R.id.action_mainFragment_to_settingsFragment);
+        });
+    }
+
+    private boolean checkUserLogin(View view) {
+        Log.d("MainFragment", "Checking user login status");
+        if (ShPrefs.getUser(requireContext()) == null) {
+            Log.d("MainFragment", "User not logged in, navigating to login fragment");
+            Navigation.findNavController(view).popBackStack();
+            Navigation.findNavController(view).navigate(R.id.loginFragment);
+            return false;
+        } else {
+            Log.d("MainFragment", "User logged in");
+            Data.getInstance().setUser(ShPrefs.getUser(requireContext()));
+            return true;
+        }
+    }
+
+    private void setupNavBarFragment(View view) {
+        Log.d("MainFragment", "Setting up navigation bar fragment");
         NavBarFragment nvb = new NavBarFragment(view);
         FragmentManager fragmentManager = getParentFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.add(R.id.fragment_nav_bar, nvb);
         fragmentTransaction.commit();
-
-        NavController navController = Navigation.findNavController(view);
-        view.findViewById(R.id.settingsButton).setOnClickListener(v -> {
-            navController.navigate(R.id.action_mainFragment_to_settingsFragment);
-        });
     }
 }
