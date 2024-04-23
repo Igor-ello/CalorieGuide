@@ -46,6 +46,7 @@ public class MainFragment extends Fragment {
             setupNavBarFragment(view);
 
         view.findViewById(R.id.arrow_back).setOnClickListener(v -> {
+            // При выходе из аккаунта устанавливаем значение пользователя в null
             Data.getInstance().setUser(null);
             Navigation.findNavController(view).popBackStack();
             Navigation.findNavController(view).navigate(R.id.loginFragment);
