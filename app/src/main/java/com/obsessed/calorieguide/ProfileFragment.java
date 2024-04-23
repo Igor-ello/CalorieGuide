@@ -17,6 +17,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.google.gson.JsonObject;
 import com.obsessed.calorieguide.convert.FillClass;
 import com.obsessed.calorieguide.data.Data;
 import com.obsessed.calorieguide.retrofit.food.FoodCallPost;
@@ -24,6 +25,10 @@ import com.obsessed.calorieguide.retrofit.user.User;
 import com.obsessed.calorieguide.retrofit.user.UserCall;
 
 import java.util.ArrayList;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class ProfileFragment extends Fragment {
 
@@ -101,12 +106,39 @@ public class ProfileFragment extends Fragment {
             user.setEmail(etEmail.getText().toString().trim());
             user.setPassword(etPassword.getText().toString().trim());
 
-            UserCall userCall = new UserCall(Data.getInstance().getUser().getBearerToken());
-            userCall.updateUser(user.getId(), FillClass.fillRegistrationRequest(user));
+            updateUserRequest(user);
 
             btEdit.setVisibility(View.VISIBLE);
             btSave.setVisibility(View.GONE);
         });
-
     }
+
+    private void updateUserRequest(User user) {
+        UserCall userCall = new UserCall(Data.getInstance().getUser().getBearerToken());
+        Call<JsonObject> call = userCall.updateUser(user.getId(), FillClass.fillRegistrationRequest(user));
+
+        call.enqueue(new Callback<JsonObject>() {
+            @Override
+            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+                if (response.isSuccessful()) {
+                    // Обработка успешного ответа
+                    JsonObject result = response.body();
+                    Log.d("MyLog", "updateUser: Request successful. Response: " + result.toString());
+                    // Дополнительная обработка результата
+                } else {
+                    // Обработка ошибочного ответа
+                    Log.e("MyLog", "updateUser: Request failed with code " + response.code());
+                    // Возможно, что-то пошло не так, нужно обработать ошибку
+                }
+            }
+
+            @Override
+            public void onFailure(Call<JsonObject> call, Throwable t) {
+                // Обработка ошибки при выполнении запроса
+                Log.e("MyLog", "updateUser: Request failed. Error: " + t.getMessage());
+                // Например, отсутствие интернет-соединения или другие проблемы
+            }
+        });
+    }
+
 }

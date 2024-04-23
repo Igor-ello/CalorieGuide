@@ -8,4 +8,12 @@ public class AuthRequest {
         this.email = email;
         this.password = password;
     }
+
+    @Override
+    public String toString() {
+        return "AuthRequest{" +
+                "email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                '}';
+    }
 }

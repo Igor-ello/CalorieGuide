@@ -29,14 +29,12 @@ public class NavBarFragment extends Fragment {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		Log.d("mlg", "onCreate");
 	}
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 							 Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.fragment_nav_bar, container, false);
-		Log.d("mlg", "onCreateView");
 		NavController navController = Navigation.findNavController(viewFragment);
 
 		view.findViewById(R.id.home_icon).setOnClickListener(v -> {
@@ -70,6 +68,5 @@ public class NavBarFragment extends Fragment {
 	@Override
 	public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
-		Log.d("mlg", "onViewCreated");
 	}
 }

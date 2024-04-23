@@ -6,9 +6,13 @@ import com.google.gson.JsonObject;
 import com.obsessed.calorieguide.data.Data;
 import com.obsessed.calorieguide.retrofit.MainApi;
 
+import java.io.IOException;
+
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -16,6 +20,7 @@ public class UserCall {
     private String baseUrl = Data.getInstance().getBaseUrl();
     private Retrofit retrofit;
     private MainApi mainApi;
+    private OkHttpClient client;
 
     public UserCall() {
         retrofit = new Retrofit.Builder()
@@ -27,7 +32,7 @@ public class UserCall {
     }
 
     public UserCall(String ACCESS_TOKEN) {
-        OkHttpClient client = new OkHttpClient.Builder()
+        client = new OkHttpClient.Builder()
                 .addInterceptor(chain -> {
                     Request originalRequest = chain.request();
 
@@ -50,17 +55,17 @@ public class UserCall {
     }
 
     public Call<JsonObject> auth(AuthRequest authRequest) {
+        Log.d("UserCall",  authRequest.toString());
         return mainApi.auth(authRequest);
     }
 
     public Call<JsonObject> registerUser(RegistrationRequest registrationRequest) {
+        Log.d("UserCall",  registrationRequest.toString());
         return mainApi.registerUser(registrationRequest);
     }
 
     public Call<JsonObject> updateUser(int userId, RegistrationRequest registrationRequest) {
+        Log.d("UserCall", "updateUser: " + userId + " " + registrationRequest.toString());
         return mainApi.updateUser(userId, registrationRequest);
     }
-
-
-
 }
