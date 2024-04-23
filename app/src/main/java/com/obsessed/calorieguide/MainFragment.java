@@ -37,13 +37,13 @@ public class MainFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        Log.d("mlg", "Main " + String.valueOf(this.hashCode()));
-        NavBarFragment nvb = new NavBarFragment(view);
 
+        //NavBarFragment
+        NavBarFragment nvb = new NavBarFragment(view);
         FragmentManager fragmentManager = getParentFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.add(R.id.fragment_nav_bar, nvb);
-        fragmentTransaction .commit();
+        fragmentTransaction.commit();
 
         NavController navController = Navigation.findNavController(view);
         view.findViewById(R.id.settingsButton).setOnClickListener(v -> {

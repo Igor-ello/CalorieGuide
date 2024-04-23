@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Switch;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -43,7 +44,7 @@ public class NavBarFragment extends Fragment {
 					new NavOptions.Builder()
 							.setPopUpTo(R.id.mainFragment, true)
 							.build());
-			Log.d("mlg", "Переход на mainFragment");
+			Log.d("nav", "Переход на mainFragment");
 		});
 
 		view.findViewById(R.id.profile_icon).setOnClickListener(v -> {
@@ -51,7 +52,7 @@ public class NavBarFragment extends Fragment {
 					new NavOptions.Builder()
 							.setPopUpTo(R.id.profileFragment, true)
 							.build());
-			Log.d("mlg", "Переход на profileFragment");
+			Log.d("nav", "Переход на profileFragment");
 		});
 
 		view.findViewById(R.id.recipe_icon).setOnClickListener(v -> {
@@ -59,8 +60,10 @@ public class NavBarFragment extends Fragment {
 					new NavOptions.Builder()
 							.setPopUpTo(R.id.libraryFragment, true)
 							.build());
-			Log.d("mlg", "Переход на libraryFragment");
+
+			Log.d("nav", "Переход на libraryFragment");
 		});
+
 		return view;
 	}
 

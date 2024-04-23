@@ -1,7 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <style name="NavBarStyle">
-        <item name="android:layout_width">24dp</item>
-        <item name="android:layout_height">24dp</item>
+<resources xmlns:tools="http://schemas.android.com/tools">
+  
+    <style name="IconStyle">
+        <item name="android:layout_width">@dimen/icon_width</item>
+        <item name="android:layout_height">@dimen/icon_height</item>
     </style>
+
+    <style name="TextStyle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">@dimen/text_size</item>
+        <item name="android:textColor">@color/text_color</item>
+        <item name="android:text">Some text</item>
+    </style>
+
+    <style name="TextHeaderStyle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textSize">@dimen/text_header_size</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/text_color</item>
+        <item name="android:text">Some text</item>
+    </style>
+
+    <style name="EditTextStyle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">@dimen/text_size</item>
+        <item name="android:textColor">@color/text_color</item>
+    </style>
+
+    <style name="ButtonStyle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">@dimen/text_size</item>
+        <item name="android:textColor">@color/text_color</item>
+    </style>
+
+  
 </resources>

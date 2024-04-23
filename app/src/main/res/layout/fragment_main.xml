@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="10dp"
-    tools:context=".MainFragment">
+    tools:context=".MainFragment"
+    android:layout_margin="@dimen/marginStandard">
 
     <FrameLayout
         android:id="@+id/fragment_nav_bar"
@@ -14,28 +14,30 @@
         android:layout_gravity="bottom">
     </FrameLayout>
 
-        <LinearLayout
+    <FrameLayout
+        android:id="@+id/settingsButton"
+        style="@style/IconStyle"
+        android:layout_gravity="end"
+        android:background="@drawable/settings_icon">
+    </FrameLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            style="@style/TextHeaderStyle"
+            android:text="@string/fragment_main_header">
+        </TextView>
+
+        <TextView
+            android:id="@+id/text"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal"
-            android:layout_margin="10dp">
+            android:layout_height="wrap_content"
+            android:text="Some text">
+        </TextView>
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center_horizontal"
-                android:text="@string/hello_blank_fragment">
-            </TextView>
-
-            <ImageButton
-                android:id="@+id/settingsButton"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                android:background="@drawable/settings_icon">
-            </ImageButton>
-        </LinearLayout>
+    </LinearLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

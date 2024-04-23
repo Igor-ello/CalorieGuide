@@ -3,12 +3,27 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".RegistrationFragment">
+    tools:context=".RegistrationFragment"
+    android:layout_margin="@dimen/marginStandard">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:orientation="vertical">
+
+        <TextView
+            style="@style/TextHeaderStyle"
+            android:text="@string/fragment_registration_header">
+        </TextView>
+
+        <include layout="@layout/user_params"/>
+
+        <Button
+            android:id="@+id/btSend"
+            style="@style/ButtonStyle"
+            android:text="send">
+        </Button>
+
+    </LinearLayout>
 
 </FrameLayout>

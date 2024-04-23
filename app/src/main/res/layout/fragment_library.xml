@@ -4,7 +4,45 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".LibraryFragment"
-    android:layout_margin="10dp">
+    android:layout_margin="@dimen/marginStandard">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_marginBottom="50dp">
+
+        <TextView
+            style="@style/TextHeaderStyle"
+            android:text="@string/fragment_library_header">
+        </TextView>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rcView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                </androidx.recyclerview.widget.RecyclerView>
+
+                <Button
+                    android:id="@+id/buttonAdd"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="Add food">
+                </Button>
+            </LinearLayout>
+        </ScrollView>
+    </LinearLayout>
 
     <FrameLayout
         android:id="@+id/fragment_nav_bar"
@@ -12,11 +50,4 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom">
     </FrameLayout>
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Library" 
-        android:gravity="center_horizontal"/>
-
 </FrameLayout>

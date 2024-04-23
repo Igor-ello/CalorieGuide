@@ -3,12 +3,66 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".LoginFragment">
+    tools:context=".LoginFragment"
+    android:layout_margin="@dimen/marginStandard">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:orientation="vertical"
+        android:gravity="center_horizontal">
+
+        <TextView
+            style="@style/TextHeaderStyle"
+            android:text="@string/fragment_login_header">
+        </TextView>
+        
+        <ImageView
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:src="@drawable/grass_icon">
+        </ImageView>
+        
+        <TextView
+            style="@style/TextStyle"
+            android:text="Email"
+            android:textStyle="bold">
+        </TextView>
+
+        <EditText
+            android:id="@+id/edEmail"
+            style="@style/EditTextStyle">
+        </EditText>
+
+        <TextView
+            style="@style/TextStyle"
+            android:text="Password"
+            android:textStyle="bold">
+        </TextView>
+
+        <EditText
+            android:id="@+id/edPassword"
+            android:inputType="textPassword"
+            style="@style/EditTextStyle">
+        </EditText>
+
+        <Button
+            android:id="@+id/btSignIn"
+            style="@style/ButtonStyle"
+            android:text="Sign in">
+        </Button>
+    </LinearLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom">
+
+        <Button
+            android:id="@+id/btRegistration"
+            style="@style/ButtonStyle"
+            android:text="Not Registration Yet?">
+        </Button>
+    </FrameLayout>
 
 </FrameLayout>

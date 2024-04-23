@@ -1,5 +1,13 @@
 <resources>
     <string name="app_name">CalorieGuide</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <!-- Fragments -->
+    <string name="fragment_main_header">Main</string>
+    <string name="fragment_food_header">Food</string>
+    <string name="fragment_library_header">Library</string>
+    <string name="fragment_profile_header">Profile</string>
+    <string name="fragment_registration_header">Registration</string>
+    <string name="fragment_add_meal_header">AddMeal</string>
+    <string name="fragment_login_header">Login</string>
+    <string name="fragment_settings_header">Settings</string>
 </resources>

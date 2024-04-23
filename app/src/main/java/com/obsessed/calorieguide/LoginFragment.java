@@ -5,10 +5,27 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.Toast;
+
+import com.google.gson.JsonObject;
+import com.obsessed.calorieguide.data.Data;
+import com.obsessed.calorieguide.convert.JsonToClass;
+import com.obsessed.calorieguide.retrofit.user.User;
+import com.obsessed.calorieguide.retrofit.user.UserCall;
+import com.obsessed.calorieguide.retrofit.user.AuthRequest;
+import com.obsessed.calorieguide.save.ShPrefs;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 
 public class LoginFragment extends Fragment {
@@ -34,5 +51,61 @@ public class LoginFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        //Проверка на выполнный вход в аккаунт
+        if(ShPrefs.getUser(requireContext())!= null) {
+            Data.getInstance().setUser(ShPrefs.getUser(requireContext()));
+            NavController navController = Navigation.findNavController(view);
+            navController.navigate(R.id.action_loginFragment_to_mainFragment);
+        }
+
+        //Инициализация переменных
+        EditText edEmail = requireView().findViewById(R.id.edEmail);
+        EditText edPassword = requireView().findViewById(R.id.edPassword);
+
+        requireView().findViewById(R.id.btSignIn).setOnClickListener(v -> {
+            String username = edEmail.getText().toString().trim();
+            String password = edPassword.getText().toString().trim();
+
+            if(username.isEmpty() || password.isEmpty()) {
+                Toast.makeText(requireContext(), "Введите все данные", Toast.LENGTH_SHORT).show();
+            } else {
+                authRequest(view, username, password);
+            }
+        });
+
+        requireView().findViewById(R.id.btRegistration).setOnClickListener(v -> {
+            Navigation.findNavController(view).navigate(R.id.action_loginFragment_to_registrationFragment);
+        });
+    }
+
+    private void authRequest(View view, String username, String password) {
+        AuthRequest authRequest = new AuthRequest(username, password);
+        UserCall userCall = new UserCall();
+        Call<JsonObject> call = userCall.auth(authRequest);
+        call.enqueue(new Callback<JsonObject>() {
+            @Override
+            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+                if (response.isSuccessful()) {
+                    JsonObject jsonObject = response.body();
+                    Log.d("MyLog", "Authentication successful: " + response.message());
+
+                    if (jsonObject!= null) {
+                        User user = JsonToClass.getUser(jsonObject);
+                        Data.getInstance().setUser(user);
+
+                        Toast.makeText(requireContext(), "Welcome!", Toast.LENGTH_SHORT).show();
+                        NavController navController = Navigation.findNavController(view);
+                        navController.navigate(R.id.action_loginFragment_to_mainFragment);
+                    }
+                } else {
+                    Log.d("MyLog", "Authentication failed: " + response.message());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<JsonObject> call, Throwable t) {
+                Log.e("MyLog", "Authentication error: " + t.getMessage());
+            }
+        });
     }
 }
