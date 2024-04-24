@@ -5,7 +5,6 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
 import android.util.Log;
@@ -16,8 +15,8 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.google.gson.JsonObject;
-import com.obsessed.calorieguide.data.Data;
 import com.obsessed.calorieguide.convert.JsonToClass;
+import com.obsessed.calorieguide.data.Data;
 import com.obsessed.calorieguide.retrofit.user.User;
 import com.obsessed.calorieguide.retrofit.user.UserCall;
 import com.obsessed.calorieguide.retrofit.user.AuthRequest;
@@ -84,7 +83,7 @@ public class LoginFragment extends Fragment {
 
                     if (jsonObject!= null) {
                         User user = JsonToClass.getUser(jsonObject);
-                        ShPrefs.saveUser(user, requireContext());
+                        ShPrefs.saveData(user, Data.getInstance().getAdapterType(), requireContext());
 
                         Toast.makeText(requireContext(), "Welcome!", Toast.LENGTH_SHORT).show();
                         Navigation.findNavController(view).popBackStack();

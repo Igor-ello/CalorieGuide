@@ -8,9 +8,25 @@
 
     <include layout="@layout/arrow_back"></include>
 
-    <TextView
-        style="@style/TextHeaderStyle"
-        android:text="@string/fragment_registration_header">
-    </TextView>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            style="@style/TextHeaderStyle"
+            android:text="@string/fragment_settings_header">
+        </TextView>
+
+        <Switch
+            android:id="@+id/swAdapterType"
+            style="@style/TextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="Type of food arrangement (V1/V2)">
+        </Switch>
+
+    </LinearLayout>
 
 </FrameLayout>

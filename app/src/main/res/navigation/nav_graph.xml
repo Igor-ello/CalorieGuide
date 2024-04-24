@@ -14,9 +14,6 @@
             android:id="@+id/action_mainFragment_to_profileFragment"
             app:destination="@id/profileFragment" />
         <action
-            android:id="@+id/action_mainFragment_to_settingsFragment"
-            app:destination="@id/settingsFragment" />
-        <action
             android:id="@+id/action_mainFragment_to_libraryFragment"
             app:destination="@id/libraryFragment" />
         <action
@@ -31,6 +28,9 @@
         <action
             android:id="@+id/action_profileFragment_to_addMealFragment"
             app:destination="@id/addMealFragment" />
+        <action
+            android:id="@+id/action_profileFragment_to_settingsFragment"
+            app:destination="@id/settingsFragment" />
     </fragment>
     <fragment
         android:id="@+id/settingsFragment"

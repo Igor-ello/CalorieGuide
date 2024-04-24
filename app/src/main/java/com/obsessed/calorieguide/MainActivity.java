@@ -20,14 +20,18 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStop() {
         super.onStop();
-        ShPrefs.saveUser(Data.getInstance().getUser(), this);
+        ShPrefs.saveData(Data.getInstance().getUser(),
+                Data.getInstance().getAdapterType(),
+                this);
         Log.d("Lifecycle", "onStop: User saved to SharedPreferences");
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        ShPrefs.saveUser(Data.getInstance().getUser(), this);
+        ShPrefs.saveData(Data.getInstance().getUser(),
+                Data.getInstance().getAdapterType(),
+                this);
         Log.d("Lifecycle", "onDestroy: User saved to SharedPreferences");
     }
 }

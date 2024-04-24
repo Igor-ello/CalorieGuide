@@ -7,10 +7,11 @@ import android.content.SharedPreferences;
 import android.util.Log;
 
 import com.google.gson.Gson;
+import com.obsessed.calorieguide.data.Data;
 import com.obsessed.calorieguide.retrofit.user.User;
 
 public class ShPrefs {
-    public static void saveUser(User user, Context context) {
+    public static void saveData(User user, int adapterType, Context context) {
         SharedPreferences sharedPreferences = context.getSharedPreferences("myPrefs", MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
 
@@ -19,26 +20,29 @@ public class ShPrefs {
         String userJson = gson.toJson(user);
 
         // Сохранение данных
-        editor.putString("user", userJson);
+        editor.putString("user", userJson); // Сохранение user
+        editor.putInt("adapterType", adapterType); // Сохранение adapterType
         editor.apply();
-        Log.d("ShPrefs", "SAVE: " + userJson); // Выводим данные в лог
+
+        Log.d("ShPrefs", "SAVE Data"); // Выводим данные в лог
     }
 
-    public static User getUser(Context context) {
+    public static void loadData(Context context) {
         SharedPreferences sharedPreferences = context.getSharedPreferences("myPrefs", MODE_PRIVATE);
 
         // Получение данных
-        String userJson = sharedPreferences.getString("user", null);
+        String userJson = sharedPreferences.getString("user", null); // Получение user
+        int adapterType = sharedPreferences.getInt("adapterType", 1); // Получение adapterType
 
-        if (userJson != null) {
-            // Десериализация строки JSON обратно в объект User
-            Gson gson = new Gson();
-            User user = gson.fromJson(userJson, User.class);
-            Log.d("ShPrefs", "GET: " + user); // Выводим данные в лог
-            return user;
-        } else {
-            Log.d("ShPrefs", "GET: " + null); // Выводим данные в лог
-            return null;
-        }
+        // Десериализация строки JSON обратно в объект User
+        Gson gson = new Gson();
+        User user = gson.fromJson(userJson, User.class);
+
+        // Загрузка данных
+        Data.getInstance().setUser(user);
+        Data.getInstance().setAdapterType(adapterType);
+
+        Log.d("ShPrefs", "LOAD Data");
     }
+
 }

@@ -7,7 +7,6 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
 import android.util.Log;
@@ -15,12 +14,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.Switch;
 
 import com.google.gson.JsonObject;
 import com.obsessed.calorieguide.convert.FillClass;
 import com.obsessed.calorieguide.data.Data;
-import com.obsessed.calorieguide.retrofit.food.FoodCallPost;
 import com.obsessed.calorieguide.retrofit.user.User;
 import com.obsessed.calorieguide.retrofit.user.UserCall;
 
@@ -31,6 +31,9 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class ProfileFragment extends Fragment {
+    ArrayList<EditText> userParams;
+    EditText etName, etSurname, etEmail, etPassword;
+    User user;
 
     public ProfileFragment() {
         // Required empty public constructor
@@ -53,30 +56,16 @@ public class ProfileFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         //NavBarFragment
-        NavBarFragment nvb = new NavBarFragment(view);
-        FragmentManager fragmentManager = getParentFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.add(R.id.fragment_nav_bar, nvb);
-        fragmentTransaction.commit();
+        setupNavBarFragment(view);
 
         //Объявление параметров
-        User user = Data.getInstance().getUser();
-        EditText etName = view.findViewById(R.id.etName);
-        EditText etSurname = view.findViewById(R.id.etSurname);
-        EditText etEmail = view.findViewById(R.id.etEmail);
-        EditText etPassword = view.findViewById(R.id.etPassword);
-        Button btEdit = view.findViewById(R.id.btEdit);
-        Button btSave = view.findViewById(R.id.btSave);
+        init(view);
 
         //Заполнение массива параметров
-        ArrayList<EditText> user_params = new ArrayList<>();
-        user_params.add(etName);
-        user_params.add(etSurname);
-        user_params.add(etEmail);
-        user_params.add(etPassword);
+        initUserParams();
 
         //Заполнение параметров
-        for(EditText et : user_params) {
+        for(EditText et : userParams) {
             et.setFocusable(false); // Запретить редактирование
             et.setFocusableInTouchMode(false); // Запретить редактирование по клику
         }
@@ -86,8 +75,11 @@ public class ProfileFragment extends Fragment {
         etPassword.setText(user.getPassword());
 
         //Кнопки
+        Button btEdit = view.findViewById(R.id.btEdit);
+        Button btSave = view.findViewById(R.id.btSave);
+
         btEdit.setOnClickListener(v -> {
-            for (EditText et : user_params) {
+            for (EditText et : userParams) {
                 et.setFocusableInTouchMode(true);
                 et.setFocusable(true);
             }
@@ -96,7 +88,7 @@ public class ProfileFragment extends Fragment {
         });
 
         btSave.setOnClickListener(v -> {
-            for (EditText et : user_params) {
+            for (EditText et : userParams) {
                 et.setFocusable(false);
                 et.setFocusableInTouchMode(false);
             }
@@ -105,16 +97,47 @@ public class ProfileFragment extends Fragment {
             user.setSurname(etSurname.getText().toString().trim());
             user.setEmail(etEmail.getText().toString().trim());
             user.setPassword(etPassword.getText().toString().trim());
+            Data.getInstance().setUser(user);
+            //TODO проследить за сохранением полей пользователя
 
             updateUserRequest(user);
 
             btEdit.setVisibility(View.VISIBLE);
             btSave.setVisibility(View.GONE);
         });
+
+        view.findViewById(R.id.settingsButton).setOnClickListener(v -> {
+            Navigation.findNavController(view).navigate(R.id.action_profileFragment_to_settingsFragment);
+        });
+    }
+
+    private void init(View view) {
+        user = Data.getInstance().getUser();
+        etName = view.findViewById(R.id.etName);
+        etSurname = view.findViewById(R.id.etSurname);
+        etEmail = view.findViewById(R.id.etEmail);
+        etPassword = view.findViewById(R.id.etPassword);
+    }
+
+    private void initUserParams() {
+        userParams = new ArrayList<>();
+        userParams.add(etName);
+        userParams.add(etSurname);
+        userParams.add(etEmail);
+        userParams.add(etPassword);
+    }
+
+    private void setupNavBarFragment(View view) {
+        Log.d("MainFragment", "Setting up navigation bar fragment");
+        NavBarFragment nvb = new NavBarFragment(view);
+        FragmentManager fragmentManager = getParentFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.add(R.id.fragment_nav_bar, nvb);
+        fragmentTransaction.commit();
     }
 
     private void updateUserRequest(User user) {
-        UserCall userCall = new UserCall(Data.getInstance().getUser().getBearerToken());
+        UserCall userCall = new UserCall(user.getBearerToken());
         Call<JsonObject> call = userCall.updateUser(user.getId(), FillClass.fillRegistrationRequest(user));
 
         call.enqueue(new Callback<JsonObject>() {
@@ -140,5 +163,4 @@ public class ProfileFragment extends Fragment {
             }
         });
     }
-
 }

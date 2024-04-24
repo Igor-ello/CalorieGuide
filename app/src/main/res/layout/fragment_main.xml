@@ -14,13 +14,6 @@
         android:layout_gravity="bottom">
     </FrameLayout>
 
-    <FrameLayout
-        android:id="@+id/settingsButton"
-        style="@style/IconStyle"
-        android:layout_gravity="end"
-        android:background="@drawable/settings_icon">
-    </FrameLayout>
-
     <include layout="@layout/arrow_back"></include>
 
     <LinearLayout

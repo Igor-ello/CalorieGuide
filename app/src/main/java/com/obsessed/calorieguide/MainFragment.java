@@ -1,5 +1,7 @@
 package com.obsessed.calorieguide;
 
+import static com.obsessed.calorieguide.save.ShPrefs.loadData;
+
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -7,7 +9,6 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
 import android.util.Log;
@@ -16,7 +17,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.obsessed.calorieguide.data.Data;
-import com.obsessed.calorieguide.save.ShPrefs;
 
 
 public class MainFragment extends Fragment {
@@ -41,6 +41,8 @@ public class MainFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        loadData(requireContext());
+
         // Проверка пользователя на наличие авторизации
         if(checkUserLogin(view))
             setupNavBarFragment(view);
@@ -51,22 +53,17 @@ public class MainFragment extends Fragment {
             Navigation.findNavController(view).popBackStack();
             Navigation.findNavController(view).navigate(R.id.loginFragment);
         });
-
-        view.findViewById(R.id.settingsButton).setOnClickListener(v -> {
-            Navigation.findNavController(view).navigate(R.id.action_mainFragment_to_settingsFragment);
-        });
     }
 
     private boolean checkUserLogin(View view) {
         Log.d("MainFragment", "Checking user login status");
-        if (ShPrefs.getUser(requireContext()) == null) {
+        if (Data.getInstance().getUser() == null) {
             Log.d("MainFragment", "User not logged in, navigating to login fragment");
             Navigation.findNavController(view).popBackStack();
             Navigation.findNavController(view).navigate(R.id.loginFragment);
             return false;
         } else {
             Log.d("MainFragment", "User logged in");
-            Data.getInstance().setUser(ShPrefs.getUser(requireContext()));
             return true;
         }
     }
