@@ -43,14 +43,18 @@ public class FoodCall {
                     Food food = response.body();
                     if (food != null) {
                         foodCallback.onFoodByIdReceived(food);
-                        Log.d("MyLog", "Response getFoodById is successful!");
-                    } else Log.d("MyLog", "food is not null!");
-                } else Log.d("MyLog", "ERROR response getFoodById is not successful!!!");
+                        Log.d("Call", "Response getFoodById is successful!");
+                    } else {
+                        Log.d("Call", "Food is null!");
+                    }
+                } else {
+                    Log.d("Call", "ERROR response getFoodById is not successful!!!");
+                }
             }
 
             @Override
             public void onFailure(Call<Food> call, Throwable t) {
-                Log.d("MyLog", "ERROR in Call!!!");
+                Log.d("Call", "ERROR in getFoodById Call!!!");
             }
         });
     }
@@ -67,18 +71,18 @@ public class FoodCall {
                         List<Food> allFood = new Gson().fromJson(productsArray, new TypeToken<List<Food>>() {}.getType());
                         foodCallback.onAllFoodReceived(allFood);
 
-                        Log.d("MyLog", "Response getAllFood is successful!");
+                        Log.d("Call", "Response getAllFood is successful!");
                     } else {
-                        Log.d("MyLog", "No products found in response!");
+                        Log.d("Call", "No products found in response!");
                     }
                 } else {
-                    Log.d("MyLog", "ERROR response getAllFood is not successful!!!");
+                    Log.d("Call", "ERROR response getAllFood is not successful!!!");
                 }
             }
 
             @Override
             public void onFailure(Call<JsonObject> call, Throwable t) {
-                Log.d("MyLog", "ERROR in Call!!! \n" + call + "\n" + t);
+                Log.d("Call", "ERROR in getAllFood Call!!! \n" + call + "\n" + t);
             }
         });
     }

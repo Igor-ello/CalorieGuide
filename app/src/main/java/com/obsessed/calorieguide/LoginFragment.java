@@ -73,13 +73,13 @@ public class LoginFragment extends Fragment {
     private void authRequest(View view, String username, String password) {
         AuthRequest authRequest = new AuthRequest(username, password);
         UserCall userCall = new UserCall();
-        Call<JsonObject> call = userCall.auth(authRequest);
+        Call<JsonObject> call = userCall.authUser(authRequest);
         call.enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
                 if (response.isSuccessful()) {
                     JsonObject jsonObject = response.body();
-                    Log.d("MyLog", "Authentication successful: " + response.message());
+                    Log.d("Call", "Authentication successful: " + response.message());
 
                     if (jsonObject!= null) {
                         User user = JsonToClass.getUser(jsonObject);
@@ -90,13 +90,13 @@ public class LoginFragment extends Fragment {
                         Navigation.findNavController(view).navigate(R.id.mainFragment);
                     }
                 } else {
-                    Log.d("MyLog", "Authentication failed: " + response.message());
+                    Log.d("Call", "Authentication failed: " + response.message());
                 }
             }
 
             @Override
             public void onFailure(Call<JsonObject> call, Throwable t) {
-                Log.e("MyLog", "Authentication error: " + t.getMessage());
+                Log.e("Call", "Authentication error: " + t.getMessage());
             }
         });
     }

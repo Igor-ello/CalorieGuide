@@ -6,13 +6,9 @@ import com.google.gson.JsonObject;
 import com.obsessed.calorieguide.data.Data;
 import com.obsessed.calorieguide.retrofit.MainApi;
 
-import java.io.IOException;
-
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -54,7 +50,7 @@ public class UserCall {
         mainApi = retrofit.create(MainApi.class);
     }
 
-    public Call<JsonObject> auth(AuthRequest authRequest) {
+    public Call<JsonObject> authUser(AuthRequest authRequest) {
         Log.d("UserCall",  authRequest.toString());
         return mainApi.auth(authRequest);
     }

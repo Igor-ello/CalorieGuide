@@ -72,18 +72,18 @@ public class RegistrationFragment extends Fragment {
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
                 if (response.isSuccessful()) {
-                    Log.d("MyLog", "Authentication successful: " + response.message());
+                    Log.d("Call", "Authentication successful: " + response.message());
                     Toast.makeText(requireContext(), "Successful!", Toast.LENGTH_SHORT).show();
 
                     Navigation.findNavController(view).popBackStack();
                 } else {
-                    Log.d("MyLog", "Authentication failed: " + response.message());
+                    Log.d("Call", "Authentication failed: " + response.message());
                 }
             }
 
             @Override
             public void onFailure(Call<JsonObject> call, Throwable t) {
-                Log.e("MyLog", "Authentication error: " + t.getMessage());
+                Log.e("Call", "Authentication error: " + t.getMessage());
             }
         });
     }
