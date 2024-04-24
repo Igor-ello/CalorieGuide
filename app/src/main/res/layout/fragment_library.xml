@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".LibraryFragment"
-    android:layout_margin="@dimen/marginStandard">
+    android:layout_margin="5dp">
 
 
     <LinearLayout
@@ -15,7 +15,8 @@
 
         <TextView
             style="@style/TextHeaderStyle"
-            android:text="@string/fragment_library_header">
+            android:text="@string/fragment_library_header"
+            android:layout_margin="5dp">
         </TextView>
 
         <ScrollView

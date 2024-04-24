@@ -30,7 +30,7 @@ public class FoodAdapterV2 extends RecyclerView.Adapter<FoodAdapterV2.FoodHolder
             binding.tvCarbohydrates.setText("c: " + food.getCarbohydrates());
             binding.tvFats.setText("f: " + food.getFats());
 
-            if(food.getPicture() != null) {
+            if (food.getPicture() != null) {
                 byte[] imageData = food.getPicture();
                 Bitmap bitmap = BitmapFactory.decodeByteArray(imageData, 0, imageData.length);
                 binding.imageView.setImageBitmap(bitmap);
