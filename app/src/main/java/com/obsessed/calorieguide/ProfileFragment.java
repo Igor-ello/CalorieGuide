@@ -146,11 +146,11 @@ public class ProfileFragment extends Fragment {
                 if (response.isSuccessful()) {
                     // Обработка успешного ответа
                     JsonObject result = response.body();
-                    Log.d("MyLog", "updateUser: Request successful. Response: " + result.toString());
+                    Log.d("Call", "Request updateUser successful.");
                     // Дополнительная обработка результата
                 } else {
                     // Обработка ошибочного ответа
-                    Log.e("MyLog", "updateUser: Request failed with code " + response.code());
+                    Log.e("Call", "Request updateUser failed");
                     // Возможно, что-то пошло не так, нужно обработать ошибку
                 }
             }
@@ -158,7 +158,7 @@ public class ProfileFragment extends Fragment {
             @Override
             public void onFailure(Call<JsonObject> call, Throwable t) {
                 // Обработка ошибки при выполнении запроса
-                Log.e("MyLog", "updateUser: Request failed. Error: " + t.getMessage());
+                Log.e("Call", "ERROR in updateUser Call!!!" + t.getMessage());
                 // Например, отсутствие интернет-соединения или другие проблемы
             }
         });

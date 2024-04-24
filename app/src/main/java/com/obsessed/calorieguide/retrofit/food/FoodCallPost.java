@@ -29,11 +29,11 @@ public class FoodCallPost {
     private MainApi mainApi;
 
     public FoodCallPost(String ACCESS_TOKEN) {
-        HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
-        loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+//        HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
+//        loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
 
         OkHttpClient client = new OkHttpClient.Builder()
-                .addInterceptor(loggingInterceptor) // Добавление Interceptor для логирования
+                //.addInterceptor(loggingInterceptor) // Добавление Interceptor для логирования
                 .addInterceptor(chain -> {
                     Request originalRequest = chain.request();
 
@@ -67,15 +67,15 @@ public class FoodCallPost {
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
                 if (response.isSuccessful()) {
-                    Log.d("MyLog", "Response postFood is successful!");
+                    Log.d("Call", "Response postFood is successful!");
                 } else {
-                    Log.d("MyLog", "ERROR response postFood is not successful!!!");
+                    Log.d("Call", "ERROR response postFood is not successful!!!");
                 }
             }
 
             @Override
             public void onFailure(Call<JsonObject> call, Throwable t) {
-                Log.d("MyLog", "ERROR in Call!!! \n" + call + "\n" + t);
+                Log.d("Call", "ERROR in postFood Call!!! \n" + call + "\n" + t);
             }
         });
     }
