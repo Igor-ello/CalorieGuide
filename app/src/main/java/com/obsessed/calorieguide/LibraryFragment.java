@@ -54,11 +54,7 @@ public class LibraryFragment extends Fragment implements FoodCallback {
         binding = FragmentLibraryBinding.bind(view);
 
         //NavBarFragment
-        NavBarFragment nvb = new NavBarFragment(view);
-        FragmentManager fragmentManager = getParentFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.add(R.id.fragment_nav_bar, nvb);
-        fragmentTransaction.commit();
+        setupNavBarFragment(view);
 
         //Подгрузка данных
         requireActivity().runOnUiThread(() -> {
@@ -97,5 +93,14 @@ public class LibraryFragment extends Fragment implements FoodCallback {
                 binding.rcView.setAdapter(foodAdapter);
             }
         }
+    }
+
+    private void setupNavBarFragment(View view) {
+        Log.d("MainFragment", "Setting up navigation bar fragment");
+        NavBarFragment nvb = new NavBarFragment(view);
+        FragmentManager fragmentManager = getParentFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.add(R.id.fragment_nav_bar, nvb);
+        fragmentTransaction.commit();
     }
 }
