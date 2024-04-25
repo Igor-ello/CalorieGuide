@@ -1,16 +1,15 @@
 package com.obsessed.calorieguide.retrofit.food;
 
-import android.graphics.Bitmap;
-import android.text.Editable;
 
 public class Food {
-    int author_id;
+    int id;
     String food_name;
     String description;
     int calories;
     int proteins;
     int carbohydrates;
     int fats;
+    int author_id;
     int likes;
     byte[] picture;
 
@@ -27,10 +26,10 @@ public class Food {
     }
 
     public int getId() {
-        return author_id;
+        return id;
     }
 
-    public String getFood_name() {
+    public String getFoodName() {
         return food_name;
     }
 
@@ -54,6 +53,10 @@ public class Food {
         return fats;
     }
 
+    public int getAuthorId() {
+        return author_id;
+    }
+
     public int getLikes() {
         return likes;
     }
@@ -61,4 +64,6 @@ public class Food {
     public byte[] getPicture() {
         return picture;
     }
+
+
 }

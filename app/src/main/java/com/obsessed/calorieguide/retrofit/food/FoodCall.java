@@ -18,12 +18,26 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class FoodCall {
-    private FoodCallback foodCallback; //интерфейс для возврата результата запроса
+    private CallbackGetAllFood callbackGetAllFood; //интерфейс для возврата результата запроса getAllFood
+    private CallbackGetFoodById callbackGetFoodById; //интерфейс для возврата результата запроса getFoodById
     private Retrofit retrofit;
     private MainApi mainApi;
 
-    public FoodCall(FoodCallback foodCallback) {
-        this.foodCallback = foodCallback;
+    // Перегрузка для запроса getAllFood
+    public FoodCall(CallbackGetAllFood callbackGetAllFood) {
+        this.callbackGetAllFood = callbackGetAllFood;
+
+        retrofit = new Retrofit.Builder()
+                .baseUrl(Data.getInstance().getBaseUrl()) //ссылка на сервер
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        mainApi = retrofit.create(MainApi.class);
+    }
+
+    // Перегрузка для запроса getFoodById
+    public FoodCall(CallbackGetFoodById callbackGetFoodById) {
+        this.callbackGetFoodById = callbackGetFoodById;
 
         retrofit = new Retrofit.Builder()
                 .baseUrl(Data.getInstance().getBaseUrl()) //ссылка на сервер
@@ -42,7 +56,7 @@ public class FoodCall {
                 if (response.isSuccessful()) {
                     Food food = response.body();
                     if (food != null) {
-                        foodCallback.onFoodByIdReceived(food);
+                        callbackGetFoodById.onFoodByIdReceived(food);
                         Log.d("Call", "Response getFoodById is successful!");
                     } else {
                         Log.d("Call", "Food is null!");
@@ -69,7 +83,7 @@ public class FoodCall {
                     if (jsonObject != null && jsonObject.has("products")) {
                         JsonArray productsArray = jsonObject.getAsJsonArray("products");
                         List<Food> allFood = new Gson().fromJson(productsArray, new TypeToken<List<Food>>() {}.getType());
-                        foodCallback.onAllFoodReceived(allFood);
+                        callbackGetAllFood.onAllFoodReceived(allFood);
 
                         Log.d("Call", "Response getAllFood is successful!");
                     } else {

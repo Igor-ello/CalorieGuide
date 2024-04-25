@@ -17,14 +17,27 @@ import java.util.ArrayList;
 
 public class FoodAdapterV1 extends RecyclerView.Adapter<FoodAdapterV1.FoodHolder> {
     public ArrayList<Food> foodArrayList;
+    private OnFoodClickListener onFoodClickListener;
 
-    public class FoodHolder extends RecyclerView.ViewHolder{
-        FoodItemV1Binding binding = FoodItemV1Binding.bind(itemView);
-        public FoodHolder(@NonNull View item){
-            super(item);
+    public class FoodHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+        FoodItemV1Binding binding;
+
+        public FoodHolder(@NonNull View itemView) {
+            super(itemView);
+            binding = FoodItemV1Binding.bind(itemView);
+            binding.getRoot().setOnClickListener(this);
         }
+
+        @Override
+        public void onClick(View v) {
+            int position = getAdapterPosition();
+            if (position != RecyclerView.NO_POSITION && onFoodClickListener != null) {
+                onFoodClickListener.onFoodClick(foodArrayList.get(position));
+            }
+        }
+
         public void bind(Food food) {
-            binding.tvName.setText(food.getFood_name());
+            binding.tvName.setText(food.getFoodName());
 
             if (food.getPicture() != null) {
                 byte[] imageData = food.getPicture();
@@ -33,18 +46,17 @@ public class FoodAdapterV1 extends RecyclerView.Adapter<FoodAdapterV1.FoodHolder
             } else {
                 binding.imageView.setImageResource(R.drawable.grass_icon);
             }
-
         }
     }
 
-    @NonNull //Создание
-    @Override //Надувка food_item через LayoutInflater.inflate()
+    @NonNull
+    @Override
     public FoodHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.food_item_v1, parent, false);
         return new FoodHolder(view);
     }
 
-    @Override //Заполнение
+    @Override
     public void onBindViewHolder(@NonNull FoodHolder holder, int position) {
         holder.bind(foodArrayList.get(position));
     }
@@ -54,9 +66,12 @@ public class FoodAdapterV1 extends RecyclerView.Adapter<FoodAdapterV1.FoodHolder
         return foodArrayList.size();
     }
 
-    public void addFood(Food food){
+    public void addFood(Food food) {
         foodArrayList.add(food);
-        //Перерисовка адаптера
         notifyDataSetChanged();
+    }
+
+    public void setOnFoodClickListener(OnFoodClickListener listener) {
+        this.onFoodClickListener = listener;
     }
 }

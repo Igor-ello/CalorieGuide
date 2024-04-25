@@ -23,12 +23,12 @@ import com.obsessed.calorieguide.data.Data;
 import com.obsessed.calorieguide.databinding.FragmentLibraryBinding;
 import com.obsessed.calorieguide.retrofit.food.Food;
 import com.obsessed.calorieguide.retrofit.food.FoodCall;
-import com.obsessed.calorieguide.retrofit.food.FoodCallback;
+import com.obsessed.calorieguide.retrofit.food.CallbackGetAllFood;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class LibraryFragment extends Fragment implements FoodCallback {
+public class LibraryFragment extends Fragment implements CallbackGetAllFood {
     FragmentLibraryBinding binding;
 
     public LibraryFragment() {
@@ -58,7 +58,7 @@ public class LibraryFragment extends Fragment implements FoodCallback {
 
         //Подгрузка данных
         requireActivity().runOnUiThread(() -> {
-            FoodCall foodCall = new FoodCall(this); // Передаем экземпляр FoodCallback в конструктор FoodCall
+            FoodCall foodCall = new FoodCall(this); // Передаем экземпляр CallbackGetAllFood в конструктор FoodCall
             foodCall.getAllFood();
         });
 
@@ -70,27 +70,32 @@ public class LibraryFragment extends Fragment implements FoodCallback {
     }
 
     @Override
-    public void onFoodByIdReceived(Food food) {
-        // Обновляем UI с полученным foodName
-        TextView textView = requireView().findViewById(R.id.text);
-        textView.setText(food.getFood_name());
-    }
-
-    @Override
     public void onAllFoodReceived(List<Food> foodList) {
         if (isAdded()) { // Проверяем, привязан ли фрагмент к активности
             if (Data.getInstance().getAdapterType() == 2) {
                 FoodAdapterV2 foodAdapter = new FoodAdapterV2();
                 foodAdapter.foodArrayList = (ArrayList<Food>) foodList;
-
                 binding.rcView.setLayoutManager(new GridLayoutManager(requireContext(), 1));
                 binding.rcView.setAdapter(foodAdapter);
+
+                // Установка слушателя в адаптере
+                foodAdapter.setOnFoodClickListener(food -> {
+                    Log.d("FoodAdapter", "Clicked on food in FoodAdapterV2: " + food.getFoodName());
+                    Bundle args = new Bundle();
+                    args.putInt("food_id", food.getId());
+                    Navigation.findNavController(requireView()).navigate(R.id.action_libraryFragment_to_editFoodFragment, args);
+                });
+
             } else {
                 FoodAdapterV1 foodAdapter = new FoodAdapterV1();
                 foodAdapter.foodArrayList = (ArrayList<Food>) foodList;
-
                 binding.rcView.setLayoutManager(new GridLayoutManager(requireContext(), 2));
                 binding.rcView.setAdapter(foodAdapter);
+
+                // Установка слушателя в адаптере
+                foodAdapter.setOnFoodClickListener(food -> {
+                    Log.d("FoodAdapter", "Clicked on food in FoodAdapterV1: " + food.getFoodName());
+                });
             }
         }
     }

@@ -16,9 +16,6 @@
         <action
             android:id="@+id/action_mainFragment_to_libraryFragment"
             app:destination="@id/libraryFragment" />
-        <action
-            android:id="@+id/action_mainFragment_to_addRecipeFragment2"
-            app:destination="@id/addFoodFragment" />
     </fragment>
     <fragment
         android:id="@+id/profileFragment"
@@ -65,10 +62,13 @@
         <action
             android:id="@+id/action_libraryFragment_to_addMealFragment"
             app:destination="@id/addMealFragment" />
+        <action
+            android:id="@+id/action_libraryFragment_to_editFoodFragment"
+            app:destination="@id/editFoodFragment" />
     </fragment>
     <fragment
         android:id="@+id/addFoodFragment"
-        android:name="com.obsessed.calorieguide.AddFoodFragment"
+        android:name="com.obsessed.calorieguide.food_fragments.AddFoodFragment"
         android:label="fragment_add_food"
         tools:layout="@layout/fragment_add_food" />
     <fragment
@@ -76,4 +76,11 @@
         android:name="com.obsessed.calorieguide.AddMealFragment"
         android:label="fragment_add_meal"
         tools:layout="@layout/fragment_add_meal" />
+    <fragment
+        android:id="@+id/editFoodFragment"
+        android:name="com.obsessed.calorieguide.food_fragments.EditFoodFragment"
+        android:label="fragment_edit_food"
+        tools:layout="@layout/fragment_edit_food" >
+        <argument android:name="food" />
+    </fragment>
 </navigation>

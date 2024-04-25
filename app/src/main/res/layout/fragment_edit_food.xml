@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".food_fragments.AddFoodFragment"
+    tools:context=".food_fragments.EditFoodFragment"
     android:layout_margin="@dimen/marginStandard">
 
     <LinearLayout
@@ -13,7 +13,7 @@
 
         <TextView
             style="@style/TextHeaderStyle"
-            android:text="@string/fragment_food_header">
+            android:text="@string/fragment_edit_food_header">
         </TextView>
 
         <include layout="@layout/food_params"></include>

@@ -17,14 +17,27 @@ import java.util.ArrayList;
 
 public class FoodAdapterV2 extends RecyclerView.Adapter<FoodAdapterV2.FoodHolder> {
     public ArrayList<Food> foodArrayList;
+    private OnFoodClickListener onFoodClickListener;
 
-    public class FoodHolder extends RecyclerView.ViewHolder{
-        FoodItemV2Binding binding = FoodItemV2Binding.bind(itemView);
-        public FoodHolder(@NonNull View item){
-            super(item);
+    public class FoodHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+        FoodItemV2Binding binding;
+
+        public FoodHolder(@NonNull View itemView) {
+            super(itemView);
+            binding = FoodItemV2Binding.bind(itemView);
+            binding.getRoot().setOnClickListener(this);
         }
+
+        @Override
+        public void onClick(View v) {
+            int position = getAdapterPosition();
+            if (position != RecyclerView.NO_POSITION && onFoodClickListener != null) {
+                onFoodClickListener.onFoodClick(foodArrayList.get(position));
+            }
+        }
+
         public void bind(Food food) {
-            binding.tvName.setText(food.getFood_name());
+            binding.tvName.setText(food.getFoodName());
             binding.tvCalories.setText("Calories: " + food.getCalories());
             binding.tvProteins.setText("p: " + food.getProteins());
             binding.tvCarbohydrates.setText("c: " + food.getCarbohydrates());
@@ -40,14 +53,14 @@ public class FoodAdapterV2 extends RecyclerView.Adapter<FoodAdapterV2.FoodHolder
         }
     }
 
-    @NonNull //Создание
-    @Override //Надувка food_item через LayoutInflater.inflate()
+    @NonNull
+    @Override
     public FoodHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.food_item_v2, parent, false);
         return new FoodHolder(view);
     }
 
-    @Override //Заполнение
+    @Override
     public void onBindViewHolder(@NonNull FoodHolder holder, int position) {
         holder.bind(foodArrayList.get(position));
     }
@@ -57,9 +70,12 @@ public class FoodAdapterV2 extends RecyclerView.Adapter<FoodAdapterV2.FoodHolder
         return foodArrayList.size();
     }
 
-    public void addFood(Food food){
+    public void addFood(Food food) {
         foodArrayList.add(food);
-        //Перерисовка адаптера
         notifyDataSetChanged();
+    }
+
+    public void setOnFoodClickListener(OnFoodClickListener listener) {
+        this.onFoodClickListener = listener;
     }
 }
