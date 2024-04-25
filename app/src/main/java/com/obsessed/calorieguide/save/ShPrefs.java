@@ -45,4 +45,18 @@ public class ShPrefs {
         Log.d("ShPrefs", "LOAD Data");
     }
 
+    public static void dropData(Context context) {
+        SharedPreferences sharedPreferences = context.getSharedPreferences("myPrefs", MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+
+        // Сохранение данных
+        editor.putString("user", null); // Сохранение user
+        editor.putInt("adapterType", 1); // Сохранение adapterType
+        editor.apply();
+
+        loadData(context);
+
+        Log.d("ShPrefs", "DROP Data"); // Выводим данные в лог
+    }
+
 }

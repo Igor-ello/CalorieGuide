@@ -17,6 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.obsessed.calorieguide.data.Data;
+import com.obsessed.calorieguide.save.ShPrefs;
 
 
 public class MainFragment extends Fragment {
@@ -49,7 +50,7 @@ public class MainFragment extends Fragment {
 
         view.findViewById(R.id.arrow_back).setOnClickListener(v -> {
             // При выходе из аккаунта устанавливаем значение пользователя в null
-            Data.getInstance().setUser(null);
+            ShPrefs.dropData(requireContext());
             Navigation.findNavController(view).popBackStack();
             Navigation.findNavController(view).navigate(R.id.loginFragment);
         });

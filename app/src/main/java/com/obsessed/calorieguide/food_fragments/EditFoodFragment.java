@@ -27,6 +27,7 @@ import com.obsessed.calorieguide.retrofit.food.CallbackGetFoodById;
 import com.obsessed.calorieguide.retrofit.food.Food;
 import com.obsessed.calorieguide.retrofit.food.FoodCall;
 import com.obsessed.calorieguide.retrofit.food.FoodCallForAdapter;
+import com.obsessed.calorieguide.save.ShPrefs;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -70,6 +71,13 @@ public class EditFoodFragment extends Fragment implements CallbackGetFoodById {
         requireActivity().runOnUiThread(() -> {
             FoodCallForAdapter foodCallForAdapter = new FoodCallForAdapter(this);
             foodCallForAdapter.getFoodById(foodId);
+        });
+
+        view.findViewById(R.id.btDelete).setOnClickListener(v -> {
+            FoodCall foodCall = new FoodCall(Data.getInstance().getUser().getBearerToken());
+            foodCall.deleteFood(foodId);
+
+            Navigation.findNavController(view).popBackStack();
         });
 
         // Подгрузка изображения из галереи или камеры

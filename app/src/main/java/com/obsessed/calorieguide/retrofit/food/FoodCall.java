@@ -95,4 +95,23 @@ public class FoodCall {
             }
         });
     }
+
+    public void deleteFood(int foodId) {
+        Call<JsonObject> call = mainApi.deleteProduct(foodId);
+        call.enqueue(new Callback<JsonObject>() {
+            @Override
+            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+                if (response.isSuccessful()) {
+                    Log.d("Call", "Request deleteFood successful.");
+                } else {
+                    Log.e("Call", "Request deleteFood failed. Response code: " + response.code());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<JsonObject> call, Throwable t) {
+                Log.e("Call", "ERROR in deleteFood Call!!!; Error: " + t);
+            }
+        });
+    }
 }
