@@ -7,6 +7,8 @@ public class Data {
     static final String BASE_URL = "http://95.174.92.190:8088/";
     User user = null;
     int adapterType = 1;
+    static final int PICTURE_SIZE = 250;
+    static final int QUALITY = 100;
 
     private Data() {}
 
@@ -36,4 +38,13 @@ public class Data {
     public void setUser(User user) {
         this.user = user;
     }
+
+    public int getPictureSize() {
+        return PICTURE_SIZE;
+    }
+
+    public int getQuality() {
+        return QUALITY;
+    }
+
 }

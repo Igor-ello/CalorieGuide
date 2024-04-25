@@ -85,7 +85,6 @@ public class LibraryFragment extends Fragment implements CallbackGetAllFood {
                     args.putInt("food_id", food.getId());
                     Navigation.findNavController(requireView()).navigate(R.id.action_libraryFragment_to_editFoodFragment, args);
                 });
-
             } else {
                 FoodAdapterV1 foodAdapter = new FoodAdapterV1();
                 foodAdapter.foodArrayList = (ArrayList<Food>) foodList;
@@ -95,6 +94,9 @@ public class LibraryFragment extends Fragment implements CallbackGetAllFood {
                 // Установка слушателя в адаптере
                 foodAdapter.setOnFoodClickListener(food -> {
                     Log.d("FoodAdapter", "Clicked on food in FoodAdapterV1: " + food.getFoodName());
+                    Bundle args = new Bundle();
+                    args.putInt("food_id", food.getId());
+                    Navigation.findNavController(requireView()).navigate(R.id.action_libraryFragment_to_editFoodFragment, args);
                 });
             }
         }

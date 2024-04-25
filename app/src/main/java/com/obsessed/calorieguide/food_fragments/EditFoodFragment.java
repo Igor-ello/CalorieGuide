@@ -121,15 +121,17 @@ public class EditFoodFragment extends Fragment implements CallbackGetFoodById {
                 // Получаем Bitmap из URI выбранного изображения из галереи
                 Bitmap originalBitmap = MediaStore.Images.Media.getBitmap(requireContext().getContentResolver(), selectedImageUri);
 
-                // Уменьшаем размер Bitmap до 125x125 dp
-                Bitmap resizedBitmap = FieldValidation.getResizedBitmap(originalBitmap, 200, 200);
+                // Уменьшаем размер Bitmap
+                Bitmap resizedBitmap = FieldValidation.getResizedBitmap(originalBitmap,
+                        Data.getInstance().getPictureSize(),
+                        Data.getInstance().getPictureSize());
 
                 // Устанавливаем уменьшенное изображение в ImageView
                 imageView.setImageBitmap(resizedBitmap);
 
                 // Сохраняем уменьшенное изображение в бинарный файл
                 ByteArrayOutputStream stream = new ByteArrayOutputStream();
-                resizedBitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+                resizedBitmap.compress(Bitmap.CompressFormat.JPEG, Data.getInstance().getQuality(), stream);
                 byteArray = stream.toByteArray();
             } catch (IOException e) {
                 e.printStackTrace();
