@@ -62,13 +62,13 @@ public class FoodCall {
                 if (response.isSuccessful()) {
                     Log.d("Call", "Response postFood is successful!");
                 } else {
-                    Log.e("Call", "ERROR response postFood is not successful!!!; Response: " + response.code());
+                    Log.e("Call", "ERROR response postFood is not successful; Response: " + response.code());
                 }
             }
 
             @Override
             public void onFailure(Call<JsonObject> call, Throwable t) {
-                Log.e("Call", "ERROR in postFood Call!!! \n" + call + "\n" + t);
+                Log.e("Call", "ERROR in postFood call: " + t.getMessage());
             }
         });
     }
@@ -91,7 +91,7 @@ public class FoodCall {
 
             @Override
             public void onFailure(Call<JsonObject> call, Throwable t) {
-                Log.e("Call", "ERROR in updateFood Call!!!", t);
+                Log.e("Call", "ERROR in updateFood call: " + t.getMessage());
             }
         });
     }
@@ -110,7 +110,7 @@ public class FoodCall {
 
             @Override
             public void onFailure(Call<JsonObject> call, Throwable t) {
-                Log.e("Call", "ERROR in deleteFood Call!!!; Error: " + t);
+                Log.e("Call", "ERROR in deleteFood call: " + t.getMessage());
             }
         });
     }

@@ -79,7 +79,7 @@ public class LoginFragment extends Fragment {
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
                 if (response.isSuccessful()) {
                     JsonObject jsonObject = response.body();
-                    Log.d("Call", "Authentication successful: " + response.message());
+                    Log.d("Call", "Authentication successful");
 
                     if (jsonObject!= null) {
                         User user = JsonToClass.getUser(jsonObject);
@@ -90,7 +90,7 @@ public class LoginFragment extends Fragment {
                         Navigation.findNavController(view).navigate(R.id.mainFragment);
                     }
                 } else {
-                    Log.d("Call", "Authentication failed: " + response.message());
+                    Log.e("Call", "Authentication failed; Response: " + response.code());
                 }
             }
 

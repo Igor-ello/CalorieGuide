@@ -51,17 +51,14 @@ public class UserCall {
     }
 
     public Call<JsonObject> authUser(AuthRequest authRequest) {
-        Log.d("UserCall",  authRequest.toString());
         return mainApi.auth(authRequest);
     }
 
     public Call<JsonObject> registerUser(RegistrationRequest registrationRequest) {
-        Log.d("UserCall",  registrationRequest.toString());
         return mainApi.registerUser(registrationRequest);
     }
 
     public Call<JsonObject> updateUser(int userId, RegistrationRequest registrationRequest) {
-        Log.d("UserCall", "updateUser: " + userId + " " + registrationRequest.toString());
         return mainApi.updateUser(userId, registrationRequest);
     }
 }

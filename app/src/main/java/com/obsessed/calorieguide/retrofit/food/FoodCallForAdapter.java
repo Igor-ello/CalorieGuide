@@ -66,13 +66,13 @@ public class FoodCallForAdapter {
                         Log.d("Call", "Food is null!");
                     }
                 } else {
-                    Log.e("Call", "Request getAllFood failed. Response code: " + response.code());
+                    Log.e("Call", "Request getAllFood failed; Response: " + response.code());
                 }
             }
 
             @Override
             public void onFailure(Call<Food> call, Throwable t) {
-                Log.e("Call", "ERROR in getAllFood Call!!!");
+                Log.e("Call", "ERROR in getAllFood call: " + t.getMessage());
             }
         });
     }
@@ -94,13 +94,13 @@ public class FoodCallForAdapter {
                         Log.d("Call", "No products found in response!");
                     }
                 } else {
-                    Log.e("Call", "Request getAllFood failed. Response code: " + response.code());
+                    Log.e("Call", "Request getAllFood failed; Response: " + response.code());
                 }
             }
 
             @Override
             public void onFailure(Call<JsonObject> call, Throwable t) {
-                Log.e("Call", "ERROR in getAllFood Call!!! \n" + call + "\n" + t);
+                Log.e("Call", "ERROR in getAllFood call: " + t.getMessage());
             }
         });
     }
