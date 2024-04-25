@@ -25,7 +25,6 @@ import com.obsessed.calorieguide.data.Data;
 import com.obsessed.calorieguide.retrofit.food.CallbackGetFoodById;
 import com.obsessed.calorieguide.retrofit.food.Food;
 import com.obsessed.calorieguide.retrofit.food.FoodCall;
-import com.obsessed.calorieguide.retrofit.food.FoodCallPost;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -33,7 +32,7 @@ import java.util.ArrayList;
 
 public class EditFoodFragment extends Fragment implements CallbackGetFoodById {
     private static final String ARG_FOOD_ID = "food_id";
-    private int food_id;
+    private int foodId;
     private static final int GALLERY_REQUEST_CODE = 100;
     ImageView imageView;
     byte[] byteArray;
@@ -47,7 +46,7 @@ public class EditFoodFragment extends Fragment implements CallbackGetFoodById {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            food_id = getArguments().getInt(ARG_FOOD_ID);
+            foodId = getArguments().getInt(ARG_FOOD_ID);
         }
     }
 
@@ -68,15 +67,16 @@ public class EditFoodFragment extends Fragment implements CallbackGetFoodById {
         //Подгрузка данных
         requireActivity().runOnUiThread(() -> {
             FoodCall foodCall = new FoodCall(this);
-            foodCall.getFoodById(food_id);
+            foodCall.getFoodById(foodId);
         });
 
         // Отправка на сервер введенных данных
         requireView().findViewById(R.id.btSave).setOnClickListener(v -> {
             ArrayList<EditText> etList = fieldValidation.validate();
             if(etList != null){
-                FoodCallPost foodCall = new FoodCallPost(Data.getInstance().getUser().getBearerToken());
-                foodCall.postFood(FillClass.fillFood(etList, byteArray));
+                FoodCall foodCall = new FoodCall(this);
+                foodCall.updateFood(foodId, FillClass.fillFoodUpdate(etList, byteArray),
+                        Data.getInstance().getUser().getBearerToken());
 
                 Navigation.findNavController(view).popBackStack();
             } else {

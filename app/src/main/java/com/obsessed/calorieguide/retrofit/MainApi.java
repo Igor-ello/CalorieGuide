@@ -14,7 +14,7 @@ import retrofit2.http.PUT;
 import retrofit2.http.Path;
 
 public interface MainApi {
-    //Food
+    //Food (product)
     @GET("products/{id}")
     Call<Food> getFoodById(@Path("id") int foodId);
 
@@ -23,6 +23,9 @@ public interface MainApi {
 
     @POST("/product")
     Call<JsonObject> postFood(@Body RequestBody requestBody);
+
+    @PUT("/product/{product_id}")
+    Call<JsonObject> updateProduct(@Path("product_id") int productId, @Body RequestBody requestBody);
 
 
     //User

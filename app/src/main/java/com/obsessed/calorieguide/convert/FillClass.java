@@ -23,6 +23,18 @@ public class FillClass {
         return food;
     }
 
+    public static Food fillFoodUpdate(ArrayList<EditText> etList, byte[] byteArray) {
+        Food food = new Food(
+                etList.get(0).getText().toString(),
+                etList.get(1).getText().toString(),
+                Integer.parseInt(etList.get(2).getText().toString()),
+                Integer.parseInt(etList.get(3).getText().toString()),
+                Integer.parseInt(etList.get(4).getText().toString()),
+                Integer.parseInt(etList.get(5).getText().toString()),
+                byteArray);
+        return food;
+    }
+
     public static RegistrationRequest fillRegistrationRequest(User user) {
         RegistrationRequest registrationRequest = new RegistrationRequest(
                 user.getName(),
