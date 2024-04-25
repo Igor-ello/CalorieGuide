@@ -54,6 +54,8 @@ public class ShPrefs {
         editor.putInt("adapterType", 1); // Сохранение adapterType
         editor.apply();
 
+        loadData(context);
+
         Log.d("ShPrefs", "DROP Data"); // Выводим данные в лог
     }
 

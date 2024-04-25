@@ -64,4 +64,9 @@ public class UserCall {
         Log.d("UserCall", "updateUser: " + userId + " " + registrationRequest.toString());
         return mainApi.updateUser(userId, registrationRequest);
     }
+
+    public Call<JsonObject> deleteUser(int userId) {
+        Log.d("UserCall", "deleteUser: " + userId);
+        return mainApi.deleteUser(userId);
+    }
 }
