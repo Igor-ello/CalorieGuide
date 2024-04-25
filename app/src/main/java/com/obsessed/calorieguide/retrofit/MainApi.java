@@ -8,6 +8,7 @@ import com.obsessed.calorieguide.retrofit.user.RegistrationRequest;
 import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
@@ -26,6 +27,9 @@ public interface MainApi {
 
     @PUT("/products/{product_id}")
     Call<JsonObject> updateProduct(@Path("product_id") int productId, @Body RequestBody requestBody);
+
+    @DELETE("/products/{product_id}")
+    Call<JsonObject> deleteProduct(@Path("product_id") int productId);
 
 
     //User

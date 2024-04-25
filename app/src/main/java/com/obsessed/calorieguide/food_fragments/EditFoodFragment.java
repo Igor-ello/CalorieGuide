@@ -26,6 +26,8 @@ import com.obsessed.calorieguide.data.Data;
 import com.obsessed.calorieguide.retrofit.food.CallbackGetFoodById;
 import com.obsessed.calorieguide.retrofit.food.Food;
 import com.obsessed.calorieguide.retrofit.food.FoodCall;
+import com.obsessed.calorieguide.retrofit.food.FoodCallForAdapter;
+import com.obsessed.calorieguide.save.ShPrefs;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -67,8 +69,15 @@ public class EditFoodFragment extends Fragment implements CallbackGetFoodById {
 
         //Подгрузка данных
         requireActivity().runOnUiThread(() -> {
-            FoodCall foodCall = new FoodCall(this);
-            foodCall.getFoodById(foodId);
+            FoodCallForAdapter foodCallForAdapter = new FoodCallForAdapter(this);
+            foodCallForAdapter.getFoodById(foodId);
+        });
+
+        view.findViewById(R.id.btDelete).setOnClickListener(v -> {
+            FoodCall foodCall = new FoodCall(Data.getInstance().getUser().getBearerToken());
+            foodCall.deleteFood(foodId);
+
+            Navigation.findNavController(view).popBackStack();
         });
 
         // Подгрузка изображения из галереи или камеры
@@ -82,9 +91,8 @@ public class EditFoodFragment extends Fragment implements CallbackGetFoodById {
         requireView().findViewById(R.id.btSave).setOnClickListener(v -> {
             ArrayList<EditText> etList = fieldValidation.getValues();
             if(etList != null){
-                FoodCall foodCall = new FoodCall(this);
-                foodCall.updateFood(foodId, FillClass.fillFood(etList, byteArray),
-                        Data.getInstance().getUser().getBearerToken());
+                FoodCall foodCall = new FoodCall(Data.getInstance().getUser().getBearerToken());
+                foodCall.updateFood(foodId, FillClass.fillFood(etList, byteArray));
 
                 Navigation.findNavController(view).popBackStack();
             } else {

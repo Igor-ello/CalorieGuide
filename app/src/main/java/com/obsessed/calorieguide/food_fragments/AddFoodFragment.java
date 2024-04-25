@@ -22,7 +22,7 @@ import android.widget.Toast;
 import com.obsessed.calorieguide.R;
 import com.obsessed.calorieguide.convert.FillClass;
 import com.obsessed.calorieguide.data.Data;
-import com.obsessed.calorieguide.retrofit.food.FoodCallPost;
+import com.obsessed.calorieguide.retrofit.food.FoodCall;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -70,7 +70,7 @@ public class AddFoodFragment extends Fragment {
         requireView().findViewById(R.id.btSave).setOnClickListener(v -> {
             ArrayList<EditText> etList = fieldValidation.getValues();
             if(etList != null){
-                FoodCallPost foodCall = new FoodCallPost(Data.getInstance().getUser().getBearerToken());
+                FoodCall foodCall = new FoodCall(Data.getInstance().getUser().getBearerToken());
                 foodCall.postFood(FillClass.fillFood(etList, byteArray));
 
                 Navigation.findNavController(view).popBackStack();
