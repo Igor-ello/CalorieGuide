@@ -75,7 +75,7 @@ public class EditFoodFragment extends Fragment implements CallbackGetFoodById {
             ArrayList<EditText> etList = fieldValidation.validate();
             if(etList != null){
                 FoodCall foodCall = new FoodCall(this);
-                foodCall.updateFood(foodId, FillClass.fillFoodUpdate(etList, byteArray),
+                foodCall.updateFood(foodId, FillClass.fillFood(etList, byteArray),
                         Data.getInstance().getUser().getBearerToken());
 
                 Navigation.findNavController(view).popBackStack();

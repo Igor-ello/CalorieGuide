@@ -68,13 +68,13 @@ public class FoodCall {
                         Log.d("Call", "Food is null!");
                     }
                 } else {
-                    Log.d("Call", "ERROR response getFoodById is not successful!!!");
+                    Log.e("Call", "Request getAllFood failed. Response code: " + response.code());
                 }
             }
 
             @Override
             public void onFailure(Call<Food> call, Throwable t) {
-                Log.d("Call", "ERROR in getFoodById Call!!!");
+                Log.e("Call", "ERROR in getAllFood Call!!!");
             }
         });
     }
@@ -97,27 +97,22 @@ public class FoodCall {
                         Log.d("Call", "No products found in response!");
                     }
                 } else {
-                    Log.d("Call", "ERROR response getAllFood is not successful!!!");
+                    Log.e("Call", "Request getAllFood failed. Response code: " + response.code());
                 }
             }
 
             @Override
             public void onFailure(Call<JsonObject> call, Throwable t) {
-                Log.d("Call", "ERROR in getAllFood Call!!! \n" + call + "\n" + t);
+                Log.e("Call", "ERROR in getAllFood Call!!! \n" + call + "\n" + t);
             }
         });
     }
 
     public void updateFood(int foodId, Food food, String ACCESS_TOKEN) {
-        Log.d("Call", food.toString());
-
         Gson gson = new Gson();
-        String json = gson.toJson(food); // Convert the Food object to JSON string
-        Log.d("Call", json);
-
+        String json = gson.toJson(food);
         RequestBody requestBody = RequestBody.create(MediaType.parse("application/json"), json);
 
-        // Create OkHttpClient with an interceptor for adding Authorization header
         OkHttpClient client = new OkHttpClient.Builder()
                 .addInterceptor(chain -> {
                     Request originalRequest = chain.request();
@@ -128,7 +123,6 @@ public class FoodCall {
                 })
                 .build();
 
-        // Initialize Retrofit with OkHttpClient and GsonConverterFactory
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(baseUrl)
                 .client(client)
@@ -137,28 +131,20 @@ public class FoodCall {
 
         MainApi mainApi = retrofit.create(MainApi.class);
 
-        // Make the API call to update the food
         Call<JsonObject> call = mainApi.updateProduct(foodId, requestBody);
         call.enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
                 if (response.isSuccessful()) {
-                    // Handle successful response
-                    JsonObject responseBody = response.body();
-                    Log.d("Call", "Request updateFood successful. Response: " + responseBody);
-                    // Additional processing if needed
+                    Log.d("Call", "Request updateFood successful.");
                 } else {
-                    // Handle error response
                     Log.e("Call", "Request updateFood failed. Response code: " + response.code());
-                    // Additional error handling if needed
                 }
             }
 
             @Override
             public void onFailure(Call<JsonObject> call, Throwable t) {
-                // Handle failure
                 Log.e("Call", "ERROR in updateFood Call!!!", t);
-                // Additional error handling if needed
             }
         });
     }

@@ -21,10 +21,10 @@ public interface MainApi {
     @GET("products")
     Call<JsonObject> getAllFood();
 
-    @POST("/product")
+    @POST("/products")
     Call<JsonObject> postFood(@Body RequestBody requestBody);
 
-    @PUT("/product/{product_id}")
+    @PUT("/products/{product_id}")
     Call<JsonObject> updateProduct(@Path("product_id") int productId, @Body RequestBody requestBody);
 
 
