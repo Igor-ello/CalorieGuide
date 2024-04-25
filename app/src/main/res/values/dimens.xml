@@ -3,10 +3,13 @@
     <dimen name="marginStandard">10dp</dimen>
     
     <dimen name="text_header_size">20sp</dimen>
-    <dimen name="text_size">18sp</dimen>
+    <dimen name="text_size">16sp</dimen>
 
     <dimen name="margin_top">5dp</dimen>
 
     <dimen name="icon_height">24dp</dimen>
     <dimen name="icon_width">24dp</dimen>
+
+    <dimen name="picture_height">125dp</dimen>
+    <dimen name="picture_width">125dp</dimen>
 </resources>

@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import com.obsessed.calorieguide.data.Data;
 import com.obsessed.calorieguide.retrofit.MainApi;
 
 import java.io.IOException;
@@ -23,20 +24,19 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class FoodCallPost {
-    private String baseUrl = "http://95.174.92.190:8088/";
+    private String baseUrl = Data.getInstance().getBaseUrl();
     private Retrofit retrofit;
     private MainApi mainApi;
 
     public FoodCallPost(String ACCESS_TOKEN) {
-        HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
-        loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+//        HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
+//        loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
 
         OkHttpClient client = new OkHttpClient.Builder()
-                .addInterceptor(loggingInterceptor) // Добавление Interceptor для логирования
+                //.addInterceptor(loggingInterceptor) // Добавление Interceptor для логирования
                 .addInterceptor(chain -> {
                     Request originalRequest = chain.request();
 
-                    Log.d("FoodCallPost", ACCESS_TOKEN);
                     // Добавляем заголовок к исходному запросу
                     Request newRequest = originalRequest.newBuilder()
                             .addHeader("Authorization", "Bearer " + ACCESS_TOKEN)
@@ -67,15 +67,15 @@ public class FoodCallPost {
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
                 if (response.isSuccessful()) {
-                    Log.d("MyLog", "Response postFood is successful!");
+                    Log.d("Call", "Response postFood is successful!");
                 } else {
-                    Log.d("MyLog", "ERROR response postFood is not successful!!!");
+                    Log.d("Call", "ERROR response postFood is not successful!!!");
                 }
             }
 
             @Override
             public void onFailure(Call<JsonObject> call, Throwable t) {
-                Log.d("MyLog", "ERROR in Call!!! \n" + call + "\n" + t);
+                Log.d("Call", "ERROR in postFood Call!!! \n" + call + "\n" + t);
             }
         });
     }

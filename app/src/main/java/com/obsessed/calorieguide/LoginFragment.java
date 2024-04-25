@@ -5,7 +5,6 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
 import android.util.Log;
@@ -16,8 +15,8 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.google.gson.JsonObject;
-import com.obsessed.calorieguide.data.Data;
 import com.obsessed.calorieguide.convert.JsonToClass;
+import com.obsessed.calorieguide.data.Data;
 import com.obsessed.calorieguide.retrofit.user.User;
 import com.obsessed.calorieguide.retrofit.user.UserCall;
 import com.obsessed.calorieguide.retrofit.user.AuthRequest;
@@ -51,13 +50,6 @@ public class LoginFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        //Проверка на выполнный вход в аккаунт
-        if(ShPrefs.getUser(requireContext())!= null) {
-            Data.getInstance().setUser(ShPrefs.getUser(requireContext()));
-            NavController navController = Navigation.findNavController(view);
-            navController.navigate(R.id.action_loginFragment_to_mainFragment);
-        }
-
         //Инициализация переменных
         EditText edEmail = requireView().findViewById(R.id.edEmail);
         EditText edPassword = requireView().findViewById(R.id.edPassword);
@@ -81,30 +73,30 @@ public class LoginFragment extends Fragment {
     private void authRequest(View view, String username, String password) {
         AuthRequest authRequest = new AuthRequest(username, password);
         UserCall userCall = new UserCall();
-        Call<JsonObject> call = userCall.auth(authRequest);
+        Call<JsonObject> call = userCall.authUser(authRequest);
         call.enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
                 if (response.isSuccessful()) {
                     JsonObject jsonObject = response.body();
-                    Log.d("MyLog", "Authentication successful: " + response.message());
+                    Log.d("Call", "Authentication successful: " + response.message());
 
                     if (jsonObject!= null) {
                         User user = JsonToClass.getUser(jsonObject);
-                        Data.getInstance().setUser(user);
+                        ShPrefs.saveData(user, Data.getInstance().getAdapterType(), requireContext());
 
                         Toast.makeText(requireContext(), "Welcome!", Toast.LENGTH_SHORT).show();
-                        NavController navController = Navigation.findNavController(view);
-                        navController.navigate(R.id.action_loginFragment_to_mainFragment);
+                        Navigation.findNavController(view).popBackStack();
+                        Navigation.findNavController(view).navigate(R.id.mainFragment);
                     }
                 } else {
-                    Log.d("MyLog", "Authentication failed: " + response.message());
+                    Log.d("Call", "Authentication failed: " + response.message());
                 }
             }
 
             @Override
             public void onFailure(Call<JsonObject> call, Throwable t) {
-                Log.e("MyLog", "Authentication error: " + t.getMessage());
+                Log.e("Call", "Authentication error: " + t.getMessage());
             }
         });
     }

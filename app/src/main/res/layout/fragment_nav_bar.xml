@@ -22,6 +22,17 @@
             </ImageView>
         </LinearLayout>
 
+        <LinearLayout
+            android:id="@+id/recipe_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:layout_weight="1">
+            <ImageView
+                style="@style/IconStyle"
+                android:src="@drawable/recipe_book">
+            </ImageView>
+        </LinearLayout>
 
         <LinearLayout
             android:id="@+id/profile_icon"
@@ -32,18 +43,6 @@
             <ImageView
                 style="@style/IconStyle"
                 android:src="@drawable/profile_icon">
-            </ImageView>
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/recipe_icon"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:layout_weight="1">
-            <ImageView
-                style="@style/IconStyle"
-                android:src="@drawable/recipe_book">
             </ImageView>
         </LinearLayout>
     </LinearLayout>

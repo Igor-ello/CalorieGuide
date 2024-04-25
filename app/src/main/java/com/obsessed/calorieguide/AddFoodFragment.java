@@ -3,6 +3,7 @@ package com.obsessed.calorieguide;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Matrix;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -34,6 +35,7 @@ public class AddFoodFragment extends Fragment {
     ImageView imageView;
     ArrayList<EditText> etList;
     byte[] byteArray;
+    ImageView img;
 
     public AddFoodFragment() {
         // Required empty public constructor
@@ -55,14 +57,17 @@ public class AddFoodFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        // Инициализируем полей
         init(requireView());
 
+        // Подгрузка изображения из галереи или камеры
         requireView().findViewById(R.id.image).setOnClickListener(v -> {
             Intent galleryIntent = new Intent(Intent.ACTION_PICK,
                     android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
             startActivityForResult(galleryIntent, GALLERY_REQUEST_CODE);
         });
 
+        // Отправка на сервер введенных данных
         requireView().findViewById(R.id.btSave).setOnClickListener(v -> {
             int counter = 0;
             for (EditText et: etList){
@@ -104,16 +109,40 @@ public class AddFoodFragment extends Fragment {
             Uri selectedImageUri = data.getData();
 
             try {
-                // Получаем Bitmap из URI выбранного изображения
-                Bitmap bitmap = MediaStore.Images.Media.getBitmap(requireContext().getContentResolver(), selectedImageUri);
-                imageView.setImageBitmap(bitmap);
+                // Получаем Bitmap из URI выбранного изображения из галереи
+                Bitmap originalBitmap = MediaStore.Images.Media.getBitmap(requireContext().getContentResolver(), selectedImageUri);
 
+                // Уменьшаем размер Bitmap до 125x125 dp
+                Bitmap resizedBitmap = getResizedBitmap(originalBitmap, 200, 200);
+
+                // Устанавливаем уменьшенное изображение в ImageView
+                imageView.setImageBitmap(resizedBitmap);
+
+                // Сохраняем уменьшенное изображение в бинарный файл
                 ByteArrayOutputStream stream = new ByteArrayOutputStream();
-                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+                resizedBitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
                 byteArray = stream.toByteArray();
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
     }
+
+    private Bitmap getResizedBitmap(Bitmap bm, int newWidth, int newHeight) {
+        int width = bm.getWidth();
+        int height = bm.getHeight();
+
+        float scaleWidth = ((float) newWidth) / width;
+        float scaleHeight = ((float) newHeight) / height;
+
+        // Создаем матрицу для масштабирования
+        Matrix matrix = new Matrix();
+
+        // Масштабируем изображение с матрицей
+        matrix.postScale(scaleWidth, scaleHeight);
+
+        // Пересоздаем изображение с новыми размерами
+        return Bitmap.createBitmap(bm, 0, 0, width, height, matrix, false);
+    }
+
 }

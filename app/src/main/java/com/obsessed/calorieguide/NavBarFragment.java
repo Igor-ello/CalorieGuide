@@ -29,38 +29,29 @@ public class NavBarFragment extends Fragment {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		Log.d("mlg", "onCreate");
 	}
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 							 Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.fragment_nav_bar, container, false);
-		Log.d("mlg", "onCreateView");
 		NavController navController = Navigation.findNavController(viewFragment);
 
 		view.findViewById(R.id.home_icon).setOnClickListener(v -> {
-			navController.navigate(R.id.mainFragment, null,
-					new NavOptions.Builder()
-							.setPopUpTo(R.id.mainFragment, true)
-							.build());
+			navController.popBackStack(R.id.mainFragment, true);
+			navController.navigate(R.id.mainFragment);
 			Log.d("nav", "Переход на mainFragment");
 		});
 
 		view.findViewById(R.id.profile_icon).setOnClickListener(v -> {
-			navController.navigate(R.id.profileFragment, null,
-					new NavOptions.Builder()
-							.setPopUpTo(R.id.profileFragment, true)
-							.build());
+			navController.popBackStack(R.id.mainFragment, false);
+			navController.navigate(R.id.profileFragment);
 			Log.d("nav", "Переход на profileFragment");
 		});
 
 		view.findViewById(R.id.recipe_icon).setOnClickListener(v -> {
-			navController.navigate(R.id.libraryFragment, null,
-					new NavOptions.Builder()
-							.setPopUpTo(R.id.libraryFragment, true)
-							.build());
-
+			navController.popBackStack(R.id.mainFragment, false);
+			navController.navigate(R.id.libraryFragment);
 			Log.d("nav", "Переход на libraryFragment");
 		});
 
@@ -70,6 +61,5 @@ public class NavBarFragment extends Fragment {
 	@Override
 	public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
-		Log.d("mlg", "onViewCreated");
 	}
 }

@@ -12,4 +12,14 @@ public class RegistrationRequest {
         this.email = email;
         this.password = password;
     }
+
+    @Override
+    public String toString() {
+        return "RegistrationRequest{" +
+                "user_name='" + user_name + '\'' +
+                ", surname='" + surname + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                '}';
+    }
 }

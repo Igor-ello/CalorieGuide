@@ -4,6 +4,8 @@ import android.widget.EditText;
 
 import com.obsessed.calorieguide.data.Data;
 import com.obsessed.calorieguide.retrofit.food.Food;
+import com.obsessed.calorieguide.retrofit.user.RegistrationRequest;
+import com.obsessed.calorieguide.retrofit.user.User;
 
 import java.util.ArrayList;
 
@@ -19,5 +21,15 @@ public class FillClass {
                 Data.getInstance().getUser().getId(),
                 byteArray);
         return food;
+    }
+
+    public static RegistrationRequest fillRegistrationRequest(User user) {
+        RegistrationRequest registrationRequest = new RegistrationRequest(
+                user.getName(),
+                user.getSurname(),
+                user.getEmail(),
+                user.getPassword()
+        );
+        return registrationRequest;
     }
 }

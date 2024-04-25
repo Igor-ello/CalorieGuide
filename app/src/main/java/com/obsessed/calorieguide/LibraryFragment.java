@@ -54,11 +54,7 @@ public class LibraryFragment extends Fragment implements FoodCallback {
         binding = FragmentLibraryBinding.bind(view);
 
         //NavBarFragment
-        NavBarFragment nvb = new NavBarFragment(view);
-        FragmentManager fragmentManager = getParentFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.add(R.id.fragment_nav_bar, nvb);
-        fragmentTransaction.commit();
+        setupNavBarFragment(view);
 
         //Подгрузка данных
         requireActivity().runOnUiThread(() -> {
@@ -82,18 +78,29 @@ public class LibraryFragment extends Fragment implements FoodCallback {
 
     @Override
     public void onAllFoodReceived(List<Food> foodList) {
-        if(Data.getInstance().getAdapterType() == 2) {
-            FoodAdapterV2 foodAdapter = new FoodAdapterV2();
-            foodAdapter.foodArrayList = (ArrayList<Food>) foodList;
+        if (isAdded()) { // Проверяем, привязан ли фрагмент к активности
+            if (Data.getInstance().getAdapterType() == 2) {
+                FoodAdapterV2 foodAdapter = new FoodAdapterV2();
+                foodAdapter.foodArrayList = (ArrayList<Food>) foodList;
 
-            binding.rcView.setLayoutManager(new GridLayoutManager(requireContext(), 1));
-            binding.rcView.setAdapter(foodAdapter);
-        } else {
-            FoodAdapterV1 foodAdapter = new FoodAdapterV1();
-            foodAdapter.foodArrayList = (ArrayList<Food>) foodList;
+                binding.rcView.setLayoutManager(new GridLayoutManager(requireContext(), 1));
+                binding.rcView.setAdapter(foodAdapter);
+            } else {
+                FoodAdapterV1 foodAdapter = new FoodAdapterV1();
+                foodAdapter.foodArrayList = (ArrayList<Food>) foodList;
 
-            binding.rcView.setLayoutManager(new GridLayoutManager(requireContext(), 2));
-            binding.rcView.setAdapter(foodAdapter);
+                binding.rcView.setLayoutManager(new GridLayoutManager(requireContext(), 2));
+                binding.rcView.setAdapter(foodAdapter);
+            }
         }
+    }
+
+    private void setupNavBarFragment(View view) {
+        Log.d("MainFragment", "Setting up navigation bar fragment");
+        NavBarFragment nvb = new NavBarFragment(view);
+        FragmentManager fragmentManager = getParentFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.add(R.id.fragment_nav_bar, nvb);
+        fragmentTransaction.commit();
     }
 }
