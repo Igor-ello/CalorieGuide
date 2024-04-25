@@ -1,5 +1,6 @@
 package com.obsessed.calorieguide;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -17,6 +18,7 @@ import android.widget.CompoundButton;
 import android.widget.Switch;
 
 import com.obsessed.calorieguide.data.Data;
+import com.obsessed.calorieguide.save.ShPrefs;
 
 public class SettingsFragment extends Fragment implements CompoundButton.OnCheckedChangeListener {
 
@@ -45,7 +47,23 @@ public class SettingsFragment extends Fragment implements CompoundButton.OnCheck
             navController.popBackStack();
         });
 
+        view.findViewById(R.id.btLogout).setOnClickListener(v -> {
+            // При выходе из аккаунта сбрасываем данные
+            ShPrefs.dropData(requireContext());
+            Navigation.findNavController(view).popBackStack();
+            Navigation.findNavController(view).navigate(R.id.loginFragment);
+        });
+
+        view.findViewById(R.id.btDelete).setOnClickListener(v -> {
+
+        });
+
         //Switch
+        setSwitch(view);
+    }
+
+    @SuppressLint("UseSwitchCompatOrMaterialCode")
+    void setSwitch(View view) {
         Switch swAdapterType = view.findViewById(R.id.swAdapterType);
         if (swAdapterType != null) {
             if (Data.getInstance().getAdapterType() == 1) {

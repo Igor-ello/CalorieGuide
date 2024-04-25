@@ -14,15 +14,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.CompoundButton;
 import android.widget.EditText;
-import android.widget.Switch;
 
 import com.google.gson.JsonObject;
 import com.obsessed.calorieguide.convert.FillClass;
 import com.obsessed.calorieguide.data.Data;
 import com.obsessed.calorieguide.retrofit.user.User;
 import com.obsessed.calorieguide.retrofit.user.UserCall;
+import com.obsessed.calorieguide.save.ShPrefs;
 
 import java.util.ArrayList;
 
@@ -57,22 +56,16 @@ public class ProfileFragment extends Fragment {
 
         //NavBarFragment
         setupNavBarFragment(view);
-
         //Объявление параметров
         init(view);
-
         //Заполнение массива параметров
-        initUserParams();
-
+        initParams();
         //Заполнение параметров
-        for(EditText et : userParams) {
-            et.setFocusable(false); // Запретить редактирование
-            et.setFocusableInTouchMode(false); // Запретить редактирование по клику
-        }
-        etName.setText(user.getName());
-        etSurname.setText(user.getSurname());
-        etEmail.setText(user.getEmail());
-        etPassword.setText(user.getPassword());
+        fillParams();
+
+        view.findViewById(R.id.settingsButton).setOnClickListener(v -> {
+            Navigation.findNavController(view).navigate(R.id.action_profileFragment_to_settingsFragment);
+        });
 
         //Кнопки
         Button btEdit = view.findViewById(R.id.btEdit);
@@ -93,38 +86,14 @@ public class ProfileFragment extends Fragment {
                 et.setFocusableInTouchMode(false);
             }
 
-            user.setName(etName.getText().toString().trim());
-            user.setSurname(etSurname.getText().toString().trim());
-            user.setEmail(etEmail.getText().toString().trim());
-            user.setPassword(etPassword.getText().toString().trim());
+            setUserParams();
             Data.getInstance().setUser(user);
-            //TODO проследить за сохранением полей пользователя
 
             updateUserRequest(user);
 
             btEdit.setVisibility(View.VISIBLE);
             btSave.setVisibility(View.GONE);
         });
-
-        view.findViewById(R.id.settingsButton).setOnClickListener(v -> {
-            Navigation.findNavController(view).navigate(R.id.action_profileFragment_to_settingsFragment);
-        });
-    }
-
-    private void init(View view) {
-        user = Data.getInstance().getUser();
-        etName = view.findViewById(R.id.etName);
-        etSurname = view.findViewById(R.id.etSurname);
-        etEmail = view.findViewById(R.id.etEmail);
-        etPassword = view.findViewById(R.id.etPassword);
-    }
-
-    private void initUserParams() {
-        userParams = new ArrayList<>();
-        userParams.add(etName);
-        userParams.add(etSurname);
-        userParams.add(etEmail);
-        userParams.add(etPassword);
     }
 
     private void setupNavBarFragment(View view) {
@@ -135,6 +104,41 @@ public class ProfileFragment extends Fragment {
         fragmentTransaction.add(R.id.fragment_nav_bar, nvb);
         fragmentTransaction.commit();
     }
+
+    private void init(View view) {
+        user = Data.getInstance().getUser();
+        etName = view.findViewById(R.id.etName);
+        etSurname = view.findViewById(R.id.etSurname);
+        etEmail = view.findViewById(R.id.etEmail);
+        etPassword = view.findViewById(R.id.etPassword);
+    }
+
+    private void initParams() {
+        userParams = new ArrayList<>();
+        userParams.add(etName);
+        userParams.add(etSurname);
+        userParams.add(etEmail);
+        userParams.add(etPassword);
+    }
+
+    private void fillParams() {
+        for(EditText et : userParams) {
+            et.setFocusable(false); // Запретить редактирование
+            et.setFocusableInTouchMode(false); // Запретить редактирование по клику
+        }
+        etName.setText(user.getName());
+        etSurname.setText(user.getSurname());
+        etEmail.setText(user.getEmail());
+        etPassword.setText(user.getPassword());
+    }
+
+    private void setUserParams() {
+        user.setName(etName.getText().toString().trim());
+        user.setSurname(etSurname.getText().toString().trim());
+        user.setEmail(etEmail.getText().toString().trim());
+        user.setPassword(etPassword.getText().toString().trim());
+    }
+
 
     private void updateUserRequest(User user) {
         UserCall userCall = new UserCall(user.getBearerToken());

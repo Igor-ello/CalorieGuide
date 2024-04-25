@@ -18,14 +18,54 @@
             android:text="@string/fragment_settings_header">
         </TextView>
 
+
+
         <Switch
             android:id="@+id/swAdapterType"
             style="@style/TextStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:text="Type of food arrangement (V1/V2)">
+            android:text="Type of food arrangement (V1/V2)"
+            tools:ignore="UseSwitchCompatOrMaterialXml">
         </Switch>
+
+        <LinearLayout
+            android:id="@+id/btLogout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center">
+
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/logout">
+            </ImageView>
+
+            <Button
+                style="@style/ButtonStyle"
+                android:text="Log out">
+            </Button>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/btDelete"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center">
+
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/delete_forever">
+            </ImageView>
+
+            <Button
+                style="@style/ButtonStyle"
+                android:text="Delete account">
+            </Button>
+
+        </LinearLayout>
 
     </LinearLayout>
 
