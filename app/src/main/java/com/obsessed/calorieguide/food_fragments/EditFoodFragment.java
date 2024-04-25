@@ -80,7 +80,7 @@ public class EditFoodFragment extends Fragment implements CallbackGetFoodById {
 
         // Отправка на сервер введенных данных
         requireView().findViewById(R.id.btSave).setOnClickListener(v -> {
-            ArrayList<EditText> etList = fieldValidation.validate();
+            ArrayList<EditText> etList = fieldValidation.getValues();
             if(etList != null){
                 FoodCall foodCall = new FoodCall(this);
                 foodCall.updateFood(foodId, FillClass.fillFood(etList, byteArray),
@@ -97,8 +97,8 @@ public class EditFoodFragment extends Fragment implements CallbackGetFoodById {
     public void onFoodByIdReceived(Food food) {
         fieldValidation.setValues(food);
         if (food.getPicture() != null) {
-            byte[] imageData = food.getPicture();
-            Bitmap bitmap = BitmapFactory.decodeByteArray(imageData, 0, imageData.length);
+            byteArray = food.getPicture();
+            Bitmap bitmap = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
             imageView.setImageBitmap(bitmap);
         }
     }

@@ -68,7 +68,7 @@ public class AddFoodFragment extends Fragment {
 
         // Отправка на сервер введенных данных
         requireView().findViewById(R.id.btSave).setOnClickListener(v -> {
-            ArrayList<EditText> etList = fieldValidation.validate();
+            ArrayList<EditText> etList = fieldValidation.getValues();
             if(etList != null){
                 FoodCallPost foodCall = new FoodCallPost(Data.getInstance().getUser().getBearerToken());
                 foodCall.postFood(FillClass.fillFood(etList, byteArray));

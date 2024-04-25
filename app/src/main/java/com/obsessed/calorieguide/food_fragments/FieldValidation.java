@@ -36,7 +36,7 @@ public class FieldValidation {
         }
     }
 
-    public ArrayList<EditText> validate(){
+    public ArrayList<EditText> getValues(){
         int counter = 0;
         for (EditText et: etList){
             et.setText(et.getText().toString().trim());
