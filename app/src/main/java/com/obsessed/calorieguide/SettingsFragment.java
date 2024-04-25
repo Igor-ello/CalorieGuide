@@ -103,12 +103,12 @@ public class SettingsFragment extends Fragment implements CompoundButton.OnCheck
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
                 if (response.isSuccessful()) {
-                    Log.d("Call", "Authentication successful: " + response.message());
+                    Log.d("Call", "Authentication successful!");
                     ShPrefs.dropData(requireContext());
                     Navigation.findNavController(view).popBackStack();
                     Navigation.findNavController(view).navigate(R.id.loginFragment);
                 } else {
-                    Log.e("Call", "Delete user failed: " + response.message());
+                    Log.e("Call", "Delete user failed; Response: " + response.message());
                 }
             }
 
