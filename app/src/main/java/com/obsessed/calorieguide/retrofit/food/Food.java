@@ -1,6 +1,8 @@
 package com.obsessed.calorieguide.retrofit.food;
 
 
+import java.util.ArrayList;
+
 public class Food {
     int id;
     String food_name;
@@ -24,6 +26,21 @@ public class Food {
         this.author_id = author_id;
         this.picture = picture;
     }
+
+    public ArrayList<Object> getValues() {
+        ArrayList<Object> arrayList = new ArrayList<>();
+        arrayList.add(food_name);
+        arrayList.add(description);
+        arrayList.add(calories);
+        arrayList.add(proteins);
+        arrayList.add(carbohydrates);
+        arrayList.add(fats);
+        arrayList.add(author_id);
+        arrayList.add(likes);
+        arrayList.add(picture);
+        return arrayList;
+    }
+
 
     public int getId() {
         return id;

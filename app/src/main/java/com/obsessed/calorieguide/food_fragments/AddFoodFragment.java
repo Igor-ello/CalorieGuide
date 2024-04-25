@@ -34,9 +34,8 @@ public class AddFoodFragment extends Fragment {
     // Константа для определения requestCode
     private static final int GALLERY_REQUEST_CODE = 100;
     ImageView imageView;
-    ArrayList<EditText> etList;
     byte[] byteArray;
-    ImageView img;
+    FieldValidation fieldValidation;
 
     public AddFoodFragment() {
         // Required empty public constructor
@@ -58,8 +57,8 @@ public class AddFoodFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        // Инициализируем полей
-        init(requireView());
+        // Инициализируем поля
+        init(view);
 
         // Подгрузка изображения из галереи или камеры
         requireView().findViewById(R.id.image).setOnClickListener(v -> {
@@ -70,13 +69,8 @@ public class AddFoodFragment extends Fragment {
 
         // Отправка на сервер введенных данных
         requireView().findViewById(R.id.btSave).setOnClickListener(v -> {
-            int counter = 0;
-            for (EditText et: etList){
-                et.setText(et.getText().toString().trim());
-                if (!et.getText().toString().isEmpty())
-                    counter++;
-            }
-            if(counter == etList.size()){
+            ArrayList<EditText> etList = fieldValidation.validate();
+            if(etList != null){
                 FoodCallPost foodCall = new FoodCallPost(Data.getInstance().getUser().getBearerToken());
                 foodCall.postFood(FillClass.fillFood(etList, byteArray));
 
@@ -89,16 +83,8 @@ public class AddFoodFragment extends Fragment {
 
     private void init(View view){
         imageView = view.findViewById(R.id.image);
-        etList = new ArrayList<>();
-        etList.add(view.findViewById(R.id.edFoodName));
-        etList.add(view.findViewById(R.id.edDescription));
-        etList.add(view.findViewById(R.id.edCalories));
-        etList.add(view.findViewById(R.id.edProteins));
-        etList.add(view.findViewById(R.id.edCarbohydrates));
-        etList.add(view.findViewById(R.id.edFats));
+        fieldValidation = new FieldValidation(requireView());
     }
-
-
 
     // Метод для обработки результата выбора изображения из галереи или камеры
     @Override
@@ -114,7 +100,7 @@ public class AddFoodFragment extends Fragment {
                 Bitmap originalBitmap = MediaStore.Images.Media.getBitmap(requireContext().getContentResolver(), selectedImageUri);
 
                 // Уменьшаем размер Bitmap до 125x125 dp
-                Bitmap resizedBitmap = getResizedBitmap(originalBitmap, 200, 200);
+                Bitmap resizedBitmap = FieldValidation.getResizedBitmap(originalBitmap, 200, 200);
 
                 // Устанавливаем уменьшенное изображение в ImageView
                 imageView.setImageBitmap(resizedBitmap);
@@ -128,22 +114,4 @@ public class AddFoodFragment extends Fragment {
             }
         }
     }
-
-    private Bitmap getResizedBitmap(Bitmap bm, int newWidth, int newHeight) {
-        int width = bm.getWidth();
-        int height = bm.getHeight();
-
-        float scaleWidth = ((float) newWidth) / width;
-        float scaleHeight = ((float) newHeight) / height;
-
-        // Создаем матрицу для масштабирования
-        Matrix matrix = new Matrix();
-
-        // Масштабируем изображение с матрицей
-        matrix.postScale(scaleWidth, scaleHeight);
-
-        // Пересоздаем изображение с новыми размерами
-        return Bitmap.createBitmap(bm, 0, 0, width, height, matrix, false);
-    }
-
 }
