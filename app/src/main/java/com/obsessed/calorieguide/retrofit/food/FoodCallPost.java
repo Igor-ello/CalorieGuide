@@ -69,13 +69,13 @@ public class FoodCallPost {
                 if (response.isSuccessful()) {
                     Log.d("Call", "Response postFood is successful!");
                 } else {
-                    Log.d("Call", "ERROR response postFood is not successful!!!");
+                    Log.e("Call", "ERROR response postFood is not successful!!!; Response: " + response.code());
                 }
             }
 
             @Override
             public void onFailure(Call<JsonObject> call, Throwable t) {
-                Log.d("Call", "ERROR in postFood Call!!! \n" + call + "\n" + t);
+                Log.e("Call", "ERROR in postFood Call!!! \n" + call + "\n" + t);
             }
         });
     }

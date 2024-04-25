@@ -21,7 +21,7 @@ public interface MainApi {
     @GET("products")
     Call<JsonObject> getAllFood();
 
-    @POST("/products")
+    @POST("/product")
     Call<JsonObject> postFood(@Body RequestBody requestBody);
 
     @PUT("/products/{product_id}")
