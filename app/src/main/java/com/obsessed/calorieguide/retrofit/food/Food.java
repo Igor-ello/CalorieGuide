@@ -28,16 +28,6 @@ public class Food {
         this.picture = picture;
     }
 
-    public Food(String food_name, String description, int calories, int proteins, int carbohydrates, int fats, byte[] picture) {
-        this.food_name = food_name;
-        this.description = description;
-        this.calories = calories;
-        this.proteins = proteins;
-        this.carbohydrates = carbohydrates;
-        this.fats = fats;
-        this.picture = picture;
-    }
-
     public ArrayList<Object> getValues() {
         ArrayList<Object> arrayList = new ArrayList<>();
         arrayList.add(food_name);
