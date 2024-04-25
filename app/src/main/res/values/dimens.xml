@@ -7,8 +7,8 @@
 
     <dimen name="margin_top">5dp</dimen>
 
-    <dimen name="icon_height">24dp</dimen>
-    <dimen name="icon_width">24dp</dimen>
+    <dimen name="icon_height">35dp</dimen>
+    <dimen name="icon_width">35dp</dimen>
 
     <dimen name="picture_height">125dp</dimen>
     <dimen name="picture_width">125dp</dimen>
