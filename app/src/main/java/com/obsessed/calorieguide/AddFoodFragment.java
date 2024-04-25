@@ -113,7 +113,7 @@ public class AddFoodFragment extends Fragment {
                 Bitmap originalBitmap = MediaStore.Images.Media.getBitmap(requireContext().getContentResolver(), selectedImageUri);
 
                 // Уменьшаем размер Bitmap до 125x125 dp
-                Bitmap resizedBitmap = getResizedBitmap(originalBitmap, R.dimen.picture_width, R.dimen.picture_height);
+                Bitmap resizedBitmap = getResizedBitmap(originalBitmap, 200, 200);
 
                 // Устанавливаем уменьшенное изображение в ImageView
                 imageView.setImageBitmap(resizedBitmap);
