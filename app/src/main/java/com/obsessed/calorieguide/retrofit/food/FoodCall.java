@@ -52,7 +52,6 @@ public class FoodCall {
     public void postFood(Food food) {
         Gson gson = new Gson();
         String json = gson.toJson(food); // Преобразуем объект Food в JSON-строку
-
         RequestBody requestBody = RequestBody.create(MediaType.parse("application/json"), json);
 
         // Выполняем POST-запрос на сервер
@@ -70,6 +69,29 @@ public class FoodCall {
             @Override
             public void onFailure(Call<JsonObject> call, Throwable t) {
                 Log.e("Call", "ERROR in postFood Call!!! \n" + call + "\n" + t);
+            }
+        });
+    }
+
+    public void updateFood(int foodId, Food food) {
+        Gson gson = new Gson();
+        String json = gson.toJson(food);
+        RequestBody requestBody = RequestBody.create(MediaType.parse("application/json"), json);
+
+        Call<JsonObject> call = mainApi.updateProduct(foodId, requestBody);
+        call.enqueue(new Callback<JsonObject>() {
+            @Override
+            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+                if (response.isSuccessful()) {
+                    Log.d("Call", "Request updateFood successful.");
+                } else {
+                    Log.e("Call", "Request updateFood failed. Response code: " + response.code());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<JsonObject> call, Throwable t) {
+                Log.e("Call", "ERROR in updateFood Call!!!", t);
             }
         });
     }

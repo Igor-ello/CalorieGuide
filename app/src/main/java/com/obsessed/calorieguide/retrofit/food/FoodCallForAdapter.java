@@ -26,7 +26,6 @@ public class FoodCallForAdapter {
     private CallbackGetFoodById callbackGetFoodById; //интерфейс для возврата результата запроса getFoodById
     private Retrofit retrofit;
     private MainApi mainApi;
-    private String baseUrl = Data.getInstance().getBaseUrl();
 
     // Перегрузка для запроса getAllFood
     public FoodCallForAdapter(CallbackGetAllFood callbackGetAllFood) {
@@ -102,47 +101,6 @@ public class FoodCallForAdapter {
             @Override
             public void onFailure(Call<JsonObject> call, Throwable t) {
                 Log.e("Call", "ERROR in getAllFood Call!!! \n" + call + "\n" + t);
-            }
-        });
-    }
-
-    public void updateFood(int foodId, Food food, String ACCESS_TOKEN) {
-        Gson gson = new Gson();
-        String json = gson.toJson(food);
-        RequestBody requestBody = RequestBody.create(MediaType.parse("application/json"), json);
-
-        OkHttpClient client = new OkHttpClient.Builder()
-                .addInterceptor(chain -> {
-                    Request originalRequest = chain.request();
-                    Request newRequest = originalRequest.newBuilder()
-                            .addHeader("Authorization", "Bearer " + ACCESS_TOKEN)
-                            .build();
-                    return chain.proceed(newRequest);
-                })
-                .build();
-
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(baseUrl)
-                .client(client)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-
-        MainApi mainApi = retrofit.create(MainApi.class);
-
-        Call<JsonObject> call = mainApi.updateProduct(foodId, requestBody);
-        call.enqueue(new Callback<JsonObject>() {
-            @Override
-            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
-                if (response.isSuccessful()) {
-                    Log.d("Call", "Request updateFood successful.");
-                } else {
-                    Log.e("Call", "Request updateFood failed. Response code: " + response.code());
-                }
-            }
-
-            @Override
-            public void onFailure(Call<JsonObject> call, Throwable t) {
-                Log.e("Call", "ERROR in updateFood Call!!!", t);
             }
         });
     }

@@ -25,6 +25,7 @@ import com.obsessed.calorieguide.convert.FillClass;
 import com.obsessed.calorieguide.data.Data;
 import com.obsessed.calorieguide.retrofit.food.CallbackGetFoodById;
 import com.obsessed.calorieguide.retrofit.food.Food;
+import com.obsessed.calorieguide.retrofit.food.FoodCall;
 import com.obsessed.calorieguide.retrofit.food.FoodCallForAdapter;
 
 import java.io.ByteArrayOutputStream;
@@ -82,9 +83,8 @@ public class EditFoodFragment extends Fragment implements CallbackGetFoodById {
         requireView().findViewById(R.id.btSave).setOnClickListener(v -> {
             ArrayList<EditText> etList = fieldValidation.getValues();
             if(etList != null){
-                FoodCallForAdapter foodCallForAdapter = new FoodCallForAdapter(this);
-                foodCallForAdapter.updateFood(foodId, FillClass.fillFood(etList, byteArray),
-                        Data.getInstance().getUser().getBearerToken());
+                FoodCall foodCall = new FoodCall(Data.getInstance().getUser().getBearerToken());
+                foodCall.updateFood(foodId, FillClass.fillFood(etList, byteArray));
 
                 Navigation.findNavController(view).popBackStack();
             } else {
