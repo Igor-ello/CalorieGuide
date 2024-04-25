@@ -3,6 +3,7 @@ package com.obsessed.calorieguide.food_fragments;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -70,6 +71,13 @@ public class EditFoodFragment extends Fragment implements CallbackGetFoodById {
             foodCall.getFoodById(foodId);
         });
 
+        // Подгрузка изображения из галереи или камеры
+        imageView.setOnClickListener(v -> {
+            Intent galleryIntent = new Intent(Intent.ACTION_PICK,
+                    android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+            startActivityForResult(galleryIntent, GALLERY_REQUEST_CODE);
+        });
+
         // Отправка на сервер введенных данных
         requireView().findViewById(R.id.btSave).setOnClickListener(v -> {
             ArrayList<EditText> etList = fieldValidation.validate();
@@ -88,6 +96,11 @@ public class EditFoodFragment extends Fragment implements CallbackGetFoodById {
     @Override
     public void onFoodByIdReceived(Food food) {
         fieldValidation.setValues(food);
+        if (food.getPicture() != null) {
+            byte[] imageData = food.getPicture();
+            Bitmap bitmap = BitmapFactory.decodeByteArray(imageData, 0, imageData.length);
+            imageView.setImageBitmap(bitmap);
+        }
     }
 
     private void init(View view){

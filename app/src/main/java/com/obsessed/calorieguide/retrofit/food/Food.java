@@ -36,7 +36,6 @@ public class Food {
         arrayList.add(proteins);
         arrayList.add(carbohydrates);
         arrayList.add(fats);
-        arrayList.add(picture);
         return arrayList;
     }
 

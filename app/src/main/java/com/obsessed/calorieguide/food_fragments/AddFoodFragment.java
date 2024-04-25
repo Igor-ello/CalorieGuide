@@ -3,7 +3,6 @@ package com.obsessed.calorieguide.food_fragments;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.Matrix;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -61,7 +60,7 @@ public class AddFoodFragment extends Fragment {
         init(view);
 
         // Подгрузка изображения из галереи или камеры
-        requireView().findViewById(R.id.image).setOnClickListener(v -> {
+        imageView.setOnClickListener(v -> {
             Intent galleryIntent = new Intent(Intent.ACTION_PICK,
                     android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
             startActivityForResult(galleryIntent, GALLERY_REQUEST_CODE);
