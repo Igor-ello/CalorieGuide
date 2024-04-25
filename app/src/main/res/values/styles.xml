@@ -22,6 +22,7 @@
         <item name="android:textStyle">bold</item>
         <item name="android:textColor">@color/text_color</item>
         <item name="android:text">Some text</item>
+        <item name="android:layout_marginBottom">10dp</item>
     </style>
 
     <style name="EditTextStyle">

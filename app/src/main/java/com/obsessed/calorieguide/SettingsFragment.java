@@ -1,5 +1,6 @@
 package com.obsessed.calorieguide;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -15,8 +16,19 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
 import android.widget.Switch;
+import android.widget.Toast;
 
+import com.google.gson.JsonObject;
+import com.obsessed.calorieguide.convert.JsonToClass;
 import com.obsessed.calorieguide.data.Data;
+import com.obsessed.calorieguide.retrofit.user.AuthRequest;
+import com.obsessed.calorieguide.retrofit.user.User;
+import com.obsessed.calorieguide.retrofit.user.UserCall;
+import com.obsessed.calorieguide.save.ShPrefs;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class SettingsFragment extends Fragment implements CompoundButton.OnCheckedChangeListener {
 
@@ -45,7 +57,23 @@ public class SettingsFragment extends Fragment implements CompoundButton.OnCheck
             navController.popBackStack();
         });
 
+        view.findViewById(R.id.btLogout).setOnClickListener(v -> {
+            // При выходе из аккаунта сбрасываем данные
+            ShPrefs.dropData(requireContext());
+            Navigation.findNavController(view).popBackStack();
+            Navigation.findNavController(view).navigate(R.id.loginFragment);
+        });
+
+        view.findViewById(R.id.btDelete).setOnClickListener(v -> {
+            deleteRequest(view);
+        });
+
         //Switch
+        setSwitch(view);
+    }
+
+    @SuppressLint("UseSwitchCompatOrMaterialCode")
+    void setSwitch(View view) {
         Switch swAdapterType = view.findViewById(R.id.swAdapterType);
         if (swAdapterType != null) {
             if (Data.getInstance().getAdapterType() == 1) {
@@ -66,5 +94,28 @@ public class SettingsFragment extends Fragment implements CompoundButton.OnCheck
             Data.getInstance().setAdapterType(1);
             Log.d("Switch", "Switch is not checked");
         }
+    }
+
+    private void deleteRequest(View view) {
+        UserCall userCall = new UserCall(Data.getInstance().getUser().getBearerToken());
+        Call<JsonObject> call = userCall.deleteUser(Data.getInstance().getUser().getId());
+        call.enqueue(new Callback<JsonObject>() {
+            @Override
+            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+                if (response.isSuccessful()) {
+                    Log.d("Call", "Authentication successful!");
+                    ShPrefs.dropData(requireContext());
+                    Navigation.findNavController(view).popBackStack();
+                    Navigation.findNavController(view).navigate(R.id.loginFragment);
+                } else {
+                    Log.e("Call", "Delete user failed; Response: " + response.message());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<JsonObject> call, Throwable t) {
+                Log.e("Call", "Delete user error: " + t.getMessage());
+            }
+        });
     }
 }

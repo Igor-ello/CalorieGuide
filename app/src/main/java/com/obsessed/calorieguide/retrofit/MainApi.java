@@ -41,4 +41,7 @@ public interface MainApi {
 
     @PUT("/user/{user_id}")
     Call<JsonObject> updateUser(@Path("user_id") int userId, @Body RegistrationRequest registrationRequest);
+
+    @DELETE("/user/{user_id}")
+    Call<JsonObject> deleteUser(@Path("user_id") int userId);
 }

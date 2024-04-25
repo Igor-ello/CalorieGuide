@@ -1,7 +1,5 @@
 package com.obsessed.calorieguide;
 
-import static com.obsessed.calorieguide.save.ShPrefs.loadData;
-
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -42,18 +40,11 @@ public class MainFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        loadData(requireContext());
+        ShPrefs.loadData(requireContext());
 
         // Проверка пользователя на наличие авторизации
         if(checkUserLogin(view))
             setupNavBarFragment(view);
-
-        view.findViewById(R.id.arrow_back).setOnClickListener(v -> {
-            // При выходе из аккаунта устанавливаем значение пользователя в null
-            ShPrefs.dropData(requireContext());
-            Navigation.findNavController(view).popBackStack();
-            Navigation.findNavController(view).navigate(R.id.loginFragment);
-        });
     }
 
     private boolean checkUserLogin(View view) {
