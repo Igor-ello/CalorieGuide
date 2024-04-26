@@ -26,13 +26,13 @@ public interface MainApi {
     Call<JsonObject> postFood(@Body RequestBody requestBody);
 
     @PUT("/products/{product_id}")
-    Call<JsonObject> updateProduct(@Path("product_id") int productId, @Body RequestBody requestBody);
+    Call<JsonObject> updateFood(@Path("product_id") int productId, @Body RequestBody requestBody);
 
     @DELETE("/products/{product_id}")
-    Call<JsonObject> deleteProduct(@Path("product_id") int productId);
+    Call<JsonObject> deleteFood(@Path("product_id") int productId);
 
     @POST("/products/like")
-    Call<JsonObject> likeProduct(@Body RequestBody requestBody);
+    Call<JsonObject> likeFood(@Body RequestBody requestBody);
 
 
     //User

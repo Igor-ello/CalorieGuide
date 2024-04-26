@@ -78,7 +78,7 @@ public class FoodCall {
         String json = gson.toJson(food);
         RequestBody requestBody = RequestBody.create(MediaType.parse("application/json"), json);
 
-        Call<JsonObject> call = mainApi.updateProduct(foodId, requestBody);
+        Call<JsonObject> call = mainApi.updateFood(foodId, requestBody);
         call.enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
@@ -97,7 +97,7 @@ public class FoodCall {
     }
 
     public void deleteFood(int foodId) {
-        Call<JsonObject> call = mainApi.deleteProduct(foodId);
+        Call<JsonObject> call = mainApi.deleteFood(foodId);
         call.enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
@@ -126,7 +126,7 @@ public class FoodCall {
         RequestBody requestBody = RequestBody.create(MediaType.parse("application/json"), json);
 
         // Выполняем POST-запрос на сервер
-        Call<JsonObject> call = mainApi.likeProduct(requestBody);
+        Call<JsonObject> call = mainApi.likeFood(requestBody);
         call.enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
