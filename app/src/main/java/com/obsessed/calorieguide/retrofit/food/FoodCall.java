@@ -114,4 +114,33 @@ public class FoodCall {
             }
         });
     }
+
+    public void likeFood(int userId, int productId) {
+        JsonObject requestObject = new JsonObject();
+        requestObject.addProperty("userId", userId);
+        requestObject.addProperty("productId", productId);
+
+        // Преобразование объекта запроса в JSON-строку
+        Gson gson = new Gson();
+        String json = gson.toJson(requestObject);
+        RequestBody requestBody = RequestBody.create(MediaType.parse("application/json"), json);
+
+        // Выполняем POST-запрос на сервер
+        Call<JsonObject> call = mainApi.likeProduct(requestBody);
+        call.enqueue(new Callback<JsonObject>() {
+            @Override
+            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+                if (response.isSuccessful()) {
+                    Log.d("Call", "Response likeFood is successful!");
+                } else {
+                    Log.e("Call", "ERROR response likeFood is not successful; Response: " + response.code());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<JsonObject> call, Throwable t) {
+                Log.e("Call", "ERROR in likeFood call: " + t.getMessage());
+            }
+        });
+    }
 }

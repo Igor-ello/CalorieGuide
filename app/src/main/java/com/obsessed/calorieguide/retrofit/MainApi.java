@@ -31,6 +31,9 @@ public interface MainApi {
     @DELETE("/products/{product_id}")
     Call<JsonObject> deleteProduct(@Path("product_id") int productId);
 
+    @POST("/products/like")
+    Call<JsonObject> likeProduct(@Body RequestBody requestBody);
+
 
     //User
     @POST("/login")
