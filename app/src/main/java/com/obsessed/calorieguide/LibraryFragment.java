@@ -21,6 +21,7 @@ import com.obsessed.calorieguide.adapters.FoodAdapterV2;
 import com.obsessed.calorieguide.data.Data;
 import com.obsessed.calorieguide.databinding.FragmentLibraryBinding;
 import com.obsessed.calorieguide.retrofit.food.Food;
+import com.obsessed.calorieguide.retrofit.food.FoodCall;
 import com.obsessed.calorieguide.retrofit.food.FoodCallForAdapter;
 import com.obsessed.calorieguide.retrofit.food.CallbackGetAllFood;
 
@@ -96,6 +97,12 @@ public class LibraryFragment extends Fragment implements CallbackGetAllFood {
                     Bundle args = new Bundle();
                     args.putInt("food_id", food.getId());
                     Navigation.findNavController(requireView()).navigate(R.id.action_libraryFragment_to_editFoodFragment, args);
+                });
+
+                foodAdapter.setOnLikeFoodClickListener(food -> {
+                    Log.d("FoodAdapter", "Clicked on like for food in FoodAdapterV1: " + food.getFoodName());
+                    FoodCall foodCall = new FoodCall(Data.getInstance().getUser().getBearerToken());
+                    foodCall.likeFood(Data.getInstance().getUser().getId(), food.getId());
                 });
             }
         }

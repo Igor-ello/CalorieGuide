@@ -29,9 +29,16 @@
                 android:orientation="vertical"
                 android:layout_gravity="center">
 
+                <FrameLayout
+                    style="@style/IconStyle"
+                    android:layout_gravity="end"
+                    android:background="@drawable/like_not_active">
+                </FrameLayout>
+
                 <TextView
                     android:id="@+id/tvName"
                     style="@style/TextHeaderStyle"
+                    android:layout_marginBottom="5dp"
                     android:layout_weight="1"
                     android:gravity="center"
                     android:fontFamily="sans-serif-condensed">
@@ -40,7 +47,7 @@
                 <TextView
                     android:id="@+id/tv_calories"
                     style="@style/TextHeaderStyle"
-                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
                     android:layout_weight="1"
                     android:gravity="center"
                     android:fontFamily="sans-serif-condensed">
@@ -55,6 +62,7 @@
 
                     <TextView
                         android:id="@+id/tv_proteins"
+                        android:layout_marginBottom="0dp"
                         style="@style/TextHeaderStyle"
                         android:gravity="center"
                         android:layout_weight="1"
@@ -64,6 +72,7 @@
                     <TextView
                         android:id="@+id/tv_carbohydrates"
                         style="@style/TextHeaderStyle"
+                        android:layout_marginBottom="0dp"
                         android:gravity="center"
                         android:layout_weight="1"
                         android:fontFamily="sans-serif-condensed">
@@ -72,6 +81,7 @@
                     <TextView
                         android:id="@+id/tv_fats"
                         style="@style/TextHeaderStyle"
+                        android:layout_marginBottom="0dp"
                         android:gravity="center"
                         android:layout_weight="1"
                         android:fontFamily="sans-serif-condensed">

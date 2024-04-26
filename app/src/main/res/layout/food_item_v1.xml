@@ -6,8 +6,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:padding="5dp">
 
-
     <androidx.cardview.widget.CardView
+        android:id="@+id/cardView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:cardCornerRadius="10dp">
@@ -19,27 +19,33 @@
             android:padding="10dp"
             android:background="@drawable/card_background">
 
-
-            <FrameLayout
-                style="@style/IconStyle"
-                android:layout_gravity="end"
-                android:background="@drawable/like_not_active">
-            </FrameLayout>
-
             <ImageView
                 android:id="@+id/imageView"
                 style="@style/PictureStyle"
                 android:layout_gravity="center">
             </ImageView>
 
-            <TextView
-                android:id="@+id/tvName"
-                style="@style/TextHeaderStyle"
-                android:layout_marginBottom="5dp"
-                android:layout_marginTop="@dimen/margin_top"
-                android:gravity="center"
-                android:fontFamily="sans-serif-condensed">
-            </TextView>
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/tvName"
+                    style="@style/TextHeaderStyle"
+                    android:layout_marginBottom="0dp"
+                    android:layout_marginTop="@dimen/margin_top"
+                    android:gravity="center"
+                    android:fontFamily="sans-serif-condensed">
+                </TextView>
+
+                <ImageView
+                    android:id="@+id/btLike"
+                    style="@style/IconStyle"
+                    android:layout_gravity="end"
+                    android:background="@drawable/like_not_active">
+                </ImageView>
+
+            </FrameLayout>
 
         </LinearLayout>
 

@@ -117,8 +117,8 @@ public class FoodCall {
 
     public void likeFood(int userId, int productId) {
         JsonObject requestObject = new JsonObject();
-        requestObject.addProperty("userId", userId);
-        requestObject.addProperty("productId", productId);
+        requestObject.addProperty("user_id", userId);
+        requestObject.addProperty("product_id", productId);
 
         // Преобразование объекта запроса в JSON-строку
         Gson gson = new Gson();
