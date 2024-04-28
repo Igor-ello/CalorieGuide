@@ -1,4 +1,4 @@
-package com.obsessed.calorieguide;
+package com.obsessed.calorieguide.library;
 
 import android.os.Bundle;
 
@@ -16,6 +16,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.obsessed.calorieguide.NavBarFragment;
+import com.obsessed.calorieguide.R;
 import com.obsessed.calorieguide.adapters.FoodAdapterV1;
 import com.obsessed.calorieguide.adapters.FoodAdapterV2;
 import com.obsessed.calorieguide.data.Data;
@@ -62,7 +64,7 @@ public class LibraryFragment extends Fragment implements CallbackGetAllFood {
 
         //Подгрузка данных
         requireActivity().runOnUiThread(() -> {
-            FoodCallForAdapter foodCallForAdapter = new FoodCallForAdapter(this); // Передаем экземпляр CallbackGetAllFood в конструктор FoodCallForAdapter
+            FoodCallForAdapter foodCallForAdapter = new FoodCallForAdapter(this);
             foodCallForAdapter.getAllFood();
         });
 
@@ -76,39 +78,7 @@ public class LibraryFragment extends Fragment implements CallbackGetAllFood {
     @Override
     public void onAllFoodReceived(List<Food> foodList) {
         if (isAdded()) { // Проверяем, привязан ли фрагмент к активности
-            if (Data.getInstance().getAdapterType() == 2) {
-                FoodAdapterV2 foodAdapter = new FoodAdapterV2();
-                foodAdapter.foodArrayList = (ArrayList<Food>) foodList;
-                binding.rcView.setLayoutManager(new GridLayoutManager(requireContext(), 1));
-                binding.rcView.setAdapter(foodAdapter);
-
-                // Установка слушателя в адаптере
-                foodAdapter.setOnFoodClickListener(food -> {
-                    Log.d("FoodAdapter", "Clicked on food in FoodAdapterV2: " + food.getFoodName());
-                    Bundle args = new Bundle();
-                    args.putInt("food_id", food.getId());
-                    Navigation.findNavController(requireView()).navigate(R.id.action_libraryFragment_to_editFoodFragment, args);
-                });
-            } else {
-                FoodAdapterV1 foodAdapter = new FoodAdapterV1();
-                foodAdapter.foodArrayList = (ArrayList<Food>) foodList;
-                binding.rcView.setLayoutManager(new GridLayoutManager(requireContext(), 2));
-                binding.rcView.setAdapter(foodAdapter);
-
-                // Установка слушателя в адаптере
-                foodAdapter.setOnFoodClickListener(food -> {
-                    Log.d("FoodAdapter", "Clicked on food in FoodAdapterV1: " + food.getFoodName());
-                    Bundle args = new Bundle();
-                    args.putInt("food_id", food.getId());
-                    Navigation.findNavController(requireView()).navigate(R.id.action_libraryFragment_to_editFoodFragment, args);
-                });
-
-                foodAdapter.setOnLikeFoodClickListener(food -> {
-                    Log.d("FoodAdapter", "Clicked on like for food in FoodAdapterV1: " + food.getFoodName());
-                    FoodCall foodCall = new FoodCall(Data.getInstance().getUser().getBearerToken());
-                    foodCall.likeFood(Data.getInstance().getUser().getId(), food.getId(), requireView());
-                });
-            }
+            AllFoodReceived.onAllFoodReceived(requireContext(), requireView(), binding, foodList);
         }
     }
 

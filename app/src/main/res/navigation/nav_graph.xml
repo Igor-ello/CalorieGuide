@@ -53,7 +53,7 @@
         tools:layout="@layout/fragment_registration" />
     <fragment
         android:id="@+id/libraryFragment"
-        android:name="com.obsessed.calorieguide.LibraryFragment"
+        android:name="com.obsessed.calorieguide.library.LibraryFragment"
         android:label="fragment_library"
         tools:layout="@layout/fragment_library" >
         <action

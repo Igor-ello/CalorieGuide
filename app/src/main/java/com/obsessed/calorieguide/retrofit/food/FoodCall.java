@@ -136,13 +136,20 @@ public class FoodCall {
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
                 if (response.isSuccessful()) {
-                    ImageView imageView = view.findViewById(R.id.btLike);
-                    if (imageView.getDrawable().getConstantState().equals(
-                            ContextCompat.getDrawable(view.getContext(),
-                                    R.drawable.like_not_active).getConstantState())) {
-                        imageView.setImageResource(R.drawable.like_active);
-                    } else {
-                        imageView.setImageResource(R.drawable.like_not_active);
+
+                    ImageView imageView = null;
+                    if(Data.getInstance().getAdapterType() != 2)
+                        imageView = view.findViewById(R.id.btLikeV1);
+                    else
+                        imageView = view.findViewById(R.id.btLikeV2);
+
+                    if(imageView != null) {
+                        if (imageView.getDrawable().getConstantState().equals(
+                                ContextCompat.getDrawable(view.getContext(), R.drawable.like_not_active).getConstantState())) {
+                            imageView.setImageResource(R.drawable.like_active);
+                        } else {
+                            imageView.setImageResource(R.drawable.like_not_active);
+                        }
                     }
                     Log.d("Call", "Response likeFood is successful!");
                 } else {

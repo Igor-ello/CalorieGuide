@@ -29,11 +29,12 @@
                 android:orientation="vertical"
                 android:layout_gravity="center">
 
-                <FrameLayout
+                <ImageView
+                    android:id="@+id/btLikeV2"
                     style="@style/IconStyle"
                     android:layout_gravity="end"
-                    android:background="@drawable/like_not_active">
-                </FrameLayout>
+                    android:src="@drawable/like_not_active">
+                </ImageView>
 
                 <TextView
                     android:id="@+id/tvName"

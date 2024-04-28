@@ -18,6 +18,7 @@ import java.util.ArrayList;
 public class FoodAdapterV2 extends RecyclerView.Adapter<FoodAdapterV2.FoodHolder> {
     public ArrayList<Food> foodArrayList;
     private OnFoodClickListener onFoodClickListener;
+    private OnLikeFoodClickListener onLikeFoodClickListener;
 
     public class FoodHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         FoodItemV2Binding binding;
@@ -26,6 +27,7 @@ public class FoodAdapterV2 extends RecyclerView.Adapter<FoodAdapterV2.FoodHolder
             super(itemView);
             binding = FoodItemV2Binding.bind(itemView);
             binding.getRoot().setOnClickListener(this);
+            binding.btLikeV2.setOnClickListener(this);
         }
 
         @Override
@@ -33,6 +35,9 @@ public class FoodAdapterV2 extends RecyclerView.Adapter<FoodAdapterV2.FoodHolder
             int position = getAdapterPosition();
             if (position != RecyclerView.NO_POSITION && onFoodClickListener != null) {
                 onFoodClickListener.onFoodClick(foodArrayList.get(position));
+            }
+            if (position != RecyclerView.NO_POSITION && onLikeFoodClickListener != null) {
+                onLikeFoodClickListener.onLikeFoodClick(foodArrayList.get(position));
             }
         }
 
@@ -63,6 +68,11 @@ public class FoodAdapterV2 extends RecyclerView.Adapter<FoodAdapterV2.FoodHolder
     @Override
     public void onBindViewHolder(@NonNull FoodHolder holder, int position) {
         holder.bind(foodArrayList.get(position));
+        holder.binding.btLikeV2.setOnClickListener(v -> {
+            if (onLikeFoodClickListener != null) {
+                onLikeFoodClickListener.onLikeFoodClick(foodArrayList.get(position));
+            }
+        });
     }
 
     @Override
@@ -77,5 +87,9 @@ public class FoodAdapterV2 extends RecyclerView.Adapter<FoodAdapterV2.FoodHolder
 
     public void setOnFoodClickListener(OnFoodClickListener listener) {
         this.onFoodClickListener = listener;
+    }
+
+    public void setOnLikeFoodClickListener(OnLikeFoodClickListener listener) {
+        this.onLikeFoodClickListener = listener;
     }
 }

@@ -27,7 +27,7 @@ public class FoodAdapterV1 extends RecyclerView.Adapter<FoodAdapterV1.FoodHolder
             super(itemView);
             binding = FoodItemV1Binding.bind(itemView);
             binding.getRoot().setOnClickListener(this);
-            binding.btLike.setOnClickListener(this);
+            binding.btLikeV1.setOnClickListener(this);
         }
 
         @Override
@@ -64,7 +64,7 @@ public class FoodAdapterV1 extends RecyclerView.Adapter<FoodAdapterV1.FoodHolder
     @Override
     public void onBindViewHolder(@NonNull FoodHolder holder, int position) {
         holder.bind(foodArrayList.get(position));
-        holder.binding.btLike.setOnClickListener(v -> {
+        holder.binding.btLikeV1.setOnClickListener(v -> {
             if (onLikeFoodClickListener != null) {
                 onLikeFoodClickListener.onLikeFoodClick(foodArrayList.get(position));
             }

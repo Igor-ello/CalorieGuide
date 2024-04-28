@@ -39,10 +39,10 @@
                 </TextView>
 
                 <ImageView
-                    android:id="@+id/btLike"
+                    android:id="@+id/btLikeV1"
                     style="@style/IconStyle"
                     android:layout_gravity="end"
-                    android:background="@drawable/like_not_active">
+                    android:src="@drawable/like_not_active">
                 </ImageView>
 
             </FrameLayout>
