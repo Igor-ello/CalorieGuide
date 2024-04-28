@@ -1,9 +1,14 @@
 package com.obsessed.calorieguide.retrofit.food;
 
 import android.util.Log;
+import android.view.View;
+import android.widget.ImageView;
+
+import androidx.core.content.ContextCompat;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import com.obsessed.calorieguide.R;
 import com.obsessed.calorieguide.data.Data;
 import com.obsessed.calorieguide.retrofit.MainApi;
 
@@ -115,7 +120,7 @@ public class FoodCall {
         });
     }
 
-    public void likeFood(int userId, int productId) {
+    public void likeFood(int userId, int productId, View view) {
         JsonObject requestObject = new JsonObject();
         requestObject.addProperty("user_id", userId);
         requestObject.addProperty("product_id", productId);
@@ -131,6 +136,14 @@ public class FoodCall {
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
                 if (response.isSuccessful()) {
+                    ImageView imageView = view.findViewById(R.id.btLike);
+                    if (imageView.getDrawable().getConstantState().equals(
+                            ContextCompat.getDrawable(view.getContext(),
+                                    R.drawable.like_not_active).getConstantState())) {
+                        imageView.setImageResource(R.drawable.like_active);
+                    } else {
+                        imageView.setImageResource(R.drawable.like_not_active);
+                    }
                     Log.d("Call", "Response likeFood is successful!");
                 } else {
                     Log.e("Call", "ERROR response likeFood is not successful; Response: " + response.code());

@@ -28,6 +28,10 @@ import com.obsessed.calorieguide.retrofit.food.CallbackGetAllFood;
 import java.util.ArrayList;
 import java.util.List;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 public class LibraryFragment extends Fragment implements CallbackGetAllFood {
     FragmentLibraryBinding binding;
 
@@ -102,7 +106,7 @@ public class LibraryFragment extends Fragment implements CallbackGetAllFood {
                 foodAdapter.setOnLikeFoodClickListener(food -> {
                     Log.d("FoodAdapter", "Clicked on like for food in FoodAdapterV1: " + food.getFoodName());
                     FoodCall foodCall = new FoodCall(Data.getInstance().getUser().getBearerToken());
-                    foodCall.likeFood(Data.getInstance().getUser().getId(), food.getId());
+                    foodCall.likeFood(Data.getInstance().getUser().getId(), food.getId(), requireView());
                 });
             }
         }
