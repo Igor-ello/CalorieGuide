@@ -18,7 +18,7 @@
             android:layout_weight="1">
             <ImageView
                 style="@style/IconStyle"
-                android:src="@drawable/home_icon">
+                android:src="@drawable/home">
             </ImageView>
         </LinearLayout>
 
@@ -42,7 +42,7 @@
             android:layout_weight="1">
             <ImageView
                 style="@style/IconStyle"
-                android:src="@drawable/profile_icon">
+                android:src="@drawable/profile">
             </ImageView>
         </LinearLayout>
     </LinearLayout>

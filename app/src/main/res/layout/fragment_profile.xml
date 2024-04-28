@@ -19,7 +19,7 @@
         android:id="@+id/settingsButton"
         style="@style/IconStyle"
         android:layout_gravity="end"
-        android:background="@drawable/settings_icon">
+        android:background="@drawable/settings">
     </FrameLayout>
 
     <LinearLayout
