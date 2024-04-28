@@ -1,4 +1,4 @@
-package com.obsessed.calorieguide;
+package com.obsessed.calorieguide.fragments;
 
 import android.os.Bundle;
 
@@ -15,12 +15,13 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.google.gson.JsonObject;
-import com.obsessed.calorieguide.convert.JsonToClass;
+import com.obsessed.calorieguide.R;
+import com.obsessed.calorieguide.tools.convert.JsonToClass;
 import com.obsessed.calorieguide.data.Data;
 import com.obsessed.calorieguide.retrofit.user.User;
 import com.obsessed.calorieguide.retrofit.user.UserCall;
 import com.obsessed.calorieguide.retrofit.user.AuthRequest;
-import com.obsessed.calorieguide.save.ShPrefs;
+import com.obsessed.calorieguide.tools.save.ShPrefs;
 
 import retrofit2.Call;
 import retrofit2.Callback;

@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".food_fragments.AddFoodFragment"
+    tools:context=".fragments.food.AddFoodFragment"
     android:layout_margin="@dimen/marginStandard">
 
     <LinearLayout

@@ -1,8 +1,9 @@
-package com.obsessed.calorieguide.food_fragments;
+package com.obsessed.calorieguide.fragments.food;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -20,36 +21,42 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.obsessed.calorieguide.R;
-import com.obsessed.calorieguide.convert.FillClass;
+import com.obsessed.calorieguide.tools.convert.FillClass;
 import com.obsessed.calorieguide.data.Data;
+import com.obsessed.calorieguide.retrofit.food.CallbackGetFoodById;
+import com.obsessed.calorieguide.retrofit.food.Food;
 import com.obsessed.calorieguide.retrofit.food.FoodCall;
+import com.obsessed.calorieguide.retrofit.food.FoodCallForAdapter;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 
-
-public class AddFoodFragment extends Fragment {
-    // Константа для определения requestCode
+public class EditFoodFragment extends Fragment implements CallbackGetFoodById {
+    private static final String ARG_FOOD_ID = "food_id";
+    private int foodId;
     private static final int GALLERY_REQUEST_CODE = 100;
     ImageView imageView;
     byte[] byteArray;
     FieldValidation fieldValidation;
 
-    public AddFoodFragment() {
+    public EditFoodFragment() {
         // Required empty public constructor
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (getArguments() != null) {
+            foodId = getArguments().getInt(ARG_FOOD_ID);
+        }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_add_food, container, false);
+        return inflater.inflate(R.layout.fragment_edit_food, container, false);
     }
 
     @Override
@@ -58,6 +65,19 @@ public class AddFoodFragment extends Fragment {
 
         // Инициализируем поля
         init(view);
+
+        //Подгрузка данных
+        requireActivity().runOnUiThread(() -> {
+            FoodCallForAdapter foodCallForAdapter = new FoodCallForAdapter(this);
+            foodCallForAdapter.getFoodById(foodId);
+        });
+
+        view.findViewById(R.id.btDelete).setOnClickListener(v -> {
+            FoodCall foodCall = new FoodCall(Data.getInstance().getUser().getBearerToken());
+            foodCall.deleteFood(foodId);
+
+            Navigation.findNavController(view).popBackStack();
+        });
 
         // Подгрузка изображения из галереи или камеры
         imageView.setOnClickListener(v -> {
@@ -71,13 +91,23 @@ public class AddFoodFragment extends Fragment {
             ArrayList<EditText> etList = fieldValidation.getValues();
             if(etList != null){
                 FoodCall foodCall = new FoodCall(Data.getInstance().getUser().getBearerToken());
-                foodCall.postFood(FillClass.fillFood(etList, byteArray));
+                foodCall.updateFood(foodId, FillClass.fillFood(etList, byteArray));
 
                 Navigation.findNavController(view).popBackStack();
             } else {
                 Toast.makeText(requireContext(), "Fill in all the fields", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    @Override
+    public void onFoodByIdReceived(Food food) {
+        fieldValidation.setValues(food);
+        if (food.getPicture() != null) {
+            byteArray = food.getPicture();
+            Bitmap bitmap = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
+            imageView.setImageBitmap(bitmap);
+        }
     }
 
     private void init(View view){

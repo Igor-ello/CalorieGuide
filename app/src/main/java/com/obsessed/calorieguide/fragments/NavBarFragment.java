@@ -1,4 +1,4 @@
-package com.obsessed.calorieguide;
+package com.obsessed.calorieguide.fragments;
 
 import android.os.Bundle;
 
@@ -17,6 +17,7 @@ import android.view.ViewGroup;
 import android.widget.Switch;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.obsessed.calorieguide.R;
 
 public class NavBarFragment extends Fragment {
 

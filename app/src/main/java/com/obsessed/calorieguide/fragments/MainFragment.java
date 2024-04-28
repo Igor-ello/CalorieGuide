@@ -1,4 +1,4 @@
-package com.obsessed.calorieguide;
+package com.obsessed.calorieguide.fragments;
 
 import android.os.Bundle;
 
@@ -14,8 +14,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.obsessed.calorieguide.R;
 import com.obsessed.calorieguide.data.Data;
-import com.obsessed.calorieguide.save.ShPrefs;
+import com.obsessed.calorieguide.tools.save.ShPrefs;
 
 
 public class MainFragment extends Fragment {

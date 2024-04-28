@@ -1,4 +1,4 @@
-package com.obsessed.calorieguide.convert;
+package com.obsessed.calorieguide.tools.convert;
 
 import android.widget.EditText;
 

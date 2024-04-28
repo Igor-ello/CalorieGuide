@@ -7,7 +7,7 @@ import android.os.Bundle;
 import android.util.Log;
 
 import com.obsessed.calorieguide.data.Data;
-import com.obsessed.calorieguide.save.ShPrefs;
+import com.obsessed.calorieguide.tools.save.ShPrefs;
 
 public class MainActivity extends AppCompatActivity {
 

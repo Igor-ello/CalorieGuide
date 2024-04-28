@@ -1,4 +1,4 @@
-package com.obsessed.calorieguide.library;
+package com.obsessed.calorieguide.fragments.library;
 
 import android.content.Context;
 import android.os.Bundle;

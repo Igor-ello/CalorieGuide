@@ -1,4 +1,4 @@
-package com.obsessed.calorieguide;
+package com.obsessed.calorieguide.fragments;
 
 import android.os.Bundle;
 
@@ -16,6 +16,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.google.gson.JsonObject;
+import com.obsessed.calorieguide.R;
 import com.obsessed.calorieguide.retrofit.user.RegistrationRequest;
 import com.obsessed.calorieguide.retrofit.user.UserCall;
 

@@ -1,11 +1,10 @@
-package com.obsessed.calorieguide;
+package com.obsessed.calorieguide.fragments;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.widget.SwitchCompat;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -16,15 +15,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
 import android.widget.Switch;
-import android.widget.Toast;
 
 import com.google.gson.JsonObject;
-import com.obsessed.calorieguide.convert.JsonToClass;
+import com.obsessed.calorieguide.R;
 import com.obsessed.calorieguide.data.Data;
-import com.obsessed.calorieguide.retrofit.user.AuthRequest;
-import com.obsessed.calorieguide.retrofit.user.User;
 import com.obsessed.calorieguide.retrofit.user.UserCall;
-import com.obsessed.calorieguide.save.ShPrefs;
+import com.obsessed.calorieguide.tools.save.ShPrefs;
 
 import retrofit2.Call;
 import retrofit2.Callback;

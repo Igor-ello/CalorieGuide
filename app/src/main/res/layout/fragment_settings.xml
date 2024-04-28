@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SettingsFragment"
+    tools:context=".fragments.SettingsFragment"
     android:layout_margin="@dimen/marginStandard">
 
     <include layout="@layout/arrow_back"></include>

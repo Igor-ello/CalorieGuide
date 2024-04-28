@@ -1,4 +1,4 @@
-package com.obsessed.calorieguide.library;
+package com.obsessed.calorieguide.fragments.library;
 
 import android.os.Bundle;
 
@@ -9,30 +9,20 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
-import androidx.recyclerview.widget.GridLayoutManager;
 
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.obsessed.calorieguide.NavBarFragment;
+import com.obsessed.calorieguide.fragments.NavBarFragment;
 import com.obsessed.calorieguide.R;
-import com.obsessed.calorieguide.adapters.FoodAdapterV1;
-import com.obsessed.calorieguide.adapters.FoodAdapterV2;
-import com.obsessed.calorieguide.data.Data;
 import com.obsessed.calorieguide.databinding.FragmentLibraryBinding;
 import com.obsessed.calorieguide.retrofit.food.Food;
-import com.obsessed.calorieguide.retrofit.food.FoodCall;
 import com.obsessed.calorieguide.retrofit.food.FoodCallForAdapter;
 import com.obsessed.calorieguide.retrofit.food.CallbackGetAllFood;
 
-import java.util.ArrayList;
 import java.util.List;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class LibraryFragment extends Fragment implements CallbackGetAllFood {
     FragmentLibraryBinding binding;

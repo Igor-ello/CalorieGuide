@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/mainFragment"
-        android:name="com.obsessed.calorieguide.MainFragment"
+        android:name="com.obsessed.calorieguide.fragments.MainFragment"
         android:label="fragment_main"
         tools:layout="@layout/fragment_main" >
         <action
@@ -19,7 +19,7 @@
     </fragment>
     <fragment
         android:id="@+id/profileFragment"
-        android:name="com.obsessed.calorieguide.ProfileFragment"
+        android:name="com.obsessed.calorieguide.fragments.ProfileFragment"
         android:label="fragment_profile"
         tools:layout="@layout/fragment_profile" >
         <action
@@ -31,12 +31,12 @@
     </fragment>
     <fragment
         android:id="@+id/settingsFragment"
-        android:name="com.obsessed.calorieguide.SettingsFragment"
+        android:name="com.obsessed.calorieguide.fragments.SettingsFragment"
         android:label="fragment_settings"
         tools:layout="@layout/fragment_settings" />
     <fragment
         android:id="@+id/loginFragment"
-        android:name="com.obsessed.calorieguide.LoginFragment"
+        android:name="com.obsessed.calorieguide.fragments.LoginFragment"
         android:label="fragment_login"
         tools:layout="@layout/fragment_login" >
         <action
@@ -48,12 +48,12 @@
     </fragment>
     <fragment
         android:id="@+id/registrationFragment"
-        android:name="com.obsessed.calorieguide.RegistrationFragment"
+        android:name="com.obsessed.calorieguide.fragments.RegistrationFragment"
         android:label="fragment_registration"
         tools:layout="@layout/fragment_registration" />
     <fragment
         android:id="@+id/libraryFragment"
-        android:name="com.obsessed.calorieguide.library.LibraryFragment"
+        android:name="com.obsessed.calorieguide.fragments.library.LibraryFragment"
         android:label="fragment_library"
         tools:layout="@layout/fragment_library" >
         <action
@@ -68,17 +68,17 @@
     </fragment>
     <fragment
         android:id="@+id/addFoodFragment"
-        android:name="com.obsessed.calorieguide.food_fragments.AddFoodFragment"
+        android:name="com.obsessed.calorieguide.fragments.food.AddFoodFragment"
         android:label="fragment_add_food"
         tools:layout="@layout/fragment_add_food" />
     <fragment
         android:id="@+id/addMealFragment"
-        android:name="com.obsessed.calorieguide.AddMealFragment"
+        android:name="com.obsessed.calorieguide.fragments.AddMealFragment"
         android:label="fragment_add_meal"
         tools:layout="@layout/fragment_add_meal" />
     <fragment
         android:id="@+id/editFoodFragment"
-        android:name="com.obsessed.calorieguide.food_fragments.EditFoodFragment"
+        android:name="com.obsessed.calorieguide.fragments.food.EditFoodFragment"
         android:label="fragment_edit_food"
         tools:layout="@layout/fragment_edit_food" >
         <argument android:name="food" />

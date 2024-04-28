@@ -1,4 +1,4 @@
-package com.obsessed.calorieguide.food_fragments;
+package com.obsessed.calorieguide.fragments.food;
 
 import android.graphics.Bitmap;
 import android.graphics.Matrix;
