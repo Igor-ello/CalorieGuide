@@ -5,8 +5,6 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.navigation.Navigation;
 
 import android.util.Log;
@@ -54,8 +52,6 @@ public class ProfileFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        //NavBarFragment
-        setupNavBarFragment(view);
         //Объявление параметров
         init(view);
         //Заполнение массива параметров
@@ -94,15 +90,6 @@ public class ProfileFragment extends Fragment {
             btEdit.setVisibility(View.VISIBLE);
             btSave.setVisibility(View.GONE);
         });
-    }
-
-    private void setupNavBarFragment(View view) {
-        Log.d("MainFragment", "Setting up navigation bar fragment");
-        NavBarFragment nvb = new NavBarFragment(view);
-        FragmentManager fragmentManager = getParentFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.add(R.id.fragment_nav_bar, nvb);
-        fragmentTransaction.commit();
     }
 
     private void init(View view) {
