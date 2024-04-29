@@ -1,5 +1,6 @@
 package com.obsessed.calorieguide.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -15,6 +16,8 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.google.gson.JsonObject;
+import com.obsessed.calorieguide.MainActivityApp;
+import com.obsessed.calorieguide.MainActivityAuth;
 import com.obsessed.calorieguide.R;
 import com.obsessed.calorieguide.tools.convert.JsonToClass;
 import com.obsessed.calorieguide.data.Data;
@@ -87,8 +90,11 @@ public class LoginFragment extends Fragment {
                         ShPrefs.saveData(user, Data.getInstance().getAdapterType(), requireContext());
 
                         Toast.makeText(requireContext(), "Welcome!", Toast.LENGTH_SHORT).show();
-                        Navigation.findNavController(view).popBackStack();
-                        Navigation.findNavController(view).navigate(R.id.mainFragment);
+
+                        // Вернуться на главную activity
+                        if (getActivity() != null && getActivity() instanceof MainActivityAuth) {
+                            getActivity().finish(); // Закрываем активность
+                        }
                     }
                 } else {
                     Log.e("Call", "Authentication failed; Response: " + response.code());

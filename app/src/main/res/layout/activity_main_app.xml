@@ -2,16 +2,17 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".MainActivityApp">
 
     <fragment
-        android:id="@+id/navHostFragment"
+        android:id="@+id/navHostFragmentApp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:defaultNavHost="true"
-        app:navGraph="@navigation/nav_graph"
+        app:navGraph="@navigation/nav_graph_app"
         android:name="androidx.navigation.fragment.NavHostFragment">
     </fragment>
 
@@ -23,7 +24,8 @@
         android:background="@android:color/white"
         app:itemIconTint="@color/black"
         app:itemTextColor="@color/black"
-        android:layout_alignBottom="@id/navHostFragment">
+        android:layout_alignBottom="@id/navHostFragmentApp">
     </com.google.android.material.bottomnavigation.BottomNavigationView>
+
 
 </RelativeLayout>

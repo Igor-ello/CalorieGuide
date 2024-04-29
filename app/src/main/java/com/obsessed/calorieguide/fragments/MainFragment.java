@@ -1,12 +1,11 @@
 package com.obsessed.calorieguide.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.navigation.Navigation;
 
 import android.util.Log;
@@ -14,6 +13,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.obsessed.calorieguide.MainActivityApp;
+import com.obsessed.calorieguide.MainActivityAuth;
 import com.obsessed.calorieguide.R;
 import com.obsessed.calorieguide.data.Data;
 import com.obsessed.calorieguide.tools.save.ShPrefs;
@@ -51,8 +52,9 @@ public class MainFragment extends Fragment {
         Log.d("MainFragment", "Checking user login status");
         if (Data.getInstance().getUser() == null) {
             Log.d("MainFragment", "User not logged in, navigating to login fragment");
-            Navigation.findNavController(view).popBackStack();
-            Navigation.findNavController(view).navigate(R.id.loginFragment);
+            if (getActivity() != null && getActivity() instanceof MainActivityApp) {
+                startActivity(new Intent(getActivity(), MainActivityAuth.class));
+            }
             return false;
         } else {
             Log.d("MainFragment", "User logged in");
