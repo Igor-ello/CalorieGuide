@@ -2,10 +2,14 @@ package com.obsessed.calorieguide;
 
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+import androidx.navigation.ui.NavigationUI;
 
 import android.os.Bundle;
 import android.util.Log;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.obsessed.calorieguide.data.Data;
 import com.obsessed.calorieguide.tools.save.ShPrefs;
 
@@ -15,6 +19,10 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNV);
+        NavController navController = Navigation.findNavController(this, R.id.navHostFragment);
+        NavigationUI.setupWithNavController(bottomNavigationView, navController);
     }
 
     @Override

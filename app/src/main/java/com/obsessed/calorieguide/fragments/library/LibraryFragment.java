@@ -5,8 +5,6 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
@@ -15,7 +13,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.obsessed.calorieguide.fragments.NavBarFragment;
 import com.obsessed.calorieguide.R;
 import com.obsessed.calorieguide.databinding.FragmentLibraryBinding;
 import com.obsessed.calorieguide.retrofit.food.Food;
@@ -49,9 +46,6 @@ public class LibraryFragment extends Fragment implements CallbackGetAllFood {
         super.onViewCreated(view, savedInstanceState);
         binding = FragmentLibraryBinding.bind(view);
 
-        //NavBarFragment
-        setupNavBarFragment(view);
-
         //Подгрузка данных
         requireActivity().runOnUiThread(() -> {
             FoodCallForAdapter foodCallForAdapter = new FoodCallForAdapter(this);
@@ -70,14 +64,5 @@ public class LibraryFragment extends Fragment implements CallbackGetAllFood {
         if (isAdded()) { // Проверяем, привязан ли фрагмент к активности
             AllFoodReceived.onAllFoodReceived(requireContext(), requireView(), binding, foodList);
         }
-    }
-
-    private void setupNavBarFragment(View view) {
-        Log.d("MainFragment", "Setting up navigation bar fragment");
-        NavBarFragment nvb = new NavBarFragment(view);
-        FragmentManager fragmentManager = getParentFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.add(R.id.fragment_nav_bar, nvb);
-        fragmentTransaction.commit();
     }
 }

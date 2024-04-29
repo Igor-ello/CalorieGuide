@@ -44,8 +44,7 @@ public class MainFragment extends Fragment {
         ShPrefs.loadData(requireContext());
 
         // Проверка пользователя на наличие авторизации
-        if(checkUserLogin(view))
-            setupNavBarFragment(view);
+        checkUserLogin(view);
     }
 
     private boolean checkUserLogin(View view) {
@@ -59,14 +58,5 @@ public class MainFragment extends Fragment {
             Log.d("MainFragment", "User logged in");
             return true;
         }
-    }
-
-    private void setupNavBarFragment(View view) {
-        Log.d("MainFragment", "Setting up navigation bar fragment");
-        NavBarFragment nvb = new NavBarFragment(view);
-        FragmentManager fragmentManager = getParentFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.add(R.id.fragment_nav_bar, nvb);
-        fragmentTransaction.commit();
     }
 }
