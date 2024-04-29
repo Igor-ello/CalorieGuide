@@ -11,6 +11,4 @@
     <string name="fragment_add_meal_header">AddMeal</string>
     <string name="fragment_login_header">Login</string>
     <string name="fragment_settings_header">Settings</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

@@ -55,6 +55,5 @@
         <item name="android:layout_height">@dimen/picture_height</item>
         <item name="android:src">@drawable/food_default</item>
     </style>
-
   
 </resources>
