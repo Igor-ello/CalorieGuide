@@ -15,16 +15,13 @@
             app:destination="@id/profileFragment" />
         <action
             android:id="@+id/action_mainFragment_to_libraryFragment"
-            app:destination="@id/libraryFragment" />
+            app:destination="@id/libraryFoodFragment" />
     </fragment>
     <fragment
         android:id="@+id/profileFragment"
         android:name="com.obsessed.calorieguide.fragments.ProfileFragment"
         android:label="fragment_profile"
         tools:layout="@layout/fragment_profile" >
-        <action
-            android:id="@+id/action_profileFragment_to_addMealFragment"
-            app:destination="@id/addMealFragment" />
         <action
             android:id="@+id/action_profileFragment_to_settingsFragment"
             app:destination="@id/settingsFragment" />
@@ -35,19 +32,19 @@
         android:label="fragment_settings"
         tools:layout="@layout/fragment_settings" />
     <fragment
-        android:id="@+id/libraryFragment"
-        android:name="com.obsessed.calorieguide.fragments.library.LibraryFragment"
+        android:id="@+id/libraryFoodFragment"
+        android:name="com.obsessed.calorieguide.fragments.library.LibraryFoodFragment"
         android:label="fragment_library"
-        tools:layout="@layout/fragment_library" >
+        tools:layout="@layout/fragment_food_library" >
         <action
             android:id="@+id/action_libraryFragment_to_addFoodFragment"
             app:destination="@id/addFoodFragment" />
         <action
-            android:id="@+id/action_libraryFragment_to_addMealFragment"
-            app:destination="@id/addMealFragment" />
-        <action
             android:id="@+id/action_libraryFragment_to_editFoodFragment"
             app:destination="@id/editFoodFragment" />
+        <action
+            android:id="@+id/action_libraryFoodFragment_to_libraryMealFragment"
+            app:destination="@id/libraryMealFragment" />
     </fragment>
     <fragment
         android:id="@+id/addFoodFragment"
@@ -66,4 +63,21 @@
         tools:layout="@layout/fragment_edit_food" >
         <argument android:name="food" />
     </fragment>
+    <fragment
+        android:id="@+id/libraryMealFragment"
+        android:name="com.obsessed.calorieguide.fragments.library.LibraryMealFragment"
+        android:label="fragment_library_meal"
+        tools:layout="@layout/fragment_meal_library" >
+        <action
+            android:id="@+id/action_libraryMealFragment_to_addMealFragment"
+            app:destination="@id/addMealFragment" />
+        <action
+            android:id="@+id/action_libraryMealFragment_to_editMealFragment"
+            app:destination="@id/editMealFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/editMealFragment"
+        android:name="com.obsessed.calorieguide.EditMealFragment"
+        android:label="fragment_edit_meal"
+        tools:layout="@layout/fragment_edit_meal" />
 </navigation>

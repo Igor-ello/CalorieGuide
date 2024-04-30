@@ -1,5 +1,6 @@
 package com.obsessed.calorieguide.fragments;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -12,6 +13,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.obsessed.calorieguide.MainActivityApp;
 import com.obsessed.calorieguide.MainActivityAuth;
@@ -42,10 +44,18 @@ public class MainFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        // Загрузка данных из хранилища
         ShPrefs.loadData(requireContext());
 
         // Проверка пользователя на наличие авторизации
         checkUserLogin(view);
+
+        initView(view);
+    }
+
+    @SuppressLint("SetTextI18n")
+    void initView(View view) {
+        ((TextView)view.findViewById(R.id.tvUserName)).setText(Data.getInstance().getUser().getName() + "!");
     }
 
     private boolean checkUserLogin(View view) {

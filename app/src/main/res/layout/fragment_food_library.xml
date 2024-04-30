@@ -3,9 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments.library.LibraryFragment"
+    tools:context=".fragments.library.LibraryFoodFragment"
     android:layout_margin="5dp">
-
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -15,7 +14,7 @@
 
         <TextView
             style="@style/TextHeaderStyle"
-            android:text="@string/fragment_library_header"
+            android:text="@string/fragment_food_library_header"
             android:layout_margin="5dp">
         </TextView>
 

@@ -24,6 +24,37 @@
             android:text="@string/fragment_main_header">
         </TextView>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                style="@style/HelloTextStyle"
+                android:text="Good morning, ">
+            </TextView>
+
+            <TextView
+                android:id="@+id/tvUserName"
+                style="@style/HelloTextStyle"
+                android:text="User!">
+            </TextView>
+
+        </LinearLayout>
+
+        <include layout="@layout/stats"></include>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                style="@style/TextStyle"
+                android:text="Your meals:">
+            </TextView>
+
+
+        </LinearLayout>
+
     </LinearLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

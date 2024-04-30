@@ -12,7 +12,8 @@ import com.obsessed.calorieguide.R;
 import com.obsessed.calorieguide.adapters.FoodAdapterV1;
 import com.obsessed.calorieguide.adapters.FoodAdapterV2;
 import com.obsessed.calorieguide.data.Data;
-import com.obsessed.calorieguide.databinding.FragmentLibraryBinding;
+import com.obsessed.calorieguide.databinding.FragmentAddFoodBinding;
+import com.obsessed.calorieguide.databinding.FragmentFoodLibraryBinding;
 import com.obsessed.calorieguide.retrofit.food.Food;
 import com.obsessed.calorieguide.retrofit.food.FoodCall;
 
@@ -20,7 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AllFoodReceived {
-    public static void onAllFoodReceived(Context context, View view, FragmentLibraryBinding binding, List<Food> foodList) {
+    public static void onAllFoodReceived(Context context, View view, FragmentFoodLibraryBinding binding, List<Food> foodList) {
         if (Data.getInstance().getAdapterType() != 2) {
             isAdapterV1(context, view, binding, foodList);
         } else {
@@ -28,7 +29,7 @@ public class AllFoodReceived {
         }
     }
 
-    private static void isAdapterV1(Context context, View view, FragmentLibraryBinding binding, List<Food> foodList) {
+    private static void isAdapterV1(Context context, View view, FragmentFoodLibraryBinding binding, List<Food> foodList) {
         FoodAdapterV1 foodAdapter = new FoodAdapterV1();
         foodAdapter.foodArrayList = (ArrayList<Food>) foodList;
         binding.rcView.setLayoutManager(new GridLayoutManager(context, 2));
@@ -49,7 +50,7 @@ public class AllFoodReceived {
         });
     }
 
-    private static void isAdapterV2(Context context, View view, FragmentLibraryBinding binding, List<Food> foodList) {
+    private static void isAdapterV2(Context context, View view, FragmentFoodLibraryBinding binding, List<Food> foodList) {
         FoodAdapterV2 foodAdapter = new FoodAdapterV2();
         foodAdapter.foodArrayList = (ArrayList<Food>) foodList;
         binding.rcView.setLayoutManager(new GridLayoutManager(context, 1));
