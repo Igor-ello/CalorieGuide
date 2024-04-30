@@ -4,11 +4,13 @@ import android.widget.EditText;
 
 import com.obsessed.calorieguide.data.Data;
 import com.obsessed.calorieguide.retrofit.food.Food;
+import com.obsessed.calorieguide.retrofit.meal.FoodIdQuantity;
 import com.obsessed.calorieguide.retrofit.meal.Meal;
 import com.obsessed.calorieguide.retrofit.user.RegistrationRequest;
 import com.obsessed.calorieguide.retrofit.user.User;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class FillClass {
     public static Food fillFood(ArrayList<EditText> etList, byte[] byteArray) {
@@ -24,11 +26,11 @@ public class FillClass {
         return food;
     }
 
-    public static Meal fillMeal(ArrayList<EditText> etList, int[] foodIds) {
+    public static Meal fillMeal(ArrayList<EditText> etList, List<FoodIdQuantity> foodIds) {
         Meal meal = new Meal(
                 etList.get(0).getText().toString(),
                 foodIds,
-                etList.get(1).getText().toString(),
+                Integer.parseInt(etList.get(1).getText().toString()),
                 etList.get(2).getText().toString()
                 );
         return meal;

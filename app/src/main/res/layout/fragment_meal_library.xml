@@ -5,9 +5,56 @@
     android:layout_height="match_parent"
     tools:context=".fragments.library.LibraryMealFragment">
 
-    <TextView
-        style="@style/TextHeaderStyle"
-        android:text="@string/fragment_meal_library_header">
-    </TextView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_marginBottom="50dp">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp">
+
+            <TextView
+                style="@style/TextHeaderStyle"
+                android:text="@string/fragment_meal_library_header">
+            </TextView>
+
+            <ImageView
+                android:id="@+id/btToFoodLib"
+                style="@style/IconStyle"
+                android:src="@drawable/arrow_back">
+            </ImageView>
+
+        </FrameLayout>
+
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rcView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                </androidx.recyclerview.widget.RecyclerView>
+
+                <Button
+                    android:id="@+id/buttonAdd"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="Add meal">
+                </Button>
+            </LinearLayout>
+        </ScrollView>
+    </LinearLayout>
 
 </FrameLayout>

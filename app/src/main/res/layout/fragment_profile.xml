@@ -6,12 +6,6 @@
     tools:context=".fragments.ProfileFragment"
     android:layout_margin="@dimen/marginStandard">
 
-    <FrameLayout
-        android:id="@+id/fragment_nav_bar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom">
-    </FrameLayout>
 
     <include layout="@layout/arrow_back"></include>
 

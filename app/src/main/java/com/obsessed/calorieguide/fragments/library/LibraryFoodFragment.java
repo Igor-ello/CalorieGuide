@@ -52,9 +52,15 @@ public class LibraryFoodFragment extends Fragment implements CallbackGetAllFood 
         });
 
         //Кнопка для добавления нового фрукта
-        requireView().findViewById(R.id.buttonAdd).setOnClickListener(v -> {
+        view.findViewById(R.id.buttonAdd).setOnClickListener(v -> {
             NavController navController = Navigation.findNavController(requireView());
-            navController.navigate(R.id.action_libraryFragment_to_addFoodFragment);
+            navController.navigate(R.id.action_libraryFoodFragment_to_addFoodFragment);
+        });
+
+        //Кнопка для перехода в meal library
+        view.findViewById(R.id.btToMealLib).setOnClickListener(v -> {
+            NavController navController = Navigation.findNavController(view);
+            navController.navigate(R.id.action_libraryFoodFragment_to_libraryMealFragment);
         });
     }
 

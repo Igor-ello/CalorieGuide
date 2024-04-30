@@ -5,6 +5,7 @@ import android.util.Log;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
 import com.obsessed.calorieguide.data.Data;
 import com.obsessed.calorieguide.retrofit.MainApi;
@@ -26,7 +27,35 @@ public class MealCallAndCallback {
     private Retrofit retrofit;
     private MainApi mainApi;
 
-    public void MealCall(String ACCESS_TOKEN) {
+    public MealCallAndCallback(CallbackGetAllMeal callbackGetAllMeal, String ACCESS_TOKEN) {
+        this.callbackGetAllMeal = callbackGetAllMeal;
+        OkHttpClient client = new OkHttpClient.Builder()
+                //.addInterceptor(loggingInterceptor) // Добавление Interceptor для логирования
+                .addInterceptor(chain -> {
+                    Request originalRequest = chain.request();
+                    // Добавляем заголовок к исходному запросу
+                    Request newRequest = originalRequest.newBuilder()
+                            .addHeader("Authorization", "Bearer " + ACCESS_TOKEN)
+                            .build();
+
+                    // Продолжаем выполнение запроса с добавленным заголовком
+                    return chain.proceed(newRequest);
+                })
+                .build();
+
+        retrofit = new Retrofit.Builder()
+                .baseUrl(baseUrl).client(client)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        mainApi = retrofit.create(MainApi.class);
+    }
+
+    public MealCallAndCallback(CallbackGetMealById callbackGetMealById) {
+        this.callbackGetMealById = callbackGetMealById;
+    }
+
+    public MealCallAndCallback(String ACCESS_TOKEN) {
         //HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
         //loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
 
@@ -80,16 +109,16 @@ public class MealCallAndCallback {
     }
 
 
-    public Call<JsonObject> getAllMeal() {
+    public void getAllMeal() {
         Call<JsonObject> call = mainApi.getAllMeals();
         call.enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
                 if (response.isSuccessful()) {
                     JsonObject jsonObject = response.body();
-                    if (jsonObject != null && jsonObject.has("products")) {
-                        JsonArray productsArray = jsonObject.getAsJsonArray("products");
-                        List<Meal> allMeals = new Gson().fromJson(productsArray, new TypeToken<List<Meal>>() {}.getType());
+                    if (jsonObject != null && jsonObject.has("meals")) {
+                        JsonArray mealsArray = jsonObject.getAsJsonArray("meals");
+                        List<Meal> allMeals = new Gson().fromJson(mealsArray, new TypeToken<List<Meal>>() {}.getType());
                         callbackGetAllMeal.onAllMealReceived(allMeals);
 
                         Log.d("Call", "Response getAllMeal is successful!");
@@ -106,7 +135,7 @@ public class MealCallAndCallback {
             }
         });
 
-        return mainApi.getAllMeals();
+        //return mainApi.getAllMeals();
     }
 
 }

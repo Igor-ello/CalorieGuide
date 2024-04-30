@@ -12,11 +12,25 @@
         android:orientation="vertical"
         android:layout_marginBottom="50dp">
 
-        <TextView
-            style="@style/TextHeaderStyle"
-            android:text="@string/fragment_food_library_header"
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_margin="5dp">
-        </TextView>
+
+            <TextView
+                style="@style/TextHeaderStyle"
+                android:text="@string/fragment_food_library_header">
+            </TextView>
+
+            <ImageView
+                android:id="@+id/btToMealLib"
+                style="@style/IconStyle"
+                android:src="@drawable/arrow_forward"
+                android:layout_gravity="end">
+            </ImageView>
+
+        </FrameLayout>
+
 
         <ScrollView
             android:layout_width="match_parent"
@@ -43,11 +57,4 @@
             </LinearLayout>
         </ScrollView>
     </LinearLayout>
-
-    <FrameLayout
-        android:id="@+id/fragment_nav_bar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom">
-    </FrameLayout>
 </FrameLayout>

@@ -37,14 +37,14 @@
         android:label="fragment_library"
         tools:layout="@layout/fragment_food_library" >
         <action
-            android:id="@+id/action_libraryFragment_to_addFoodFragment"
-            app:destination="@id/addFoodFragment" />
-        <action
-            android:id="@+id/action_libraryFragment_to_editFoodFragment"
-            app:destination="@id/editFoodFragment" />
-        <action
             android:id="@+id/action_libraryFoodFragment_to_libraryMealFragment"
             app:destination="@id/libraryMealFragment" />
+        <action
+            android:id="@+id/action_libraryFoodFragment_to_editFoodFragment"
+            app:destination="@id/editFoodFragment" />
+        <action
+            android:id="@+id/action_libraryFoodFragment_to_addFoodFragment"
+            app:destination="@id/addFoodFragment" />
     </fragment>
     <fragment
         android:id="@+id/addFoodFragment"

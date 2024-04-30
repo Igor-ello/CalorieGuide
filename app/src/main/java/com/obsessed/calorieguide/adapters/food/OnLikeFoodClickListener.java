@@ -1,4 +1,4 @@
-package com.obsessed.calorieguide.adapters;
+package com.obsessed.calorieguide.adapters.food;
 
 import com.obsessed.calorieguide.retrofit.food.Food;
 

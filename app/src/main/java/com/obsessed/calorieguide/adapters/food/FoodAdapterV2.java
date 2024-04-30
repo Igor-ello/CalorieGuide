@@ -1,4 +1,4 @@
-package com.obsessed.calorieguide.adapters;
+package com.obsessed.calorieguide.adapters.food;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;

@@ -1,5 +1,7 @@
 package com.obsessed.calorieguide.retrofit.meal;
 
+import java.util.List;
+
 public class Meal {
     int id;
     String meal_name;
@@ -7,47 +9,63 @@ public class Meal {
     int total_proteins;
     int total_fats;
     int total_carbohydrates;
-    int[] products_id;
-    String author_id;
+    List<FoodIdQuantity> products_id;
+    int author_id;
     String description;
     int likes;
 
-    public Meal(String meal_name, int[] products_id, String author_id, String description) {
+    public Meal(String meal_name, List<FoodIdQuantity> products_id, int author_id, String description) {
         this.meal_name = meal_name;
         this.products_id = products_id;
         this.author_id = author_id;
         this.description = description;
     }
 
+    @Override
+    public String toString() {
+        return "Meal{" +
+                "id=" + id +
+                ", meal_name='" + meal_name + '\'' +
+                ", total_calories=" + total_calories +
+                ", total_proteins=" + total_proteins +
+                ", total_fats=" + total_fats +
+                ", total_carbohydrates=" + total_carbohydrates +
+                ", products_id=" + products_id +
+                ", author_id=" + author_id +
+                ", description='" + description + '\'' +
+                ", likes=" + likes +
+                '}';
+    }
+
     public int getId() {
         return id;
     }
 
-    public String getMeal_name() {
+    public String getMealName() {
         return meal_name;
     }
 
-    public int getTotal_calories() {
+    public int getTotalCalories() {
         return total_calories;
     }
 
-    public int getTotal_proteins() {
+    public int getTotalProteins() {
         return total_proteins;
     }
 
-    public int getTotal_fats() {
+    public int getTotalFats() {
         return total_fats;
     }
 
-    public int getTotal_carbohydrates() {
+    public int getTotalCarbohydrates() {
         return total_carbohydrates;
     }
 
-    public int[] getProducts_id() {
+    public List<FoodIdQuantity> getFoodIds() {
         return products_id;
     }
 
-    public String getAuthor_id() {
+    public int getAuthorId() {
         return author_id;
     }
 

@@ -21,7 +21,7 @@
 
             <ImageView
                 android:id="@+id/imageView"
-                style="@style/PictureStyle"
+                style="@style/ImageViewFoodStyle"
                 android:layout_gravity="center">
             </ImageView>
 

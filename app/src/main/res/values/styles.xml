@@ -59,10 +59,16 @@
         <item name="android:textColor">@color/text_color</item>
     </style>
 
-    <style name="PictureStyle">
+    <style name="ImageViewFoodStyle">
         <item name="android:layout_width">@dimen/picture_width</item>
         <item name="android:layout_height">@dimen/picture_height</item>
         <item name="android:src">@drawable/food_default</item>
+    </style>
+
+    <style name="ImageViewMealStyle">
+        <item name="android:layout_width">@dimen/picture_width</item>
+        <item name="android:layout_height">@dimen/picture_height</item>
+        <item name="android:src">@drawable/meal_default</item>
     </style>
 
 

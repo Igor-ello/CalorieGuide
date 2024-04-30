@@ -9,10 +9,9 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.GridLayoutManager;
 
 import com.obsessed.calorieguide.R;
-import com.obsessed.calorieguide.adapters.FoodAdapterV1;
-import com.obsessed.calorieguide.adapters.FoodAdapterV2;
+import com.obsessed.calorieguide.adapters.food.FoodAdapterV1;
+import com.obsessed.calorieguide.adapters.food.FoodAdapterV2;
 import com.obsessed.calorieguide.data.Data;
-import com.obsessed.calorieguide.databinding.FragmentAddFoodBinding;
 import com.obsessed.calorieguide.databinding.FragmentFoodLibraryBinding;
 import com.obsessed.calorieguide.retrofit.food.Food;
 import com.obsessed.calorieguide.retrofit.food.FoodCall;
@@ -40,7 +39,7 @@ public class AllFoodReceived {
             Log.d("FoodAdapter", "Clicked on food in FoodAdapterV1: " + food.getFoodName());
             Bundle args = new Bundle();
             args.putInt("food_id", food.getId());
-            Navigation.findNavController(view).navigate(R.id.action_libraryFragment_to_editFoodFragment, args);
+            Navigation.findNavController(view).navigate(R.id.action_libraryFoodFragment_to_editFoodFragment, args);
         });
 
         foodAdapter.setOnLikeFoodClickListener(food -> {
@@ -61,7 +60,7 @@ public class AllFoodReceived {
             Log.d("FoodAdapter", "Clicked on food in FoodAdapterV2: " + food.getFoodName());
             Bundle args = new Bundle();
             args.putInt("food_id", food.getId());
-            Navigation.findNavController(view).navigate(R.id.action_libraryFragment_to_editFoodFragment, args);
+            Navigation.findNavController(view).navigate(R.id.action_libraryFoodFragment_to_editFoodFragment, args);
         });
 
         foodAdapter.setOnLikeFoodClickListener(food -> {
