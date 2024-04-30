@@ -2,6 +2,7 @@ package com.obsessed.calorieguide.retrofit;
 
 import com.google.gson.JsonObject;
 import com.obsessed.calorieguide.retrofit.food.Food;
+import com.obsessed.calorieguide.retrofit.meal.Meal;
 import com.obsessed.calorieguide.retrofit.user.AuthRequest;
 import com.obsessed.calorieguide.retrofit.user.RegistrationRequest;
 
@@ -33,6 +34,22 @@ public interface MainApi {
 
     @POST("/products/like")
     Call<JsonObject> likeFood(@Body RequestBody requestBody);
+
+    //Meals
+    @GET("/meals")
+    Call<JsonObject> getAllMeals();
+    @GET("/meals/{meal_id}")
+    Call<Meal> getMealById(@Path("meal_id") int mealId);
+    @POST("/meal")
+    Call<JsonObject> postMeal(@Body RequestBody requestBody);
+    @PUT("/meal/{meal_id}")
+    Call<JsonObject> updateMeal(@Path("meal_id") int mealId, @Body RequestBody requestBody);
+    @POST("/meal/like")
+    Call<JsonObject> likeMeal(@Body RequestBody requestBody);
+    @DELETE("/meal/{meal_id}")
+    Call<JsonObject> deleteMeal(@Path("meal_id") int mealId);
+
+
 
 
     //User

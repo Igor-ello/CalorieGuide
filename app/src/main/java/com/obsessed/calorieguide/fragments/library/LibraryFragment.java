@@ -8,7 +8,6 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +15,7 @@ import android.view.ViewGroup;
 import com.obsessed.calorieguide.R;
 import com.obsessed.calorieguide.databinding.FragmentLibraryBinding;
 import com.obsessed.calorieguide.retrofit.food.Food;
-import com.obsessed.calorieguide.retrofit.food.FoodCallForAdapter;
+import com.obsessed.calorieguide.retrofit.food.FoodCallAndCallback;
 import com.obsessed.calorieguide.retrofit.food.CallbackGetAllFood;
 
 import java.util.List;
@@ -48,8 +47,8 @@ public class LibraryFragment extends Fragment implements CallbackGetAllFood {
 
         //Подгрузка данных
         requireActivity().runOnUiThread(() -> {
-            FoodCallForAdapter foodCallForAdapter = new FoodCallForAdapter(this);
-            foodCallForAdapter.getAllFood();
+            FoodCallAndCallback foodCallAndCallback = new FoodCallAndCallback(this);
+            foodCallAndCallback.getAllFood();
         });
 
         //Кнопка для добавления нового фрукта

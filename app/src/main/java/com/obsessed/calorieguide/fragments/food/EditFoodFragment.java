@@ -21,12 +21,12 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.obsessed.calorieguide.R;
+import com.obsessed.calorieguide.retrofit.food.FoodCallAndCallback;
 import com.obsessed.calorieguide.tools.convert.FillClass;
 import com.obsessed.calorieguide.data.Data;
 import com.obsessed.calorieguide.retrofit.food.CallbackGetFoodById;
 import com.obsessed.calorieguide.retrofit.food.Food;
 import com.obsessed.calorieguide.retrofit.food.FoodCall;
-import com.obsessed.calorieguide.retrofit.food.FoodCallForAdapter;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -68,8 +68,8 @@ public class EditFoodFragment extends Fragment implements CallbackGetFoodById {
 
         //Подгрузка данных
         requireActivity().runOnUiThread(() -> {
-            FoodCallForAdapter foodCallForAdapter = new FoodCallForAdapter(this);
-            foodCallForAdapter.getFoodById(foodId);
+            FoodCallAndCallback foodCallAndCallback = new FoodCallAndCallback(this);
+            foodCallAndCallback.getFoodById(foodId);
         });
 
         view.findViewById(R.id.btDelete).setOnClickListener(v -> {
