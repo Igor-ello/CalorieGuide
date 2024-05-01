@@ -1,5 +1,8 @@
 package com.obsessed.calorieguide.retrofit.meal;
 
+import android.util.Log;
+
+import java.util.ArrayList;
 import java.util.List;
 
 public class Meal {
@@ -37,6 +40,13 @@ public class Meal {
                 '}';
     }
 
+    public ArrayList<Object> getValues() {
+        ArrayList<Object> arrayList = new ArrayList<>();
+        arrayList.add(meal_name);
+        arrayList.add(description);
+        return arrayList;
+    }
+
     public int getId() {
         return id;
     }
@@ -61,7 +71,7 @@ public class Meal {
         return total_carbohydrates;
     }
 
-    public List<FoodIdQuantity> getFoodIds() {
+    public List<FoodIdQuantity> getFoodIdQuantities() {
         return products_id;
     }
 

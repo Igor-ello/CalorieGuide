@@ -41,8 +41,6 @@ public class MealCall {
                             .addHeader("Authorization", "Bearer " + ACCESS_TOKEN)
                             .build();
 
-                    Log.d("Call", ACCESS_TOKEN);
-
                     // Продолжаем выполнение запроса с добавленным заголовком
                     return chain.proceed(newRequest);
                 })

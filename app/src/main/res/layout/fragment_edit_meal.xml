@@ -17,6 +17,12 @@
 
         <include layout="@layout/meal_params"></include>
 
+        <Button
+            android:id="@+id/btDelete"
+            style="@style/ButtonStyle"
+            android:text="Delete">
+        </Button>
+
     </LinearLayout>
 
 </FrameLayout>

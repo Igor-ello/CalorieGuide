@@ -71,7 +71,7 @@ public class AddMealFragment extends Fragment implements CallbackGetAllFood {
         // Отправка на сервер введенных данных
         requireView().findViewById(R.id.btSave).setOnClickListener(v -> {
             ArrayList<EditText> etList = fieldValidation.getEtList();
-            ArrayList<FoodIdQuantity> foodIdQuantities = fieldValidation.getFoodIdQuantities(requireContext());
+            ArrayList<FoodIdQuantity> foodIdQuantities = fieldValidation.getFoodIdQuantities();
             if(etList != null){
                 MealCall mealCall = new MealCall(Data.getInstance().getUser().getBearerToken());
                 mealCall.postMeal(FillClass.fillMeal(etList, byteArray, foodIdQuantities));
@@ -85,7 +85,7 @@ public class AddMealFragment extends Fragment implements CallbackGetAllFood {
 
     void init(View view){
         imageView = view.findViewById(R.id.image);
-        fieldValidation = new FieldValidation(requireView());
+        fieldValidation = new FieldValidation(requireContext(), requireView());
     }
 
     @Override
@@ -94,6 +94,6 @@ public class AddMealFragment extends Fragment implements CallbackGetAllFood {
         for (Food food : foodList) {
             foodNames.add(food.getFoodName());
         }
-        fieldValidation.fillLnFood(requireContext(), foodNames);;
+        fieldValidation.fillLnFood(foodNames, null);;
     }
 }

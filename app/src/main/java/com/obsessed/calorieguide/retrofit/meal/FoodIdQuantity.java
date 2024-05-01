@@ -9,7 +9,7 @@ public class FoodIdQuantity {
         this.quantity = quantity;
     }
 
-    public int getProduct_id() {
+    public int getProductId() {
         return product_id;
     }
 

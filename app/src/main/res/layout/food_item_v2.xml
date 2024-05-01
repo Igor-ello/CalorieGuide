@@ -20,7 +20,8 @@
 
             <ImageView
                 android:id="@+id/imageView"
-                style="@style/ImageViewFoodStyle">
+                style="@style/ImageViewFoodStyle"
+                android:layout_marginEnd="@dimen/margin_default">
             </ImageView>
 
             <LinearLayout

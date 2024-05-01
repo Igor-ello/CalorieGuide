@@ -51,8 +51,28 @@ public class MealCallAndCallback {
         mainApi = retrofit.create(MainApi.class);
     }
 
-    public MealCallAndCallback(CallbackGetMealById callbackGetMealById) {
+    public MealCallAndCallback(CallbackGetMealById callbackGetMealById, String ACCESS_TOKEN) {
         this.callbackGetMealById = callbackGetMealById;
+        OkHttpClient client = new OkHttpClient.Builder()
+                //.addInterceptor(loggingInterceptor) // Добавление Interceptor для логирования
+                .addInterceptor(chain -> {
+                    Request originalRequest = chain.request();
+                    // Добавляем заголовок к исходному запросу
+                    Request newRequest = originalRequest.newBuilder()
+                            .addHeader("Authorization", "Bearer " + ACCESS_TOKEN)
+                            .build();
+
+                    // Продолжаем выполнение запроса с добавленным заголовком
+                    return chain.proceed(newRequest);
+                })
+                .build();
+
+        retrofit = new Retrofit.Builder()
+                .baseUrl(baseUrl).client(client)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        mainApi = retrofit.create(MainApi.class);
     }
 
     public MealCallAndCallback(String ACCESS_TOKEN) {

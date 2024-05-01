@@ -1,8 +1,6 @@
 package com.obsessed.calorieguide.fragments.meal;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.Matrix;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
@@ -11,8 +9,8 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.obsessed.calorieguide.R;
-import com.obsessed.calorieguide.retrofit.food.Food;
 import com.obsessed.calorieguide.retrofit.meal.FoodIdQuantity;
+import com.obsessed.calorieguide.retrofit.meal.Meal;
 import com.obsessed.calorieguide.tools.ViewFactory;
 
 import java.util.ArrayList;
@@ -20,15 +18,17 @@ import java.util.List;
 
 public class FieldValidation {
     View view;
+    Context context;
     ArrayList<EditText> etList;
-    EditText etMealName, etDescription, etNumberOfIng;
+    EditText etNumberOfIng;
 
     //For lnFood and getFoodIdQuantities
     ArrayList<Spinner> spinnerList;
     ArrayList<EditText> editTextList;
     LinearLayout lnFood;
 
-    public FieldValidation(View view) {
+    public FieldValidation(Context context, View view) {
+        this.context = context;
         this.view = view;
 
         init(view);
@@ -43,11 +43,12 @@ public class FieldValidation {
         lnFood = view.findViewById(R.id.lnFood);
     }
 
-    public void fillLnFood(Context context, List<String> foodList){
+    public void fillLnFood(List<String> foodList, List<FoodIdQuantity> foodIdQuantityList){
         // Класс для создания новых элементов
         ViewFactory viewFactory = new ViewFactory(context);
         spinnerList = new ArrayList<>();
         editTextList = new ArrayList<>();
+        lnFood.removeAllViews();
 
         int numberOfElements = Integer.parseInt(etNumberOfIng.getText().toString());
         ArrayAdapter<String> adapter = new ArrayAdapter(context,
@@ -56,29 +57,34 @@ public class FieldValidation {
 
         // Создаем и добавляем нужное количество элементов
         for (int i = 0; i < numberOfElements; i++) {
-            // Создаем новый LinearLayout для каждого элемента
-            LinearLayout linearLayout = viewFactory.createLinearLayout();
+            LinearLayout linearLayout = viewFactory.createLinearLayout(); // Создаем новый LinearLayout для каждого элемента
+            Spinner spinner = viewFactory.createSpinner(); // Создаем Spinner
+            EditText editText = viewFactory.createEditText(); // Создаем EditText
 
-            // Создаем и добавляем Spinner
-            Spinner spinner = viewFactory.createSpinner();
             spinner.setAdapter(adapter);
             spinnerList.add(spinner);
             linearLayout.addView(spinner);
 
-            // Создаем и добавляем EditText
-            EditText editText = viewFactory.createEditText();
             editTextList.add(editText);
             linearLayout.addView(editText);
+
+            if(foodIdQuantityList != null) {
+                spinner.setSelection(foodIdQuantityList.get(i).getProductId());
+                editText.setText(foodIdQuantityList.get(i).getQuantity() + "");
+            }
 
             // Добавляем созданный LinearLayout в существующий LinearLayout lnSpinners
             lnFood.addView(linearLayout);
         }
     }
 
-    public void setValues(Food food) {
+    public void setValues(List<String> foodList, Meal meal) {
         for (int i = 0; i < etList.size(); i++) {
-            etList.get(i).setText(food.getValues().get(i).toString());
+            etList.get(i).setText(meal.getValues().get(i).toString());
         }
+        List<FoodIdQuantity> foodIdQuantities = meal.getFoodIdQuantities();
+        etNumberOfIng.setText(String.valueOf(foodIdQuantities.size()));
+        fillLnFood(foodList, foodIdQuantities);
     }
 
     public ArrayList<EditText> getEtList(){
@@ -95,7 +101,7 @@ public class FieldValidation {
         }
     }
 
-    public ArrayList<FoodIdQuantity> getFoodIdQuantities(Context context) {
+    public ArrayList<FoodIdQuantity> getFoodIdQuantities() {
         ArrayList<FoodIdQuantity> foodIdQuantities = new ArrayList<>();
 
         // Проверка наличия данных в списках Spinner и EditText

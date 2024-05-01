@@ -69,6 +69,7 @@
         <item name="android:layout_width">@dimen/picture_width</item>
         <item name="android:layout_height">@dimen/picture_height</item>
         <item name="android:src">@drawable/meal_default</item>
+        <item name="android:layout_marginEnd">@dimen/margin_default</item>
     </style>
 
 
