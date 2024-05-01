@@ -41,6 +41,8 @@ public class MealCall {
                             .addHeader("Authorization", "Bearer " + ACCESS_TOKEN)
                             .build();
 
+                    Log.d("Call", ACCESS_TOKEN);
+
                     // Продолжаем выполнение запроса с добавленным заголовком
                     return chain.proceed(newRequest);
                 })
@@ -103,10 +105,11 @@ public class MealCall {
         return mainApi.updateMeal(mealId, requestBody);
     }
 
-    public Call<JsonObject> likeMeal(int mealId, int userId, View view) {
+    public Call<JsonObject> likeMeal(int userId, int mealId, ImageView imageView) {
         JsonObject requestObject = new JsonObject();
         requestObject.addProperty("meal_id", mealId);
         requestObject.addProperty("user_id", userId);
+        Log.d("Call", requestObject.toString());
 
         // Преобразование объекта запроса в JSON-строку
         Gson gson = new Gson();
@@ -119,16 +122,9 @@ public class MealCall {
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
                 if (response.isSuccessful()) {
-
-                    ImageView imageView = null;
-                    if(Data.getInstance().getAdapterType() != 2)
-                        imageView = view.findViewById(R.id.btLikeV1);
-                    else
-                        imageView = view.findViewById(R.id.btLikeV2);
-
-                    if(imageView != null) {
+                    if (imageView != null) {
                         if (imageView.getDrawable().getConstantState().equals(
-                                ContextCompat.getDrawable(view.getContext(), R.drawable.like_not_active).getConstantState())) {
+                                ContextCompat.getDrawable(imageView.getContext(), R.drawable.like_not_active).getConstantState())) {
                             imageView.setImageResource(R.drawable.like_active);
                         } else {
                             imageView.setImageResource(R.drawable.like_not_active);
@@ -147,6 +143,7 @@ public class MealCall {
         });
         return mainApi.likeMeal(requestBody);
     }
+
 
     public Call<JsonObject> deleteMeal(int mealId) {
         Call<JsonObject> call = mainApi.deleteMeal(mealId);

@@ -33,10 +33,10 @@ public class AllMealReceived {
             Navigation.findNavController(view).navigate(R.id.action_libraryMealFragment_to_editMealFragment, args);
         });
 
-        mealAdapter.setOnLikeMealClickListener(meal -> {
+        mealAdapter.setOnLikeMealClickListener((meal, imageView) -> {
             Log.d("MealAdapter", "Clicked on like for meal in MealAdapter: " + meal.getMealName());
             MealCall mealCall = new MealCall(Data.getInstance().getUser().getBearerToken());
-            mealCall.likeMeal(Data.getInstance().getUser().getId(), meal.getId(), view);
+            mealCall.likeMeal(Data.getInstance().getUser().getId(), meal.getId(), imageView);
         });
     }
 }

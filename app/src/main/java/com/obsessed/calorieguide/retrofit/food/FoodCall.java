@@ -120,7 +120,7 @@ public class FoodCall {
         });
     }
 
-    public void likeFood(int userId, int productId, View view) {
+    public void likeFood(int userId, int productId, ImageView imageView) {
         JsonObject requestObject = new JsonObject();
         requestObject.addProperty("user_id", userId);
         requestObject.addProperty("product_id", productId);
@@ -137,15 +137,9 @@ public class FoodCall {
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
                 if (response.isSuccessful()) {
 
-                    ImageView imageView = null;
-                    if(Data.getInstance().getAdapterType() != 2)
-                        imageView = view.findViewById(R.id.btLikeV1);
-                    else
-                        imageView = view.findViewById(R.id.btLikeV2);
-
                     if(imageView != null) {
                         if (imageView.getDrawable().getConstantState().equals(
-                                ContextCompat.getDrawable(view.getContext(), R.drawable.like_not_active).getConstantState())) {
+                                ContextCompat.getDrawable(imageView.getContext(), R.drawable.like_not_active).getConstantState())) {
                             imageView.setImageResource(R.drawable.like_active);
                         } else {
                             imageView.setImageResource(R.drawable.like_not_active);

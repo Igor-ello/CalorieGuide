@@ -59,11 +59,11 @@ public class MealAdapter extends RecyclerView.Adapter<MealAdapter.MealHolder> {
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MealAdapter.MealHolder holder, int position) {
+    public void onBindViewHolder(@NonNull MealHolder holder, int position) {
         holder.bind(mealArrayList.get(position));
         holder.binding.btLike.setOnClickListener(v -> {
             if (onLikeMealClickListener != null) {
-                onLikeMealClickListener.onLikeMealClick(mealArrayList.get(position));
+                onLikeMealClickListener.onLikeMealClick(mealArrayList.get(position), holder.binding.btLike);
             }
         });
     }

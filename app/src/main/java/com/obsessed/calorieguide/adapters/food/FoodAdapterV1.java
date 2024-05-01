@@ -63,7 +63,7 @@ public class FoodAdapterV1 extends RecyclerView.Adapter<FoodAdapterV1.FoodHolder
         holder.bind(foodArrayList.get(position));
         holder.binding.btLikeV1.setOnClickListener(v -> {
             if (onLikeFoodClickListener != null) {
-                onLikeFoodClickListener.onLikeFoodClick(foodArrayList.get(position));
+                onLikeFoodClickListener.onLikeFoodClick(foodArrayList.get(position), holder.binding.btLikeV1);
             }
         });
     }

@@ -44,7 +44,7 @@ public interface MainApi {
     Call<JsonObject> postMeal(@Body RequestBody requestBody);
     @PUT("/meal/{meal_id}")
     Call<JsonObject> updateMeal(@Path("meal_id") int mealId, @Body RequestBody requestBody);
-    @POST("/meal/like")
+    @POST("/meals/like")
     Call<JsonObject> likeMeal(@Body RequestBody requestBody);
     @DELETE("/meal/{meal_id}")
     Call<JsonObject> deleteMeal(@Path("meal_id") int mealId);
