@@ -22,7 +22,8 @@
         tools:targetApi="31">
         <activity
             android:name=".MainActivityAuth"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".MainActivityApp"
             android:exported="true"
