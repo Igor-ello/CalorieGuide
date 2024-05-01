@@ -1,4 +1,4 @@
-package com.obsessed.calorieguide;
+package com.obsessed.calorieguide.fragments.meal;
 
 import android.os.Bundle;
 
@@ -8,15 +8,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link EditMealFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
-public class EditMealFragment extends Fragment {
+import com.obsessed.calorieguide.R;
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+
+public class EditMealFragment extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 

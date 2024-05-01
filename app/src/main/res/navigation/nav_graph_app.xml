@@ -53,7 +53,7 @@
         tools:layout="@layout/fragment_add_food" />
     <fragment
         android:id="@+id/addMealFragment"
-        android:name="com.obsessed.calorieguide.fragments.AddMealFragment"
+        android:name="com.obsessed.calorieguide.fragments.meal.AddMealFragment"
         android:label="fragment_add_meal"
         tools:layout="@layout/fragment_add_meal" />
     <fragment
@@ -77,7 +77,7 @@
     </fragment>
     <fragment
         android:id="@+id/editMealFragment"
-        android:name="com.obsessed.calorieguide.EditMealFragment"
+        android:name="com.obsessed.calorieguide.fragments.meal.EditMealFragment"
         android:label="fragment_edit_meal"
         tools:layout="@layout/fragment_edit_meal" />
 </navigation>

@@ -1,4 +1,4 @@
-package com.obsessed.calorieguide.fragments;
+package com.obsessed.calorieguide.fragments.meal;
 
 import android.os.Bundle;
 
