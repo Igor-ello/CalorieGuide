@@ -40,6 +40,36 @@
                 style="@style/EditTextStyle">
             </EditText>
 
+            <TextView
+                style="@style/TextStyle"
+                android:text="Number of ingredients">
+            </TextView>
+
+            <EditText
+                android:id="@+id/etNumberOfIng"
+                style="@style/EditTextStyle">
+            </EditText>
+
+            <Button
+                android:id="@+id/btSetNumber"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Set number">
+            </Button>
+
+            <LinearLayout
+                android:id="@+id/lnFood"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/btSave"
+                style="@style/ButtonStyle"
+                android:text="Save">
+            </Button>
+
 
         </LinearLayout>
     </ScrollView>

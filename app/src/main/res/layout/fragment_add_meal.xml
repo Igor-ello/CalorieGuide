@@ -6,9 +6,18 @@
     tools:context=".fragments.meal.AddMealFragment"
     android:layout_margin="@dimen/marginStandard">
 
-    <TextView
-        style="@style/TextHeaderStyle"
-        android:text="@string/fragment_add_meal_header">
-    </TextView>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            style="@style/TextHeaderStyle"
+            android:text="@string/fragment_add_meal_header">
+        </TextView>
+
+        <include layout="@layout/meal_params"></include>
+
+    </LinearLayout>
 
 </FrameLayout>

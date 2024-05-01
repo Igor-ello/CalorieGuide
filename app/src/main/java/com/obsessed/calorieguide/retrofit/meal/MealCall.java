@@ -55,10 +55,10 @@ public class MealCall {
     }
 
 
-    public Call<JsonObject> postMeal(RequestBody requestBody) {
-//        Gson gson = new Gson();
-//        String json = gson.toJson(meal);
-//        RequestBody requestBody = RequestBody.create(MediaType.parse("application/json"), json);
+    public Call<JsonObject> postMeal(Meal meal) {
+        Gson gson = new Gson();
+        String json = gson.toJson(meal);
+        RequestBody requestBody = RequestBody.create(MediaType.parse("application/json"), json);
 
         Call<JsonObject> call = mainApi.postMeal(requestBody);
         call.enqueue(new Callback<JsonObject>() {

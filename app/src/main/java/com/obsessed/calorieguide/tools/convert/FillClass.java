@@ -26,12 +26,12 @@ public class FillClass {
         return food;
     }
 
-    public static Meal fillMeal(ArrayList<EditText> etList, List<FoodIdQuantity> foodIds) {
+    public static Meal fillMeal(ArrayList<EditText> etList, byte[] byteArray, List<FoodIdQuantity> foodIdQuantities) {
         Meal meal = new Meal(
                 etList.get(0).getText().toString(),
-                foodIds,
-                Integer.parseInt(etList.get(1).getText().toString()),
-                etList.get(2).getText().toString()
+                foodIdQuantities,
+                Data.getInstance().getUser().getId(),
+                etList.get(1).getText().toString()
                 );
         return meal;
     }
