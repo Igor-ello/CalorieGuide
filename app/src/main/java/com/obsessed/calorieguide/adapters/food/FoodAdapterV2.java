@@ -36,9 +36,6 @@ public class FoodAdapterV2 extends RecyclerView.Adapter<FoodAdapterV2.FoodHolder
             if (position != RecyclerView.NO_POSITION && onFoodClickListener != null) {
                 onFoodClickListener.onFoodClick(foodArrayList.get(position));
             }
-            if (position != RecyclerView.NO_POSITION && onLikeFoodClickListener != null) {
-                onLikeFoodClickListener.onLikeFoodClick(foodArrayList.get(position));
-            }
         }
 
         public void bind(Food food) {

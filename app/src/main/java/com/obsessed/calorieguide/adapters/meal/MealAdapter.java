@@ -34,9 +34,6 @@ public class MealAdapter extends RecyclerView.Adapter<MealAdapter.MealHolder> {
             if (position != RecyclerView.NO_POSITION && onMealClickListener != null) {
                 onMealClickListener.onMealClick(mealArrayList.get(position));
             }
-            if (position != RecyclerView.NO_POSITION && onLikeMealClickListener != null) {
-                onLikeMealClickListener.onLikeMealClick(mealArrayList.get(position));
-            }
         }
 
         public void bind(Meal meal) {
