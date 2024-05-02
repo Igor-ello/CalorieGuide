@@ -3,6 +3,7 @@ package com.obsessed.calorieguide.retrofit.meal;
 import android.util.Log;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class Meal {
@@ -16,12 +17,14 @@ public class Meal {
     int author_id;
     String description;
     int likes;
+    byte[] picture;
 
-    public Meal(String meal_name, List<FoodIdQuantity> products_id, int author_id, String description) {
+    public Meal(String meal_name, List<FoodIdQuantity> products_id, int author_id, String description, byte[] picture) {
         this.meal_name = meal_name;
         this.products_id = products_id;
         this.author_id = author_id;
         this.description = description;
+        this.picture = picture;
     }
 
     @Override
@@ -37,6 +40,7 @@ public class Meal {
                 ", author_id=" + author_id +
                 ", description='" + description + '\'' +
                 ", likes=" + likes +
+                ", picture=" + Arrays.toString(picture) +
                 '}';
     }
 
@@ -85,5 +89,9 @@ public class Meal {
 
     public int getLikes() {
         return likes;
+    }
+
+    public byte[] getPicture() {
+        return picture;
     }
 }

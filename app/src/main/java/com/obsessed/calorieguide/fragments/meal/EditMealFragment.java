@@ -1,5 +1,10 @@
 package com.obsessed.calorieguide.fragments.meal;
 
+import android.app.Activity;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -7,6 +12,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,7 +32,10 @@ import com.obsessed.calorieguide.retrofit.meal.Meal;
 import com.obsessed.calorieguide.retrofit.meal.MealCall;
 import com.obsessed.calorieguide.retrofit.meal.MealCallAndCallback;
 import com.obsessed.calorieguide.tools.convert.FillClass;
+import com.obsessed.calorieguide.tools.convert.ResizedBitmap;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -85,12 +94,12 @@ public class EditMealFragment extends Fragment implements CallbackGetMealById, C
             Navigation.findNavController(view).popBackStack();
         });
 
-//        // Подгрузка изображения из галереи или камеры
-//        imageView.setOnClickListener(v -> {
-//            Intent galleryIntent = new Intent(Intent.ACTION_PICK,
-//                    android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-//            startActivityForResult(galleryIntent, GALLERY_REQUEST_CODE);
-//        });
+        // Подгрузка изображения из галереи или камеры
+        imageView.setOnClickListener(v -> {
+            Intent galleryIntent = new Intent(Intent.ACTION_PICK,
+                    android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+            startActivityForResult(galleryIntent, GALLERY_REQUEST_CODE);
+        });
 
         // Отправка на сервер введенных данных
         requireView().findViewById(R.id.btSave).setOnClickListener(v -> {
@@ -116,6 +125,12 @@ public class EditMealFragment extends Fragment implements CallbackGetMealById, C
     public void onMealByIdReceived(Meal meal) {
         this.meal = meal;
         onDataReceived(meal, foodList);
+
+        if (meal.getPicture() != null) {
+            byteArray = meal.getPicture();
+            Bitmap bitmap = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
+            imageView.setImageBitmap(bitmap);
+        }
     }
 
     @Override
@@ -127,6 +142,37 @@ public class EditMealFragment extends Fragment implements CallbackGetMealById, C
     private void onDataReceived(Meal meal, List<Food> foodList) {
         if (meal != null && foodList != null) {
             fieldValidation.setValues(foodList, meal);
+        }
+    }
+
+    // Метод для обработки результата выбора изображения из галереи или камеры
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == GALLERY_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
+            // Получаем URI выбранного изображения из галереи
+            Uri selectedImageUri = data.getData();
+
+            try {
+                // Получаем Bitmap из URI выбранного изображения из галереи
+                Bitmap originalBitmap = MediaStore.Images.Media.getBitmap(requireContext().getContentResolver(), selectedImageUri);
+
+                // Уменьшаем размер Bitmap
+                Bitmap resizedBitmap = ResizedBitmap.getResizedBitmap(originalBitmap,
+                        Data.getInstance().getPictureSize(),
+                        Data.getInstance().getPictureSize());
+
+                // Устанавливаем уменьшенное изображение в ImageView
+                imageView.setImageBitmap(resizedBitmap);
+
+                // Сохраняем уменьшенное изображение в бинарный файл
+                ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                resizedBitmap.compress(Bitmap.CompressFormat.JPEG, Data.getInstance().getQuality(), stream);
+                byteArray = stream.toByteArray();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 }

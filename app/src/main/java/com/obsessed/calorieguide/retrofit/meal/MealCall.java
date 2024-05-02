@@ -84,6 +84,8 @@ public class MealCall {
         String json = gson.toJson(meal);
         RequestBody requestBody = RequestBody.create(MediaType.parse("application/json"), json);
 
+        Log.d("Call", meal.toString());
+
         Call<JsonObject> call = mainApi.updateMeal(mealId, requestBody);
         call.enqueue(new Callback<JsonObject>() {
             @Override

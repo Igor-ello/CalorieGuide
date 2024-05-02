@@ -1,5 +1,7 @@
 package com.obsessed.calorieguide.adapters.meal;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,13 +43,13 @@ public class MealAdapter extends RecyclerView.Adapter<MealAdapter.MealHolder> {
             binding.tvCalories.setText(String.valueOf(meal.getTotalCalories()));
             binding.tvDescription.setText(meal.getDescription());
 
-//            if (meal.getPicture() != null) {
-//                byte[] imageData = meal.getPicture();
-//                Bitmap bitmap = BitmapFactory.decodeByteArray(imageData, 0, imageData.length);
-//                binding.imageView.setImageBitmap(bitmap);
-//            } else {
-//                binding.imageView.setImageResource(R.drawable.meal_default);
-//            }
+            if (meal.getPicture() != null) {
+                byte[] imageData = meal.getPicture();
+                Bitmap bitmap = BitmapFactory.decodeByteArray(imageData, 0, imageData.length);
+                binding.imageView.setImageBitmap(bitmap);
+            } else {
+                binding.imageView.setImageResource(R.drawable.meal_default);
+            }
         }
     }
 

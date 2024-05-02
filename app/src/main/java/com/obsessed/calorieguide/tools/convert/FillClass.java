@@ -31,7 +31,8 @@ public class FillClass {
                 etList.get(0).getText().toString(),
                 foodIdQuantities,
                 Data.getInstance().getUser().getId(),
-                etList.get(1).getText().toString()
+                etList.get(1).getText().toString(),
+                byteArray
                 );
         return meal;
     }

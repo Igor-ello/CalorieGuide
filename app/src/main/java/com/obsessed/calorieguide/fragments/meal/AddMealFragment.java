@@ -1,5 +1,9 @@
 package com.obsessed.calorieguide.fragments.meal;
 
+import android.app.Activity;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -7,6 +11,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
+import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,7 +28,10 @@ import com.obsessed.calorieguide.retrofit.food.FoodCallAndCallback;
 import com.obsessed.calorieguide.retrofit.meal.FoodIdQuantity;
 import com.obsessed.calorieguide.retrofit.meal.MealCall;
 import com.obsessed.calorieguide.tools.convert.FillClass;
+import com.obsessed.calorieguide.tools.convert.ResizedBitmap;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -56,12 +64,12 @@ public class AddMealFragment extends Fragment implements CallbackGetAllFood {
         // Инициализируем поля
         init(view);
 
-//        // Подгрузка изображения из галереи или камеры
-//        imageView.setOnClickListener(v -> {
-//            Intent galleryIntent = new Intent(Intent.ACTION_PICK,
-//                    android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-//            startActivityForResult(galleryIntent, GALLERY_REQUEST_CODE);
-//        });
+        // Подгрузка изображения из галереи или камеры
+        imageView.setOnClickListener(v -> {
+            Intent galleryIntent = new Intent(Intent.ACTION_PICK,
+                    android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+            startActivityForResult(galleryIntent, GALLERY_REQUEST_CODE);
+        });
 
         view.findViewById(R.id.btSetNumber).setOnClickListener(v -> {
             FoodCallAndCallback foodCallAndCallback = new FoodCallAndCallback(this);
@@ -91,5 +99,36 @@ public class AddMealFragment extends Fragment implements CallbackGetAllFood {
     @Override
     public void onAllFoodReceived(List<Food> foodList) {
         fieldValidation.fillLnFood(foodList, null);;
+    }
+
+    // Метод для обработки результата выбора изображения из галереи или камеры
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == GALLERY_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
+            // Получаем URI выбранного изображения из галереи
+            Uri selectedImageUri = data.getData();
+
+            try {
+                // Получаем Bitmap из URI выбранного изображения из галереи
+                Bitmap originalBitmap = MediaStore.Images.Media.getBitmap(requireContext().getContentResolver(), selectedImageUri);
+
+                // Уменьшаем размер Bitmap
+                Bitmap resizedBitmap = ResizedBitmap.getResizedBitmap(originalBitmap,
+                        Data.getInstance().getPictureSize(),
+                        Data.getInstance().getPictureSize());
+
+                // Устанавливаем уменьшенное изображение в ImageView
+                imageView.setImageBitmap(resizedBitmap);
+
+                // Сохраняем уменьшенное изображение в бинарный файл
+                ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                resizedBitmap.compress(Bitmap.CompressFormat.JPEG, Data.getInstance().getQuality(), stream);
+                byteArray = stream.toByteArray();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }
