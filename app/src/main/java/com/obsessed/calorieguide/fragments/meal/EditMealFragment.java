@@ -41,7 +41,7 @@ public class EditMealFragment extends Fragment implements CallbackGetMealById, C
 
     //Data received from the server
     Meal meal = null;
-    List<String> foodNames = null;
+    List<Food> foodList = null;
 
 
     public EditMealFragment() {
@@ -115,24 +115,18 @@ public class EditMealFragment extends Fragment implements CallbackGetMealById, C
     @Override
     public void onMealByIdReceived(Meal meal) {
         this.meal = meal;
-        onDataReceived(meal, foodNames);
-        Log.d("EditMealFragment", meal.toString());
+        onDataReceived(meal, foodList);
     }
 
     @Override
     public void onAllFoodReceived(List<Food> foodList) {
-        foodNames = new ArrayList<>();
-        for (Food food : foodList) {
-            foodNames.add(food.getFoodName());
-        }
-        fieldValidation.setValues(foodNames, meal);
-        Log.d("EditMealFragment", foodNames.toString());
+        this.foodList = foodList;
+        onDataReceived(meal, foodList);
     }
 
-    private void onDataReceived(Meal meal, List<String> foodNames) {
-        if (meal != null && foodNames != null) {
-            fieldValidation.setValues(foodNames, meal);
-            Log.d("EditMealFragment", meal.toString() + " " + foodNames.toString());
+    private void onDataReceived(Meal meal, List<Food> foodList) {
+        if (meal != null && foodList != null) {
+            fieldValidation.setValues(foodList, meal);
         }
     }
 }

@@ -59,7 +59,9 @@
                         android:id="@+id/tvDescription"
                         style="@style/TextCardStyle"
                         android:gravity="start"
-                        android:maxLines="2"
+                        android:maxLines="3"
+                        android:ellipsize="end"
+                        android:justificationMode="inter_word"
                         android:textSize="@dimen/text_size">
                     </TextView>
 

@@ -90,10 +90,6 @@ public class AddMealFragment extends Fragment implements CallbackGetAllFood {
 
     @Override
     public void onAllFoodReceived(List<Food> foodList) {
-        List<String> foodNames = new ArrayList<>();
-        for (Food food : foodList) {
-            foodNames.add(food.getFoodName());
-        }
-        fieldValidation.fillLnFood(foodNames, null);;
+        fieldValidation.fillLnFood(foodList, null);;
     }
 }

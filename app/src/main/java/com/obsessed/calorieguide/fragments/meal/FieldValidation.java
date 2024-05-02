@@ -9,6 +9,7 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.obsessed.calorieguide.R;
+import com.obsessed.calorieguide.retrofit.food.Food;
 import com.obsessed.calorieguide.retrofit.meal.FoodIdQuantity;
 import com.obsessed.calorieguide.retrofit.meal.Meal;
 import com.obsessed.calorieguide.tools.ViewFactory;
@@ -19,6 +20,10 @@ import java.util.List;
 public class FieldValidation {
     View view;
     Context context;
+
+    List<String> foodNames;
+    List<Food> foodList;
+
     ArrayList<EditText> etList;
     EditText etNumberOfIng;
 
@@ -43,16 +48,22 @@ public class FieldValidation {
         lnFood = view.findViewById(R.id.lnFood);
     }
 
-    public void fillLnFood(List<String> foodList, List<FoodIdQuantity> foodIdQuantityList){
+    public void fillLnFood(List<Food> foodList, List<FoodIdQuantity> foodIdQuantityList){
         // Класс для создания новых элементов
         ViewFactory viewFactory = new ViewFactory(context);
         spinnerList = new ArrayList<>();
         editTextList = new ArrayList<>();
+        this.foodList = foodList;
         lnFood.removeAllViews();
+
+        foodNames = new ArrayList<>();
+        for (Food food : foodList) {
+            foodNames.add(food.getFoodName());
+        }
 
         int numberOfElements = Integer.parseInt(etNumberOfIng.getText().toString());
         ArrayAdapter<String> adapter = new ArrayAdapter(context,
-                android.R.layout.simple_spinner_item, foodList);
+                android.R.layout.simple_spinner_item, foodNames);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         // Создаем и добавляем нужное количество элементов
@@ -69,16 +80,17 @@ public class FieldValidation {
             linearLayout.addView(editText);
 
             if(foodIdQuantityList != null) {
-                spinner.setSelection(foodIdQuantityList.get(i).getProductId());
+                spinner.setSelection(findPositionById(foodIdQuantityList.get(i).getProductId()));
                 editText.setText(foodIdQuantityList.get(i).getQuantity() + "");
             }
+
 
             // Добавляем созданный LinearLayout в существующий LinearLayout lnSpinners
             lnFood.addView(linearLayout);
         }
     }
 
-    public void setValues(List<String> foodList, Meal meal) {
+    public void setValues(List<Food> foodList, Meal meal) {
         for (int i = 0; i < etList.size(); i++) {
             etList.get(i).setText(meal.getValues().get(i).toString());
         }
@@ -122,7 +134,7 @@ public class FieldValidation {
                 }
 
                 // Получаем выбранное значение из Spinner и текст из EditText
-                int productId = spinner.getSelectedItemPosition();
+                int productId = foodList.get(spinner.getSelectedItemPosition()).getId();
                 int quantity = Integer.parseInt(editTextValue);
 
                 // Создаем объект FoodIdQuantity и добавляем его в список
@@ -133,5 +145,15 @@ public class FieldValidation {
 
         return foodIdQuantities;
     }
+
+    private int findPositionById(int productId) {
+        for (int j = 0; j < foodList.size(); j++) {
+            if (foodList.get(j).getId() == productId) {
+                return j;
+            }
+        }
+        return 0;
+    }
+
 
 }
