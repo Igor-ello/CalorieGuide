@@ -23,6 +23,7 @@ import com.obsessed.calorieguide.R;
 import com.obsessed.calorieguide.tools.convert.FillClass;
 import com.obsessed.calorieguide.data.Data;
 import com.obsessed.calorieguide.retrofit.food.FoodCall;
+import com.obsessed.calorieguide.tools.convert.ResizedBitmap;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -99,7 +100,7 @@ public class AddFoodFragment extends Fragment {
                 Bitmap originalBitmap = MediaStore.Images.Media.getBitmap(requireContext().getContentResolver(), selectedImageUri);
 
                 // Уменьшаем размер Bitmap
-                Bitmap resizedBitmap = FieldValidation.getResizedBitmap(originalBitmap,
+                Bitmap resizedBitmap = ResizedBitmap.getResizedBitmap(originalBitmap,
                         Data.getInstance().getPictureSize(),
                         Data.getInstance().getPictureSize());
 

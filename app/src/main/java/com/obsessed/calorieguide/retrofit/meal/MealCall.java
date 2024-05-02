@@ -1,4 +1,4 @@
-package com.obsessed.calorieguide.retrofit.food;
+package com.obsessed.calorieguide.retrofit.meal;
 
 import android.util.Log;
 import android.view.View;
@@ -22,14 +22,14 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class FoodCall {
+public class MealCall {
     private String baseUrl = Data.getInstance().getBaseUrl();
     private Retrofit retrofit;
     private MainApi mainApi;
 
-    public FoodCall(String ACCESS_TOKEN) {
-//        HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
-//        loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+    public MealCall(String ACCESS_TOKEN) {
+        //HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
+        //loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
 
         OkHttpClient client = new OkHttpClient.Builder()
                 //.addInterceptor(loggingInterceptor) // Добавление Interceptor для логирования
@@ -54,76 +54,62 @@ public class FoodCall {
         mainApi = retrofit.create(MainApi.class);
     }
 
-    public void postFood(Food food) {
+
+    public Call<JsonObject> postMeal(Meal meal) {
         Gson gson = new Gson();
-        String json = gson.toJson(food); // Преобразуем объект Food в JSON-строку
+        String json = gson.toJson(meal);
         RequestBody requestBody = RequestBody.create(MediaType.parse("application/json"), json);
 
-        // Выполняем POST-запрос на сервер
-        Call<JsonObject> call = mainApi.postFood(requestBody);
+        Call<JsonObject> call = mainApi.postMeal(requestBody);
         call.enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
                 if (response.isSuccessful()) {
-                    Log.d("Call", "Response postFood is successful!");
+                    Log.d("Call", "Response postMeal is successful!");
                 } else {
-                    Log.e("Call", "ERROR response postFood is not successful; Response: " + response.code());
+                    Log.e("Call", "ERROR response postMeal is not successful; Response: " + response.code());
                 }
             }
 
             @Override
             public void onFailure(Call<JsonObject> call, Throwable t) {
-                Log.e("Call", "ERROR in postFood call: " + t.getMessage());
+                Log.e("Call", "ERROR in postMeal call: " + t.getMessage());
             }
         });
+        return mainApi.postMeal(requestBody);
     }
 
-    public void updateFood(int foodId, Food food) {
+    public Call<JsonObject> updateMeal(int mealId, Meal meal) {
         Gson gson = new Gson();
-        String json = gson.toJson(food);
+        String json = gson.toJson(meal);
         RequestBody requestBody = RequestBody.create(MediaType.parse("application/json"), json);
 
-        Call<JsonObject> call = mainApi.updateFood(foodId, requestBody);
+        Log.d("Call", meal.toString());
+
+        Call<JsonObject> call = mainApi.updateMeal(mealId, requestBody);
         call.enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
                 if (response.isSuccessful()) {
-                    Log.d("Call", "Request updateFood successful.");
+                    Log.d("Call", "Request updateMeal successful.");
                 } else {
-                    Log.e("Call", "Request updateFood failed. Response code: " + response.code());
+                    Log.e("Call", "Request updateMeal failed. Response code: " + response.code());
                 }
             }
 
             @Override
             public void onFailure(Call<JsonObject> call, Throwable t) {
-                Log.e("Call", "ERROR in updateFood call: " + t.getMessage());
+                Log.e("Call", "ERROR in updateMeal call: " + t.getMessage());
             }
         });
+        return mainApi.updateMeal(mealId, requestBody);
     }
 
-    public void deleteFood(int foodId) {
-        Call<JsonObject> call = mainApi.deleteFood(foodId);
-        call.enqueue(new Callback<JsonObject>() {
-            @Override
-            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
-                if (response.isSuccessful()) {
-                    Log.d("Call", "Request deleteFood successful.");
-                } else {
-                    Log.e("Call", "Request deleteFood failed. Response code: " + response.code());
-                }
-            }
-
-            @Override
-            public void onFailure(Call<JsonObject> call, Throwable t) {
-                Log.e("Call", "ERROR in deleteFood call: " + t.getMessage());
-            }
-        });
-    }
-
-    public void likeFood(int userId, int productId, ImageView imageView) {
+    public Call<JsonObject> likeMeal(int userId, int mealId, ImageView imageView) {
         JsonObject requestObject = new JsonObject();
+        requestObject.addProperty("meal_id", mealId);
         requestObject.addProperty("user_id", userId);
-        requestObject.addProperty("product_id", productId);
+        Log.d("Call", requestObject.toString());
 
         // Преобразование объекта запроса в JSON-строку
         Gson gson = new Gson();
@@ -131,13 +117,12 @@ public class FoodCall {
         RequestBody requestBody = RequestBody.create(MediaType.parse("application/json"), json);
 
         // Выполняем POST-запрос на сервер
-        Call<JsonObject> call = mainApi.likeFood(requestBody);
+        Call<JsonObject> call = mainApi.likeMeal(requestBody);
         call.enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
                 if (response.isSuccessful()) {
-
-                    if(imageView != null) {
+                    if (imageView != null) {
                         if (imageView.getDrawable().getConstantState().equals(
                                 ContextCompat.getDrawable(imageView.getContext(), R.drawable.like_not_active).getConstantState())) {
                             imageView.setImageResource(R.drawable.like_active);
@@ -145,16 +130,38 @@ public class FoodCall {
                             imageView.setImageResource(R.drawable.like_not_active);
                         }
                     }
-                    Log.d("Call", "Response likeFood is successful!");
+                    Log.d("Call", "Response likeMeal is successful!");
                 } else {
-                    Log.e("Call", "ERROR response likeFood is not successful; Response: " + response.code());
+                    Log.e("Call", "ERROR response likeMeal is not successful; Response: " + response.code());
                 }
             }
 
             @Override
             public void onFailure(Call<JsonObject> call, Throwable t) {
-                Log.e("Call", "ERROR in likeFood call: " + t.getMessage());
+                Log.e("Call", "ERROR in likeMeal call: " + t.getMessage());
             }
         });
+        return mainApi.likeMeal(requestBody);
+    }
+
+
+    public Call<JsonObject> deleteMeal(int mealId) {
+        Call<JsonObject> call = mainApi.deleteMeal(mealId);
+        call.enqueue(new Callback<JsonObject>() {
+            @Override
+            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+                if (response.isSuccessful()) {
+                    Log.d("Call", "Request deleteMeal successful.");
+                } else {
+                    Log.e("Call", "Request deleteMeal failed. Response code: " + response.code());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<JsonObject> call, Throwable t) {
+                Log.e("Call", "ERROR in deleteMeal call: " + t.getMessage());
+            }
+        });
+        return mainApi.deleteMeal(mealId);
     }
 }

@@ -36,6 +36,15 @@
         <item name="android:layout_marginBottom">3dp</item>
     </style>
 
+    <style name="HelloTextStyle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">@dimen/text_header_size</item>
+        <item name="android:textColor">@color/text_color</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:text">Some text</item>
+    </style>
+
     <style name="EditTextStyle">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
@@ -50,10 +59,45 @@
         <item name="android:textColor">@color/text_color</item>
     </style>
 
-    <style name="PictureStyle">
+    <style name="ImageViewFoodStyle">
         <item name="android:layout_width">@dimen/picture_width</item>
         <item name="android:layout_height">@dimen/picture_height</item>
         <item name="android:src">@drawable/food_default</item>
+    </style>
+
+    <style name="ImageViewMealStyle">
+        <item name="android:layout_width">@dimen/picture_width</item>
+        <item name="android:layout_height">@dimen/picture_height</item>
+        <item name="android:src">@drawable/meal_default</item>
+        <item name="android:layout_marginEnd">@dimen/margin_default</item>
+    </style>
+
+
+    <!--MainFragment-->
+    <style name="LinearLayoutStatsStyle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:orientation">vertical</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <style name="TextViewStatsStyle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">24dp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/text_color</item>
+        <item name="android:text">Some text</item>
+    </style>
+
+    <style name="TextViewNumberStyle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">30dp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/blue</item>
+        <item name="android:text">72</item>
     </style>
   
 </resources>

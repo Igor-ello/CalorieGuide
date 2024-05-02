@@ -3,8 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments.library.LibraryFragment"
-    android:layout_margin="5dp">
+    tools:context=".fragments.library.LibraryMealFragment">
 
 
     <LinearLayout
@@ -13,11 +12,24 @@
         android:orientation="vertical"
         android:layout_marginBottom="50dp">
 
-        <TextView
-            style="@style/TextHeaderStyle"
-            android:text="@string/fragment_library_header"
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_margin="5dp">
-        </TextView>
+
+            <TextView
+                style="@style/TextHeaderStyle"
+                android:text="@string/fragment_meal_library_header">
+            </TextView>
+
+            <ImageView
+                android:id="@+id/btToFoodLib"
+                style="@style/IconStyle"
+                android:src="@drawable/arrow_back">
+            </ImageView>
+
+        </FrameLayout>
+
 
         <ScrollView
             android:layout_width="match_parent"
@@ -39,16 +51,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:text="Add food">
+                    android:text="Add meal">
                 </Button>
             </LinearLayout>
         </ScrollView>
     </LinearLayout>
 
-    <FrameLayout
-        android:id="@+id/fragment_nav_bar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom">
-    </FrameLayout>
 </FrameLayout>

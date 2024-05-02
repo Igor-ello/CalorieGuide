@@ -1,4 +1,4 @@
-package com.obsessed.calorieguide.fragments.food;
+package com.obsessed.calorieguide.fragments.meal;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,27 +22,38 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.obsessed.calorieguide.R;
+import com.obsessed.calorieguide.data.Data;
+import com.obsessed.calorieguide.retrofit.food.CallbackGetAllFood;
+import com.obsessed.calorieguide.retrofit.food.Food;
 import com.obsessed.calorieguide.retrofit.food.FoodCallAndCallback;
+import com.obsessed.calorieguide.retrofit.meal.CallbackGetMealById;
+import com.obsessed.calorieguide.retrofit.meal.FoodIdQuantity;
+import com.obsessed.calorieguide.retrofit.meal.Meal;
+import com.obsessed.calorieguide.retrofit.meal.MealCall;
+import com.obsessed.calorieguide.retrofit.meal.MealCallAndCallback;
 import com.obsessed.calorieguide.tools.convert.FillClass;
 import com.obsessed.calorieguide.tools.convert.ResizedBitmap;
-import com.obsessed.calorieguide.data.Data;
-import com.obsessed.calorieguide.retrofit.food.CallbackGetFoodById;
-import com.obsessed.calorieguide.retrofit.food.Food;
-import com.obsessed.calorieguide.retrofit.food.FoodCall;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
-public class EditFoodFragment extends Fragment implements CallbackGetFoodById {
-    private static final String ARG_FOOD_ID = "food_id";
-    private int foodId;
+
+public class EditMealFragment extends Fragment implements CallbackGetMealById, CallbackGetAllFood {
     private static final int GALLERY_REQUEST_CODE = 100;
-    ImageView imageView;
     byte[] byteArray;
+    private static final String ARG_MEAL_ID = "meal_id";
+    private int mealId;
     FieldValidation fieldValidation;
+    ImageView imageView;
 
-    public EditFoodFragment() {
+    //Data received from the server
+    Meal meal = null;
+    List<Food> foodList = null;
+
+
+    public EditMealFragment() {
         // Required empty public constructor
     }
 
@@ -49,7 +61,7 @@ public class EditFoodFragment extends Fragment implements CallbackGetFoodById {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            foodId = getArguments().getInt(ARG_FOOD_ID);
+            mealId = getArguments().getInt(ARG_MEAL_ID);
         }
     }
 
@@ -57,7 +69,7 @@ public class EditFoodFragment extends Fragment implements CallbackGetFoodById {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_edit_food, container, false);
+        return inflater.inflate(R.layout.fragment_edit_meal, container, false);
     }
 
     @Override
@@ -69,13 +81,15 @@ public class EditFoodFragment extends Fragment implements CallbackGetFoodById {
 
         //Подгрузка данных
         requireActivity().runOnUiThread(() -> {
+            MealCallAndCallback mealCallAndCallback = new MealCallAndCallback(this, Data.getInstance().getUser().getBearerToken());
+            mealCallAndCallback.getMealById(mealId);
             FoodCallAndCallback foodCallAndCallback = new FoodCallAndCallback(this);
-            foodCallAndCallback.getFoodById(foodId);
+            foodCallAndCallback.getAllFood();
         });
 
         view.findViewById(R.id.btDelete).setOnClickListener(v -> {
-            FoodCall foodCall = new FoodCall(Data.getInstance().getUser().getBearerToken());
-            foodCall.deleteFood(foodId);
+            MealCall mealCall = new MealCall(Data.getInstance().getUser().getBearerToken());
+            mealCall.deleteMeal(mealId);
 
             Navigation.findNavController(view).popBackStack();
         });
@@ -89,10 +103,11 @@ public class EditFoodFragment extends Fragment implements CallbackGetFoodById {
 
         // Отправка на сервер введенных данных
         requireView().findViewById(R.id.btSave).setOnClickListener(v -> {
-            ArrayList<EditText> etList = fieldValidation.getValues();
+            ArrayList<EditText> etList = fieldValidation.getEtList();
+            ArrayList<FoodIdQuantity> foodIdQuantities = fieldValidation.getFoodIdQuantities();
             if(etList != null){
-                FoodCall foodCall = new FoodCall(Data.getInstance().getUser().getBearerToken());
-                foodCall.updateFood(foodId, FillClass.fillFood(etList, byteArray));
+                MealCall mealCall = new MealCall(Data.getInstance().getUser().getBearerToken());
+                mealCall.updateMeal(mealId, FillClass.fillMeal(etList, byteArray, foodIdQuantities));
 
                 Navigation.findNavController(view).popBackStack();
             } else {
@@ -101,19 +116,33 @@ public class EditFoodFragment extends Fragment implements CallbackGetFoodById {
         });
     }
 
+    void init(View view){
+        imageView = view.findViewById(R.id.image);
+        fieldValidation = new FieldValidation(requireContext(), requireView());
+    }
+
     @Override
-    public void onFoodByIdReceived(Food food) {
-        fieldValidation.setValues(food);
-        if (food.getPicture() != null) {
-            byteArray = food.getPicture();
+    public void onMealByIdReceived(Meal meal) {
+        this.meal = meal;
+        onDataReceived(meal, foodList);
+
+        if (meal.getPicture() != null) {
+            byteArray = meal.getPicture();
             Bitmap bitmap = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
             imageView.setImageBitmap(bitmap);
         }
     }
 
-    private void init(View view){
-        imageView = view.findViewById(R.id.image);
-        fieldValidation = new FieldValidation(requireView());
+    @Override
+    public void onAllFoodReceived(List<Food> foodList) {
+        this.foodList = foodList;
+        onDataReceived(meal, foodList);
+    }
+
+    private void onDataReceived(Meal meal, List<Food> foodList) {
+        if (meal != null && foodList != null) {
+            fieldValidation.setValues(foodList, meal);
+        }
     }
 
     // Метод для обработки результата выбора изображения из галереи или камеры

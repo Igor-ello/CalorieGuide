@@ -1,9 +1,8 @@
-package com.obsessed.calorieguide.fragments.food;
+package com.obsessed.calorieguide.fragments.meal;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -21,43 +20,41 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.obsessed.calorieguide.R;
+import com.obsessed.calorieguide.adapters.food.OnFoodClickListener;
+import com.obsessed.calorieguide.data.Data;
+import com.obsessed.calorieguide.retrofit.food.CallbackGetAllFood;
+import com.obsessed.calorieguide.retrofit.food.Food;
 import com.obsessed.calorieguide.retrofit.food.FoodCallAndCallback;
+import com.obsessed.calorieguide.retrofit.meal.FoodIdQuantity;
+import com.obsessed.calorieguide.retrofit.meal.MealCall;
 import com.obsessed.calorieguide.tools.convert.FillClass;
 import com.obsessed.calorieguide.tools.convert.ResizedBitmap;
-import com.obsessed.calorieguide.data.Data;
-import com.obsessed.calorieguide.retrofit.food.CallbackGetFoodById;
-import com.obsessed.calorieguide.retrofit.food.Food;
-import com.obsessed.calorieguide.retrofit.food.FoodCall;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
-public class EditFoodFragment extends Fragment implements CallbackGetFoodById {
-    private static final String ARG_FOOD_ID = "food_id";
-    private int foodId;
+public class AddMealFragment extends Fragment implements CallbackGetAllFood {
     private static final int GALLERY_REQUEST_CODE = 100;
-    ImageView imageView;
     byte[] byteArray;
     FieldValidation fieldValidation;
+    ImageView imageView;
 
-    public EditFoodFragment() {
+    public AddMealFragment() {
         // Required empty public constructor
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            foodId = getArguments().getInt(ARG_FOOD_ID);
-        }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_edit_food, container, false);
+        return inflater.inflate(R.layout.fragment_add_meal, container, false);
     }
 
     @Override
@@ -67,19 +64,6 @@ public class EditFoodFragment extends Fragment implements CallbackGetFoodById {
         // Инициализируем поля
         init(view);
 
-        //Подгрузка данных
-        requireActivity().runOnUiThread(() -> {
-            FoodCallAndCallback foodCallAndCallback = new FoodCallAndCallback(this);
-            foodCallAndCallback.getFoodById(foodId);
-        });
-
-        view.findViewById(R.id.btDelete).setOnClickListener(v -> {
-            FoodCall foodCall = new FoodCall(Data.getInstance().getUser().getBearerToken());
-            foodCall.deleteFood(foodId);
-
-            Navigation.findNavController(view).popBackStack();
-        });
-
         // Подгрузка изображения из галереи или камеры
         imageView.setOnClickListener(v -> {
             Intent galleryIntent = new Intent(Intent.ACTION_PICK,
@@ -87,12 +71,18 @@ public class EditFoodFragment extends Fragment implements CallbackGetFoodById {
             startActivityForResult(galleryIntent, GALLERY_REQUEST_CODE);
         });
 
+        view.findViewById(R.id.btSetNumber).setOnClickListener(v -> {
+            FoodCallAndCallback foodCallAndCallback = new FoodCallAndCallback(this);
+            foodCallAndCallback.getAllFood();
+        });
+
         // Отправка на сервер введенных данных
         requireView().findViewById(R.id.btSave).setOnClickListener(v -> {
-            ArrayList<EditText> etList = fieldValidation.getValues();
+            ArrayList<EditText> etList = fieldValidation.getEtList();
+            ArrayList<FoodIdQuantity> foodIdQuantities = fieldValidation.getFoodIdQuantities();
             if(etList != null){
-                FoodCall foodCall = new FoodCall(Data.getInstance().getUser().getBearerToken());
-                foodCall.updateFood(foodId, FillClass.fillFood(etList, byteArray));
+                MealCall mealCall = new MealCall(Data.getInstance().getUser().getBearerToken());
+                mealCall.postMeal(FillClass.fillMeal(etList, byteArray, foodIdQuantities));
 
                 Navigation.findNavController(view).popBackStack();
             } else {
@@ -101,19 +91,14 @@ public class EditFoodFragment extends Fragment implements CallbackGetFoodById {
         });
     }
 
-    @Override
-    public void onFoodByIdReceived(Food food) {
-        fieldValidation.setValues(food);
-        if (food.getPicture() != null) {
-            byteArray = food.getPicture();
-            Bitmap bitmap = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
-            imageView.setImageBitmap(bitmap);
-        }
+    void init(View view){
+        imageView = view.findViewById(R.id.image);
+        fieldValidation = new FieldValidation(requireContext(), requireView());
     }
 
-    private void init(View view){
-        imageView = view.findViewById(R.id.image);
-        fieldValidation = new FieldValidation(requireView());
+    @Override
+    public void onAllFoodReceived(List<Food> foodList) {
+        fieldValidation.fillLnFood(foodList, null);;
     }
 
     // Метод для обработки результата выбора изображения из галереи или камеры

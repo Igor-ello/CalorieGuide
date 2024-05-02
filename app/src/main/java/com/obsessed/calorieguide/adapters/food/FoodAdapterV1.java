@@ -1,4 +1,4 @@
-package com.obsessed.calorieguide.adapters;
+package com.obsessed.calorieguide.adapters.food;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -10,24 +10,24 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.obsessed.calorieguide.R;
-import com.obsessed.calorieguide.databinding.FoodItemV2Binding;
+import com.obsessed.calorieguide.databinding.FoodItemV1Binding;
 import com.obsessed.calorieguide.retrofit.food.Food;
 
 import java.util.ArrayList;
 
-public class FoodAdapterV2 extends RecyclerView.Adapter<FoodAdapterV2.FoodHolder> {
+public class FoodAdapterV1 extends RecyclerView.Adapter<FoodAdapterV1.FoodHolder> {
     public ArrayList<Food> foodArrayList;
     private OnFoodClickListener onFoodClickListener;
     private OnLikeFoodClickListener onLikeFoodClickListener;
 
     public class FoodHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        FoodItemV2Binding binding;
+        FoodItemV1Binding binding;
 
         public FoodHolder(@NonNull View itemView) {
             super(itemView);
-            binding = FoodItemV2Binding.bind(itemView);
+            binding = FoodItemV1Binding.bind(itemView);
             binding.getRoot().setOnClickListener(this);
-            binding.btLikeV2.setOnClickListener(this);
+            binding.btLikeV1.setOnClickListener(this);
         }
 
         @Override
@@ -36,17 +36,10 @@ public class FoodAdapterV2 extends RecyclerView.Adapter<FoodAdapterV2.FoodHolder
             if (position != RecyclerView.NO_POSITION && onFoodClickListener != null) {
                 onFoodClickListener.onFoodClick(foodArrayList.get(position));
             }
-            if (position != RecyclerView.NO_POSITION && onLikeFoodClickListener != null) {
-                onLikeFoodClickListener.onLikeFoodClick(foodArrayList.get(position));
-            }
         }
 
         public void bind(Food food) {
             binding.tvName.setText(food.getFoodName());
-            binding.tvCalories.setText("Calories: " + food.getCalories());
-            binding.tvProteins.setText("p: " + food.getProteins());
-            binding.tvCarbohydrates.setText("c: " + food.getCarbohydrates());
-            binding.tvFats.setText("f: " + food.getFats());
 
             if (food.getPicture() != null) {
                 byte[] imageData = food.getPicture();
@@ -61,16 +54,16 @@ public class FoodAdapterV2 extends RecyclerView.Adapter<FoodAdapterV2.FoodHolder
     @NonNull
     @Override
     public FoodHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.food_item_v2, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.food_item_v1, parent, false);
         return new FoodHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull FoodHolder holder, int position) {
         holder.bind(foodArrayList.get(position));
-        holder.binding.btLikeV2.setOnClickListener(v -> {
+        holder.binding.btLikeV1.setOnClickListener(v -> {
             if (onLikeFoodClickListener != null) {
-                onLikeFoodClickListener.onLikeFoodClick(foodArrayList.get(position));
+                onLikeFoodClickListener.onLikeFoodClick(foodArrayList.get(position), holder.binding.btLikeV1);
             }
         });
     }

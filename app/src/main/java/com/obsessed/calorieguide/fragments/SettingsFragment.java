@@ -1,6 +1,7 @@
 package com.obsessed.calorieguide.fragments;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -17,6 +18,8 @@ import android.widget.CompoundButton;
 import android.widget.Switch;
 
 import com.google.gson.JsonObject;
+import com.obsessed.calorieguide.MainActivityApp;
+import com.obsessed.calorieguide.MainActivityAuth;
 import com.obsessed.calorieguide.R;
 import com.obsessed.calorieguide.data.Data;
 import com.obsessed.calorieguide.retrofit.user.UserCall;
@@ -56,8 +59,9 @@ public class SettingsFragment extends Fragment implements CompoundButton.OnCheck
         view.findViewById(R.id.btLogout).setOnClickListener(v -> {
             // При выходе из аккаунта сбрасываем данные
             ShPrefs.dropData(requireContext());
-            Navigation.findNavController(view).popBackStack();
-            Navigation.findNavController(view).navigate(R.id.loginFragment);
+            if (getActivity() != null && getActivity() instanceof MainActivityApp) {
+                startActivity(new Intent(getActivity(), MainActivityAuth.class));
+            }
         });
 
         view.findViewById(R.id.btDelete).setOnClickListener(v -> {

@@ -11,24 +11,20 @@ import com.obsessed.calorieguide.retrofit.MainApi;
 
 import java.util.List;
 
-import okhttp3.MediaType;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class FoodCallForAdapter {
+public class FoodCallAndCallback {
     private CallbackGetAllFood callbackGetAllFood; //интерфейс для возврата результата запроса getAllFood
     private CallbackGetFoodById callbackGetFoodById; //интерфейс для возврата результата запроса getFoodById
     private Retrofit retrofit;
     private MainApi mainApi;
 
     // Перегрузка для запроса getAllFood
-    public FoodCallForAdapter(CallbackGetAllFood callbackGetAllFood) {
+    public FoodCallAndCallback(CallbackGetAllFood callbackGetAllFood) {
         this.callbackGetAllFood = callbackGetAllFood;
 
         retrofit = new Retrofit.Builder()
@@ -40,7 +36,7 @@ public class FoodCallForAdapter {
     }
 
     // Перегрузка для запроса getFoodById
-    public FoodCallForAdapter(CallbackGetFoodById callbackGetFoodById) {
+    public FoodCallAndCallback(CallbackGetFoodById callbackGetFoodById) {
         this.callbackGetFoodById = callbackGetFoodById;
 
         retrofit = new Retrofit.Builder()

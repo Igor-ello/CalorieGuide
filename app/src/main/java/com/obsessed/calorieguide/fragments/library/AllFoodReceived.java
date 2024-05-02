@@ -9,10 +9,10 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.GridLayoutManager;
 
 import com.obsessed.calorieguide.R;
-import com.obsessed.calorieguide.adapters.FoodAdapterV1;
-import com.obsessed.calorieguide.adapters.FoodAdapterV2;
+import com.obsessed.calorieguide.adapters.food.FoodAdapterV1;
+import com.obsessed.calorieguide.adapters.food.FoodAdapterV2;
 import com.obsessed.calorieguide.data.Data;
-import com.obsessed.calorieguide.databinding.FragmentLibraryBinding;
+import com.obsessed.calorieguide.databinding.FragmentFoodLibraryBinding;
 import com.obsessed.calorieguide.retrofit.food.Food;
 import com.obsessed.calorieguide.retrofit.food.FoodCall;
 
@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AllFoodReceived {
-    public static void onAllFoodReceived(Context context, View view, FragmentLibraryBinding binding, List<Food> foodList) {
+    public static void onAllFoodReceived(Context context, View view, FragmentFoodLibraryBinding binding, List<Food> foodList) {
         if (Data.getInstance().getAdapterType() != 2) {
             isAdapterV1(context, view, binding, foodList);
         } else {
@@ -28,7 +28,7 @@ public class AllFoodReceived {
         }
     }
 
-    private static void isAdapterV1(Context context, View view, FragmentLibraryBinding binding, List<Food> foodList) {
+    private static void isAdapterV1(Context context, View view, FragmentFoodLibraryBinding binding, List<Food> foodList) {
         FoodAdapterV1 foodAdapter = new FoodAdapterV1();
         foodAdapter.foodArrayList = (ArrayList<Food>) foodList;
         binding.rcView.setLayoutManager(new GridLayoutManager(context, 2));
@@ -39,17 +39,17 @@ public class AllFoodReceived {
             Log.d("FoodAdapter", "Clicked on food in FoodAdapterV1: " + food.getFoodName());
             Bundle args = new Bundle();
             args.putInt("food_id", food.getId());
-            Navigation.findNavController(view).navigate(R.id.action_libraryFragment_to_editFoodFragment, args);
+            Navigation.findNavController(view).navigate(R.id.action_libraryFoodFragment_to_editFoodFragment, args);
         });
 
-        foodAdapter.setOnLikeFoodClickListener(food -> {
+        foodAdapter.setOnLikeFoodClickListener((food, imageView) -> {
             Log.d("FoodAdapter", "Clicked on like for food in FoodAdapterV1: " + food.getFoodName());
             FoodCall foodCall = new FoodCall(Data.getInstance().getUser().getBearerToken());
-            foodCall.likeFood(Data.getInstance().getUser().getId(), food.getId(), view);
+            foodCall.likeFood(Data.getInstance().getUser().getId(), food.getId(), imageView);
         });
     }
 
-    private static void isAdapterV2(Context context, View view, FragmentLibraryBinding binding, List<Food> foodList) {
+    private static void isAdapterV2(Context context, View view, FragmentFoodLibraryBinding binding, List<Food> foodList) {
         FoodAdapterV2 foodAdapter = new FoodAdapterV2();
         foodAdapter.foodArrayList = (ArrayList<Food>) foodList;
         binding.rcView.setLayoutManager(new GridLayoutManager(context, 1));
@@ -60,13 +60,13 @@ public class AllFoodReceived {
             Log.d("FoodAdapter", "Clicked on food in FoodAdapterV2: " + food.getFoodName());
             Bundle args = new Bundle();
             args.putInt("food_id", food.getId());
-            Navigation.findNavController(view).navigate(R.id.action_libraryFragment_to_editFoodFragment, args);
+            Navigation.findNavController(view).navigate(R.id.action_libraryFoodFragment_to_editFoodFragment, args);
         });
 
-        foodAdapter.setOnLikeFoodClickListener(food -> {
+        foodAdapter.setOnLikeFoodClickListener((food, imageView)-> {
             Log.d("FoodAdapter", "Clicked on like for food in FoodAdapterV2: " + food.getFoodName());
             FoodCall foodCall = new FoodCall(Data.getInstance().getUser().getBearerToken());
-            foodCall.likeFood(Data.getInstance().getUser().getId(), food.getId(), view);
+            foodCall.likeFood(Data.getInstance().getUser().getId(), food.getId(), imageView);
         });
     }
 }
