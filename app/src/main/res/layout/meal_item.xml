@@ -36,6 +36,7 @@
                         android:id="@+id/tvName"
                         style="@style/TextCardStyle"
                         android:layout_weight="1"
+                        android:maxLines="2"
                         android:fontFamily="sans-serif-condensed">
                     </TextView>
 
@@ -60,7 +61,6 @@
                         style="@style/TextCardStyle"
                         android:gravity="start"
                         android:maxLines="3"
-                        android:ellipsize="end"
                         android:justificationMode="inter_word"
                         android:textSize="@dimen/text_size">
                     </TextView>

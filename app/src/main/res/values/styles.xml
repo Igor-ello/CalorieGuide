@@ -34,6 +34,7 @@
         <item name="android:textColor">@color/text_color</item>
         <item name="android:text">Some text</item>
         <item name="android:layout_marginBottom">3dp</item>
+        <item name="android:ellipsize">end</item>
     </style>
 
     <style name="HelloTextStyle">

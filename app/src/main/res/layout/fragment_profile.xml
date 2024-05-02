@@ -7,8 +7,6 @@
     android:layout_margin="@dimen/margin_default">
 
 
-    <include layout="@layout/arrow_back"></include>
-
     <FrameLayout
         android:id="@+id/settingsButton"
         style="@style/IconStyle"

@@ -40,6 +40,7 @@
                         android:id="@+id/tvName"
                         style="@style/TextCardStyle"
                         android:layout_weight="1"
+                        android:maxLines="2"
                         android:fontFamily="sans-serif-condensed">
                     </TextView>
 

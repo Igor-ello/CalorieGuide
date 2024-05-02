@@ -40,7 +40,7 @@ public class FoodAdapterV2 extends RecyclerView.Adapter<FoodAdapterV2.FoodHolder
 
         public void bind(Food food) {
             binding.tvName.setText(food.getFoodName());
-            binding.tvCalories.setText("Calories: " + food.getCalories());
+            binding.tvCalories.setText(String.valueOf(food.getCalories()));
             binding.tvProteins.setText("p: " + food.getProteins());
             binding.tvCarbohydrates.setText("c: " + food.getCarbohydrates());
             binding.tvFats.setText("f: " + food.getFats());
