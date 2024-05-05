@@ -44,6 +44,7 @@ public class FoodAdapterV2 extends RecyclerView.Adapter<FoodAdapterV2.FoodHolder
             binding.tvProteins.setText("p: " + food.getProteins());
             binding.tvCarbohydrates.setText("c: " + food.getCarbohydrates());
             binding.tvFats.setText("f: " + food.getFats());
+            binding.btLikeV2.setImageResource(food.isLiked()? R.drawable.like_active : R.drawable.like_not_active);
 
             if (food.getPicture() != null) {
                 byte[] imageData = food.getPicture();

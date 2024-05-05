@@ -1,7 +1,5 @@
 package com.obsessed.calorieguide.retrofit.meal;
 
-import android.util.Log;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -18,6 +16,7 @@ public class Meal {
     String description;
     int likes;
     byte[] picture;
+    boolean isLiked;
 
     public Meal(String meal_name, List<FoodIdQuantity> products_id, int author_id, String description, byte[] picture) {
         this.meal_name = meal_name;
@@ -41,6 +40,7 @@ public class Meal {
                 ", description='" + description + '\'' +
                 ", likes=" + likes +
                 ", picture=" + Arrays.toString(picture) +
+                ", isLiked=" + isLiked +
                 '}';
     }
 
@@ -93,5 +93,9 @@ public class Meal {
 
     public byte[] getPicture() {
         return picture;
+    }
+
+    public boolean isLiked() {
+        return isLiked;
     }
 }

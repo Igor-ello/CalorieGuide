@@ -42,6 +42,7 @@ public class MealAdapter extends RecyclerView.Adapter<MealAdapter.MealHolder> {
             binding.tvName.setText(meal.getMealName());
             binding.tvCalories.setText(String.valueOf(meal.getTotalCalories()));
             binding.tvDescription.setText(meal.getDescription());
+            binding.btLike.setImageResource(meal.isLiked()? R.drawable.like_active : R.drawable.like_not_active);
 
             if (meal.getPicture() != null) {
                 byte[] imageData = meal.getPicture();

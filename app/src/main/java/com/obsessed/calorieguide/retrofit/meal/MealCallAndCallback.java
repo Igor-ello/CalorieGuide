@@ -12,8 +12,10 @@ import com.obsessed.calorieguide.retrofit.MainApi;
 
 import java.util.List;
 
+import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -53,32 +55,6 @@ public class MealCallAndCallback {
 
     public MealCallAndCallback(CallbackGetMealById callbackGetMealById, String ACCESS_TOKEN) {
         this.callbackGetMealById = callbackGetMealById;
-        OkHttpClient client = new OkHttpClient.Builder()
-                //.addInterceptor(loggingInterceptor) // Добавление Interceptor для логирования
-                .addInterceptor(chain -> {
-                    Request originalRequest = chain.request();
-                    // Добавляем заголовок к исходному запросу
-                    Request newRequest = originalRequest.newBuilder()
-                            .addHeader("Authorization", "Bearer " + ACCESS_TOKEN)
-                            .build();
-
-                    // Продолжаем выполнение запроса с добавленным заголовком
-                    return chain.proceed(newRequest);
-                })
-                .build();
-
-        retrofit = new Retrofit.Builder()
-                .baseUrl(baseUrl).client(client)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-
-        mainApi = retrofit.create(MainApi.class);
-    }
-
-    public MealCallAndCallback(String ACCESS_TOKEN) {
-        //HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
-        //loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
-
         OkHttpClient client = new OkHttpClient.Builder()
                 //.addInterceptor(loggingInterceptor) // Добавление Interceptor для логирования
                 .addInterceptor(chain -> {
@@ -154,8 +130,42 @@ public class MealCallAndCallback {
                 Log.e("Call", "ERROR in getAllMeal call: " + t.getMessage());
             }
         });
+    }
 
-        //return mainApi.getAllMeals();
+    public void getAllMeal(int userId) {
+        JsonObject requestObject = new JsonObject();
+        requestObject.addProperty("sort", "likesDesc");
+        requestObject.addProperty("two-decade", 1);
+        requestObject.addProperty("user_id", userId);
+
+        Gson gson = new Gson();
+        String json = gson.toJson(requestObject);
+        RequestBody requestBody = RequestBody.create(MediaType.parse("application/json"), json);
+
+        Call<JsonObject> call = mainApi.getAllMeals(requestBody);
+        call.enqueue(new Callback<JsonObject>() {
+            @Override
+            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+                if (response.isSuccessful()) {
+                    JsonObject jsonObject = response.body();
+                    if (jsonObject != null && jsonObject.has("meals")) {
+                        JsonArray mealsArray = jsonObject.getAsJsonArray("meals");
+                        List<Meal> allMeals = new Gson().fromJson(mealsArray, new TypeToken<List<Meal>>() {}.getType());
+                        callbackGetAllMeal.onAllMealReceived(allMeals);
+
+                        Log.d("Call", "Response getAllMeal is successful!");
+                    } else {
+                        Log.d("Call", "No meals found in response!");
+                    }
+                } else {
+                    Log.e("Call", "Request getAllMeal failed. Response code: " + response.code());
+                }
+            }
+            @Override
+            public void onFailure(Call<JsonObject> call, Throwable t) {
+                Log.e("Call", "ERROR in getAllMeal call: " + t.getMessage());
+            }
+        });
     }
 
 }

@@ -2,6 +2,7 @@ package com.obsessed.calorieguide.adapters.food;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,6 +41,8 @@ public class FoodAdapterV1 extends RecyclerView.Adapter<FoodAdapterV1.FoodHolder
 
         public void bind(Food food) {
             binding.tvName.setText(food.getFoodName());
+            binding.btLikeV1.setImageResource(food.isLiked()? R.drawable.like_active : R.drawable.like_not_active);
+            Log.d("FoodAdapter", food.isLiked() + "");
 
             if (food.getPicture() != null) {
                 byte[] imageData = food.getPicture();

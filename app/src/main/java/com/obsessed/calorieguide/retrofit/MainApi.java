@@ -20,8 +20,10 @@ public interface MainApi {
     @GET("products/{id}")
     Call<Food> getFoodById(@Path("id") int foodId);
 
-    @GET("products")
+    @POST("products")
     Call<JsonObject> getAllFood();
+    @POST("products")
+    Call<JsonObject> getAllFood(@Body RequestBody requestBody);
 
     @POST("/product")
     Call<JsonObject> postFood(@Body RequestBody requestBody);
@@ -36,8 +38,10 @@ public interface MainApi {
     Call<JsonObject> likeFood(@Body RequestBody requestBody);
 
     //Meals
-    @GET("/meals")
+    @POST("/meals")
     Call<JsonObject> getAllMeals();
+    @POST("/meals")
+    Call<JsonObject> getAllMeals(@Body RequestBody requestBody);
     @GET("/meals/{meal_id}")
     Call<Meal> getMealById(@Path("meal_id") int mealId);
     @POST("/meal")

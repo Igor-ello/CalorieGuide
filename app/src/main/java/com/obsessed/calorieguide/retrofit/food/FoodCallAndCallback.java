@@ -8,9 +8,12 @@ import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
 import com.obsessed.calorieguide.data.Data;
 import com.obsessed.calorieguide.retrofit.MainApi;
+import com.obsessed.calorieguide.retrofit.user.User;
 
 import java.util.List;
 
+import okhttp3.MediaType;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -75,6 +78,43 @@ public class FoodCallAndCallback {
 
     public void getAllFood() {
         Call<JsonObject> call = mainApi.getAllFood(); // JsonObject из библиотеки Gson
+        call.enqueue(new Callback<JsonObject>() {
+            @Override
+            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+                if (response.isSuccessful()) {
+                    JsonObject jsonObject = response.body();
+                    if (jsonObject != null && jsonObject.has("products")) {
+                        JsonArray productsArray = jsonObject.getAsJsonArray("products");
+                        List<Food> allFood = new Gson().fromJson(productsArray, new TypeToken<List<Food>>() {}.getType());
+                        callbackGetAllFood.onAllFoodReceived(allFood);
+
+                        Log.d("Call", "Response getAllFood is successful!");
+                    } else {
+                        Log.d("Call", "No products found in response!");
+                    }
+                } else {
+                    Log.e("Call", "Request getAllFood failed; Response: " + response.code());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<JsonObject> call, Throwable t) {
+                Log.e("Call", "ERROR in getAllFood call: " + t.getMessage());
+            }
+        });
+    }
+
+    public void getAllFood(int userId) {
+        JsonObject requestObject = new JsonObject();
+        requestObject.addProperty("sort", "likesDesc");
+        requestObject.addProperty("two-decade", 1);
+        requestObject.addProperty("user_id", userId);
+
+        Gson gson = new Gson();
+        String json = gson.toJson(requestObject);
+        RequestBody requestBody = RequestBody.create(MediaType.parse("application/json"), json);
+
+        Call<JsonObject> call = mainApi.getAllFood(requestBody);
         call.enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {

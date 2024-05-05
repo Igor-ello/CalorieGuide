@@ -15,6 +15,7 @@ public class Food {
     int author_id;
     int likes;
     byte[] picture;
+    boolean isLiked;
 
 
     public Food(String food_name, String description, int calories, int proteins, int carbohydrates, int fats, int author_id, byte[] picture) {
@@ -42,7 +43,8 @@ public class Food {
     @Override
     public String toString() {
         return "Food{" +
-                "food_name='" + food_name + '\'' +
+                "id=" + id +
+                ", food_name='" + food_name + '\'' +
                 ", description='" + description + '\'' +
                 ", calories=" + calories +
                 ", proteins=" + proteins +
@@ -51,6 +53,7 @@ public class Food {
                 ", author_id=" + author_id +
                 ", likes=" + likes +
                 ", picture=" + Arrays.toString(picture) +
+                ", isLiked=" + isLiked +
                 '}';
     }
 
@@ -94,5 +97,7 @@ public class Food {
         return picture;
     }
 
-
+    public boolean isLiked() {
+        return isLiked;
+    }
 }

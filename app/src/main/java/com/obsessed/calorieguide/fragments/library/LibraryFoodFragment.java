@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.obsessed.calorieguide.R;
+import com.obsessed.calorieguide.data.Data;
 import com.obsessed.calorieguide.databinding.FragmentFoodLibraryBinding;
 import com.obsessed.calorieguide.retrofit.food.Food;
 import com.obsessed.calorieguide.retrofit.food.FoodCallAndCallback;
@@ -48,7 +49,9 @@ public class LibraryFoodFragment extends Fragment implements CallbackGetAllFood 
         //Подгрузка данных
         requireActivity().runOnUiThread(() -> {
             FoodCallAndCallback foodCallAndCallback = new FoodCallAndCallback(this);
-            foodCallAndCallback.getAllFood();
+            if(Data.getInstance().getUser() != null)
+                foodCallAndCallback.getAllFood(Data.getInstance().getUser().getId());
+            else foodCallAndCallback.getAllFood();
         });
 
         //Кнопка для добавления нового фрукта
