@@ -42,7 +42,7 @@ public class FoodAdapterV1 extends RecyclerView.Adapter<FoodAdapterV1.FoodHolder
         public void bind(Food food) {
             binding.tvName.setText(food.getFoodName());
             binding.btLikeV1.setImageResource(food.isLiked()? R.drawable.like_active : R.drawable.like_not_active);
-            Log.d("FoodAdapter", food.isLiked() + "");
+            Log.d("FoodAdapter", "Name: " + food.getFoodName() + " like: " + food.isLiked());
 
             if (food.getPicture() != null) {
                 byte[] imageData = food.getPicture();
