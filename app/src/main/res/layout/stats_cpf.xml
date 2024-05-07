@@ -24,10 +24,12 @@
             </TextView>
 
             <ProgressBar
+                android:id="@+id/prgBarCarb"
                 style="@style/ProgressBarStyle">
             </ProgressBar>
 
             <TextView
+                android:id="@+id/tvCarb"
                 style="@style/TextViewStatsStyle"
                 android:text="13/270г">
             </TextView>
@@ -47,10 +49,12 @@
             </TextView>
 
             <ProgressBar
+                android:id="@+id/prgBarProteins"
                 style="@style/ProgressBarStyle">
             </ProgressBar>
 
             <TextView
+                android:id="@+id/tvProteins"
                 style="@style/TextViewStatsStyle"
                 android:text="13/270г">
             </TextView>
@@ -70,10 +74,12 @@
             </TextView>
 
             <ProgressBar
+                android:id="@+id/prgBarFats"
                 style="@style/ProgressBarStyle">
             </ProgressBar>
 
             <TextView
+                android:id="@+id/tvFats"
                 style="@style/TextViewStatsStyle"
                 android:text="13/270г">
             </TextView>

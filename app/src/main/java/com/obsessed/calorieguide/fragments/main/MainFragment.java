@@ -1,4 +1,4 @@
-package com.obsessed.calorieguide.fragments;
+package com.obsessed.calorieguide.fragments.main;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -51,11 +51,12 @@ public class MainFragment extends Fragment {
         checkUserLogin(view);
 
         initView(view);
+        Stats.init(view, requireActivity());
     }
 
     @SuppressLint("SetTextI18n")
     void initView(View view) {
-        ((TextView)view.findViewById(R.id.tvUserName)).setText(Data.getInstance().getUser().getName() + "!");
+        //((TextView)view.findViewById(R.id.tvUserName)).setText(Data.getInstance().getUser().getName() + "!");
     }
 
     private boolean checkUserLogin(View view) {

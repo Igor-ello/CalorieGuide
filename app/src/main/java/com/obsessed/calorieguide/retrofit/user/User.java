@@ -7,6 +7,19 @@ public class User {
     String email;
     String password;
     String BearerToken;
+    byte[] picture;
+    int lunch_id;
+    int breakfast_id;
+    int dinner_id;
+    int calories_goal;
+    int carbohydrates_goal;
+    int fats_goal;
+    int proteins_goal;
+    int calories_current;
+    int carbonates_current = 0;
+    int fats_current = 0;
+    int proteins_current = 0;
+
 
     public User(int id, String name, String surname, String email, String password, String BearerToken) {
         this.id = id;
@@ -50,5 +63,70 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public byte[] getPicture() {
+        return picture;
+    }
+
+    public int getLunchId() {
+        return lunch_id;
+    }
+
+    public int getBreakfastId() {
+        return breakfast_id;
+    }
+
+    public int getDinnerId() {
+        return dinner_id;
+    }
+
+    public int getCaloriesGoal() {
+        return calories_goal;
+    }
+
+
+    public int getCarbonatesGoal() {
+        return carbohydrates_goal;
+    }
+
+    public int getFatsGoal() {
+        return fats_goal;
+    }
+
+    public int getProteinsGoal() {
+        return proteins_goal;
+    }
+
+    public int getCaloriesCurrent() {
+        return calories_current;
+    }
+
+    public void setCaloriesCurrent(int calories_current) {
+        this.calories_current = calories_current;
+    }
+
+    public int getCarbonatesCurrent() {
+        return carbonates_current;
+    }
+
+    public void setCarbonatesCurrent(int carbonates_current) {
+        this.carbonates_current = carbonates_current;
+    }
+
+    public int getFatsCurrent() {
+        return fats_current;
+    }
+
+    public void setFatsCurrent(int fats_current) {
+        this.fats_current = fats_current;
+    }
+
+    public int getProteinsCurrent() {
+        return proteins_current;
+    }
+
+    public void setProteinsCurrent(int proteins_current) {
+        this.proteins_current = proteins_current;
     }
 }
