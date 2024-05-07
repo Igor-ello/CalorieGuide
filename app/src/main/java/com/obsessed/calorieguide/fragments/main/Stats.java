@@ -1,6 +1,6 @@
 package com.obsessed.calorieguide.fragments.main;
 
-import android.app.Activity;
+import android.animation.ObjectAnimator;
 import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
@@ -36,10 +36,20 @@ public class Stats {
     private static void initPrsBar(View view, FragmentActivity fragmentActivity) {
         fragmentActivity.runOnUiThread(() -> {
             try {
-                ((ProgressBar)view.findViewById(R.id.prgBarCarb)).setProgress((int) (user.getProteinsCurrent() * 100 / user.getProteinsGoal()));
-                ((ProgressBar)view.findViewById(R.id.prgBarFats)).setProgress((int) (user.getFatsCurrent() * 100 / user.getFatsGoal()));
-                ((ProgressBar)view.findViewById(R.id.prgBarProteins)).setProgress((int) (user.getFatsCurrent() * 100 / user.getFatsGoal()));
+                ProgressBar prsBar = view.findViewById(R.id.prgBar);
+                ProgressBar progressBarCarb = view.findViewById(R.id.prgBarCarb);
+                ProgressBar progressBarProteins = view.findViewById(R.id.prgBarProteins);
+                ProgressBar progressBarFats = view.findViewById(R.id.prgBarFats);
+
+                progressBarCarb.setProgress( (int) (user.getCarbonatesCurrent() * 100 / user.getCarbonatesGoal()));
+                //updateProgressAnimated(progressBarCarb, 30);
+                progressBarProteins.setProgress( (int) (user.getProteinsCurrent() * 100 / user.getProteinsGoal()));
+                //updateProgressAnimated(progressBarProteins, 30);
+                progressBarFats.setProgress( (int) (user.getFatsCurrent() * 100 / user.getFatsGoal()));
+                //updateProgressAnimated(progressBarFats, 30);
+
             } catch (Exception e) {
+                ((ProgressBar)view.findViewById(R.id.prgBar)).setProgress((int) (0));
                 ((ProgressBar)view.findViewById(R.id.prgBarCarb)).setProgress((int) (0));
                 ((ProgressBar)view.findViewById(R.id.prgBarFats)).setProgress((int) (0));
                 ((ProgressBar)view.findViewById(R.id.prgBarProteins)).setProgress((int) (0));
@@ -49,4 +59,18 @@ public class Stats {
 
         });
     }
+
+    private static void updateProgressAnimated(ProgressBar progressBar, int newProgress) {
+        int currentProgress = progressBar.getProgress();
+        Log.d("Progress", "Current progress: " + currentProgress);
+
+        // Проверяем, если новое значение прогресса отличается от текущего
+        if (newProgress != currentProgress) {
+            // Создаем анимацию изменения прогресса
+            ObjectAnimator animator = ObjectAnimator.ofInt(progressBar, "progress", currentProgress, newProgress);
+            animator.setDuration(1000);
+            animator.start(); // Запускаем анимацию
+        }
+    }
+
 }
