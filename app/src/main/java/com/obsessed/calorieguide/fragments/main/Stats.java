@@ -35,28 +35,19 @@ public class Stats {
 
     private static void initPrsBar(View view, FragmentActivity fragmentActivity) {
         fragmentActivity.runOnUiThread(() -> {
-            try {
-                ProgressBar prsBar = view.findViewById(R.id.prgBar);
-                ProgressBar progressBarCarb = view.findViewById(R.id.prgBarCarb);
-                ProgressBar progressBarProteins = view.findViewById(R.id.prgBarProteins);
-                ProgressBar progressBarFats = view.findViewById(R.id.prgBarFats);
+            ProgressBar prsBar = view.findViewById(R.id.prgBar);
+            ProgressBar progressBarCarb = view.findViewById(R.id.prgBarCarb);
+            ProgressBar progressBarProteins = view.findViewById(R.id.prgBarProteins);
+            ProgressBar progressBarFats = view.findViewById(R.id.prgBarFats);
 
-                progressBarCarb.setProgress( (int) (user.getCarbonatesCurrent() * 100 / user.getCarbonatesGoal()));
-                //updateProgressAnimated(progressBarCarb, 30);
-                progressBarProteins.setProgress( (int) (user.getProteinsCurrent() * 100 / user.getProteinsGoal()));
-                //updateProgressAnimated(progressBarProteins, 30);
-                progressBarFats.setProgress( (int) (user.getFatsCurrent() * 100 / user.getFatsGoal()));
-                //updateProgressAnimated(progressBarFats, 30);
-
-            } catch (Exception e) {
-                ((ProgressBar)view.findViewById(R.id.prgBar)).setProgress((int) (0));
-                ((ProgressBar)view.findViewById(R.id.prgBarCarb)).setProgress((int) (0));
-                ((ProgressBar)view.findViewById(R.id.prgBarFats)).setProgress((int) (0));
-                ((ProgressBar)view.findViewById(R.id.prgBarProteins)).setProgress((int) (0));
-                e.printStackTrace();
-                Log.e("Error", e.getMessage());
-            }
-
+            prsBar.setProgress( (int) (user.getCaloriesCurrent() * 100 / (user.getCaloriesGoal()+1)));
+            //updateProgressAnimated(prsBar, 30);
+            progressBarCarb.setProgress( (int) (user.getCarbonatesCurrent() * 100 / (user.getCarbonatesGoal()+1)));
+            //updateProgressAnimated(progressBarCarb, 30);
+            progressBarProteins.setProgress( (int) (user.getProteinsCurrent() * 100 / (user.getProteinsGoal()+1)));
+            //updateProgressAnimated(progressBarProteins, 30);
+            progressBarFats.setProgress( (int) (user.getFatsCurrent() * 100 / (user.getFatsGoal()+1)));
+            //updateProgressAnimated(progressBarFats, 30);
         });
     }
 
