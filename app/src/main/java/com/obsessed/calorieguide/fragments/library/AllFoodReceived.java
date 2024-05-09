@@ -45,7 +45,7 @@ public class AllFoodReceived {
         foodAdapter.setOnLikeFoodClickListener((food, imageView) -> {
             Log.d("FoodAdapter", "Clicked on like for food in FoodAdapterV1: " + food.getFoodName());
             FoodCall foodCall = new FoodCall(Data.getInstance().getUser().getBearerToken());
-            foodCall.likeFood(Data.getInstance().getUser().getId(), food.getId(), imageView);
+            foodCall.likeFood(Data.getInstance().getUser().getId(), food, imageView);
         });
     }
 
@@ -66,7 +66,7 @@ public class AllFoodReceived {
         foodAdapter.setOnLikeFoodClickListener((food, imageView)-> {
             Log.d("FoodAdapter", "Clicked on like for food in FoodAdapterV2: " + food.getFoodName());
             FoodCall foodCall = new FoodCall(Data.getInstance().getUser().getBearerToken());
-            foodCall.likeFood(Data.getInstance().getUser().getId(), food.getId(), imageView);
+            foodCall.likeFood(Data.getInstance().getUser().getId(), food, imageView);
         });
     }
 }

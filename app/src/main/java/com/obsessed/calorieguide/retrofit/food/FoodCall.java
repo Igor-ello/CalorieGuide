@@ -1,10 +1,12 @@
 package com.obsessed.calorieguide.retrofit.food;
 
+import android.content.Context;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 
 import androidx.core.content.ContextCompat;
+import androidx.core.content.res.ResourcesCompat;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
@@ -120,16 +122,16 @@ public class FoodCall {
         });
     }
 
-    public void likeFood(int userId, int productId, ImageView imageView) {
+    public void likeFood(int userId, Food food, ImageView imageView) {
         JsonObject requestObject = new JsonObject();
         requestObject.addProperty("user_id", userId);
-        requestObject.addProperty("product_id", productId);
+        requestObject.addProperty("product_id", food.getId());
 
         // Преобразование объекта запроса в JSON-строку
         Gson gson = new Gson();
         String json = gson.toJson(requestObject);
         RequestBody requestBody = RequestBody.create(MediaType.parse("application/json"), json);
-
+        food.isLiked = !food.isLiked();
         // Выполняем POST-запрос на сервер
         Call<JsonObject> call = mainApi.likeFood(requestBody);
         call.enqueue(new Callback<JsonObject>() {
@@ -138,8 +140,7 @@ public class FoodCall {
                 if (response.isSuccessful()) {
 
                     if(imageView != null) {
-                        if (imageView.getDrawable().getConstantState().equals(
-                                ContextCompat.getDrawable(imageView.getContext(), R.drawable.like_not_active).getConstantState())) {
+                        if (food.isLiked()) {
                             imageView.setImageResource(R.drawable.like_active);
                         } else {
                             imageView.setImageResource(R.drawable.like_not_active);
