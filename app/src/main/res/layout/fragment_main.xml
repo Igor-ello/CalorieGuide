@@ -7,6 +7,11 @@
     tools:context=".fragments.main.MainFragment"
     android:layout_margin="@dimen/margin_default">
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="50dp">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -15,6 +20,16 @@
         <include layout="@layout/stats"/>
 
         <include layout="@layout/stats_cpf"/>
+
+        <include
+            android:id="@+id/intakeLunch"
+            layout="@layout/intake"/>
+        <include
+            android:id="@+id/intakeBreakfast"
+            layout="@layout/intake"/>
+        <include
+            android:id="@+id/intakeDinner"
+            layout="@layout/intake"/>
 
 <!--        <TextView-->
 <!--            style="@style/TextHeaderStyle"-->
@@ -39,5 +54,7 @@
 <!--        </LinearLayout>-->
 
     </LinearLayout>
+
+    </ScrollView>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

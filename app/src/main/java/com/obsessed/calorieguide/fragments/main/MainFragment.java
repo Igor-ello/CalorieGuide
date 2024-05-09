@@ -19,10 +19,19 @@ import com.obsessed.calorieguide.MainActivityApp;
 import com.obsessed.calorieguide.MainActivityAuth;
 import com.obsessed.calorieguide.R;
 import com.obsessed.calorieguide.data.Data;
+import com.obsessed.calorieguide.databinding.FragmentMainBinding;
+import com.obsessed.calorieguide.retrofit.meal.CallbackGetAllMeal;
+import com.obsessed.calorieguide.retrofit.meal.CallbackGetMealById;
+import com.obsessed.calorieguide.retrofit.meal.Meal;
+import com.obsessed.calorieguide.retrofit.meal.MealCallAndCallback;
 import com.obsessed.calorieguide.tools.save.ShPrefs;
 
+import java.util.ArrayList;
+import java.util.List;
 
-public class MainFragment extends Fragment {
+
+public class MainFragment extends Fragment implements CallbackGetMealById {
+    FragmentMainBinding binding;
 
     public MainFragment() {
         // Required empty public constructor
@@ -52,10 +61,18 @@ public class MainFragment extends Fragment {
 
         initView(view);
         Stats.init(view, requireActivity());
+
+        //Подгрузка данных
+        requireActivity().runOnUiThread(() -> {
+            int mealId = 2;
+            MealCallAndCallback mealCallAndCallback = new MealCallAndCallback(this, Data.getInstance().getUser().getBearerToken());
+            mealCallAndCallback.getMealById(mealId);
+        });
     }
 
     @SuppressLint("SetTextI18n")
     void initView(View view) {
+        binding = FragmentMainBinding.bind(view);
         //((TextView)view.findViewById(R.id.tvUserName)).setText(Data.getInstance().getUser().getName() + "!");
     }
 
@@ -71,5 +88,16 @@ public class MainFragment extends Fragment {
             Log.d("MainFragment", "User logged in");
             return true;
         }
+    }
+
+    @Override
+    public void onMealByIdReceived(Meal meal) {
+        ArrayList<Object> objArrayList = new ArrayList<>();
+        objArrayList.add(meal);
+        objArrayList.add(meal);
+        objArrayList.add(meal);
+        objArrayList.add(meal);
+        objArrayList.add(meal);
+        Intakes.intakes(binding, requireContext(), requireView(), objArrayList);
     }
 }

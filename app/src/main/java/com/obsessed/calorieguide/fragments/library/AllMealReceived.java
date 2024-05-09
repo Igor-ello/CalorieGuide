@@ -27,14 +27,14 @@ public class AllMealReceived {
 
         // Установка слушателя в адаптере
         mealAdapter.setOnMealClickListener(meal -> {
-            Log.d("MealAdapter", "Clicked on meal in MealAdapter: " + meal.getMealName());
+            Log.d("IntakeAdapter", "Clicked on meal in IntakeAdapter: " + meal.getMealName());
             Bundle args = new Bundle();
             args.putInt("meal_id", meal.getId());
             Navigation.findNavController(view).navigate(R.id.action_libraryMealFragment_to_editMealFragment, args);
         });
 
         mealAdapter.setOnLikeMealClickListener((meal, imageView) -> {
-            Log.d("MealAdapter", "Clicked on like for meal in MealAdapter: " + meal.getMealName());
+            Log.d("IntakeAdapter", "Clicked on like for meal in IntakeAdapter: " + meal.getMealName());
             MealCall mealCall = new MealCall(Data.getInstance().getUser().getBearerToken());
             mealCall.likeMeal(Data.getInstance().getUser().getId(), meal.getId(), imageView);
         });

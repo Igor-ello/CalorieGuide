@@ -73,6 +73,12 @@
         <item name="android:layout_marginEnd">@dimen/margin_default</item>
     </style>
 
+    <style name="ImageViewObjectStyle">
+        <item name="android:layout_width">70dp</item>
+        <item name="android:layout_height">70dp</item>
+        <item name="android:src">@drawable/food_default</item>
+    </style>
+
     <style name="ProgressBarStyle" parent="@android:style/Widget.ProgressBar.Horizontal">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">10dp</item>
