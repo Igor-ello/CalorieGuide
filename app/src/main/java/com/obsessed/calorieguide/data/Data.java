@@ -47,7 +47,6 @@ public class Data {
     public int getQuality() {
         return QUALITY;
     }
-
     public Day getDay() {
         return day;
     }

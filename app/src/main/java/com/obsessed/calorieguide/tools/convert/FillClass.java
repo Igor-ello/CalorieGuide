@@ -42,7 +42,11 @@ public class FillClass {
                 user.getName(),
                 user.getSurname(),
                 user.getEmail(),
-                user.getPassword()
+                user.getPassword(),
+                user.getCaloriesGoal(),
+                user.getCarbonatesGoal(),
+                user.getProteinsGoal(),
+                user.getFatsGoal()
         );
         return registrationRequest;
     }

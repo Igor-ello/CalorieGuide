@@ -30,6 +30,7 @@ import retrofit2.Response;
 public class ProfileFragment extends Fragment {
     ArrayList<EditText> userParams;
     EditText etName, etSurname, etEmail, etPassword;
+    EditText etCalories, etCarbs, etProteins, etFats;
     User user;
 
     public ProfileFragment() {
@@ -98,6 +99,11 @@ public class ProfileFragment extends Fragment {
         etSurname = view.findViewById(R.id.etSurname);
         etEmail = view.findViewById(R.id.etEmail);
         etPassword = view.findViewById(R.id.etPassword);
+
+        etCalories = view.findViewById(R.id.etCalories);
+        etCarbs = view.findViewById(R.id.etCarbs);
+        etProteins = view.findViewById(R.id.etProteins);
+        etFats = view.findViewById(R.id.etFats);
     }
 
     private void initParams() {
@@ -106,6 +112,11 @@ public class ProfileFragment extends Fragment {
         userParams.add(etSurname);
         userParams.add(etEmail);
         userParams.add(etPassword);
+
+        userParams.add(etCalories);
+        userParams.add(etCarbs);
+        userParams.add(etProteins);
+        userParams.add(etFats);
     }
 
     private void fillParams() {
@@ -117,6 +128,11 @@ public class ProfileFragment extends Fragment {
         etSurname.setText(user.getSurname());
         etEmail.setText(user.getEmail());
         etPassword.setText(user.getPassword());
+
+        etCalories.setText(String.valueOf(user.getCaloriesGoal()));
+        etCarbs.setText(String.valueOf(user.getCarbonatesGoal()));
+        etProteins.setText(String.valueOf(user.getProteinsGoal()));
+        etFats.setText(String.valueOf(user.getFatsGoal()));
     }
 
     private void setUserParams() {
@@ -124,6 +140,11 @@ public class ProfileFragment extends Fragment {
         user.setSurname(etSurname.getText().toString().trim());
         user.setEmail(etEmail.getText().toString().trim());
         user.setPassword(etPassword.getText().toString().trim());
+
+        user.setCaloriesGoal(Integer.parseInt(etCalories.getText().toString().trim()));
+        user.setCarbohydratesGoal(Integer.parseInt(etCarbs.getText().toString().trim()));
+        user.setProteinsGoal(Integer.parseInt(etProteins.getText().toString().trim()));
+        user.setFatsGoal(Integer.parseInt(etFats.getText().toString().trim()));
     }
 
 
@@ -136,7 +157,6 @@ public class ProfileFragment extends Fragment {
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
                 if (response.isSuccessful()) {
                     // Обработка успешного ответа
-                    JsonObject result = response.body();
                     Log.d("Call", "Request updateUser successful");
                     // Дополнительная обработка результата
                 } else {

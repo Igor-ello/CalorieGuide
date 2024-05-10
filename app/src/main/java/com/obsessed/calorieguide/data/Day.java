@@ -2,6 +2,9 @@ package com.obsessed.calorieguide.data;
 
 import android.util.Log;
 
+import com.obsessed.calorieguide.retrofit.food.Food;
+import com.obsessed.calorieguide.retrofit.meal.Meal;
+
 import java.util.ArrayList;
 
 public class Day {
@@ -36,18 +39,19 @@ public class Day {
         }
         return -1;
     }
+
+    // Add
     public void addBreakfast(Object breakfast) {
         this.breakfast.add(breakfast);
     }
-
     public void addLunch(Object lunch) {
         this.lunch.add(lunch);
     }
-
     public void addDinner(Object dinner) {
         this.dinner.add(dinner);
     }
 
+    // Delete
     public void deleteByIdBreakfast(int id) {
         this.breakfast.remove(id);
     }
@@ -58,15 +62,23 @@ public class Day {
         this.dinner.remove(id);
     }
 
+    // Get
     public ArrayList<Object> getBreakfast() {
         return breakfast;
     }
-
     public ArrayList<Object> getLunch() {
         return lunch;
     }
-
     public ArrayList<Object> getDinner() {
         return dinner;
     }
+
+    public ArrayList<Object> getAllArray() {
+        ArrayList<Object> allArray = new ArrayList<>();
+        allArray.addAll(breakfast);
+        allArray.addAll(lunch);
+        allArray.addAll(dinner);
+        return allArray;
+    }
+
 }

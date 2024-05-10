@@ -17,9 +17,13 @@
         android:orientation="vertical"
         android:layout_margin="@dimen/margin_default">
 
-        <include layout="@layout/stats"/>
+        <include
+            android:id="@+id/stats"
+            layout="@layout/stats"/>
 
-        <include layout="@layout/stats_cpf"/>
+        <include
+            android:id="@+id/stats_cpf"
+            layout="@layout/stats_cpf"/>
 
         <include
             android:id="@+id/intakeBreakfast"

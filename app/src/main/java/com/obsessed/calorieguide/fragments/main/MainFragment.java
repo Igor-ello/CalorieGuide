@@ -55,7 +55,8 @@ public class MainFragment extends Fragment implements CallbackGetMealById {
         checkUserLogin(view);
 
         initView(view);
-        Stats.init(view, requireActivity());
+
+        Stats.getInstance().init(binding, requireActivity());
 
         //Подгрузка данных
         requireActivity().runOnUiThread(() -> {
@@ -92,5 +93,6 @@ public class MainFragment extends Fragment implements CallbackGetMealById {
         day.addBreakfast(meal);
         day.addLunch(meal);
         Intakes.init(binding, requireContext(), requireActivity());
+        Stats.getInstance().update();
     }
 }
