@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -11,6 +12,7 @@ import androidx.navigation.Navigation;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import com.obsessed.calorieguide.R;
 import com.obsessed.calorieguide.data.Data;
@@ -19,12 +21,13 @@ import com.obsessed.calorieguide.databinding.FragmentMealLibraryBinding;
 import com.obsessed.calorieguide.retrofit.food.Food;
 import com.obsessed.calorieguide.retrofit.food.FoodCallAndCallback;
 import com.obsessed.calorieguide.retrofit.meal.CallbackGetAllMeal;
+import com.obsessed.calorieguide.retrofit.meal.CallbackLikeMeal;
 import com.obsessed.calorieguide.retrofit.meal.Meal;
 import com.obsessed.calorieguide.retrofit.meal.MealCallAndCallback;
 
 import java.util.List;
 
-public class LibraryMealFragment extends Fragment implements CallbackGetAllMeal {
+public class LibraryMealFragment extends Fragment implements CallbackGetAllMeal, CallbackLikeMeal {
     FragmentMealLibraryBinding binding;
 
     public LibraryMealFragment() {
@@ -70,7 +73,20 @@ public class LibraryMealFragment extends Fragment implements CallbackGetAllMeal 
     @Override
     public void onAllMealReceived(List<Meal> mealList) {
         if (isAdded()) { // Проверяем, привязан ли фрагмент к активности
-            AllMealReceived.onAllMealReceived(requireContext(), requireView(), binding, mealList);
+            new AllMealReceived(requireContext(), requireView(), binding, mealList, this)
+                    .onAllMealReceived();
+        }
+    }
+
+    @Override
+    public void onLikeMealSuccess(ImageView imageView) {
+        if (imageView != null) {
+            if (imageView.getDrawable().getConstantState().equals(
+                    ContextCompat.getDrawable(imageView.getContext(), R.drawable.like_not_active).getConstantState())) {
+                imageView.setImageResource(R.drawable.like_active);
+            } else {
+                imageView.setImageResource(R.drawable.like_not_active);
+            }
         }
     }
 }

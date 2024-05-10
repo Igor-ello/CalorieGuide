@@ -13,6 +13,7 @@ import com.obsessed.calorieguide.adapters.food.FoodAdapterV1;
 import com.obsessed.calorieguide.adapters.food.FoodAdapterV2;
 import com.obsessed.calorieguide.data.Data;
 import com.obsessed.calorieguide.databinding.FragmentFoodLibraryBinding;
+import com.obsessed.calorieguide.retrofit.food.CallbackLikeFood;
 import com.obsessed.calorieguide.retrofit.food.Food;
 import com.obsessed.calorieguide.retrofit.food.FoodCall;
 
@@ -20,15 +21,29 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AllFoodReceived {
-    public static void onAllFoodReceived(Context context, View view, FragmentFoodLibraryBinding binding, List<Food> foodList) {
+    Context context;
+    View view;
+    FragmentFoodLibraryBinding binding;
+    List<Food> foodList;
+    CallbackLikeFood callback;
+
+    public AllFoodReceived(Context context, View view, FragmentFoodLibraryBinding binding, List<Food> foodList, CallbackLikeFood callback) {
+        this.context = context;
+        this.view = view;
+        this.binding = binding;
+        this.foodList = foodList;
+        this.callback = callback;
+    }
+
+    public void onAllFoodReceived() {
         if (Data.getInstance().getAdapterType() != 2) {
-            isAdapterV1(context, view, binding, foodList);
+            isAdapterV1();
         } else {
-            isAdapterV2(context, view, binding, foodList);
+            isAdapterV2();
         }
     }
 
-    private static void isAdapterV1(Context context, View view, FragmentFoodLibraryBinding binding, List<Food> foodList) {
+    private void isAdapterV1() {
         FoodAdapterV1 foodAdapter = new FoodAdapterV1();
         foodAdapter.foodArrayList = (ArrayList<Food>) foodList;
         binding.rcView.setLayoutManager(new GridLayoutManager(context, 2));
@@ -45,11 +60,11 @@ public class AllFoodReceived {
         foodAdapter.setOnLikeFoodClickListener((food, imageView) -> {
             Log.d("FoodAdapter", "Clicked on like for food in FoodAdapterV1: " + food.getFoodName());
             FoodCall foodCall = new FoodCall(Data.getInstance().getUser().getBearerToken());
-            foodCall.likeFood(Data.getInstance().getUser().getId(), food.getId(), imageView);
+            foodCall.likeFood(Data.getInstance().getUser().getId(), food.getId(), imageView, callback);
         });
     }
 
-    private static void isAdapterV2(Context context, View view, FragmentFoodLibraryBinding binding, List<Food> foodList) {
+    private void isAdapterV2() {
         FoodAdapterV2 foodAdapter = new FoodAdapterV2();
         foodAdapter.foodArrayList = (ArrayList<Food>) foodList;
         binding.rcView.setLayoutManager(new GridLayoutManager(context, 1));
@@ -66,7 +81,8 @@ public class AllFoodReceived {
         foodAdapter.setOnLikeFoodClickListener((food, imageView)-> {
             Log.d("FoodAdapter", "Clicked on like for food in FoodAdapterV2: " + food.getFoodName());
             FoodCall foodCall = new FoodCall(Data.getInstance().getUser().getBearerToken());
-            foodCall.likeFood(Data.getInstance().getUser().getId(), food.getId(), imageView);
+            foodCall.likeFood(Data.getInstance().getUser().getId(), food.getId(), imageView, callback);
         });
     }
+
 }

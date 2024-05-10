@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="150dp"
-    android:layout_height="200dp"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:padding="5dp">
 
@@ -16,7 +16,7 @@
             android:layout_height="match_parent"
             android:orientation="vertical"
             android:gravity="center"
-            android:padding="10dp"
+            android:padding="5dp"
             android:background="@drawable/card_background_3">
 
             <ImageView
@@ -29,19 +29,9 @@
                 android:id="@+id/tvName"
                 style="@style/TextHeaderStyle"
                 android:layout_marginBottom="0dp"
-                android:layout_marginTop="@dimen/margin_top"
-                android:gravity="center"
                 android:maxLines="2"
                 android:fontFamily="sans-serif-condensed">
             </TextView>
-
-            <ImageView
-                android:id="@+id/btLike"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:background="@drawable/like_not_active">
-            </ImageView>
-
         </LinearLayout>
 
     </androidx.cardview.widget.CardView>

@@ -20,7 +20,6 @@ import java.util.ArrayList;
 public class IntakeAdapter extends RecyclerView.Adapter<IntakeAdapter.IntakeHolder> {
     public ArrayList<Object> objArrayList;
     private OnObjClickListener onObjClickListener;
-    private OnLikeObjClickListener onLikeObjClickListener;
 
     public class IntakeHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         ObjectItemBinding binding;
@@ -29,7 +28,6 @@ public class IntakeAdapter extends RecyclerView.Adapter<IntakeAdapter.IntakeHold
             super(itemView);
             binding = ObjectItemBinding.bind(itemView);
             binding.getRoot().setOnClickListener(this);
-            //binding.btLike.setOnClickListener(this);
         }
 
         @Override
@@ -59,7 +57,10 @@ public class IntakeAdapter extends RecyclerView.Adapter<IntakeAdapter.IntakeHold
             if(imageData != null) {
                 binding.imageView.setImageBitmap(BitmapFactory.decodeByteArray(imageData, 0, imageData.length));
             } else {
-                binding.imageView.setImageResource(R.drawable.avatar_default);
+                if (object instanceof Food)
+                    binding.imageView.setImageResource(R.drawable.food_default);
+                if (object instanceof Meal)
+                    binding.imageView.setImageResource(R.drawable.meal_default);
             }
         }
     }
@@ -74,11 +75,6 @@ public class IntakeAdapter extends RecyclerView.Adapter<IntakeAdapter.IntakeHold
     @Override
     public void onBindViewHolder(@NonNull IntakeHolder holder, int position) {
         holder.bind(objArrayList.get(position));
-        holder.binding.btLike.setOnClickListener(v -> {
-            if (onLikeObjClickListener != null) {
-                onLikeObjClickListener.onLikeIntakeClick(objArrayList.get(position), holder.binding.btLike);
-            }
-        });
     }
 
     @Override
@@ -93,9 +89,5 @@ public class IntakeAdapter extends RecyclerView.Adapter<IntakeAdapter.IntakeHold
 
     public void setOnObjClickListener(OnObjClickListener listener) {
         this.onObjClickListener = listener;
-    }
-
-    public void setOnLikeObjClickListener(OnLikeObjClickListener listener) {
-        this.onLikeObjClickListener = listener;
     }
 }

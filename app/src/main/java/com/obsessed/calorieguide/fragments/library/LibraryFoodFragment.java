@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -11,17 +12,19 @@ import androidx.navigation.Navigation;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import com.obsessed.calorieguide.R;
 import com.obsessed.calorieguide.data.Data;
 import com.obsessed.calorieguide.databinding.FragmentFoodLibraryBinding;
+import com.obsessed.calorieguide.retrofit.food.CallbackLikeFood;
 import com.obsessed.calorieguide.retrofit.food.Food;
 import com.obsessed.calorieguide.retrofit.food.FoodCallAndCallback;
 import com.obsessed.calorieguide.retrofit.food.CallbackGetAllFood;
 
 import java.util.List;
 
-public class LibraryFoodFragment extends Fragment implements CallbackGetAllFood {
+public class LibraryFoodFragment extends Fragment implements CallbackGetAllFood, CallbackLikeFood {
     FragmentFoodLibraryBinding binding;
 
     public LibraryFoodFragment() {
@@ -70,7 +73,20 @@ public class LibraryFoodFragment extends Fragment implements CallbackGetAllFood 
     @Override
     public void onAllFoodReceived(List<Food> foodList) {
         if (isAdded()) { // Проверяем, привязан ли фрагмент к активности
-            AllFoodReceived.onAllFoodReceived(requireContext(), requireView(), binding, foodList);
+            new AllFoodReceived(requireContext(), requireView(), binding, foodList, this)
+                    .onAllFoodReceived();
+        }
+    }
+
+    @Override
+    public void onLikeFoodSuccess(ImageView imageView) {
+        if(imageView != null) {
+            if (imageView.getDrawable().getConstantState().equals(
+                    ContextCompat.getDrawable(imageView.getContext(), R.drawable.like_not_active).getConstantState())) {
+                imageView.setImageResource(R.drawable.like_active);
+            } else {
+                imageView.setImageResource(R.drawable.like_not_active);
+            }
         }
     }
 }

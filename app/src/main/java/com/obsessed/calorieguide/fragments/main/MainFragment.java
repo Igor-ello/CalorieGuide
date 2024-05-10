@@ -7,27 +7,22 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.navigation.Navigation;
 
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.obsessed.calorieguide.MainActivityApp;
 import com.obsessed.calorieguide.MainActivityAuth;
 import com.obsessed.calorieguide.R;
 import com.obsessed.calorieguide.data.Data;
+import com.obsessed.calorieguide.data.Day;
 import com.obsessed.calorieguide.databinding.FragmentMainBinding;
-import com.obsessed.calorieguide.retrofit.meal.CallbackGetAllMeal;
 import com.obsessed.calorieguide.retrofit.meal.CallbackGetMealById;
 import com.obsessed.calorieguide.retrofit.meal.Meal;
 import com.obsessed.calorieguide.retrofit.meal.MealCallAndCallback;
 import com.obsessed.calorieguide.tools.save.ShPrefs;
-
-import java.util.ArrayList;
-import java.util.List;
 
 
 public class MainFragment extends Fragment implements CallbackGetMealById {
@@ -92,12 +87,10 @@ public class MainFragment extends Fragment implements CallbackGetMealById {
 
     @Override
     public void onMealByIdReceived(Meal meal) {
-        ArrayList<Object> objArrayList = new ArrayList<>();
-        objArrayList.add(meal);
-        objArrayList.add(meal);
-        objArrayList.add(meal);
-        objArrayList.add(meal);
-        objArrayList.add(meal);
-        Intakes.intakes(binding, requireContext(), requireView(), objArrayList);
+        Day day = Data.getInstance().getDay();
+        day.addBreakfast(meal);
+        day.addBreakfast(meal);
+        day.addLunch(meal);
+        Intakes.init(binding, requireContext(), requireActivity());
     }
 }

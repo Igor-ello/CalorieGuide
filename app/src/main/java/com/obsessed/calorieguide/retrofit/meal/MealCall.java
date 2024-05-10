@@ -105,7 +105,7 @@ public class MealCall {
         return mainApi.updateMeal(mealId, requestBody);
     }
 
-    public Call<JsonObject> likeMeal(int userId, int mealId, ImageView imageView) {
+    public Call<JsonObject> likeMeal(int userId, int mealId, ImageView imageView, CallbackLikeMeal callback) {
         JsonObject requestObject = new JsonObject();
         requestObject.addProperty("meal_id", mealId);
         requestObject.addProperty("user_id", userId);
@@ -122,14 +122,11 @@ public class MealCall {
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
                 if (response.isSuccessful()) {
-                    if (imageView != null) {
-                        if (imageView.getDrawable().getConstantState().equals(
-                                ContextCompat.getDrawable(imageView.getContext(), R.drawable.like_not_active).getConstantState())) {
-                            imageView.setImageResource(R.drawable.like_active);
-                        } else {
-                            imageView.setImageResource(R.drawable.like_not_active);
-                        }
+
+                    if(callback!= null) {
+                        callback.onLikeMealSuccess(imageView);
                     }
+
                     Log.d("Call", "Response likeMeal is successful!");
                 } else {
                     Log.e("Call", "ERROR response likeMeal is not successful; Response: " + response.code());
