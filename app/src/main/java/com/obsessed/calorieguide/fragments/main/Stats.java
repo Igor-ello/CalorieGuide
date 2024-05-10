@@ -23,12 +23,12 @@ public class Stats {
     public static Stats getInstance() {
         if (uniqueInstance == null) {
             uniqueInstance = new Stats();
-            user = Data.getInstance().getUser();
         }
         return uniqueInstance;
     }
 
     public void init(FragmentMainBinding binding, FragmentActivity fragmentActivity) {
+        user = Data.getInstance().getUser();
         this.binding = binding;
         this.fragmentActivity = fragmentActivity;
     }

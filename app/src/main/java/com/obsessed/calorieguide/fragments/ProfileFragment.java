@@ -20,6 +20,7 @@ import com.obsessed.calorieguide.tools.convert.FillClass;
 import com.obsessed.calorieguide.data.Data;
 import com.obsessed.calorieguide.retrofit.user.User;
 import com.obsessed.calorieguide.retrofit.user.UserCall;
+import com.obsessed.calorieguide.tools.save.ShPrefs;
 
 import java.util.ArrayList;
 
@@ -84,8 +85,7 @@ public class ProfileFragment extends Fragment {
             }
 
             setUserParams();
-            Data.getInstance().setUser(user);
-
+            ShPrefs.saveData(user, Data.getInstance().getAdapterType(), requireContext());
             updateUserRequest(user);
 
             btEdit.setVisibility(View.VISIBLE);
@@ -156,21 +156,15 @@ public class ProfileFragment extends Fragment {
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
                 if (response.isSuccessful()) {
-                    // Обработка успешного ответа
                     Log.d("Call", "Request updateUser successful");
-                    // Дополнительная обработка результата
                 } else {
-                    // Обработка ошибочного ответа
                     Log.e("Call", "Request updateUser failed; Response: " + response.code());
-                    // Возможно, что-то пошло не так, нужно обработать ошибку
                 }
             }
 
             @Override
             public void onFailure(Call<JsonObject> call, Throwable t) {
-                // Обработка ошибки при выполнении запроса
                 Log.e("Call", "ERROR in updateUser Call: " + t.getMessage());
-                // Например, отсутствие интернет-соединения или другие проблемы
             }
         });
     }

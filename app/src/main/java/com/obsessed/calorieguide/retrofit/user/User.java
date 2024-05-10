@@ -1,5 +1,7 @@
 package com.obsessed.calorieguide.retrofit.user;
 
+import java.util.Arrays;
+
 public class User {
     int id;
     String user_name;
@@ -30,6 +32,29 @@ public class User {
         this.BearerToken = BearerToken;
     }
 
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", user_name='" + user_name + '\'' +
+                ", surname='" + surname + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", BearerToken='" + BearerToken + '\'' +
+                ", picture=" + Arrays.toString(picture) +
+                ", lunch_id=" + lunch_id +
+                ", breakfast_id=" + breakfast_id +
+                ", dinner_id=" + dinner_id +
+                ", calories_goal=" + calories_goal +
+                ", carbohydrates_goal=" + carbohydrates_goal +
+                ", fats_goal=" + fats_goal +
+                ", proteins_goal=" + proteins_goal +
+                ", calories_current=" + calories_current +
+                ", carbonates_current=" + carbonates_current +
+                ", fats_current=" + fats_current +
+                ", proteins_current=" + proteins_current +
+                '}';
+    }
 
     // Getters
     public String getName() {
