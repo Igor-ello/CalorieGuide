@@ -7,7 +7,7 @@
     <dimen name="text_size">16sp</dimen>
 
     <dimen name="margin_top">5dp</dimen>
-    <dimen name="margin_end_default">50dp</dimen>
+    <dimen name="margin_end_default">75dp</dimen>
 
     <dimen name="icon_height">35dp</dimen>
     <dimen name="icon_width">35dp</dimen>
