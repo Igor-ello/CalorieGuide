@@ -22,7 +22,7 @@ import com.obsessed.calorieguide.databinding.FragmentMealLibraryBinding;
 import com.obsessed.calorieguide.retrofit.meal.callbacks.CallbackGetAllMeal;
 import com.obsessed.calorieguide.retrofit.meal.callbacks.CallbackLikeMeal;
 import com.obsessed.calorieguide.retrofit.meal.Meal;
-import com.obsessed.calorieguide.retrofit.meal.MealCallAndCallback;
+import com.obsessed.calorieguide.retrofit.meal.MealCall;
 
 import java.util.List;
 
@@ -53,8 +53,8 @@ public class LibraryMealFragment extends Fragment implements CallbackGetAllMeal,
 
         //Подгрузка данных
         requireActivity().runOnUiThread(() -> {
-            MealCallAndCallback mealCallAndCallback = new MealCallAndCallback(this, Data.getInstance().getUser().getBearerToken());
-            mealCallAndCallback.getAllMeal();
+            MealCall mealCall = new MealCall();
+            mealCall.getAllMeal(this);
         });
 
         //Кнопка для добавления нового питания

@@ -14,7 +14,7 @@ import com.obsessed.calorieguide.data.Data;
 import com.obsessed.calorieguide.databinding.FragmentMealLibraryBinding;
 import com.obsessed.calorieguide.retrofit.meal.callbacks.CallbackLikeMeal;
 import com.obsessed.calorieguide.retrofit.meal.Meal;
-import com.obsessed.calorieguide.retrofit.meal.MealCall;
+import com.obsessed.calorieguide.retrofit.meal.MealCallWithToken;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -50,8 +50,8 @@ public class AllMealReceived {
 
         mealAdapter.setOnLikeMealClickListener((meal, imageView) -> {
             Log.d("IntakeAdapter", "Clicked on like for meal in IntakeAdapter: " + meal.getMealName());
-            MealCall mealCall = new MealCall(Data.getInstance().getUser().getBearerToken());
-            mealCall.likeMeal(Data.getInstance().getUser().getId(), meal, imageView, callback);
+            MealCallWithToken mealCallWithToken = new MealCallWithToken(Data.getInstance().getUser().getBearerToken());
+            mealCallWithToken.likeMeal(Data.getInstance().getUser().getId(), meal, imageView, callback);
         });
     }
 }

@@ -23,10 +23,12 @@ import com.obsessed.calorieguide.data.Data;
 import com.obsessed.calorieguide.data.DayFunc;
 import com.obsessed.calorieguide.data.Func;
 import com.obsessed.calorieguide.databinding.FragmentMealLibraryBinding;
+import com.obsessed.calorieguide.fragments.main.MainFragment;
+import com.obsessed.calorieguide.retrofit.meal.MealCall;
 import com.obsessed.calorieguide.retrofit.meal.callbacks.CallbackLikeMeal;
 import com.obsessed.calorieguide.retrofit.meal.callbacks.CallbackSearchMeal;
 import com.obsessed.calorieguide.retrofit.meal.Meal;
-import com.obsessed.calorieguide.retrofit.meal.MealCall;
+import com.obsessed.calorieguide.retrofit.meal.MealCallWithToken;
 
 import java.util.ArrayList;
 
@@ -71,7 +73,7 @@ public class MealIntakeFragment extends Fragment implements CallbackSearchMeal, 
             @Override
             public boolean onQueryTextSubmit(String query) {
                 // Вызывается при отправке запроса поиска (нажатии Enter или отправке формы)
-                MealCall call = new MealCall(Data.getInstance().getUser().getBearerToken());
+                MealCall call = new MealCall();
                 call.searchMeal(query, MealIntakeFragment.this);
                 return true;
             }
@@ -102,7 +104,7 @@ public class MealIntakeFragment extends Fragment implements CallbackSearchMeal, 
 
         adapter.setOnLikeMealClickListener((meal, imageView) -> {
             Log.d("Adapter", "Clicked on like for meal in MealAdapterIntake: " + meal.getMealName());
-            MealCall call = new MealCall(Data.getInstance().getUser().getBearerToken());
+            MealCallWithToken call = new MealCallWithToken(Data.getInstance().getUser().getBearerToken());
             call.likeMeal(Data.getInstance().getUser().getId(), meal, imageView, this);
         });
 

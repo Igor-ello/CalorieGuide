@@ -27,12 +27,11 @@ import com.obsessed.calorieguide.data.Data;
 import com.obsessed.calorieguide.retrofit.food.FoodCall;
 import com.obsessed.calorieguide.retrofit.food.callbacks.CallbackGetAllFood;
 import com.obsessed.calorieguide.retrofit.food.Food;
-import com.obsessed.calorieguide.retrofit.food.FoodCallWithToken;
 import com.obsessed.calorieguide.retrofit.meal.callbacks.CallbackGetMealById;
 import com.obsessed.calorieguide.retrofit.meal.FoodIdQuantity;
 import com.obsessed.calorieguide.retrofit.meal.Meal;
+import com.obsessed.calorieguide.retrofit.meal.MealCallWithToken;
 import com.obsessed.calorieguide.retrofit.meal.MealCall;
-import com.obsessed.calorieguide.retrofit.meal.MealCallAndCallback;
 import com.obsessed.calorieguide.tools.convert.FillClass;
 import com.obsessed.calorieguide.tools.convert.ResizedBitmap;
 
@@ -84,15 +83,16 @@ public class EditMealFragment extends Fragment implements CallbackGetMealById, C
 
         //Подгрузка данных
         requireActivity().runOnUiThread(() -> {
-            MealCallAndCallback mealCallAndCallback = new MealCallAndCallback(this, Data.getInstance().getUser().getBearerToken());
-            mealCallAndCallback.getMealById(mealId);
+            MealCall mealCall = new MealCall();
+            mealCall.getMealById(mealId, this);
+
             FoodCall call = new FoodCall();
             call.getAllFood(this);
         });
 
         view.findViewById(R.id.btDelete).setOnClickListener(v -> {
-            MealCall mealCall = new MealCall(Data.getInstance().getUser().getBearerToken());
-            mealCall.deleteMeal(mealId);
+            MealCallWithToken mealCallWithToken = new MealCallWithToken(Data.getInstance().getUser().getBearerToken());
+            mealCallWithToken.deleteMeal(mealId);
 
             Navigation.findNavController(view).popBackStack();
         });
@@ -109,8 +109,8 @@ public class EditMealFragment extends Fragment implements CallbackGetMealById, C
             ArrayList<EditText> etList = fieldValidation.getEtList();
             ArrayList<FoodIdQuantity> foodIdQuantities = fieldValidation.getFoodIdQuantities();
             if(etList != null){
-                MealCall mealCall = new MealCall(Data.getInstance().getUser().getBearerToken());
-                mealCall.updateMeal(mealId, FillClass.fillMeal(etList, byteArray, foodIdQuantities));
+                MealCallWithToken mealCallWithToken = new MealCallWithToken(Data.getInstance().getUser().getBearerToken());
+                mealCallWithToken.updateMeal(mealId, FillClass.fillMeal(etList, byteArray, foodIdQuantities));
 
                 Navigation.findNavController(view).popBackStack();
             } else {

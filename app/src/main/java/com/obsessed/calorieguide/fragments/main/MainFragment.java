@@ -20,7 +20,7 @@ import com.obsessed.calorieguide.data.Data;
 import com.obsessed.calorieguide.databinding.FragmentMainBinding;
 import com.obsessed.calorieguide.retrofit.meal.callbacks.CallbackGetMealById;
 import com.obsessed.calorieguide.retrofit.meal.Meal;
-import com.obsessed.calorieguide.retrofit.meal.MealCallAndCallback;
+import com.obsessed.calorieguide.retrofit.meal.MealCall;
 import com.obsessed.calorieguide.tools.save.ShPrefs;
 
 
@@ -64,8 +64,8 @@ public class MainFragment extends Fragment implements CallbackGetMealById {
         //Подгрузка данных
         requireActivity().runOnUiThread(() -> {
             int mealId = 2;
-            MealCallAndCallback mealCallAndCallback = new MealCallAndCallback(this, Data.getInstance().getUser().getBearerToken());
-            mealCallAndCallback.getMealById(mealId);
+            MealCall mealCall = new MealCall();
+            mealCall.getMealById(mealId, this);
         });
     }
 

@@ -21,8 +21,8 @@ import com.obsessed.calorieguide.retrofit.food.Food;
 import com.obsessed.calorieguide.retrofit.food.FoodCall;
 import com.obsessed.calorieguide.retrofit.meal.callbacks.CallbackGetMealById;
 import com.obsessed.calorieguide.retrofit.meal.Meal;
+import com.obsessed.calorieguide.retrofit.meal.MealCallWithToken;
 import com.obsessed.calorieguide.retrofit.meal.MealCall;
-import com.obsessed.calorieguide.retrofit.meal.MealCallAndCallback;
 
 public class ObjectActions extends Fragment implements CallbackGetMealById, CallbackGetFoodById {
     private static final String ARG_OBJECT_ID = "object_id";
@@ -61,8 +61,8 @@ public class ObjectActions extends Fragment implements CallbackGetMealById, Call
         super.onViewCreated(view, savedInstanceState);
 
         if (objectType.equals("meal")) {
-            MealCallAndCallback mealCallAndCallback = new MealCallAndCallback(this, Data.getInstance().getUser().getBearerToken());
-            mealCallAndCallback.getMealById(objectId);
+            MealCall mealCall = new MealCall();
+            mealCall.getMealById(objectId, this);
         } else if (objectType.equals("food")) {
             FoodCall call = new FoodCall();
             call.getFoodById(objectId, this);
@@ -88,8 +88,8 @@ public class ObjectActions extends Fragment implements CallbackGetMealById, Call
 
         view.findViewById(R.id.btLikeObject).setOnClickListener(v -> {
             if (object != null && objectType.equals("meal")) {
-                MealCall mealCall = new MealCall(Data.getInstance().getUser().getBearerToken());
-                mealCall.likeMeal(Data.getInstance().getUser().getId(), (Meal)object, null, null);
+                MealCallWithToken mealCallWithToken = new MealCallWithToken(Data.getInstance().getUser().getBearerToken());
+                mealCallWithToken.likeMeal(Data.getInstance().getUser().getId(), (Meal)object, null, null);
             }
             if (object != null && objectType.equals("food")) {
                 FoodCallWithToken call = new FoodCallWithToken(Data.getInstance().getUser().getBearerToken());
