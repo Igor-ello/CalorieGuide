@@ -20,6 +20,8 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.obsessed.calorieguide.MainActivityApp;
 import com.obsessed.calorieguide.R;
 import com.obsessed.calorieguide.retrofit.food.FoodCallAndCallback;
 import com.obsessed.calorieguide.tools.convert.FillClass;
@@ -56,8 +58,9 @@ public class EditFoodFragment extends Fragment implements CallbackGetFoodById {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_edit_food, container, false);
+        View view = inflater.inflate(R.layout.fragment_edit_food, container, false);
+        ((BottomNavigationView)((MainActivityApp) getActivity()).findViewById(R.id.bottomNV)).setVisibility(view.GONE);
+        return view;
     }
 
     @Override

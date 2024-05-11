@@ -1,4 +1,4 @@
-package com.obsessed.calorieguide.fragments;
+package com.obsessed.calorieguide.fragments.main;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;

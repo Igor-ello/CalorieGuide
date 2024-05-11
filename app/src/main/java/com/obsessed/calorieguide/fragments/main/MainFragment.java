@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.obsessed.calorieguide.MainActivityApp;
 import com.obsessed.calorieguide.MainActivityAuth;
 import com.obsessed.calorieguide.R;
@@ -38,8 +39,12 @@ public class MainFragment extends Fragment implements CallbackGetMealById {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_main, container, false);
+        View view = inflater.inflate(R.layout.fragment_main, container, false);
+        BottomNavigationView botNavView = ((BottomNavigationView)((MainActivityApp) getActivity()).findViewById(R.id.bottomNV));
+        if (botNavView != null) {
+            botNavView.setVisibility(view.VISIBLE);
+        }
+        return view;
     }
 
     @Override

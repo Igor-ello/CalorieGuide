@@ -1,18 +1,14 @@
 package com.obsessed.calorieguide.fragments.main;
 
-import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
-import androidx.navigation.ui.NavigationUI;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.obsessed.calorieguide.R;
 import com.obsessed.calorieguide.adapters.intake.IntakeAdapter;
 import com.obsessed.calorieguide.data.Data;

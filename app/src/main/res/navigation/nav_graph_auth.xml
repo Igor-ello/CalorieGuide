@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/loginFragment"
-        android:name="com.obsessed.calorieguide.fragments.LoginFragment"
+        android:name="com.obsessed.calorieguide.fragments.auth.LoginFragment"
         tools:layout="@layout/fragment_login"
         android:label="fragment_login">
         <action
@@ -16,7 +16,7 @@
     </fragment>
     <fragment
         android:id="@+id/registrationFragment"
-        android:name="com.obsessed.calorieguide.fragments.RegistrationFragment"
+        android:name="com.obsessed.calorieguide.fragments.auth.RegistrationFragment"
         tools:layout="@layout/fragment_registration"
         android:label="fragment_registration" />
 </navigation>

@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="margin_default">10dp</dimen>
-    
+    <dimen name="margin_default2">5dp</dimen>
+
     <dimen name="text_header_size">20sp</dimen>
     <dimen name="text_size">16sp</dimen>
 
     <dimen name="margin_top">5dp</dimen>
+    <dimen name="margin_end_default">50dp</dimen>
 
     <dimen name="icon_height">35dp</dimen>
     <dimen name="icon_width">35dp</dimen>

@@ -1,4 +1,4 @@
-package com.obsessed.calorieguide.fragments;
+package com.obsessed.calorieguide.fragments.auth;
 
 import android.content.Intent;
 import android.os.Bundle;
