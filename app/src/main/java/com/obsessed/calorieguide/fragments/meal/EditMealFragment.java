@@ -24,9 +24,10 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.obsessed.calorieguide.MainActivityApp;
 import com.obsessed.calorieguide.R;
 import com.obsessed.calorieguide.data.Data;
+import com.obsessed.calorieguide.retrofit.food.FoodCall;
 import com.obsessed.calorieguide.retrofit.food.callbacks.CallbackGetAllFood;
 import com.obsessed.calorieguide.retrofit.food.Food;
-import com.obsessed.calorieguide.retrofit.food.FoodCallAndCallback;
+import com.obsessed.calorieguide.retrofit.food.FoodCallWithToken;
 import com.obsessed.calorieguide.retrofit.meal.callbacks.CallbackGetMealById;
 import com.obsessed.calorieguide.retrofit.meal.FoodIdQuantity;
 import com.obsessed.calorieguide.retrofit.meal.Meal;
@@ -85,8 +86,8 @@ public class EditMealFragment extends Fragment implements CallbackGetMealById, C
         requireActivity().runOnUiThread(() -> {
             MealCallAndCallback mealCallAndCallback = new MealCallAndCallback(this, Data.getInstance().getUser().getBearerToken());
             mealCallAndCallback.getMealById(mealId);
-            FoodCallAndCallback foodCallAndCallback = new FoodCallAndCallback(this);
-            foodCallAndCallback.getAllFood();
+            FoodCall call = new FoodCall();
+            call.getAllFood(this);
         });
 
         view.findViewById(R.id.btDelete).setOnClickListener(v -> {

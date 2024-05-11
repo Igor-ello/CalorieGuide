@@ -15,10 +15,10 @@ import com.obsessed.calorieguide.MainActivityApp;
 import com.obsessed.calorieguide.R;
 import com.obsessed.calorieguide.data.Data;
 import com.obsessed.calorieguide.data.Day;
+import com.obsessed.calorieguide.retrofit.food.FoodCallWithToken;
 import com.obsessed.calorieguide.retrofit.food.callbacks.CallbackGetFoodById;
 import com.obsessed.calorieguide.retrofit.food.Food;
 import com.obsessed.calorieguide.retrofit.food.FoodCall;
-import com.obsessed.calorieguide.retrofit.food.FoodCallAndCallback;
 import com.obsessed.calorieguide.retrofit.meal.callbacks.CallbackGetMealById;
 import com.obsessed.calorieguide.retrofit.meal.Meal;
 import com.obsessed.calorieguide.retrofit.meal.MealCall;
@@ -64,8 +64,8 @@ public class ObjectActions extends Fragment implements CallbackGetMealById, Call
             MealCallAndCallback mealCallAndCallback = new MealCallAndCallback(this, Data.getInstance().getUser().getBearerToken());
             mealCallAndCallback.getMealById(objectId);
         } else if (objectType.equals("food")) {
-            FoodCallAndCallback foodCallAndCallback = new FoodCallAndCallback(this);
-            foodCallAndCallback.getFoodById(objectId);
+            FoodCall call = new FoodCall();
+            call.getFoodById(objectId, this);
         }
 
         view.findViewById(R.id.btBack).setOnClickListener(v -> {
@@ -92,8 +92,8 @@ public class ObjectActions extends Fragment implements CallbackGetMealById, Call
                 mealCall.likeMeal(Data.getInstance().getUser().getId(), (Meal)object, null, null);
             }
             if (object != null && objectType.equals("food")) {
-                FoodCall foodCall = new FoodCall(Data.getInstance().getUser().getBearerToken());
-                foodCall.likeFood(Data.getInstance().getUser().getId(), (Food)object, null, null);
+                FoodCallWithToken call = new FoodCallWithToken(Data.getInstance().getUser().getBearerToken());
+                call.likeFood(Data.getInstance().getUser().getId(), (Food)object, null, null);
             }
             Navigation.findNavController(view).popBackStack();
         });

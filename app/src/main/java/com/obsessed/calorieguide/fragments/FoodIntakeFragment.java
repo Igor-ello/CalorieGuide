@@ -23,6 +23,7 @@ import com.obsessed.calorieguide.data.Data;
 import com.obsessed.calorieguide.data.DayFunc;
 import com.obsessed.calorieguide.data.Func;
 import com.obsessed.calorieguide.databinding.FragmentFoodLibraryBinding;
+import com.obsessed.calorieguide.retrofit.food.FoodCallWithToken;
 import com.obsessed.calorieguide.retrofit.food.callbacks.CallbackLikeFood;
 import com.obsessed.calorieguide.retrofit.food.callbacks.CallbackSearchFood;
 import com.obsessed.calorieguide.retrofit.food.Food;
@@ -70,7 +71,7 @@ public class FoodIntakeFragment extends Fragment implements CallbackSearchFood, 
             @Override
             public boolean onQueryTextSubmit(String query) {
                 // Вызывается при отправке запроса поиска (нажатии Enter или отправке формы)
-                FoodCall call = new FoodCall(Data.getInstance().getUser().getBearerToken());
+                FoodCall call = new FoodCall();
                 call.searchFood(query, FoodIntakeFragment.this);
                 return true;
             }
@@ -101,8 +102,8 @@ public class FoodIntakeFragment extends Fragment implements CallbackSearchFood, 
 
         adapter.setOnLikeFoodClickListener((food, imageView) -> {
             Log.d("Adapter", "Clicked on like for food in FoodAdapterLike: " + food.getFoodName());
-            FoodCall foodCall = new FoodCall(Data.getInstance().getUser().getBearerToken());
-            foodCall.likeFood(Data.getInstance().getUser().getId(), food, imageView, this);
+            FoodCallWithToken call = new FoodCallWithToken(Data.getInstance().getUser().getBearerToken());
+            call.likeFood(Data.getInstance().getUser().getId(), food, imageView, this);
         });
 
         adapter.setOnAddFoodClickListener(food -> {
