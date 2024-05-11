@@ -110,7 +110,7 @@ public class MealCall {
                     JsonObject jsonObject = response.body();
                     if (jsonObject != null && jsonObject.has("meals")) {
                         JsonArray mealsArray = jsonObject.getAsJsonArray("meals");
-                        List<Meal> allMeals = new Gson().fromJson(mealsArray, new TypeToken<List<Meal>>() {}.getType());
+                        ArrayList<Meal> allMeals = new Gson().fromJson(mealsArray, new TypeToken<List<Meal>>() {}.getType());
                         callback.onAllMealReceived(allMeals);
 
                         Log.d("Call", "Response getAllMeal is successful!");
@@ -147,7 +147,7 @@ public class MealCall {
                     JsonObject jsonObject = response.body();
                     if (jsonObject != null && jsonObject.has("meals")) {
                         JsonArray mealsArray = jsonObject.getAsJsonArray("meals");
-                        List<Meal> allMeals = new Gson().fromJson(mealsArray, new TypeToken<List<Meal>>() {}.getType());
+                        ArrayList<Meal> allMeals = new Gson().fromJson(mealsArray, new TypeToken<List<Meal>>() {}.getType());
                         callback.onAllMealReceived(allMeals);
 
                         Log.d("Call", "Response getAllMeal is successful!");
