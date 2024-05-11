@@ -13,6 +13,7 @@ import com.obsessed.calorieguide.adapters.food.FoodAdapterV1;
 import com.obsessed.calorieguide.adapters.food.FoodAdapterV2;
 import com.obsessed.calorieguide.data.Data;
 import com.obsessed.calorieguide.databinding.FragmentFoodLibraryBinding;
+import com.obsessed.calorieguide.retrofit.food.FoodCallWithToken;
 import com.obsessed.calorieguide.retrofit.food.callbacks.CallbackLikeFood;
 import com.obsessed.calorieguide.retrofit.food.Food;
 import com.obsessed.calorieguide.retrofit.food.FoodCall;
@@ -58,8 +59,8 @@ public class AllFoodReceived {
 
         foodAdapter.setOnLikeFoodClickListener((food, imageView) -> {
             Log.d("FoodAdapter", "Clicked on like for food in FoodAdapterV1: " + food.getFoodName());
-            FoodCall foodCall = new FoodCall(Data.getInstance().getUser().getBearerToken());
-            foodCall.likeFood(Data.getInstance().getUser().getId(), food, imageView, callback);
+            FoodCallWithToken call = new FoodCallWithToken(Data.getInstance().getUser().getBearerToken());
+            call.likeFood(Data.getInstance().getUser().getId(), food, imageView, callback);
         });
     }
 
@@ -78,8 +79,8 @@ public class AllFoodReceived {
 
         foodAdapter.setOnLikeFoodClickListener((food, imageView)-> {
             Log.d("FoodAdapter", "Clicked on like for food in FoodAdapterV2: " + food.getFoodName());
-            FoodCall foodCall = new FoodCall(Data.getInstance().getUser().getBearerToken());
-            foodCall.likeFood(Data.getInstance().getUser().getId(), food, imageView, callback);
+            FoodCallWithToken call = new FoodCallWithToken(Data.getInstance().getUser().getBearerToken());
+            call.likeFood(Data.getInstance().getUser().getId(), food, imageView, callback);
         });
     }
 

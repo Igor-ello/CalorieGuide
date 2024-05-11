@@ -19,9 +19,10 @@ import com.obsessed.calorieguide.R;
 import com.obsessed.calorieguide.data.Data;
 import com.obsessed.calorieguide.data.Func;
 import com.obsessed.calorieguide.databinding.FragmentFoodLibraryBinding;
+import com.obsessed.calorieguide.retrofit.food.FoodCall;
+import com.obsessed.calorieguide.retrofit.food.FoodCallWithToken;
 import com.obsessed.calorieguide.retrofit.food.callbacks.CallbackLikeFood;
 import com.obsessed.calorieguide.retrofit.food.Food;
-import com.obsessed.calorieguide.retrofit.food.FoodCallAndCallback;
 import com.obsessed.calorieguide.retrofit.food.callbacks.CallbackGetAllFood;
 
 import java.util.ArrayList;
@@ -55,10 +56,10 @@ public class LibraryFoodFragment extends Fragment implements CallbackGetAllFood,
 
         //Подгрузка данных
         requireActivity().runOnUiThread(() -> {
-            FoodCallAndCallback foodCallAndCallback = new FoodCallAndCallback(this);
+            FoodCall call = new FoodCall();
             if(Data.getInstance().getUser() != null)
-                foodCallAndCallback.getAllFood(Data.getInstance().getUser().getId());
-            else foodCallAndCallback.getAllFood();
+                call.getAllFood(Data.getInstance().getUser().getId(), this);
+            else call.getAllFood(this);
         });
 
         //Кнопка для добавления нового фрукта

@@ -23,11 +23,11 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.obsessed.calorieguide.MainActivityApp;
 import com.obsessed.calorieguide.R;
 import com.obsessed.calorieguide.data.Data;
+import com.obsessed.calorieguide.retrofit.food.FoodCall;
 import com.obsessed.calorieguide.retrofit.food.callbacks.CallbackGetAllFood;
 import com.obsessed.calorieguide.retrofit.food.Food;
-import com.obsessed.calorieguide.retrofit.food.FoodCallAndCallback;
 import com.obsessed.calorieguide.retrofit.meal.FoodIdQuantity;
-import com.obsessed.calorieguide.retrofit.meal.MealCall;
+import com.obsessed.calorieguide.retrofit.meal.MealCallWithToken;
 import com.obsessed.calorieguide.tools.convert.FillClass;
 import com.obsessed.calorieguide.tools.convert.ResizedBitmap;
 
@@ -74,8 +74,8 @@ public class AddMealFragment extends Fragment implements CallbackGetAllFood {
         });
 
         view.findViewById(R.id.btSetNumber).setOnClickListener(v -> {
-            FoodCallAndCallback foodCallAndCallback = new FoodCallAndCallback(this);
-            foodCallAndCallback.getAllFood();
+            FoodCall call = new FoodCall();
+            call.getAllFood(this);
         });
 
         // Отправка на сервер введенных данных
@@ -83,8 +83,8 @@ public class AddMealFragment extends Fragment implements CallbackGetAllFood {
             ArrayList<EditText> etList = fieldValidation.getEtList();
             ArrayList<FoodIdQuantity> foodIdQuantities = fieldValidation.getFoodIdQuantities();
             if(etList != null){
-                MealCall mealCall = new MealCall(Data.getInstance().getUser().getBearerToken());
-                mealCall.postMeal(FillClass.fillMeal(etList, byteArray, foodIdQuantities));
+                MealCallWithToken mealCallWithToken = new MealCallWithToken(Data.getInstance().getUser().getBearerToken());
+                mealCallWithToken.postMeal(FillClass.fillMeal(etList, byteArray, foodIdQuantities));
 
                 Navigation.findNavController(view).popBackStack();
             } else {

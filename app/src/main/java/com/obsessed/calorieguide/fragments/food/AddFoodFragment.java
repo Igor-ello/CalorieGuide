@@ -22,6 +22,7 @@ import android.widget.Toast;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.obsessed.calorieguide.MainActivityApp;
 import com.obsessed.calorieguide.R;
+import com.obsessed.calorieguide.retrofit.food.FoodCallWithToken;
 import com.obsessed.calorieguide.tools.convert.FillClass;
 import com.obsessed.calorieguide.data.Data;
 import com.obsessed.calorieguide.retrofit.food.FoodCall;
@@ -74,8 +75,8 @@ public class AddFoodFragment extends Fragment {
         requireView().findViewById(R.id.btSave).setOnClickListener(v -> {
             ArrayList<EditText> etList = fieldValidation.getValues();
             if(etList != null){
-                FoodCall foodCall = new FoodCall(Data.getInstance().getUser().getBearerToken());
-                foodCall.postFood(FillClass.fillFood(etList, byteArray));
+                FoodCallWithToken call = new FoodCallWithToken(Data.getInstance().getUser().getBearerToken());
+                call.postFood(FillClass.fillFood(etList, byteArray));
 
                 Navigation.findNavController(view).popBackStack();
             } else {
