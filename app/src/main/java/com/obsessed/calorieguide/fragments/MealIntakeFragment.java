@@ -18,12 +18,11 @@ import android.widget.SearchView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.obsessed.calorieguide.MainActivityApp;
 import com.obsessed.calorieguide.R;
-import com.obsessed.calorieguide.adapters.meal.MealAdapterIntake;
+import com.obsessed.calorieguide.adapters.meal.MealIntakeAdapter;
 import com.obsessed.calorieguide.data.Data;
 import com.obsessed.calorieguide.data.DayFunc;
 import com.obsessed.calorieguide.data.Func;
 import com.obsessed.calorieguide.databinding.FragmentMealLibraryBinding;
-import com.obsessed.calorieguide.fragments.main.MainFragment;
 import com.obsessed.calorieguide.retrofit.meal.MealCall;
 import com.obsessed.calorieguide.retrofit.meal.callbacks.CallbackLikeMeal;
 import com.obsessed.calorieguide.retrofit.meal.callbacks.CallbackSearchMeal;
@@ -90,26 +89,26 @@ public class MealIntakeFragment extends Fragment implements CallbackSearchMeal, 
 
     @Override
     public void mealSearchReceived(ArrayList<Meal> mealList) {
-        MealAdapterIntake adapter = new MealAdapterIntake(mealList);
+        MealIntakeAdapter adapter = new MealIntakeAdapter(mealList);
         binding.rcView.setLayoutManager(new GridLayoutManager(requireContext(), 1));
         binding.rcView.setAdapter(adapter);
 
         // Установка слушателя в адаптере
         adapter.setOnMealClickListener(meal -> {
-            Log.d("Adapter", "Clicked on meal in MealAdapterIntake: " + meal.getMealName());
+            Log.d("Adapter", "Clicked on meal in MealIntakeAdapter: " + meal.getMealName());
             Bundle args = new Bundle();
             args.putInt("meal_id", meal.getId());
             Navigation.findNavController(requireView()).navigate(R.id.editMealFragment, args);
         });
 
         adapter.setOnLikeMealClickListener((meal, imageView) -> {
-            Log.d("Adapter", "Clicked on like for meal in MealAdapterIntake: " + meal.getMealName());
+            Log.d("Adapter", "Clicked on like for meal in MealIntakeAdapter: " + meal.getMealName());
             MealCallWithToken call = new MealCallWithToken(Data.getInstance().getUser().getBearerToken());
             call.likeMeal(Data.getInstance().getUser().getId(), meal, imageView, this);
         });
 
         adapter.setOnAddMealClickListener(meal -> {
-            Log.d("Adapter", "Clicked on add for meal in MealAdapterIntake: " + meal.getMealName());
+            Log.d("Adapter", "Clicked on add for meal in MealIntakeAdapter: " + meal.getMealName());
             DayFunc.addObjectToDay(meal, arrayType);
         });
     }

@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -15,6 +16,7 @@ import com.obsessed.calorieguide.MainActivityApp;
 import com.obsessed.calorieguide.R;
 import com.obsessed.calorieguide.data.Data;
 import com.obsessed.calorieguide.data.Day;
+import com.obsessed.calorieguide.data.DayFunc;
 import com.obsessed.calorieguide.retrofit.food.FoodCallWithToken;
 import com.obsessed.calorieguide.retrofit.food.callbacks.CallbackGetFoodById;
 import com.obsessed.calorieguide.retrofit.food.Food;
@@ -74,14 +76,7 @@ public class ObjectActions extends Fragment implements CallbackGetMealById, Call
 
         view.findViewById(R.id.btAddObject).setOnClickListener(v -> {
             if(object != null) {
-                Day day = Data.getInstance().getDay();
-                if(arrayType.equals("breakfast")) {
-                    day.addBreakfast(object);
-                } else if(arrayType.equals("lunch")) {
-                    day.addLunch(object);
-                } else if(arrayType.equals("dinner")) {
-                    day.addDinner(object);
-                }
+                DayFunc.addObjectToDay(object, arrayType);
             }
             Navigation.findNavController(view).popBackStack();
         });
@@ -100,14 +95,7 @@ public class ObjectActions extends Fragment implements CallbackGetMealById, Call
 
         view.findViewById(R.id.btDeleteObject).setOnClickListener(v -> {
             if(object != null) {
-                Day day = Data.getInstance().getDay();
-                if(arrayType.equals("breakfast")) {
-                    day.deleteByIdBreakfast(posInArray);
-                } else if(arrayType.equals("lunch")) {
-                    day.deleteByIdLunch(posInArray);
-                } else if(arrayType.equals("dinner")) {
-                    day.deleteByIdDinner(posInArray);
-                }
+                DayFunc.deleteObjectFromDay(posInArray, arrayType);
             }
             Navigation.findNavController(view).popBackStack();
         });
@@ -116,10 +104,14 @@ public class ObjectActions extends Fragment implements CallbackGetMealById, Call
     @Override
     public void onFoodByIdReceived(Food food) {
         object = food;
+        ((ImageView)requireView().findViewById(R.id.btLikeObject))
+                .setImageResource(food.getIsLiked()? R.drawable.like_active : R.drawable.like_not_active_black);;
     }
 
     @Override
     public void onMealByIdReceived(Meal meal) {
         object = meal;
+        ((ImageView)requireView().findViewById(R.id.btLikeObject))
+                .setImageResource(meal.getIsLiked()? R.drawable.like_active : R.drawable.like_not_active_black);;
     }
 }

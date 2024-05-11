@@ -18,13 +18,13 @@ import com.obsessed.calorieguide.retrofit.meal.Meal;
 
 import java.util.ArrayList;
 
-public class MealAdapterIntake extends RecyclerView.Adapter<MealAdapterIntake.MealHolder> {
+public class MealIntakeAdapter extends RecyclerView.Adapter<MealIntakeAdapter.MealHolder> {
     private ArrayList<Meal> mealArrayList;
     private OnMealClickListener onMealClickListener;
     private OnLikeMealClickListener onLikeMealClickListener;
     private OnAddMealClickListener onAddMealClickListener;
 
-    public MealAdapterIntake(ArrayList<Meal> mealArrayList) {
+    public MealIntakeAdapter(ArrayList<Meal> mealArrayList) {
         this.mealArrayList = mealArrayList;
     }
 
@@ -68,9 +68,9 @@ public class MealAdapterIntake extends RecyclerView.Adapter<MealAdapterIntake.Me
 
     @NonNull
     @Override
-    public MealAdapterIntake.MealHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public MealIntakeAdapter.MealHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.meal_item_likes, parent, false);
-        return new MealAdapterIntake.MealHolder(view);
+        return new MealIntakeAdapter.MealHolder(view);
     }
 
     @Override

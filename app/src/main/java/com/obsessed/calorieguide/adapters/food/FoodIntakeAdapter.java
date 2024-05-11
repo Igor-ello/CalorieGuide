@@ -18,13 +18,13 @@ import com.obsessed.calorieguide.retrofit.food.Food;
 
 import java.util.ArrayList;
 
-public class FoodAdapterIntake extends RecyclerView.Adapter<FoodAdapterIntake.FoodHolder> {
+public class FoodIntakeAdapter extends RecyclerView.Adapter<FoodIntakeAdapter.FoodHolder> {
     public ArrayList<Food> foodArrayList;
     private OnFoodClickListener onFoodClickListener;
     private OnLikeFoodClickListener onLikeFoodClickListener;
     private OnAddFoodClickListener onAddFoodClickListener;
 
-    public FoodAdapterIntake(ArrayList<Food> foodArrayList) {
+    public FoodIntakeAdapter(ArrayList<Food> foodArrayList) {
         this.foodArrayList = foodArrayList;
     }
 

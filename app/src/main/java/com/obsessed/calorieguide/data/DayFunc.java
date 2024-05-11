@@ -18,6 +18,16 @@ public class DayFunc {
         }
     }
 
+    public static void deleteObjectFromDay(int posInArray, String arrayType) {
+        if (arrayType.equals("breakfast")) {
+            day.deleteByIdBreakfast(posInArray);
+        } else if (arrayType.equals("lunch")) {
+            day.deleteByIdLunch(posInArray);
+        } else if (arrayType.equals("dinner")) {
+            day.deleteByIdDinner(posInArray);
+        }
+    }
+
     // Get
     public static int getCalories() {
         int sum = 0;
