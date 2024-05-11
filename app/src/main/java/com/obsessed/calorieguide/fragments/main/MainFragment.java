@@ -47,6 +47,7 @@ public class MainFragment extends Fragment implements CallbackGetMealById {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        binding = FragmentMainBinding.bind(view);
 
         // Загрузка данных из хранилища
         ShPrefs.loadData(requireContext());
@@ -54,8 +55,7 @@ public class MainFragment extends Fragment implements CallbackGetMealById {
         // Проверка пользователя на наличие авторизации
         checkUserLogin(view);
 
-        initView(view);
-
+        // Инициализация для отображения данных
         Stats.getInstance().init(binding, requireActivity());
 
         //Подгрузка данных
@@ -64,12 +64,6 @@ public class MainFragment extends Fragment implements CallbackGetMealById {
             MealCallAndCallback mealCallAndCallback = new MealCallAndCallback(this, Data.getInstance().getUser().getBearerToken());
             mealCallAndCallback.getMealById(mealId);
         });
-    }
-
-    @SuppressLint("SetTextI18n")
-    void initView(View view) {
-        binding = FragmentMainBinding.bind(view);
-        //((TextView)view.findViewById(R.id.tvUserName)).setText(Data.getInstance().getUser().getName() + "!");
     }
 
     private boolean checkUserLogin(View view) {
@@ -88,11 +82,7 @@ public class MainFragment extends Fragment implements CallbackGetMealById {
 
     @Override
     public void onMealByIdReceived(Meal meal) {
-        Day day = Data.getInstance().getDay();
-        day.addBreakfast(meal);
-        day.addBreakfast(meal);
-        day.addLunch(meal);
-        Intakes.init(binding, requireContext(), requireActivity());
+        Intakes.getInstance().init(binding, requireContext());
         Stats.getInstance().update();
     }
 }

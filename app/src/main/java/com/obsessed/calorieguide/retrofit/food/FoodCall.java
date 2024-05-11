@@ -4,9 +4,16 @@ import android.util.Log;
 import android.widget.ImageView;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import com.google.gson.reflect.TypeToken;
 import com.obsessed.calorieguide.data.Data;
 import com.obsessed.calorieguide.retrofit.MainApi;
+import com.obsessed.calorieguide.retrofit.meal.CallbackSearchMeal;
+import com.obsessed.calorieguide.retrofit.meal.Meal;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
@@ -149,4 +156,32 @@ public class FoodCall {
             }
         });
     }
+
+    public void searchFood(String query, CallbackSearchFood callback) {
+        Call<JsonObject> call = mainApi.searchFood(query);
+        call.enqueue(new Callback<JsonObject>() {
+            @Override
+            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+                if (response.isSuccessful()) {
+                    JsonObject jsonObject = response.body();
+                    if (jsonObject != null && jsonObject.has("products")) {
+                        JsonArray productsArray = jsonObject.getAsJsonArray("products");
+                        ArrayList<Food> allFood = new Gson().fromJson(productsArray, new TypeToken<List<Food>>() {}.getType());
+                        callback.foodSearchReceived(allFood);
+
+                        Log.d("Call", "Response searchFood is successful!");
+                    } else {
+                        Log.d("Call", "No products found in response!");
+                    }
+                } else {
+                    Log.e("Call", "Request searchFood failed. Response code: " + response.code());
+                }
+            }
+            @Override
+            public void onFailure(Call<JsonObject> call, Throwable t) {
+                Log.e("Call", "ERROR in searchFood call: " + t.getMessage());
+            }
+        });
+    }
+
 }

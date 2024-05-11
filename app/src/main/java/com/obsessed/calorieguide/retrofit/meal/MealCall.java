@@ -7,10 +7,15 @@ import android.widget.ImageView;
 import androidx.core.content.ContextCompat;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import com.google.gson.reflect.TypeToken;
 import com.obsessed.calorieguide.R;
 import com.obsessed.calorieguide.data.Data;
 import com.obsessed.calorieguide.retrofit.MainApi;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
@@ -55,7 +60,7 @@ public class MealCall {
     }
 
 
-    public Call<JsonObject> postMeal(Meal meal) {
+    public void postMeal(Meal meal) {
         Gson gson = new Gson();
         String json = gson.toJson(meal);
         RequestBody requestBody = RequestBody.create(MediaType.parse("application/json"), json);
@@ -76,10 +81,9 @@ public class MealCall {
                 Log.e("Call", "ERROR in postMeal call: " + t.getMessage());
             }
         });
-        return mainApi.postMeal(requestBody);
     }
 
-    public Call<JsonObject> updateMeal(int mealId, Meal meal) {
+    public void updateMeal(int mealId, Meal meal) {
         Gson gson = new Gson();
         String json = gson.toJson(meal);
         RequestBody requestBody = RequestBody.create(MediaType.parse("application/json"), json);
@@ -102,10 +106,9 @@ public class MealCall {
                 Log.e("Call", "ERROR in updateMeal call: " + t.getMessage());
             }
         });
-        return mainApi.updateMeal(mealId, requestBody);
     }
 
-    public Call<JsonObject> likeMeal(int userId, int mealId, ImageView imageView, CallbackLikeMeal callback) {
+    public void likeMeal(int userId, int mealId, ImageView imageView, CallbackLikeMeal callback) {
         JsonObject requestObject = new JsonObject();
         requestObject.addProperty("meal_id", mealId);
         requestObject.addProperty("user_id", userId);
@@ -138,11 +141,9 @@ public class MealCall {
                 Log.e("Call", "ERROR in likeMeal call: " + t.getMessage());
             }
         });
-        return mainApi.likeMeal(requestBody);
     }
 
-
-    public Call<JsonObject> deleteMeal(int mealId) {
+    public void deleteMeal(int mealId) {
         Call<JsonObject> call = mainApi.deleteMeal(mealId);
         call.enqueue(new Callback<JsonObject>() {
             @Override
@@ -159,6 +160,32 @@ public class MealCall {
                 Log.e("Call", "ERROR in deleteMeal call: " + t.getMessage());
             }
         });
-        return mainApi.deleteMeal(mealId);
+    }
+
+    public void searchMeal(String query, CallbackSearchMeal callback) {
+        Call<JsonObject> call = mainApi.searchMeal(query);
+        call.enqueue(new Callback<JsonObject>() {
+            @Override
+            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+                if (response.isSuccessful()) {
+                    JsonObject jsonObject = response.body();
+                    if (jsonObject != null && jsonObject.has("meals")) {
+                        JsonArray mealsArray = jsonObject.getAsJsonArray("meals");
+                        ArrayList<Meal> allMeals = new Gson().fromJson(mealsArray, new TypeToken<List<Meal>>() {}.getType());
+                        callback.mealSearchReceived(allMeals);
+
+                        Log.d("Call", "Response searchMeal is successful!");
+                    } else {
+                        Log.d("Call", "No meals found in response!");
+                    }
+                } else {
+                    Log.e("Call", "Request searchMeal failed. Response code: " + response.code());
+                }
+            }
+            @Override
+            public void onFailure(Call<JsonObject> call, Throwable t) {
+                Log.e("Call", "ERROR in searchMeal call: " + t.getMessage());
+            }
+        });
     }
 }

@@ -8,6 +8,16 @@ import java.util.ArrayList;
 public class DayFunc {
     private static Day day = Data.getInstance().getDay();
 
+    public static void addObjectToDay(Object object, String arrayType) {
+        if (arrayType.equals("breakfast")) {
+            day.addBreakfast(object);
+        } else if (arrayType.equals("lunch")) {
+            day.addLunch(object);
+        } else if (arrayType.equals("dinner")) {
+            day.addDinner(object);
+        }
+    }
+
     // Get
     public static int getCalories() {
         int sum = 0;

@@ -22,26 +22,47 @@ import com.obsessed.calorieguide.retrofit.food.Food;
 import com.obsessed.calorieguide.retrofit.meal.Meal;
 
 public class Intakes {
+    private static Intakes uniqueInstance;
+    private FragmentMainBinding binding;
+    private Context context;
     private static Day day;
     private static IntakeAdapter adapterBreakfast;
     private static IntakeAdapter adapterLunch;
     private static IntakeAdapter adapterDinner;
 
+    private Intakes() {}
 
-    public static void init(FragmentMainBinding binding, Context context, Activity activity) {
-        // Создаем адаптер и устанавливаем его для каждого приема пищи
-        adapterBreakfast = new IntakeAdapter();
-        adapterLunch = new IntakeAdapter();
-        adapterDinner = new IntakeAdapter();
+    public static Intakes getInstance() {
+        if (uniqueInstance == null) {
+            uniqueInstance = new Intakes();
+            day = Data.getInstance().getDay();
 
-        day = Data.getInstance().getDay();
-        if (day == null) return;
+            // Создаем адаптер и устанавливаем его для каждого приема пищи
+            adapterBreakfast = new IntakeAdapter();
+            adapterLunch = new IntakeAdapter();
+            adapterDinner = new IntakeAdapter();
+        }
+        return uniqueInstance;
+    }
 
+    public void init(FragmentMainBinding binding, Context context) {
+        this.binding = binding;
+        this.context = context;
+
+        initTv();
+        initArrayListsForAdapters();
+        setAdapterListeners();
+        initButtons();
+    }
+
+    private void initTv() {
         // Устанавливаем текст надписей
         binding.intakeBreakfast.tvName.setText("Завтрак");
         binding.intakeLunch.tvName.setText("Обед");
         binding.intakeDinner.tvName.setText("Ужин");
+    }
 
+    private void initArrayListsForAdapters() {
         // Установка списка объектов для каждого приема пищи
         adapterBreakfast.objArrayList = day.getBreakfast();
         setLM(context, binding.intakeBreakfast.rcView);
@@ -54,39 +75,47 @@ public class Intakes {
         adapterDinner.objArrayList = day.getDinner();
         setLM(context, binding.intakeDinner.rcView);
         binding.intakeDinner.rcView.setAdapter(adapterDinner);
-
-        setAdapterListeners(binding);
-
-
-        // Настройка обработчиков нажатий кнопок добавления
-        binding.intakeLunch.btAddFood.setOnClickListener(v -> {
-            //Navigation.findNavController(view).navigate(R.id.action_dayFragment_to_addFoodFragment);
-        });
-        binding.intakeLunch.btAddMeal.setOnClickListener(v -> {
-            //Navigation.findNavController(view).navigate(R.id.action_dayFragment_to_addMealFragment);
-        });
-
-//        binding.intakeBreakfast.btAddFood.setOnClickListener(v -> {
-//            Navigation.findNavController(view).navigate(R.id.action_dayFragment_to_addFoodFragment);
-//        });
-//        binding.intakeBreakfast.btAddMeal.setOnClickListener(v -> {
-//            Navigation.findNavController(view).navigate(R.id.action_dayFragment_to_addMealFragment);
-//        });
-//
-//        binding.intakeDinner.btAddFood.setOnClickListener(v ->{
-//            Navigation.findNavController(view).navigate(R.id.action_dayFragment_to_addFoodFragment);
-//        });
-//        binding.intakeDinner.btAddMeal.setOnClickListener(v ->{
-//            Navigation.findNavController(view).navigate(R.id.action_dayFragment_to_addMealFragment);
-//        });
     }
 
-    private static void setLM(Context context, RecyclerView recyclerView){
+    private void initButtons() {
+        View view = binding.getRoot();
+        NavController navController = Navigation.findNavController(view);
+
+        // Настройка обработчиков нажатий кнопок добавления
+        binding.intakeBreakfast.btAddFood.setOnClickListener(v -> {
+            navController.navigate(R.id.action_mainFragment_to_foodIntakeFragment,
+                    createBundle("breakfast"));
+        });
+        binding.intakeBreakfast.btAddMeal.setOnClickListener(v -> {
+            navController.navigate(R.id.action_mainFragment_to_mealIntakeFragment,
+                    createBundle("breakfast"));
+        });
+
+        binding.intakeLunch.btAddFood.setOnClickListener(v -> {
+            navController.navigate(R.id.action_mainFragment_to_foodIntakeFragment,
+                    createBundle("lunch"));
+        });
+        binding.intakeLunch.btAddMeal.setOnClickListener(v -> {
+            navController.navigate(R.id.action_mainFragment_to_mealIntakeFragment,
+                    createBundle("lunch"));
+        });
+
+        binding.intakeDinner.btAddFood.setOnClickListener(v ->{
+            navController.navigate(R.id.action_mainFragment_to_foodIntakeFragment,
+                    createBundle("dinner"));
+        });
+        binding.intakeDinner.btAddMeal.setOnClickListener(v ->{
+            navController.navigate(R.id.action_mainFragment_to_mealIntakeFragment,
+                    createBundle("dinner"));
+        });
+    }
+
+    private void setLM(Context context, RecyclerView recyclerView){
         LinearLayoutManager layoutManager = new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false);
         recyclerView.setLayoutManager(layoutManager);
     }
 
-    private static void setAdapterListeners(FragmentMainBinding binding){
+    private void setAdapterListeners(){
         // Установка слушателя в адаптере
         adapterBreakfast.setOnObjClickListener(obj -> {
             Bundle args = createBundle(obj, "breakfast", Day.getInstance().posInArray(obj, "breakfast"));
@@ -104,7 +133,7 @@ public class Intakes {
         });
     }
 
-    private static Bundle createBundle(Object obj, String array_type, int pos_in_array){
+    private Bundle createBundle(Object obj, String array_type, int pos_in_array){
         if (obj != null) {
             Bundle args = new Bundle();
 
@@ -122,5 +151,11 @@ public class Intakes {
             return args;
         }
         return null;
+    }
+
+    private Bundle createBundle(String array_type){
+        Bundle bundle = new Bundle();
+        bundle.putString("array_type", array_type);
+        return bundle;
     }
 }

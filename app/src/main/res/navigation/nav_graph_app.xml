@@ -19,6 +19,12 @@
         <action
             android:id="@+id/action_mainFragment_to_objectActions"
             app:destination="@id/objectActions" />
+        <action
+            android:id="@+id/action_mainFragment_to_mealIntakeFragment"
+            app:destination="@id/mealIntakeFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_foodIntakeFragment"
+            app:destination="@id/foodIntakeFragment" />
     </fragment>
     <fragment
         android:id="@+id/profileFragment"
@@ -88,4 +94,14 @@
         android:name="com.obsessed.calorieguide.fragments.ObjectActions"
         android:label="ObjectActions"
         tools:layout="@layout/object_actions"/>
+    <fragment
+        android:id="@+id/foodIntakeFragment"
+        android:name="com.obsessed.calorieguide.FoodIntakeFragment"
+        android:label="fragment_food_intake"
+        tools:layout="@layout/fragment_food_library" />
+    <fragment
+        android:id="@+id/mealIntakeFragment"
+        android:name="com.obsessed.calorieguide.MealIntakeFragment"
+        android:label="fragment_meal_intake"
+        tools:layout="@layout/fragment_meal_library" />
 </navigation>

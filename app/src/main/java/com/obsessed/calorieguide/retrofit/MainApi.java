@@ -14,6 +14,7 @@ import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 public interface MainApi {
     //Food (product)
@@ -37,6 +38,10 @@ public interface MainApi {
     @POST("/products/like")
     Call<JsonObject> likeFood(@Body RequestBody requestBody);
 
+    @POST("/products/search")
+    Call<JsonObject> searchFood(@Query("q") String query);
+
+
     //Meals
     @POST("/meals")
     Call<JsonObject> getAllMeals();
@@ -52,8 +57,8 @@ public interface MainApi {
     Call<JsonObject> likeMeal(@Body RequestBody requestBody);
     @DELETE("/meals/{meal_id}")
     Call<JsonObject> deleteMeal(@Path("meal_id") int mealId);
-
-
+    @POST("/meals/search")
+    Call<JsonObject> searchMeal(@Query("q") String query);
 
 
     //User

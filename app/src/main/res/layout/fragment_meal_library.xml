@@ -30,6 +30,9 @@
 
         </FrameLayout>
 
+        <include
+            android:id="@+id/searchAndAdd"
+            layout="@layout/search_and_add"/>
 
         <ScrollView
             android:layout_width="match_parent"
@@ -45,14 +48,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
                 </androidx.recyclerview.widget.RecyclerView>
-
-                <Button
-                    android:id="@+id/buttonAdd"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:text="Add meal">
-                </Button>
             </LinearLayout>
         </ScrollView>
     </LinearLayout>
