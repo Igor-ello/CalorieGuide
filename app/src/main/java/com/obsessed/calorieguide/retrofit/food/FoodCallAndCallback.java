@@ -11,6 +11,7 @@ import com.obsessed.calorieguide.retrofit.MainApi;
 import com.obsessed.calorieguide.retrofit.food.callbacks.CallbackGetAllFood;
 import com.obsessed.calorieguide.retrofit.food.callbacks.CallbackGetFoodById;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import okhttp3.MediaType;
@@ -86,7 +87,7 @@ public class FoodCallAndCallback {
                     JsonObject jsonObject = response.body();
                     if (jsonObject != null && jsonObject.has("products")) {
                         JsonArray productsArray = jsonObject.getAsJsonArray("products");
-                        List<Food> allFood = new Gson().fromJson(productsArray, new TypeToken<List<Food>>() {}.getType());
+                        ArrayList<Food> allFood = new Gson().fromJson(productsArray, new TypeToken<List<Food>>() {}.getType());
                         callbackGetAllFood.onAllFoodReceived(allFood);
 
                         Log.d("Call", "Response getAllFood is successful!");
@@ -123,7 +124,7 @@ public class FoodCallAndCallback {
                     JsonObject jsonObject = response.body();
                     if (jsonObject != null && jsonObject.has("products")) {
                         JsonArray productsArray = jsonObject.getAsJsonArray("products");
-                        List<Food> allFood = new Gson().fromJson(productsArray, new TypeToken<List<Food>>() {}.getType());
+                        ArrayList<Food> allFood = new Gson().fromJson(productsArray, new TypeToken<List<Food>>() {}.getType());
                         callbackGetAllFood.onAllFoodReceived(allFood);
 
                         Log.d("Call", "Response getAllFood is successful!");

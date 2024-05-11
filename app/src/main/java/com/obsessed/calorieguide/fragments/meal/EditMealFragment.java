@@ -136,7 +136,7 @@ public class EditMealFragment extends Fragment implements CallbackGetMealById, C
     }
 
     @Override
-    public void onAllFoodReceived(List<Food> foodList) {
+    public void onAllFoodReceived(ArrayList<Food> foodList) {
         this.foodList = foodList;
         onDataReceived(meal, foodList);
     }

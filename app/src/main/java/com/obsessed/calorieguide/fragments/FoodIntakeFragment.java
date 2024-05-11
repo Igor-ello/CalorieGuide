@@ -18,7 +18,7 @@ import android.widget.SearchView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.obsessed.calorieguide.MainActivityApp;
 import com.obsessed.calorieguide.R;
-import com.obsessed.calorieguide.adapters.food.FoodAdapterLike;
+import com.obsessed.calorieguide.adapters.food.FoodAdapterIntake;
 import com.obsessed.calorieguide.data.Data;
 import com.obsessed.calorieguide.data.DayFunc;
 import com.obsessed.calorieguide.data.Func;
@@ -87,26 +87,26 @@ public class FoodIntakeFragment extends Fragment implements CallbackSearchFood, 
 
     @Override
     public void foodSearchReceived(ArrayList<Food> foodList) {
-        FoodAdapterLike adapter = new FoodAdapterLike(foodList);
+        FoodAdapterIntake adapter = new FoodAdapterIntake(foodList);
         binding.rcView.setLayoutManager(new GridLayoutManager(requireContext(), 1));
         binding.rcView.setAdapter(adapter);
 
         // Установка слушателя в адаптере
         adapter.setOnFoodClickListener(food -> {
-            Log.d("Adapter", "Clicked on food in FoodAdapterLike: " + food.getFoodName());
+            Log.d("Adapter", "Clicked on food in FoodAdapterIntake: " + food.getFoodName());
             Bundle args = new Bundle();
             args.putInt("food_id", food.getId());
             Navigation.findNavController(requireView()).navigate(R.id.editFoodFragment, args);
         });
 
         adapter.setOnLikeFoodClickListener((food, imageView) -> {
-            Log.d("Adapter", "Clicked on like for food in FoodAdapterLike: " + food.getFoodName());
+            Log.d("Adapter", "Clicked on like for food in FoodAdapterIntake: " + food.getFoodName());
             FoodCall foodCall = new FoodCall(Data.getInstance().getUser().getBearerToken());
             foodCall.likeFood(Data.getInstance().getUser().getId(), food, imageView, this);
         });
 
         adapter.setOnAddFoodClickListener(food -> {
-            Log.d("Adapter", "Clicked on add for food in FoodAdapterLike: " + food.getFoodName());
+            Log.d("Adapter", "Clicked on add for food in FoodAdapterIntake: " + food.getFoodName());
             DayFunc.addObjectToDay(food, arrayType);
         });
     }

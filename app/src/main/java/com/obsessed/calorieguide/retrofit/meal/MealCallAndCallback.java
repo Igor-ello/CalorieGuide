@@ -11,6 +11,7 @@ import com.obsessed.calorieguide.retrofit.MainApi;
 import com.obsessed.calorieguide.retrofit.meal.callbacks.CallbackGetAllMeal;
 import com.obsessed.calorieguide.retrofit.meal.callbacks.CallbackGetMealById;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import okhttp3.MediaType;
@@ -115,7 +116,7 @@ public class MealCallAndCallback {
                     JsonObject jsonObject = response.body();
                     if (jsonObject != null && jsonObject.has("meals")) {
                         JsonArray mealsArray = jsonObject.getAsJsonArray("meals");
-                        List<Meal> allMeals = new Gson().fromJson(mealsArray, new TypeToken<List<Meal>>() {}.getType());
+                        ArrayList<Meal> allMeals = new Gson().fromJson(mealsArray, new TypeToken<List<Meal>>() {}.getType());
                         callbackGetAllMeal.onAllMealReceived(allMeals);
 
                         Log.d("Call", "Response getAllMeal is successful!");
@@ -151,7 +152,7 @@ public class MealCallAndCallback {
                     JsonObject jsonObject = response.body();
                     if (jsonObject != null && jsonObject.has("meals")) {
                         JsonArray mealsArray = jsonObject.getAsJsonArray("meals");
-                        List<Meal> allMeals = new Gson().fromJson(mealsArray, new TypeToken<List<Meal>>() {}.getType());
+                        ArrayList<Meal> allMeals = new Gson().fromJson(mealsArray, new TypeToken<List<Meal>>() {}.getType());
                         callbackGetAllMeal.onAllMealReceived(allMeals);
 
                         Log.d("Call", "Response getAllMeal is successful!");

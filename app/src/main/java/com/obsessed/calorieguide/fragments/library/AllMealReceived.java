@@ -23,10 +23,10 @@ public class AllMealReceived {
     Context context;
     View view;
     FragmentMealLibraryBinding binding;
-    List<Meal> mealList;
+    ArrayList<Meal> mealList;
     CallbackLikeMeal callback;
 
-    public AllMealReceived(Context context, View view, FragmentMealLibraryBinding binding, List<Meal> mealList, CallbackLikeMeal callback) {
+    public AllMealReceived(Context context, View view, FragmentMealLibraryBinding binding, ArrayList<Meal> mealList, CallbackLikeMeal callback) {
         this.context = context;
         this.view = view;
         this.binding = binding;
@@ -35,8 +35,7 @@ public class AllMealReceived {
     }
 
     public void onAllMealReceived() {
-        MealAdapter mealAdapter = new MealAdapter();
-        mealAdapter.mealArrayList = (ArrayList<Meal>) mealList;
+        MealAdapter mealAdapter = new MealAdapter(mealList);
         binding.rcView.setLayoutManager(new GridLayoutManager(context, 1));
         binding.rcView.setAdapter(mealAdapter);
 

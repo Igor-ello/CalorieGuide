@@ -24,6 +24,7 @@ import com.obsessed.calorieguide.retrofit.food.Food;
 import com.obsessed.calorieguide.retrofit.food.FoodCallAndCallback;
 import com.obsessed.calorieguide.retrofit.food.callbacks.CallbackGetAllFood;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class LibraryFoodFragment extends Fragment implements CallbackGetAllFood, CallbackLikeFood {
@@ -74,7 +75,7 @@ public class LibraryFoodFragment extends Fragment implements CallbackGetAllFood,
     }
 
     @Override
-    public void onAllFoodReceived(List<Food> foodList) {
+    public void onAllFoodReceived(ArrayList<Food> foodList) {
         if (isAdded()) { // Проверяем, привязан ли фрагмент к активности
             new AllFoodReceived(requireContext(), requireView(), binding, foodList, this)
                     .onAllFoodReceived();

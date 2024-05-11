@@ -22,6 +22,10 @@ public class FoodAdapterV2 extends RecyclerView.Adapter<FoodAdapterV2.FoodHolder
     private OnFoodClickListener onFoodClickListener;
     private OnLikeFoodClickListener onLikeFoodClickListener;
 
+    public FoodAdapterV2(ArrayList<Food> foodArrayList) {
+        this.foodArrayList = foodArrayList;
+    }
+
     public class FoodHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         FoodItemV2Binding binding;
 

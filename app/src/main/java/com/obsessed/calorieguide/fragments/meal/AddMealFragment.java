@@ -99,7 +99,7 @@ public class AddMealFragment extends Fragment implements CallbackGetAllFood {
     }
 
     @Override
-    public void onAllFoodReceived(List<Food> foodList) {
+    public void onAllFoodReceived(ArrayList<Food> foodList) {
         fieldValidation.fillLnFood(foodList, null);;
     }
 

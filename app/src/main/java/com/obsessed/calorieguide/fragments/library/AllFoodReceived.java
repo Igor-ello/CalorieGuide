@@ -24,10 +24,10 @@ public class AllFoodReceived {
     Context context;
     View view;
     FragmentFoodLibraryBinding binding;
-    List<Food> foodList;
+    ArrayList<Food> foodList;
     CallbackLikeFood callback;
 
-    public AllFoodReceived(Context context, View view, FragmentFoodLibraryBinding binding, List<Food> foodList, CallbackLikeFood callback) {
+    public AllFoodReceived(Context context, View view, FragmentFoodLibraryBinding binding, ArrayList<Food> foodList, CallbackLikeFood callback) {
         this.context = context;
         this.view = view;
         this.binding = binding;
@@ -44,8 +44,7 @@ public class AllFoodReceived {
     }
 
     private void isAdapterV1() {
-        FoodAdapterV1 foodAdapter = new FoodAdapterV1();
-        foodAdapter.foodArrayList = (ArrayList<Food>) foodList;
+        FoodAdapterV1 foodAdapter = new FoodAdapterV1(foodList);
         binding.rcView.setLayoutManager(new GridLayoutManager(context, 2));
         binding.rcView.setAdapter(foodAdapter);
 
@@ -65,8 +64,7 @@ public class AllFoodReceived {
     }
 
     private void isAdapterV2() {
-        FoodAdapterV2 foodAdapter = new FoodAdapterV2();
-        foodAdapter.foodArrayList = (ArrayList<Food>) foodList;
+        FoodAdapterV2 foodAdapter = new FoodAdapterV2(foodList);
         binding.rcView.setLayoutManager(new GridLayoutManager(context, 1));
         binding.rcView.setAdapter(foodAdapter);
 
