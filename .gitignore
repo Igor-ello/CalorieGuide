@@ -98,6 +98,7 @@ obj/
 .idea/.gitignore
 .idea/migrations.xml
 .idea/deploymentTargetDropDown.xml
+.idea/deploymentTargetSelector.xml
 
 # Legacy Eclipse project files
 .classpath

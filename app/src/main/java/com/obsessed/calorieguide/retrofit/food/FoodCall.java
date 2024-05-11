@@ -1,5 +1,6 @@
 package com.obsessed.calorieguide.retrofit.food;
 
+import android.content.Context;
 import android.util.Log;
 import android.widget.ImageView;
 
@@ -123,16 +124,16 @@ public class FoodCall {
         });
     }
 
-    public void likeFood(int userId, int productId, ImageView imageView, CallbackLikeFood callback) {
+    public void likeFood(int userId, Food food, ImageView imageView, CallbackLikeFood callback) {
         JsonObject requestObject = new JsonObject();
         requestObject.addProperty("user_id", userId);
-        requestObject.addProperty("product_id", productId);
+        requestObject.addProperty("product_id", food.getId());
 
         // Преобразование объекта запроса в JSON-строку
         Gson gson = new Gson();
         String json = gson.toJson(requestObject);
         RequestBody requestBody = RequestBody.create(MediaType.parse("application/json"), json);
-
+        food.isLiked = !food.isLiked();
         // Выполняем POST-запрос на сервер
         Call<JsonObject> call = mainApi.likeFood(requestBody);
         call.enqueue(new Callback<JsonObject>() {
@@ -140,6 +141,12 @@ public class FoodCall {
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
                 if (response.isSuccessful()) {
 
+                    if(imageView != null) {
+                        if (food.isLiked()) {
+                            imageView.setImageResource(R.drawable.like_active);
+                        } else {
+                            imageView.setImageResource(R.drawable.like_not_active);
+                        }
                     if (callback != null) {
                         callback.onLikeFoodSuccess(imageView);
                     }
