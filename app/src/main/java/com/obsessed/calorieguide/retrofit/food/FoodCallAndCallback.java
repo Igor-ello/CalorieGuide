@@ -8,7 +8,8 @@ import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
 import com.obsessed.calorieguide.data.Data;
 import com.obsessed.calorieguide.retrofit.MainApi;
-import com.obsessed.calorieguide.retrofit.user.User;
+import com.obsessed.calorieguide.retrofit.food.callbacks.CallbackGetAllFood;
+import com.obsessed.calorieguide.retrofit.food.callbacks.CallbackGetFoodById;
 
 import java.util.List;
 

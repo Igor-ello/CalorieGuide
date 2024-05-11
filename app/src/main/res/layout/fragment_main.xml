@@ -4,50 +4,52 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments.MainFragment"
-    android:layout_margin="@dimen/margin_default">
+    tools:context=".fragments.main.MainFragment">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="50dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:layout_margin="@dimen/margin_default">
 
-        <TextView
-            style="@style/TextHeaderStyle"
-            android:text="@string/fragment_main_header">
-        </TextView>
+        <include
+            android:id="@+id/stats"
+            layout="@layout/stats"/>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+        <include
+            android:id="@+id/stats_cpf"
+            layout="@layout/stats_cpf"/>
 
-            <TextView
-                style="@style/HelloTextStyle"
-                android:text="Good morning, ">
-            </TextView>
-
-            <TextView
-                android:id="@+id/tvUserName"
-                style="@style/HelloTextStyle"
-                android:text="User!">
-            </TextView>
-
-        </LinearLayout>
-
-        <include layout="@layout/stats"></include>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <TextView
-                style="@style/TextStyle"
-                android:text="Your meals:">
-            </TextView>
-
-
-        </LinearLayout>
+        <include
+            android:id="@+id/intakeBreakfast"
+            layout="@layout/intake"/>
+        <include
+            android:id="@+id/intakeLunch"
+            layout="@layout/intake"/>
+        <include
+            android:id="@+id/intakeDinner"
+            layout="@layout/intake"/>
 
     </LinearLayout>
+
+    </ScrollView>
+
+<!--    <FrameLayout-->
+<!--        android:id="@+id/objectActions"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent"-->
+<!--        android:background="@drawable/background_gray"-->
+<!--        android:clickable="true"-->
+<!--        android:visibility="gone">-->
+
+<!--        <include-->
+<!--            android:id="@+id/objectActionsLayout"-->
+<!--            layout="@layout/object_actions" />-->
+<!--    </FrameLayout>-->
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

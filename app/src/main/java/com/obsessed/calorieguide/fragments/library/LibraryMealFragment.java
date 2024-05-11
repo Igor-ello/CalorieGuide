@@ -11,20 +11,20 @@ import androidx.navigation.Navigation;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import com.obsessed.calorieguide.R;
 import com.obsessed.calorieguide.data.Data;
-import com.obsessed.calorieguide.databinding.FragmentFoodLibraryBinding;
+import com.obsessed.calorieguide.data.Func;
 import com.obsessed.calorieguide.databinding.FragmentMealLibraryBinding;
-import com.obsessed.calorieguide.retrofit.food.Food;
-import com.obsessed.calorieguide.retrofit.food.FoodCallAndCallback;
-import com.obsessed.calorieguide.retrofit.meal.CallbackGetAllMeal;
+import com.obsessed.calorieguide.retrofit.meal.callbacks.CallbackGetAllMeal;
+import com.obsessed.calorieguide.retrofit.meal.callbacks.CallbackLikeMeal;
 import com.obsessed.calorieguide.retrofit.meal.Meal;
 import com.obsessed.calorieguide.retrofit.meal.MealCallAndCallback;
 
 import java.util.List;
 
-public class LibraryMealFragment extends Fragment implements CallbackGetAllMeal {
+public class LibraryMealFragment extends Fragment implements CallbackGetAllMeal, CallbackLikeMeal {
     FragmentMealLibraryBinding binding;
 
     public LibraryMealFragment() {
@@ -55,7 +55,7 @@ public class LibraryMealFragment extends Fragment implements CallbackGetAllMeal 
         });
 
         //Кнопка для добавления нового питания
-        view.findViewById(R.id.buttonAdd).setOnClickListener(v -> {
+        view.findViewById(R.id.btAdd).setOnClickListener(v -> {
             NavController navController = Navigation.findNavController(requireView());
             navController.navigate(R.id.action_libraryMealFragment_to_addMealFragment);
         });
@@ -70,7 +70,13 @@ public class LibraryMealFragment extends Fragment implements CallbackGetAllMeal 
     @Override
     public void onAllMealReceived(List<Meal> mealList) {
         if (isAdded()) { // Проверяем, привязан ли фрагмент к активности
-            AllMealReceived.onAllMealReceived(requireContext(), requireView(), binding, mealList);
+            new AllMealReceived(requireContext(), requireView(), binding, mealList, this)
+                    .onAllMealReceived();
         }
+    }
+
+    @Override
+    public void onLikeMealSuccess(ImageView imageView) {
+        Func.setLikeState(imageView);
     }
 }

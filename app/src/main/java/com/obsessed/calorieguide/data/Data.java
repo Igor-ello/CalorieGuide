@@ -4,6 +4,7 @@ import com.obsessed.calorieguide.retrofit.user.User;
 
 public class Data {
     static Data uniqueInstance = new Data();
+    static Day day = Day.getInstance();
     static final String BASE_URL = "http://95.174.92.190:8088/";
     User user = null;
     int adapterType = 1;
@@ -46,5 +47,7 @@ public class Data {
     public int getQuality() {
         return QUALITY;
     }
-
+    public Day getDay() {
+        return day;
+    }
 }

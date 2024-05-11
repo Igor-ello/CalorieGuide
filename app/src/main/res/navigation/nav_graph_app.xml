@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/mainFragment"
-        android:name="com.obsessed.calorieguide.fragments.MainFragment"
+        android:name="com.obsessed.calorieguide.fragments.main.MainFragment"
         android:label="fragment_main"
         tools:layout="@layout/fragment_main" >
         <action
@@ -16,6 +16,15 @@
         <action
             android:id="@+id/action_mainFragment_to_libraryFragment"
             app:destination="@id/libraryFoodFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_objectActions"
+            app:destination="@id/objectActions" />
+        <action
+            android:id="@+id/action_mainFragment_to_mealIntakeFragment"
+            app:destination="@id/mealIntakeFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_foodIntakeFragment"
+            app:destination="@id/foodIntakeFragment" />
     </fragment>
     <fragment
         android:id="@+id/profileFragment"
@@ -80,4 +89,19 @@
         android:name="com.obsessed.calorieguide.fragments.meal.EditMealFragment"
         android:label="fragment_edit_meal"
         tools:layout="@layout/fragment_edit_meal" />
+    <fragment
+        android:id="@+id/objectActions"
+        android:name="com.obsessed.calorieguide.fragments.ObjectActions"
+        android:label="ObjectActions"
+        tools:layout="@layout/object_actions"/>
+    <fragment
+        android:id="@+id/foodIntakeFragment"
+        android:name="com.obsessed.calorieguide.fragments.FoodIntakeFragment"
+        android:label="fragment_food_intake"
+        tools:layout="@layout/fragment_food_library" />
+    <fragment
+        android:id="@+id/mealIntakeFragment"
+        android:name="com.obsessed.calorieguide.fragments.MealIntakeFragment"
+        android:label="fragment_meal_intake"
+        tools:layout="@layout/fragment_meal_library" />
 </navigation>

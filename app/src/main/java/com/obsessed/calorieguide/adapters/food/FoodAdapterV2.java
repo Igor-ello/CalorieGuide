@@ -10,6 +10,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.obsessed.calorieguide.R;
+import com.obsessed.calorieguide.adapters.food.listeners.OnFoodClickListener;
+import com.obsessed.calorieguide.adapters.food.listeners.OnLikeFoodClickListener;
 import com.obsessed.calorieguide.databinding.FoodItemV2Binding;
 import com.obsessed.calorieguide.retrofit.food.Food;
 

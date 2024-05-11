@@ -1,4 +1,4 @@
-package com.obsessed.calorieguide.adapters.meal;
+package com.obsessed.calorieguide.adapters.meal.listeners;
 
 
 import android.widget.ImageView;

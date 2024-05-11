@@ -66,7 +66,8 @@ public class RegistrationFragment extends Fragment {
     }
 
     private void registerRequest(View view, String name, String surname, String email, String password) {
-        RegistrationRequest registerRequest = new RegistrationRequest(name, surname, email, password);
+        RegistrationRequest registerRequest = new RegistrationRequest(name, surname, email, password,
+                2000, 250, 90, 60);
         UserCall userCall = new UserCall();
         Call<JsonObject> call = userCall.registerUser(registerRequest);
         call.enqueue(new Callback<JsonObject>() {

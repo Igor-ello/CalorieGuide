@@ -1,4 +1,6 @@
-package com.obsessed.calorieguide.retrofit.food;
+package com.obsessed.calorieguide.retrofit.food.callbacks;
+
+import com.obsessed.calorieguide.retrofit.food.Food;
 
 import java.util.List;
 

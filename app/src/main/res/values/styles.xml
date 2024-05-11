@@ -73,10 +73,28 @@
         <item name="android:layout_marginEnd">@dimen/margin_default</item>
     </style>
 
+    <style name="ImageViewObjectStyle">
+        <item name="android:layout_width">70dp</item>
+        <item name="android:layout_height">70dp</item>
+        <item name="android:src">@drawable/food_default</item>
+    </style>
+
+    <style name="ImageViewObjectActionsStyle">
+        <item name="android:layout_width">50dp</item>
+        <item name="android:layout_height">50dp</item>
+        <item name="android:layout_weight">1</item>
+    </style>
+
+    <style name="ProgressBarStyle" parent="@android:style/Widget.ProgressBar.Horizontal">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">10dp</item>
+        <item name="android:progress">0</item>
+    </style>
+
 
     <!--MainFragment-->
     <style name="LinearLayoutStatsStyle">
-        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_weight">1</item>
         <item name="android:orientation">vertical</item>
@@ -86,7 +104,7 @@
     <style name="TextViewStatsStyle">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:textSize">24dp</item>
+        <item name="android:textSize">20dp</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textColor">@color/text_color</item>
         <item name="android:text">Some text</item>

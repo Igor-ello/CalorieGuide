@@ -20,6 +20,7 @@ import com.obsessed.calorieguide.tools.convert.FillClass;
 import com.obsessed.calorieguide.data.Data;
 import com.obsessed.calorieguide.retrofit.user.User;
 import com.obsessed.calorieguide.retrofit.user.UserCall;
+import com.obsessed.calorieguide.tools.save.ShPrefs;
 
 import java.util.ArrayList;
 
@@ -30,6 +31,7 @@ import retrofit2.Response;
 public class ProfileFragment extends Fragment {
     ArrayList<EditText> userParams;
     EditText etName, etSurname, etEmail, etPassword;
+    EditText etCalories, etCarbs, etProteins, etFats;
     User user;
 
     public ProfileFragment() {
@@ -83,8 +85,7 @@ public class ProfileFragment extends Fragment {
             }
 
             setUserParams();
-            Data.getInstance().setUser(user);
-
+            ShPrefs.saveData(user, Data.getInstance().getAdapterType(), requireContext());
             updateUserRequest(user);
 
             btEdit.setVisibility(View.VISIBLE);
@@ -98,6 +99,11 @@ public class ProfileFragment extends Fragment {
         etSurname = view.findViewById(R.id.etSurname);
         etEmail = view.findViewById(R.id.etEmail);
         etPassword = view.findViewById(R.id.etPassword);
+
+        etCalories = view.findViewById(R.id.etCalories);
+        etCarbs = view.findViewById(R.id.etCarbs);
+        etProteins = view.findViewById(R.id.etProteins);
+        etFats = view.findViewById(R.id.etFats);
     }
 
     private void initParams() {
@@ -106,6 +112,11 @@ public class ProfileFragment extends Fragment {
         userParams.add(etSurname);
         userParams.add(etEmail);
         userParams.add(etPassword);
+
+        userParams.add(etCalories);
+        userParams.add(etCarbs);
+        userParams.add(etProteins);
+        userParams.add(etFats);
     }
 
     private void fillParams() {
@@ -117,6 +128,11 @@ public class ProfileFragment extends Fragment {
         etSurname.setText(user.getSurname());
         etEmail.setText(user.getEmail());
         etPassword.setText(user.getPassword());
+
+        etCalories.setText(String.valueOf(user.getCaloriesGoal()));
+        etCarbs.setText(String.valueOf(user.getCarbonatesGoal()));
+        etProteins.setText(String.valueOf(user.getProteinsGoal()));
+        etFats.setText(String.valueOf(user.getFatsGoal()));
     }
 
     private void setUserParams() {
@@ -124,6 +140,11 @@ public class ProfileFragment extends Fragment {
         user.setSurname(etSurname.getText().toString().trim());
         user.setEmail(etEmail.getText().toString().trim());
         user.setPassword(etPassword.getText().toString().trim());
+
+        user.setCaloriesGoal(Integer.parseInt(etCalories.getText().toString().trim()));
+        user.setCarbohydratesGoal(Integer.parseInt(etCarbs.getText().toString().trim()));
+        user.setProteinsGoal(Integer.parseInt(etProteins.getText().toString().trim()));
+        user.setFatsGoal(Integer.parseInt(etFats.getText().toString().trim()));
     }
 
 
@@ -135,22 +156,15 @@ public class ProfileFragment extends Fragment {
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
                 if (response.isSuccessful()) {
-                    // Обработка успешного ответа
-                    JsonObject result = response.body();
                     Log.d("Call", "Request updateUser successful");
-                    // Дополнительная обработка результата
                 } else {
-                    // Обработка ошибочного ответа
                     Log.e("Call", "Request updateUser failed; Response: " + response.code());
-                    // Возможно, что-то пошло не так, нужно обработать ошибку
                 }
             }
 
             @Override
             public void onFailure(Call<JsonObject> call, Throwable t) {
-                // Обработка ошибки при выполнении запроса
                 Log.e("Call", "ERROR in updateUser Call: " + t.getMessage());
-                // Например, отсутствие интернет-соединения или другие проблемы
             }
         });
     }

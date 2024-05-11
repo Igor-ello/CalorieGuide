@@ -11,17 +11,20 @@ import androidx.navigation.Navigation;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import com.obsessed.calorieguide.R;
 import com.obsessed.calorieguide.data.Data;
+import com.obsessed.calorieguide.data.Func;
 import com.obsessed.calorieguide.databinding.FragmentFoodLibraryBinding;
+import com.obsessed.calorieguide.retrofit.food.callbacks.CallbackLikeFood;
 import com.obsessed.calorieguide.retrofit.food.Food;
 import com.obsessed.calorieguide.retrofit.food.FoodCallAndCallback;
-import com.obsessed.calorieguide.retrofit.food.CallbackGetAllFood;
+import com.obsessed.calorieguide.retrofit.food.callbacks.CallbackGetAllFood;
 
 import java.util.List;
 
-public class LibraryFoodFragment extends Fragment implements CallbackGetAllFood {
+public class LibraryFoodFragment extends Fragment implements CallbackGetAllFood, CallbackLikeFood {
     FragmentFoodLibraryBinding binding;
 
     public LibraryFoodFragment() {
@@ -55,7 +58,7 @@ public class LibraryFoodFragment extends Fragment implements CallbackGetAllFood 
         });
 
         //Кнопка для добавления нового фрукта
-        view.findViewById(R.id.buttonAdd).setOnClickListener(v -> {
+        view.findViewById(R.id.btAdd).setOnClickListener(v -> {
             NavController navController = Navigation.findNavController(requireView());
             navController.navigate(R.id.action_libraryFoodFragment_to_addFoodFragment);
         });
@@ -70,7 +73,13 @@ public class LibraryFoodFragment extends Fragment implements CallbackGetAllFood 
     @Override
     public void onAllFoodReceived(List<Food> foodList) {
         if (isAdded()) { // Проверяем, привязан ли фрагмент к активности
-            AllFoodReceived.onAllFoodReceived(requireContext(), requireView(), binding, foodList);
+            new AllFoodReceived(requireContext(), requireView(), binding, foodList, this)
+                    .onAllFoodReceived();
         }
+    }
+
+    @Override
+    public void onLikeFoodSuccess(ImageView imageView) {
+        Func.setLikeState(imageView);
     }
 }

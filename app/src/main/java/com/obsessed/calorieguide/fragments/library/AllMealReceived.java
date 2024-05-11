@@ -12,6 +12,7 @@ import com.obsessed.calorieguide.R;
 import com.obsessed.calorieguide.adapters.meal.MealAdapter;
 import com.obsessed.calorieguide.data.Data;
 import com.obsessed.calorieguide.databinding.FragmentMealLibraryBinding;
+import com.obsessed.calorieguide.retrofit.meal.callbacks.CallbackLikeMeal;
 import com.obsessed.calorieguide.retrofit.meal.Meal;
 import com.obsessed.calorieguide.retrofit.meal.MealCall;
 
@@ -19,7 +20,21 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AllMealReceived {
-    public static void onAllMealReceived(Context context, View view, FragmentMealLibraryBinding binding, List<Meal> mealList) {
+    Context context;
+    View view;
+    FragmentMealLibraryBinding binding;
+    List<Meal> mealList;
+    CallbackLikeMeal callback;
+
+    public AllMealReceived(Context context, View view, FragmentMealLibraryBinding binding, List<Meal> mealList, CallbackLikeMeal callback) {
+        this.context = context;
+        this.view = view;
+        this.binding = binding;
+        this.mealList = mealList;
+        this.callback = callback;
+    }
+
+    public void onAllMealReceived() {
         MealAdapter mealAdapter = new MealAdapter();
         mealAdapter.mealArrayList = (ArrayList<Meal>) mealList;
         binding.rcView.setLayoutManager(new GridLayoutManager(context, 1));
@@ -27,16 +42,16 @@ public class AllMealReceived {
 
         // Установка слушателя в адаптере
         mealAdapter.setOnMealClickListener(meal -> {
-            Log.d("MealAdapter", "Clicked on meal in MealAdapter: " + meal.getMealName());
+            Log.d("IntakeAdapter", "Clicked on meal in IntakeAdapter: " + meal.getMealName());
             Bundle args = new Bundle();
             args.putInt("meal_id", meal.getId());
             Navigation.findNavController(view).navigate(R.id.action_libraryMealFragment_to_editMealFragment, args);
         });
 
         mealAdapter.setOnLikeMealClickListener((meal, imageView) -> {
-            Log.d("MealAdapter", "Clicked on like for meal in MealAdapter: " + meal.getMealName());
+            Log.d("IntakeAdapter", "Clicked on like for meal in IntakeAdapter: " + meal.getMealName());
             MealCall mealCall = new MealCall(Data.getInstance().getUser().getBearerToken());
-            mealCall.likeMeal(Data.getInstance().getUser().getId(), meal.getId(), imageView);
+            mealCall.likeMeal(Data.getInstance().getUser().getId(), meal.getId(), imageView, callback);
         });
     }
 }

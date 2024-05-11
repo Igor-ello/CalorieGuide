@@ -1,16 +1,19 @@
 package com.obsessed.calorieguide.retrofit.food;
 
 import android.util.Log;
-import android.view.View;
 import android.widget.ImageView;
 
-import androidx.core.content.ContextCompat;
-
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import com.obsessed.calorieguide.R;
+import com.google.gson.reflect.TypeToken;
 import com.obsessed.calorieguide.data.Data;
 import com.obsessed.calorieguide.retrofit.MainApi;
+import com.obsessed.calorieguide.retrofit.food.callbacks.CallbackLikeFood;
+import com.obsessed.calorieguide.retrofit.food.callbacks.CallbackSearchFood;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
@@ -120,7 +123,7 @@ public class FoodCall {
         });
     }
 
-    public void likeFood(int userId, int productId, ImageView imageView) {
+    public void likeFood(int userId, int productId, ImageView imageView, CallbackLikeFood callback) {
         JsonObject requestObject = new JsonObject();
         requestObject.addProperty("user_id", userId);
         requestObject.addProperty("product_id", productId);
@@ -137,14 +140,10 @@ public class FoodCall {
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
                 if (response.isSuccessful()) {
 
-                    if(imageView != null) {
-                        if (imageView.getDrawable().getConstantState().equals(
-                                ContextCompat.getDrawable(imageView.getContext(), R.drawable.like_not_active).getConstantState())) {
-                            imageView.setImageResource(R.drawable.like_active);
-                        } else {
-                            imageView.setImageResource(R.drawable.like_not_active);
-                        }
+                    if (callback != null) {
+                        callback.onLikeFoodSuccess(imageView);
                     }
+
                     Log.d("Call", "Response likeFood is successful!");
                 } else {
                     Log.e("Call", "ERROR response likeFood is not successful; Response: " + response.code());
@@ -157,4 +156,32 @@ public class FoodCall {
             }
         });
     }
+
+    public void searchFood(String query, CallbackSearchFood callback) {
+        Call<JsonObject> call = mainApi.searchFood(query);
+        call.enqueue(new Callback<JsonObject>() {
+            @Override
+            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+                if (response.isSuccessful()) {
+                    JsonObject jsonObject = response.body();
+                    if (jsonObject != null && jsonObject.has("products")) {
+                        JsonArray productsArray = jsonObject.getAsJsonArray("products");
+                        ArrayList<Food> allFood = new Gson().fromJson(productsArray, new TypeToken<List<Food>>() {}.getType());
+                        callback.foodSearchReceived(allFood);
+
+                        Log.d("Call", "Response searchFood is successful!");
+                    } else {
+                        Log.d("Call", "No products found in response!");
+                    }
+                } else {
+                    Log.e("Call", "Request searchFood failed. Response code: " + response.code());
+                }
+            }
+            @Override
+            public void onFailure(Call<JsonObject> call, Throwable t) {
+                Log.e("Call", "ERROR in searchFood call: " + t.getMessage());
+            }
+        });
+    }
+
 }
