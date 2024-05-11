@@ -5,10 +5,11 @@ import android.util.Log;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
 import com.obsessed.calorieguide.data.Data;
 import com.obsessed.calorieguide.retrofit.MainApi;
+import com.obsessed.calorieguide.retrofit.meal.callbacks.CallbackGetAllMeal;
+import com.obsessed.calorieguide.retrofit.meal.callbacks.CallbackGetMealById;
 
 import java.util.List;
 

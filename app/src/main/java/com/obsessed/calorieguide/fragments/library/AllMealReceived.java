@@ -12,7 +12,7 @@ import com.obsessed.calorieguide.R;
 import com.obsessed.calorieguide.adapters.meal.MealAdapter;
 import com.obsessed.calorieguide.data.Data;
 import com.obsessed.calorieguide.databinding.FragmentMealLibraryBinding;
-import com.obsessed.calorieguide.retrofit.meal.CallbackLikeMeal;
+import com.obsessed.calorieguide.retrofit.meal.callbacks.CallbackLikeMeal;
 import com.obsessed.calorieguide.retrofit.meal.Meal;
 import com.obsessed.calorieguide.retrofit.meal.MealCall;
 

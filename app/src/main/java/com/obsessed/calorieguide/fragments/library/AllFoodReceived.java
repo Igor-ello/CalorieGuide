@@ -13,7 +13,7 @@ import com.obsessed.calorieguide.adapters.food.FoodAdapterV1;
 import com.obsessed.calorieguide.adapters.food.FoodAdapterV2;
 import com.obsessed.calorieguide.data.Data;
 import com.obsessed.calorieguide.databinding.FragmentFoodLibraryBinding;
-import com.obsessed.calorieguide.retrofit.food.CallbackLikeFood;
+import com.obsessed.calorieguide.retrofit.food.callbacks.CallbackLikeFood;
 import com.obsessed.calorieguide.retrofit.food.Food;
 import com.obsessed.calorieguide.retrofit.food.FoodCall;
 

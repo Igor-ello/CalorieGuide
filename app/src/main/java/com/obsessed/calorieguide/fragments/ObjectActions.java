@@ -1,7 +1,6 @@
 package com.obsessed.calorieguide.fragments;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,17 +8,16 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
 import com.obsessed.calorieguide.R;
 import com.obsessed.calorieguide.data.Data;
 import com.obsessed.calorieguide.data.Day;
-import com.obsessed.calorieguide.retrofit.food.CallbackGetFoodById;
+import com.obsessed.calorieguide.retrofit.food.callbacks.CallbackGetFoodById;
 import com.obsessed.calorieguide.retrofit.food.Food;
 import com.obsessed.calorieguide.retrofit.food.FoodCall;
 import com.obsessed.calorieguide.retrofit.food.FoodCallAndCallback;
-import com.obsessed.calorieguide.retrofit.meal.CallbackGetMealById;
+import com.obsessed.calorieguide.retrofit.meal.callbacks.CallbackGetMealById;
 import com.obsessed.calorieguide.retrofit.meal.Meal;
 import com.obsessed.calorieguide.retrofit.meal.MealCall;
 import com.obsessed.calorieguide.retrofit.meal.MealCallAndCallback;

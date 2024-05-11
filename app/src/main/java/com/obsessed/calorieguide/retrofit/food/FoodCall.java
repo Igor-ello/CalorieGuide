@@ -9,8 +9,8 @@ import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
 import com.obsessed.calorieguide.data.Data;
 import com.obsessed.calorieguide.retrofit.MainApi;
-import com.obsessed.calorieguide.retrofit.meal.CallbackSearchMeal;
-import com.obsessed.calorieguide.retrofit.meal.Meal;
+import com.obsessed.calorieguide.retrofit.food.callbacks.CallbackLikeFood;
+import com.obsessed.calorieguide.retrofit.food.callbacks.CallbackSearchFood;
 
 import java.util.ArrayList;
 import java.util.List;

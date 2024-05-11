@@ -96,12 +96,12 @@
         tools:layout="@layout/object_actions"/>
     <fragment
         android:id="@+id/foodIntakeFragment"
-        android:name="com.obsessed.calorieguide.FoodIntakeFragment"
+        android:name="com.obsessed.calorieguide.fragments.FoodIntakeFragment"
         android:label="fragment_food_intake"
         tools:layout="@layout/fragment_food_library" />
     <fragment
         android:id="@+id/mealIntakeFragment"
-        android:name="com.obsessed.calorieguide.MealIntakeFragment"
+        android:name="com.obsessed.calorieguide.fragments.MealIntakeFragment"
         android:label="fragment_meal_intake"
         tools:layout="@layout/fragment_meal_library" />
 </navigation>

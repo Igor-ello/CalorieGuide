@@ -17,10 +17,10 @@ import com.obsessed.calorieguide.R;
 import com.obsessed.calorieguide.data.Data;
 import com.obsessed.calorieguide.data.Func;
 import com.obsessed.calorieguide.databinding.FragmentFoodLibraryBinding;
-import com.obsessed.calorieguide.retrofit.food.CallbackLikeFood;
+import com.obsessed.calorieguide.retrofit.food.callbacks.CallbackLikeFood;
 import com.obsessed.calorieguide.retrofit.food.Food;
 import com.obsessed.calorieguide.retrofit.food.FoodCallAndCallback;
-import com.obsessed.calorieguide.retrofit.food.CallbackGetAllFood;
+import com.obsessed.calorieguide.retrofit.food.callbacks.CallbackGetAllFood;
 
 import java.util.List;
 

@@ -25,7 +25,7 @@ import com.obsessed.calorieguide.retrofit.food.FoodCallAndCallback;
 import com.obsessed.calorieguide.tools.convert.FillClass;
 import com.obsessed.calorieguide.tools.convert.ResizedBitmap;
 import com.obsessed.calorieguide.data.Data;
-import com.obsessed.calorieguide.retrofit.food.CallbackGetFoodById;
+import com.obsessed.calorieguide.retrofit.food.callbacks.CallbackGetFoodById;
 import com.obsessed.calorieguide.retrofit.food.Food;
 import com.obsessed.calorieguide.retrofit.food.FoodCall;
 

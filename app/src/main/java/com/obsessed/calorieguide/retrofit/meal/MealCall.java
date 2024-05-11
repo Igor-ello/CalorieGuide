@@ -1,18 +1,16 @@
 package com.obsessed.calorieguide.retrofit.meal;
 
 import android.util.Log;
-import android.view.View;
 import android.widget.ImageView;
-
-import androidx.core.content.ContextCompat;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
-import com.obsessed.calorieguide.R;
 import com.obsessed.calorieguide.data.Data;
 import com.obsessed.calorieguide.retrofit.MainApi;
+import com.obsessed.calorieguide.retrofit.meal.callbacks.CallbackLikeMeal;
+import com.obsessed.calorieguide.retrofit.meal.callbacks.CallbackSearchMeal;
 
 import java.util.ArrayList;
 import java.util.List;

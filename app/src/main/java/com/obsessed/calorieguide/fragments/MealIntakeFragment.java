@@ -1,4 +1,4 @@
-package com.obsessed.calorieguide;
+package com.obsessed.calorieguide.fragments;
 
 import android.os.Bundle;
 
@@ -15,24 +15,26 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.SearchView;
 
-import com.obsessed.calorieguide.adapters.food.FoodAdapterLike;
+import com.obsessed.calorieguide.R;
+import com.obsessed.calorieguide.adapters.meal.MealAdapterLike;
 import com.obsessed.calorieguide.data.Data;
 import com.obsessed.calorieguide.data.DayFunc;
 import com.obsessed.calorieguide.data.Func;
-import com.obsessed.calorieguide.databinding.FragmentFoodLibraryBinding;
-import com.obsessed.calorieguide.retrofit.food.CallbackLikeFood;
-import com.obsessed.calorieguide.retrofit.food.CallbackSearchFood;
-import com.obsessed.calorieguide.retrofit.food.Food;
-import com.obsessed.calorieguide.retrofit.food.FoodCall;
+import com.obsessed.calorieguide.databinding.FragmentMealLibraryBinding;
+import com.obsessed.calorieguide.retrofit.meal.callbacks.CallbackLikeMeal;
+import com.obsessed.calorieguide.retrofit.meal.callbacks.CallbackSearchMeal;
+import com.obsessed.calorieguide.retrofit.meal.Meal;
+import com.obsessed.calorieguide.retrofit.meal.MealCall;
 
 import java.util.ArrayList;
 
-public class FoodIntakeFragment extends Fragment implements CallbackSearchFood, CallbackLikeFood {
-    FragmentFoodLibraryBinding binding;
+
+public class MealIntakeFragment extends Fragment implements CallbackSearchMeal, CallbackLikeMeal {
+    FragmentMealLibraryBinding binding;
     private static final String ARG_ARRAY_TYPE = "array_type";
     private String arrayType;
 
-    public FoodIntakeFragment() {
+    public MealIntakeFragment() {
         // Required empty public constructor
     }
 
@@ -48,26 +50,26 @@ public class FoodIntakeFragment extends Fragment implements CallbackSearchFood, 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_food_library, container, false);
+        return inflater.inflate(R.layout.fragment_meal_library, container, false);
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        binding = FragmentFoodLibraryBinding.bind(view);
+        binding = FragmentMealLibraryBinding.bind(view);
 
         requireActivity().runOnUiThread(() -> {
             //TODO
         });
 
-        binding.btToMealLib.setVisibility(View.GONE);
+        binding.btToFoodLib.setVisibility(View.GONE);
 
         binding.searchAndAdd.search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
                 // Вызывается при отправке запроса поиска (нажатии Enter или отправке формы)
-                FoodCall call = new FoodCall(Data.getInstance().getUser().getBearerToken());
-                call.searchFood(query, FoodIntakeFragment.this);
+                MealCall call = new MealCall(Data.getInstance().getUser().getBearerToken());
+                call.searchMeal(query, MealIntakeFragment.this);
                 return true;
             }
 
@@ -82,33 +84,33 @@ public class FoodIntakeFragment extends Fragment implements CallbackSearchFood, 
     }
 
     @Override
-    public void foodSearchReceived(ArrayList<Food> foodList) {
-        FoodAdapterLike adapter = new FoodAdapterLike(foodList);
+    public void mealSearchReceived(ArrayList<Meal> mealList) {
+        MealAdapterLike adapter = new MealAdapterLike(mealList);
         binding.rcView.setLayoutManager(new GridLayoutManager(requireContext(), 1));
         binding.rcView.setAdapter(adapter);
 
         // Установка слушателя в адаптере
-        adapter.setOnFoodClickListener(food -> {
-            Log.d("Adapter", "Clicked on food in FoodAdapterLike: " + food.getFoodName());
+        adapter.setOnMealClickListener(meal -> {
+            Log.d("Adapter", "Clicked on meal in MealAdapterLike: " + meal.getMealName());
             Bundle args = new Bundle();
-            args.putInt("food_id", food.getId());
-            Navigation.findNavController(requireView()).navigate(R.id.editFoodFragment, args);
+            args.putInt("meal_id", meal.getId());
+            Navigation.findNavController(requireView()).navigate(R.id.editMealFragment, args);
         });
 
-        adapter.setOnLikeFoodClickListener((food, imageView) -> {
-            Log.d("Adapter", "Clicked on like for food in FoodAdapterLike: " + food.getFoodName());
-            FoodCall foodCall = new FoodCall(Data.getInstance().getUser().getBearerToken());
-            foodCall.likeFood(Data.getInstance().getUser().getId(), food.getId(), imageView, this);
+        adapter.setOnLikeMealClickListener((meal, imageView) -> {
+            Log.d("Adapter", "Clicked on like for meal in MealAdapterLike: " + meal.getMealName());
+            MealCall call = new MealCall(Data.getInstance().getUser().getBearerToken());
+            call.likeMeal(Data.getInstance().getUser().getId(), meal.getId(), imageView, this);
         });
 
-        adapter.setOnAddFoodClickListener(food -> {
-            Log.d("Adapter", "Clicked on add for food in FoodAdapterLike: " + food.getFoodName());
-            DayFunc.addObjectToDay(food, arrayType);
+        adapter.setOnAddMealClickListener(meal -> {
+            Log.d("Adapter", "Clicked on add for meal in MealAdapterLike: " + meal.getMealName());
+            DayFunc.addObjectToDay(meal, arrayType);
         });
     }
 
     @Override
-    public void onLikeFoodSuccess(ImageView imageView) {
+    public void onLikeMealSuccess(ImageView imageView) {
         Func.setLikeState(imageView);
     }
 }

@@ -1,6 +1,5 @@
 package com.obsessed.calorieguide.fragments.main;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -17,9 +16,8 @@ import com.obsessed.calorieguide.MainActivityApp;
 import com.obsessed.calorieguide.MainActivityAuth;
 import com.obsessed.calorieguide.R;
 import com.obsessed.calorieguide.data.Data;
-import com.obsessed.calorieguide.data.Day;
 import com.obsessed.calorieguide.databinding.FragmentMainBinding;
-import com.obsessed.calorieguide.retrofit.meal.CallbackGetMealById;
+import com.obsessed.calorieguide.retrofit.meal.callbacks.CallbackGetMealById;
 import com.obsessed.calorieguide.retrofit.meal.Meal;
 import com.obsessed.calorieguide.retrofit.meal.MealCallAndCallback;
 import com.obsessed.calorieguide.tools.save.ShPrefs;

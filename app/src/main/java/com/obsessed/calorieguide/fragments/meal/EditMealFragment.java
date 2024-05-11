@@ -13,7 +13,6 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
 import android.provider.MediaStore;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,10 +22,10 @@ import android.widget.Toast;
 
 import com.obsessed.calorieguide.R;
 import com.obsessed.calorieguide.data.Data;
-import com.obsessed.calorieguide.retrofit.food.CallbackGetAllFood;
+import com.obsessed.calorieguide.retrofit.food.callbacks.CallbackGetAllFood;
 import com.obsessed.calorieguide.retrofit.food.Food;
 import com.obsessed.calorieguide.retrofit.food.FoodCallAndCallback;
-import com.obsessed.calorieguide.retrofit.meal.CallbackGetMealById;
+import com.obsessed.calorieguide.retrofit.meal.callbacks.CallbackGetMealById;
 import com.obsessed.calorieguide.retrofit.meal.FoodIdQuantity;
 import com.obsessed.calorieguide.retrofit.meal.Meal;
 import com.obsessed.calorieguide.retrofit.meal.MealCall;

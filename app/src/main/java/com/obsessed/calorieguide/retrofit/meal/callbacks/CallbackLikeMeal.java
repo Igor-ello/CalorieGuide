@@ -1,4 +1,4 @@
-package com.obsessed.calorieguide.retrofit.meal;
+package com.obsessed.calorieguide.retrofit.meal.callbacks;
 
 import android.widget.ImageView;
 
