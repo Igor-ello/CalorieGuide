@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/mainFragment"
+        android:title="Main"
+        android:icon="@drawable/home">
+    </item>
+    <item
+        android:id="@+id/libraryFoodFragment"
+        android:title="Library"
+        android:icon="@drawable/recipe_book">
+    </item>
+    <item
+        android:id="@+id/profileFragment"
+        android:title="Profile"
+        android:icon="@drawable/profile">
+    </item>
+</menu>

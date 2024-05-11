@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="50dp"
+    android:layout_margin="@dimen/margin_default"
+    android:layout_gravity="center">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/btBack"
+            style="@style/ImageViewObjectActionsStyle"
+            android:src="@drawable/arrow_back">
+        </ImageView>
+
+        <ImageView
+            android:id="@+id/btAddObject"
+            style="@style/ImageViewObjectActionsStyle"
+            android:src="@drawable/add">
+        </ImageView>
+
+        <ImageView
+            android:id="@+id/btLikeObject"
+            style="@style/ImageViewObjectActionsStyle"
+            android:src="@drawable/like_not_active_black">
+        </ImageView>
+
+        <ImageView
+            android:id="@+id/btDeleteObject"
+            style="@style/ImageViewObjectActionsStyle"
+            android:src="@drawable/delete">
+        </ImageView>
+    </LinearLayout>
+</FrameLayout>

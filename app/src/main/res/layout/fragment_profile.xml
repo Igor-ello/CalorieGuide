@@ -3,21 +3,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ProfileFragment"
-    android:layout_margin="@dimen/marginStandard">
+    tools:context=".fragments.ProfileFragment"
+    android:layout_margin="@dimen/margin_default">
 
-    <FrameLayout
-        android:id="@+id/fragment_nav_bar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom">
-    </FrameLayout>
 
     <FrameLayout
         android:id="@+id/settingsButton"
         style="@style/IconStyle"
         android:layout_gravity="end"
-        android:background="@drawable/settings_icon">
+        android:background="@drawable/settings">
     </FrameLayout>
 
     <LinearLayout

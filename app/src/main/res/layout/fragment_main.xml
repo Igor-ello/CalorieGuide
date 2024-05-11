@@ -4,35 +4,52 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainFragment"
-    android:layout_margin="@dimen/marginStandard">
+    tools:context=".fragments.main.MainFragment">
 
-    <FrameLayout
-        android:id="@+id/fragment_nav_bar"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom">
-    </FrameLayout>
-
-    <include layout="@layout/arrow_back"></include>
+        android:layout_height="match_parent"
+        android:layout_marginBottom="50dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:layout_margin="@dimen/margin_default">
 
-        <TextView
-            style="@style/TextHeaderStyle"
-            android:text="@string/fragment_main_header">
-        </TextView>
+        <include
+            android:id="@+id/stats"
+            layout="@layout/stats"/>
 
-        <TextView
-            android:id="@+id/text"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Some text">
-        </TextView>
+        <include
+            android:id="@+id/stats_cpf"
+            layout="@layout/stats_cpf"/>
+
+        <include
+            android:id="@+id/intakeBreakfast"
+            layout="@layout/intake"/>
+        <include
+            android:id="@+id/intakeLunch"
+            layout="@layout/intake"/>
+        <include
+            android:id="@+id/intakeDinner"
+            layout="@layout/intake"/>
 
     </LinearLayout>
+
+    </ScrollView>
+
+<!--    <FrameLayout-->
+<!--        android:id="@+id/objectActions"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent"-->
+<!--        android:background="@drawable/background_gray"-->
+<!--        android:clickable="true"-->
+<!--        android:visibility="gone">-->
+
+<!--        <include-->
+<!--            android:id="@+id/objectActionsLayout"-->
+<!--            layout="@layout/object_actions" />-->
+<!--    </FrameLayout>-->
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

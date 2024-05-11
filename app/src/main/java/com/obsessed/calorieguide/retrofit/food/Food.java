@@ -1,18 +1,21 @@
 package com.obsessed.calorieguide.retrofit.food;
 
-import android.graphics.Bitmap;
-import android.text.Editable;
+
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Food {
-    int author_id;
+    int id;
     String food_name;
     String description;
     int calories;
     int proteins;
     int carbohydrates;
     int fats;
+    int author_id;
     int likes;
     byte[] picture;
+    boolean isLiked;
 
 
     public Food(String food_name, String description, int calories, int proteins, int carbohydrates, int fats, int author_id, byte[] picture) {
@@ -26,11 +29,39 @@ public class Food {
         this.picture = picture;
     }
 
-    public int getId() {
-        return author_id;
+    public ArrayList<Object> getValues() {
+        ArrayList<Object> arrayList = new ArrayList<>();
+        arrayList.add(food_name);
+        arrayList.add(description);
+        arrayList.add(calories);
+        arrayList.add(proteins);
+        arrayList.add(carbohydrates);
+        arrayList.add(fats);
+        return arrayList;
     }
 
-    public String getFood_name() {
+    @Override
+    public String toString() {
+        return "Food{" +
+                "id=" + id +
+                ", food_name='" + food_name + '\'' +
+                ", description='" + description + '\'' +
+                ", calories=" + calories +
+                ", proteins=" + proteins +
+                ", carbohydrates=" + carbohydrates +
+                ", fats=" + fats +
+                ", author_id=" + author_id +
+                ", likes=" + likes +
+                ", picture=" + Arrays.toString(picture) +
+                ", isLiked=" + isLiked +
+                '}';
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public String getFoodName() {
         return food_name;
     }
 
@@ -54,11 +85,19 @@ public class Food {
         return fats;
     }
 
+    public int getAuthorId() {
+        return author_id;
+    }
+
     public int getLikes() {
         return likes;
     }
 
     public byte[] getPicture() {
         return picture;
+    }
+
+    public boolean isLiked() {
+        return isLiked;
     }
 }

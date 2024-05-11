@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <TextView
+        style="@style/TextHeaderStyle"
+        android:text="Calorie Guide"
+        android:textSize="26dp">
+    </TextView>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ProgressBar
+            android:id="@+id/prgBar"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:layout_gravity="center"
+            android:progress="0"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:progressDrawable="@drawable/circular_progress_bar">
+        </ProgressBar>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center">
+
+            <LinearLayout
+                style="@style/LinearLayoutStatsStyle"
+                android:layout_gravity="center">
+
+                <TextView
+                    android:id="@+id/tvCaloriesTotal"
+                    style="@style/TextViewNumberStyle">
+                </TextView>
+
+                <TextView
+                    style="@style/TextViewStatsStyle"
+                    android:text="Total">
+                </TextView>
+
+            </LinearLayout>
+
+            <LinearLayout
+                style="@style/LinearLayoutStatsStyle"
+                android:layout_weight="2"
+                android:layout_gravity="center_vertical">
+
+                <TextView
+                    android:id="@+id/tvCaloriesLeft"
+                    style="@style/TextViewNumberStyle">
+                </TextView>
+
+                <TextView
+                    style="@style/TextViewStatsStyle"
+                    android:gravity="center"
+                    android:text="kcal left">
+                </TextView>
+
+            </LinearLayout>
+
+            <LinearLayout
+                style="@style/LinearLayoutStatsStyle"
+                android:layout_gravity="center_vertical">
+
+                <TextView
+                    android:id="@+id/tvCaloriesGoal"
+                    style="@style/TextViewNumberStyle">
+                </TextView>
+
+                <TextView
+                    style="@style/TextViewStatsStyle"
+                    android:text="Goal">
+                </TextView>
+
+            </LinearLayout>
+        </LinearLayout>
+
+
+    </FrameLayout>
+</LinearLayout>

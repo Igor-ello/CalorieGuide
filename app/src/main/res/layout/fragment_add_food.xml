@@ -3,8 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".AddFoodFragment"
-    android:layout_margin="@dimen/marginStandard">
+    tools:context=".fragments.food.AddFoodFragment"
+    android:layout_margin="@dimen/margin_default">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -13,103 +13,11 @@
 
         <TextView
             style="@style/TextHeaderStyle"
-            android:text="@string/fragment_food_header">
+            android:text="@string/fragment_add_food_header">
         </TextView>
 
-        <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <ImageView
-                    android:id="@+id/image"
-                    android:layout_width="200dp"
-                    android:layout_height="200dp"
-                    android:layout_gravity="center_horizontal"
-                    android:src="@drawable/add">
-                </ImageView>
-
-                <TextView
-                    style="@style/TextStyle"
-                    android:text="Food name">
-                </TextView>
-
-                <EditText
-                    android:id="@+id/edFoodName"
-                    style="@style/EditTextStyle">
-                </EditText>
-
-                <TextView
-                    style="@style/TextStyle"
-                    android:text="Description">
-                </TextView>
-
-                <EditText
-                    android:id="@+id/edDescription"
-                    style="@style/EditTextStyle">
-                </EditText>
-
-                <TextView
-                    style="@style/TextStyle"
-                    android:text="Calories">
-                </TextView>
-
-                <EditText
-                    android:id="@+id/edCalories"
-                    style="@style/EditTextStyle"
-                    android:inputType="number">
-                </EditText>
-
-                <TextView
-                    style="@style/TextStyle"
-                    android:text="Proteins">
-                </TextView>
-
-                <EditText
-                    android:id="@+id/edProteins"
-                    style="@style/EditTextStyle"
-                    android:inputType="number">
-                </EditText>
-
-                <TextView
-                    style="@style/TextStyle"
-                    android:text="Carbohydrates">
-                </TextView>
-
-                <EditText
-                    android:id="@+id/edCarbohydrates"
-                    style="@style/EditTextStyle"
-                    android:inputType="number">
-                </EditText>
-
-                <TextView
-                    style="@style/TextStyle"
-                    android:text="Fats">
-                </TextView>
-
-                <EditText
-                    android:id="@+id/edFats"
-                    style="@style/EditTextStyle"
-                    android:inputType="number">
-                </EditText>
-
-                <Button
-                    android:id="@+id/btSave"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:text="Save">
-                </Button>
-            </LinearLayout>
-        </ScrollView>
-
-
+        <include layout="@layout/food_params"></include>
 
     </LinearLayout>
-
 
 </FrameLayout>

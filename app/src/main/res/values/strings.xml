@@ -2,12 +2,25 @@
     <string name="app_name">CalorieGuide</string>
 
     <!-- Fragments -->
-    <string name="fragment_main_header">Main</string>
+    <!--Food-->
     <string name="fragment_food_header">Food</string>
-    <string name="fragment_library_header">Library</string>
-    <string name="fragment_profile_header">Profile</string>
+    <string name="fragment_edit_food_header">Edit Food</string>
+    <string name="fragment_add_food_header">Add Food</string>
+    <string name="fragment_food_library_header">Food Library</string>
+
+    <!--Meal-->
+    <string name="fragment_meal_header">Meal</string>
+    <string name="fragment_edit_meal_header">Edit Meal</string>
+    <string name="fragment_add_meal_header">Add Meal</string>
+    <string name="fragment_meal_library_header">Meal Library</string>
+
+    <!--Auth-->
     <string name="fragment_registration_header">Registration</string>
-    <string name="fragment_add_meal_header">AddMeal</string>
     <string name="fragment_login_header">Login</string>
+
+    <!--Other-->
+    <string name="fragment_main_header">Main</string>
+    <string name="fragment_profile_header">Profile</string>
     <string name="fragment_settings_header">Settings</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

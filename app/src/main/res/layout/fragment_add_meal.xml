@@ -3,12 +3,21 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".AddMealFragment"
-    android:layout_margin="@dimen/marginStandard">
+    tools:context=".fragments.meal.AddMealFragment"
+    android:layout_margin="@dimen/margin_default">
 
-    <TextView
-        style="@style/TextHeaderStyle"
-        android:text="@string/fragment_add_meal_header">
-    </TextView>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            style="@style/TextHeaderStyle"
+            android:text="@string/fragment_add_meal_header">
+        </TextView>
+
+        <include layout="@layout/meal_params"></include>
+
+    </LinearLayout>
 
 </FrameLayout>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragments.food.EditFoodFragment"
+    android:layout_margin="@dimen/margin_default">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            style="@style/TextHeaderStyle"
+            android:text="@string/fragment_edit_food_header">
+        </TextView>
+
+        <include layout="@layout/food_params"></include>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center">
+
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/delete_forever">
+            </ImageView>
+
+            <Button
+                android:id="@+id/btDelete"
+                style="@style/ButtonStyle"
+                android:text="Delete">
+            </Button>
+        </LinearLayout>
+
+    </LinearLayout>
+
+</FrameLayout>

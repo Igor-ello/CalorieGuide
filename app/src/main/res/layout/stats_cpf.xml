@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardCornerRadius="10dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:weightSum="3">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_marginHorizontal="5dp">
+
+            <TextView
+                style="@style/TextViewStatsStyle"
+                android:text="Carb">
+            </TextView>
+
+            <ProgressBar
+                android:id="@+id/prgBarCarb"
+                style="@style/ProgressBarStyle">
+            </ProgressBar>
+
+            <TextView
+                android:id="@+id/tvCarb"
+                style="@style/TextViewStatsStyle"
+                android:text="13/270г">
+            </TextView>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_marginHorizontal="5dp">
+
+            <TextView
+                style="@style/TextViewStatsStyle"
+                android:text="Proteins">
+            </TextView>
+
+            <ProgressBar
+                android:id="@+id/prgBarProteins"
+                style="@style/ProgressBarStyle">
+            </ProgressBar>
+
+            <TextView
+                android:id="@+id/tvProteins"
+                style="@style/TextViewStatsStyle"
+                android:text="13/270г">
+            </TextView>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_marginHorizontal="5dp">
+
+            <TextView
+                style="@style/TextViewStatsStyle"
+                android:text="Fats">
+            </TextView>
+
+            <ProgressBar
+                android:id="@+id/prgBarFats"
+                style="@style/ProgressBarStyle">
+            </ProgressBar>
+
+            <TextView
+                android:id="@+id/tvFats"
+                style="@style/TextViewStatsStyle"
+                android:text="13/270г">
+            </TextView>
+        </LinearLayout>
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

@@ -50,4 +50,52 @@
         android:inputType="textPassword">
     </EditText>
 
+    <TextView
+        style="@style/TextStyle"
+        android:text="Calories"
+        android:textStyle="bold">
+    </TextView>
+
+    <EditText
+        android:id="@+id/etCalories"
+        style="@style/EditTextStyle"
+        android:inputType="number">
+    </EditText>
+
+    <TextView
+        style="@style/TextStyle"
+        android:text="Carbohydrates"
+        android:textStyle="bold">
+    </TextView>
+
+    <EditText
+        android:id="@+id/etCarbs"
+        style="@style/EditTextStyle"
+        android:inputType="number">
+    </EditText>
+
+    <TextView
+        style="@style/TextStyle"
+        android:text="Proteins"
+        android:textStyle="bold">
+    </TextView>
+
+    <EditText
+        android:id="@+id/etProteins"
+        style="@style/EditTextStyle"
+        android:inputType="number">
+    </EditText>
+
+    <TextView
+        style="@style/TextStyle"
+        android:text="Fats"
+        android:textStyle="bold">
+    </TextView>
+
+    <EditText
+        android:id="@+id/etFats"
+        style="@style/EditTextStyle"
+        android:inputType="number">
+    </EditText>
+
 </LinearLayout>

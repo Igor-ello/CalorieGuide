@@ -20,7 +20,8 @@
 
             <ImageView
                 android:id="@+id/imageView"
-                style="@style/PictureStyle">
+                style="@style/ImageViewFoodStyle"
+                android:layout_marginEnd="@dimen/margin_default">
             </ImageView>
 
             <LinearLayout
@@ -29,54 +30,64 @@
                 android:orientation="vertical"
                 android:layout_gravity="center">
 
-                <TextView
-                    android:id="@+id/tvName"
-                    style="@style/TextHeaderStyle"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:fontFamily="sans-serif-condensed">
-                </TextView>
-
-                <TextView
-                    android:id="@+id/tv_calories"
-                    style="@style/TextHeaderStyle"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:gravity="center"
-                    android:fontFamily="sans-serif-condensed">
-                </TextView>
+                    android:gravity="center">
+
+                    <TextView
+                        android:id="@+id/tvName"
+                        style="@style/TextCardStyle"
+                        android:layout_weight="1"
+                        android:maxLines="2"
+                        android:fontFamily="sans-serif-condensed">
+                    </TextView>
+
+                    <TextView
+                        android:id="@+id/tvCalories"
+                        style="@style/TextCardStyle"
+                        android:layout_weight="3"
+                        android:text="123"
+                        android:fontFamily="sans-serif-condensed">
+                    </TextView>
+
+                </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:orientation="horizontal"
                     android:gravity="center">
 
                     <TextView
-                        android:id="@+id/tv_proteins"
-                        style="@style/TextHeaderStyle"
-                        android:gravity="center"
+                        android:id="@+id/tvProteins"
+                        style="@style/TextCardStyle"
                         android:layout_weight="1"
                         android:fontFamily="sans-serif-condensed">
                     </TextView>
 
                     <TextView
-                        android:id="@+id/tv_carbohydrates"
-                        style="@style/TextHeaderStyle"
-                        android:gravity="center"
+                        android:id="@+id/tvCarbohydrates"
+                        style="@style/TextCardStyle"
                         android:layout_weight="1"
                         android:fontFamily="sans-serif-condensed">
                     </TextView>
 
                     <TextView
-                        android:id="@+id/tv_fats"
-                        style="@style/TextHeaderStyle"
-                        android:gravity="center"
+                        android:id="@+id/tvFats"
+                        style="@style/TextCardStyle"
                         android:layout_weight="1"
                         android:fontFamily="sans-serif-condensed">
                     </TextView>
                 </LinearLayout>
+
+                <ImageView
+                    android:id="@+id/btLikeV2"
+                    style="@style/IconStyle"
+                    android:layout_gravity="end"
+                    android:src="@drawable/like_not_active">
+                </ImageView>
 
             </LinearLayout>
 

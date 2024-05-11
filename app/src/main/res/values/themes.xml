@@ -3,6 +3,9 @@
     <style name="Base.Theme.CalorieGuide" parent="Theme.Material3.Light.NoActionBar">
         <!-- Customize your light theme here. -->
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+
+        <item name="android:forceDarkAllowed" tools:targetApi="q">false</item>
+
     </style>
 
     <style name="Theme.CalorieGuide" parent="Base.Theme.CalorieGuide" />
