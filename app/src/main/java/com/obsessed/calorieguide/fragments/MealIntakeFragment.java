@@ -18,7 +18,7 @@ import android.widget.SearchView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.obsessed.calorieguide.MainActivityApp;
 import com.obsessed.calorieguide.R;
-import com.obsessed.calorieguide.adapters.meal.MealAdapterLike;
+import com.obsessed.calorieguide.adapters.meal.MealAdapterIntake;
 import com.obsessed.calorieguide.data.Data;
 import com.obsessed.calorieguide.data.DayFunc;
 import com.obsessed.calorieguide.data.Func;
@@ -88,32 +88,32 @@ public class MealIntakeFragment extends Fragment implements CallbackSearchMeal, 
 
     @Override
     public void mealSearchReceived(ArrayList<Meal> mealList) {
-        MealAdapterLike adapter = new MealAdapterLike(mealList);
+        MealAdapterIntake adapter = new MealAdapterIntake(mealList);
         binding.rcView.setLayoutManager(new GridLayoutManager(requireContext(), 1));
         binding.rcView.setAdapter(adapter);
 
         // Установка слушателя в адаптере
         adapter.setOnMealClickListener(meal -> {
-            Log.d("Adapter", "Clicked on meal in MealAdapterLike: " + meal.getMealName());
+            Log.d("Adapter", "Clicked on meal in MealAdapterIntake: " + meal.getMealName());
             Bundle args = new Bundle();
             args.putInt("meal_id", meal.getId());
             Navigation.findNavController(requireView()).navigate(R.id.editMealFragment, args);
         });
 
         adapter.setOnLikeMealClickListener((meal, imageView) -> {
-            Log.d("Adapter", "Clicked on like for meal in MealAdapterLike: " + meal.getMealName());
+            Log.d("Adapter", "Clicked on like for meal in MealAdapterIntake: " + meal.getMealName());
             MealCall call = new MealCall(Data.getInstance().getUser().getBearerToken());
-            call.likeMeal(Data.getInstance().getUser().getId(), meal.getId(), imageView, this);
+            call.likeMeal(Data.getInstance().getUser().getId(), meal, imageView, this);
         });
 
         adapter.setOnAddMealClickListener(meal -> {
-            Log.d("Adapter", "Clicked on add for meal in MealAdapterLike: " + meal.getMealName());
+            Log.d("Adapter", "Clicked on add for meal in MealAdapterIntake: " + meal.getMealName());
             DayFunc.addObjectToDay(meal, arrayType);
         });
     }
 
     @Override
-    public void onLikeMealSuccess(ImageView imageView) {
-        Func.setLikeState(imageView);
+    public void onLikeMealSuccess(ImageView imageView, boolean isLiked) {
+        Func.setLikeState(imageView, isLiked);
     }
 }

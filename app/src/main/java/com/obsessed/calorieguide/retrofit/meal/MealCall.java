@@ -106,11 +106,10 @@ public class MealCall {
         });
     }
 
-    public void likeMeal(int userId, int mealId, ImageView imageView, CallbackLikeMeal callback) {
+    public void likeMeal(int userId, Meal meal, ImageView imageView, CallbackLikeMeal callback) {
         JsonObject requestObject = new JsonObject();
-        requestObject.addProperty("meal_id", mealId);
+        requestObject.addProperty("meal_id", meal.getId());
         requestObject.addProperty("user_id", userId);
-        Log.d("Call", requestObject.toString());
 
         // Преобразование объекта запроса в JSON-строку
         Gson gson = new Gson();
@@ -124,8 +123,9 @@ public class MealCall {
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
                 if (response.isSuccessful()) {
 
+                    meal.setIsLiked(!meal.getIsLiked());
                     if(callback!= null) {
-                        callback.onLikeMealSuccess(imageView);
+                        callback.onLikeMealSuccess(imageView, meal.getIsLiked());
                     }
 
                     Log.d("Call", "Response likeMeal is successful!");

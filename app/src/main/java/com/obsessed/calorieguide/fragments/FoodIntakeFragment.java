@@ -102,7 +102,7 @@ public class FoodIntakeFragment extends Fragment implements CallbackSearchFood, 
         adapter.setOnLikeFoodClickListener((food, imageView) -> {
             Log.d("Adapter", "Clicked on like for food in FoodAdapterLike: " + food.getFoodName());
             FoodCall foodCall = new FoodCall(Data.getInstance().getUser().getBearerToken());
-            foodCall.likeFood(Data.getInstance().getUser().getId(), food.getId(), imageView, this);
+            foodCall.likeFood(Data.getInstance().getUser().getId(), food, imageView, this);
         });
 
         adapter.setOnAddFoodClickListener(food -> {
@@ -112,7 +112,7 @@ public class FoodIntakeFragment extends Fragment implements CallbackSearchFood, 
     }
 
     @Override
-    public void onLikeFoodSuccess(ImageView imageView) {
-        Func.setLikeState(imageView);
+    public void onLikeFoodSuccess(ImageView imageView, boolean isLiked) {
+        Func.setLikeState(imageView, isLiked);
     }
 }

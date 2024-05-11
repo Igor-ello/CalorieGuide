@@ -5,18 +5,18 @@ import java.util.Arrays;
 import java.util.List;
 
 public class Meal {
-    int id;
-    String meal_name;
-    int total_calories;
-    int total_proteins;
-    int total_fats;
-    int total_carbohydrates;
-    List<FoodIdQuantity> products_id;
-    int author_id;
-    String description;
-    int likes;
-    byte[] picture;
-    boolean isLiked;
+    private int id;
+    private String meal_name;
+    private int total_calories;
+    private int total_proteins;
+    private int total_fats;
+    private int total_carbohydrates;
+    private List<FoodIdQuantity> products_id;
+    private int author_id;
+    private String description;
+    private int likes;
+    private byte[] picture;
+    private boolean isLiked;
 
     public Meal(String meal_name, List<FoodIdQuantity> products_id, int author_id, String description, byte[] picture) {
         this.meal_name = meal_name;
@@ -95,7 +95,10 @@ public class Meal {
         return picture;
     }
 
-    public boolean isLiked() {
+    public boolean getIsLiked() {
         return isLiked;
+    }
+    public void setIsLiked(boolean isLiked) {
+        this.isLiked = isLiked;
     }
 }

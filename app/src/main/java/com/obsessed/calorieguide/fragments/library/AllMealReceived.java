@@ -51,7 +51,7 @@ public class AllMealReceived {
         mealAdapter.setOnLikeMealClickListener((meal, imageView) -> {
             Log.d("IntakeAdapter", "Clicked on like for meal in IntakeAdapter: " + meal.getMealName());
             MealCall mealCall = new MealCall(Data.getInstance().getUser().getBearerToken());
-            mealCall.likeMeal(Data.getInstance().getUser().getId(), meal.getId(), imageView, callback);
+            mealCall.likeMeal(Data.getInstance().getUser().getId(), meal, imageView, callback);
         });
     }
 }

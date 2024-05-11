@@ -89,11 +89,11 @@ public class ObjectActions extends Fragment implements CallbackGetMealById, Call
         view.findViewById(R.id.btLikeObject).setOnClickListener(v -> {
             if (object != null && objectType.equals("meal")) {
                 MealCall mealCall = new MealCall(Data.getInstance().getUser().getBearerToken());
-                mealCall.likeMeal(Data.getInstance().getUser().getId(), ((Meal)object).getId(), null, null);
+                mealCall.likeMeal(Data.getInstance().getUser().getId(), (Meal)object, null, null);
             }
             if (object != null && objectType.equals("food")) {
                 FoodCall foodCall = new FoodCall(Data.getInstance().getUser().getBearerToken());
-                foodCall.likeFood(Data.getInstance().getUser().getId(), ((Food)object).getId(), null, null);
+                foodCall.likeFood(Data.getInstance().getUser().getId(), (Food)object, null, null);
             }
             Navigation.findNavController(view).popBackStack();
         });

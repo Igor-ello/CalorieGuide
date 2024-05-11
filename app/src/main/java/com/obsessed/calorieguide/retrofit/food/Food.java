@@ -5,17 +5,17 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class Food {
-    int id;
-    String food_name;
-    String description;
-    int calories;
-    int proteins;
-    int carbohydrates;
-    int fats;
-    int author_id;
-    int likes;
-    byte[] picture;
-    boolean isLiked;
+    private int id;
+    private String food_name;
+    private String description;
+    private int calories;
+    private int proteins;
+    private int carbohydrates;
+    private int fats;
+    private int author_id;
+    private int likes;
+    private byte[] picture;
+    private boolean isLiked;
 
 
     public Food(String food_name, String description, int calories, int proteins, int carbohydrates, int fats, int author_id, byte[] picture) {
@@ -97,7 +97,10 @@ public class Food {
         return picture;
     }
 
-    public boolean isLiked() {
+    public boolean getIsLiked() {
         return isLiked;
+    }
+    public void setIsLiked(boolean isLiked) {
+        this.isLiked = isLiked;
     }
 }

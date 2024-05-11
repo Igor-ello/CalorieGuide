@@ -79,7 +79,7 @@ public class LibraryMealFragment extends Fragment implements CallbackGetAllMeal,
     }
 
     @Override
-    public void onLikeMealSuccess(ImageView imageView) {
-        Func.setLikeState(imageView);
+    public void onLikeMealSuccess(ImageView imageView, boolean isLiked) {
+        Func.setLikeState(imageView, isLiked);
     }
 }

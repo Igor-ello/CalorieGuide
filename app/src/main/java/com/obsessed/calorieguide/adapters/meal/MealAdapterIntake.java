@@ -18,13 +18,13 @@ import com.obsessed.calorieguide.retrofit.meal.Meal;
 
 import java.util.ArrayList;
 
-public class MealAdapterLike extends RecyclerView.Adapter<MealAdapterLike.MealHolder> {
+public class MealAdapterIntake extends RecyclerView.Adapter<MealAdapterIntake.MealHolder> {
     private ArrayList<Meal> mealArrayList;
     private OnMealClickListener onMealClickListener;
     private OnLikeMealClickListener onLikeMealClickListener;
     private OnAddMealClickListener onAddMealClickListener;
 
-    public MealAdapterLike(ArrayList<Meal> mealArrayList) {
+    public MealAdapterIntake(ArrayList<Meal> mealArrayList) {
         this.mealArrayList = mealArrayList;
     }
 
@@ -53,7 +53,7 @@ public class MealAdapterLike extends RecyclerView.Adapter<MealAdapterLike.MealHo
         public void bind(Meal meal) {
             binding.tvName.setText(meal.getMealName());
             binding.tvCalories.setText(String.valueOf(meal.getTotalCalories()));
-            binding.btLike.setImageResource(meal.isLiked()? R.drawable.like_active : R.drawable.like_not_active);
+            binding.btLike.setImageResource(meal.getIsLiked()? R.drawable.like_active : R.drawable.like_not_active);
             binding.btAdd.setImageResource(R.drawable.add);
 
             if (meal.getPicture() != null) {
@@ -68,9 +68,9 @@ public class MealAdapterLike extends RecyclerView.Adapter<MealAdapterLike.MealHo
 
     @NonNull
     @Override
-    public MealAdapterLike.MealHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public MealAdapterIntake.MealHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.meal_item_likes, parent, false);
-        return new MealAdapterLike.MealHolder(view);
+        return new MealAdapterIntake.MealHolder(view);
     }
 
     @Override
