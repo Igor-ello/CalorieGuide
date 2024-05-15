@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.SearchView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.obsessed.calorieguide.MainActivityApp;
@@ -19,15 +20,17 @@ import com.obsessed.calorieguide.R;
 import com.obsessed.calorieguide.data.Data;
 import com.obsessed.calorieguide.data.Func;
 import com.obsessed.calorieguide.databinding.FragmentMealLibraryBinding;
+import com.obsessed.calorieguide.fragments.intake.MealIntakeFragment;
 import com.obsessed.calorieguide.retrofit.meal.callbacks.CallbackGetAllMeal;
 import com.obsessed.calorieguide.retrofit.meal.callbacks.CallbackLikeMeal;
 import com.obsessed.calorieguide.retrofit.meal.Meal;
 import com.obsessed.calorieguide.retrofit.meal.MealCall;
+import com.obsessed.calorieguide.retrofit.meal.callbacks.CallbackSearchMeal;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class LibraryMealFragment extends Fragment implements CallbackGetAllMeal, CallbackLikeMeal {
+public class LibraryMealFragment extends Fragment implements CallbackGetAllMeal, CallbackLikeMeal, CallbackSearchMeal {
     FragmentMealLibraryBinding binding;
 
     public LibraryMealFragment() {
@@ -43,7 +46,7 @@ public class LibraryMealFragment extends Fragment implements CallbackGetAllMeal,
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_meal_library, container, false);
-        ((BottomNavigationView)((MainActivityApp) getActivity()).findViewById(R.id.bottomNV)).setVisibility(view.VISIBLE);
+        getActivity().findViewById(R.id.bottomNV).setVisibility(view.VISIBLE);
         return view;
     }
 
@@ -56,6 +59,21 @@ public class LibraryMealFragment extends Fragment implements CallbackGetAllMeal,
         requireActivity().runOnUiThread(() -> {
             MealCall mealCall = new MealCall();
             mealCall.getAllMeal(this);
+        });
+
+        //Поиск питания
+        binding.searchAndAdd.search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                MealCall call = new MealCall();
+                call.searchMeal(query, Data.getInstance().getUser().getId(), LibraryMealFragment.this);
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
         });
 
         //Кнопка для добавления нового питания
@@ -82,5 +100,13 @@ public class LibraryMealFragment extends Fragment implements CallbackGetAllMeal,
     @Override
     public void onLikeMealSuccess(ImageView imageView, boolean isLiked) {
         Func.setLikeState(imageView, isLiked);
+    }
+
+    @Override
+    public void mealSearchReceived(ArrayList<Meal> mealList) {
+        if (isAdded()) { // Проверяем, привязан ли фрагмент к активности
+            new AllMealReceived(requireContext(), requireView(), binding, mealList, this)
+                    .onAllMealReceived();
+        }
     }
 }

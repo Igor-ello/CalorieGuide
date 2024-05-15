@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.SearchView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.obsessed.calorieguide.MainActivityApp;
@@ -19,16 +20,18 @@ import com.obsessed.calorieguide.R;
 import com.obsessed.calorieguide.data.Data;
 import com.obsessed.calorieguide.data.Func;
 import com.obsessed.calorieguide.databinding.FragmentFoodLibraryBinding;
+import com.obsessed.calorieguide.fragments.intake.FoodIntakeFragment;
 import com.obsessed.calorieguide.retrofit.food.FoodCall;
 import com.obsessed.calorieguide.retrofit.food.FoodCallWithToken;
 import com.obsessed.calorieguide.retrofit.food.callbacks.CallbackLikeFood;
 import com.obsessed.calorieguide.retrofit.food.Food;
 import com.obsessed.calorieguide.retrofit.food.callbacks.CallbackGetAllFood;
+import com.obsessed.calorieguide.retrofit.food.callbacks.CallbackSearchFood;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class LibraryFoodFragment extends Fragment implements CallbackGetAllFood, CallbackLikeFood {
+public class LibraryFoodFragment extends Fragment implements CallbackGetAllFood, CallbackLikeFood, CallbackSearchFood {
     FragmentFoodLibraryBinding binding;
 
     public LibraryFoodFragment() {
@@ -44,7 +47,7 @@ public class LibraryFoodFragment extends Fragment implements CallbackGetAllFood,
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_food_library, container, false);
-        ((BottomNavigationView)((MainActivityApp) getActivity()).findViewById(R.id.bottomNV)).setVisibility(view.VISIBLE);
+        getActivity().findViewById(R.id.bottomNV).setVisibility(view.VISIBLE);
         return view;
 
     }
@@ -61,6 +64,22 @@ public class LibraryFoodFragment extends Fragment implements CallbackGetAllFood,
                 call.getAllFood(Data.getInstance().getUser().getId(), this);
             else call.getAllFood(this);
         });
+
+        //Поиск фруктов в библиотеке
+        binding.searchAndAdd.search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                FoodCall call = new FoodCall();
+                call.searchFood(query, Data.getInstance().getUser().getId(), LibraryFoodFragment.this);
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
+        });
+
 
         //Кнопка для добавления нового фрукта
         view.findViewById(R.id.btAdd).setOnClickListener(v -> {
@@ -86,5 +105,13 @@ public class LibraryFoodFragment extends Fragment implements CallbackGetAllFood,
     @Override
     public void onLikeFoodSuccess(ImageView imageView, boolean isLiked) {
         Func.setLikeState(imageView, isLiked);
+    }
+
+    @Override
+    public void foodSearchReceived(ArrayList<Food> foodList) {
+        if (isAdded()) { // Проверяем, привязан ли фрагмент к активности
+            new AllFoodReceived(requireContext(), requireView(), binding, foodList, this)
+                    .onAllFoodReceived();
+        }
     }
 }
