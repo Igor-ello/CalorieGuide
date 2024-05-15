@@ -45,8 +45,17 @@ public class MealCall {
         mainApi = retrofit.create(MainApi.class);
     }
 
-    public void searchMeal(String query, CallbackSearchMeal callback) {
-        Call<JsonObject> call = mainApi.searchMeal(query);
+    public void searchMeal(String query, int userId, CallbackSearchMeal callback) {
+        JsonObject requestObject = new JsonObject();
+        requestObject.addProperty("word", query);
+        requestObject.addProperty("user", userId);
+
+        // Преобразование объекта запроса в JSON-строку
+        Gson gson = new Gson();
+        String json = gson.toJson(requestObject);
+        RequestBody requestBody = RequestBody.create(MediaType.parse("application/json"), json);
+
+        Call<JsonObject> call = mainApi.searchMeal(requestBody);
         call.enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {

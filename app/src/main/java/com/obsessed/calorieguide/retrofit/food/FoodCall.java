@@ -13,6 +13,7 @@ import com.obsessed.calorieguide.retrofit.food.callbacks.CallbackGetAllFood;
 import com.obsessed.calorieguide.retrofit.food.callbacks.CallbackGetFoodById;
 import com.obsessed.calorieguide.retrofit.food.callbacks.CallbackLikeFood;
 import com.obsessed.calorieguide.retrofit.food.callbacks.CallbackSearchFood;
+import com.obsessed.calorieguide.retrofit.user.User;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,8 +49,18 @@ public class FoodCall {
     }
 
 
-    public void searchFood(String query, CallbackSearchFood callback) {
-        Call<JsonObject> call = mainApi.searchFood(query);
+    public void searchFood(String query, int userId, CallbackSearchFood callback) {
+        JsonObject requestObject = new JsonObject();
+        requestObject.addProperty("word", query);
+        requestObject.addProperty("user", userId);
+
+        // Преобразование объекта запроса в JSON-строку
+        Gson gson = new Gson();
+        String json = gson.toJson(requestObject);
+        RequestBody requestBody = RequestBody.create(MediaType.parse("application/json"), json);
+
+        Call<JsonObject> call = mainApi.searchFood(requestBody);
+        Log.d("Call", call.toString() + " " + query);
         call.enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {

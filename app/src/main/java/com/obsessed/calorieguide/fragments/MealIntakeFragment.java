@@ -73,7 +73,7 @@ public class MealIntakeFragment extends Fragment implements CallbackSearchMeal, 
             public boolean onQueryTextSubmit(String query) {
                 // Вызывается при отправке запроса поиска (нажатии Enter или отправке формы)
                 MealCall call = new MealCall();
-                call.searchMeal(query, MealIntakeFragment.this);
+                call.searchMeal(query, Data.getInstance().getUser().getId(), MealIntakeFragment.this);
                 return true;
             }
 

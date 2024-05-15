@@ -39,7 +39,7 @@ public interface MainApi {
     Call<JsonObject> likeFood(@Body RequestBody requestBody);
 
     @POST("/products/search")
-    Call<JsonObject> searchFood(@Query("q") String query);
+    Call<JsonObject> searchFood(@Body RequestBody requestBody);
 
 
     //Meals
@@ -58,7 +58,7 @@ public interface MainApi {
     @DELETE("/meals/{meal_id}")
     Call<JsonObject> deleteMeal(@Path("meal_id") int mealId);
     @POST("/meals/search")
-    Call<JsonObject> searchMeal(@Query("q") String query);
+    Call<JsonObject> searchMeal(@Body RequestBody requestBody);
 
 
     //User
