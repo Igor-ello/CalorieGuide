@@ -2,9 +2,6 @@ package com.obsessed.calorieguide.data;
 
 import android.util.Log;
 
-import com.obsessed.calorieguide.retrofit.food.Food;
-import com.obsessed.calorieguide.retrofit.meal.Meal;
-
 import java.util.ArrayList;
 
 public class Day {

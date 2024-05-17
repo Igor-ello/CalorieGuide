@@ -1,6 +1,6 @@
 package com.obsessed.calorieguide.data;
 
-import com.obsessed.calorieguide.retrofit.user.User;
+import com.obsessed.calorieguide.network.user.User;
 
 public class Data {
     static Data uniqueInstance = new Data();

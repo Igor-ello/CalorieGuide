@@ -1,9 +1,7 @@
 package com.obsessed.calorieguide.data;
 
-import com.obsessed.calorieguide.retrofit.food.Food;
-import com.obsessed.calorieguide.retrofit.meal.Meal;
-
-import java.util.ArrayList;
+import com.obsessed.calorieguide.network.food.Food;
+import com.obsessed.calorieguide.network.meal.Meal;
 
 public class DayFunc {
     private static Day day = Data.getInstance().getDay();

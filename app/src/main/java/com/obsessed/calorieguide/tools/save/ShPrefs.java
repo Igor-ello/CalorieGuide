@@ -8,7 +8,7 @@ import android.util.Log;
 
 import com.google.gson.Gson;
 import com.obsessed.calorieguide.data.Data;
-import com.obsessed.calorieguide.retrofit.user.User;
+import com.obsessed.calorieguide.network.user.User;
 
 public class ShPrefs {
     public static void saveData(User user, int adapterType, Context context) {

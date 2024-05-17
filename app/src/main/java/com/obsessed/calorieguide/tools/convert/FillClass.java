@@ -3,11 +3,11 @@ package com.obsessed.calorieguide.tools.convert;
 import android.widget.EditText;
 
 import com.obsessed.calorieguide.data.Data;
-import com.obsessed.calorieguide.retrofit.food.Food;
-import com.obsessed.calorieguide.retrofit.meal.FoodIdQuantity;
-import com.obsessed.calorieguide.retrofit.meal.Meal;
-import com.obsessed.calorieguide.retrofit.user.RegistrationRequest;
-import com.obsessed.calorieguide.retrofit.user.User;
+import com.obsessed.calorieguide.network.food.Food;
+import com.obsessed.calorieguide.network.meal.FoodIdQuantity;
+import com.obsessed.calorieguide.network.meal.Meal;
+import com.obsessed.calorieguide.network.user.RegistrationRequest;
+import com.obsessed.calorieguide.network.user.User;
 
 import java.util.ArrayList;
 import java.util.List;
