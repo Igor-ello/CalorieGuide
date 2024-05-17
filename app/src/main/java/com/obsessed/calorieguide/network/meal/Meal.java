@@ -1,10 +1,19 @@
 package com.obsessed.calorieguide.network.meal;
 
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+import androidx.room.TypeConverters;
+
+import com.obsessed.calorieguide.data.models.room.Converters;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+@Entity(tableName = "meal_table")
+@TypeConverters({Converters.class})
 public class Meal {
+    @PrimaryKey(autoGenerate = true)
     private int id;
     private String meal_name;
     private int total_calories;
@@ -100,5 +109,63 @@ public class Meal {
     }
     public void setIsLiked(boolean isLiked) {
         this.isLiked = isLiked;
+    }
+
+
+    //Getter
+
+    public String getMeal_name() {
+        return meal_name;
+    }
+
+    public int getTotal_calories() {
+        return total_calories;
+    }
+
+    public int getTotal_proteins() {
+        return total_proteins;
+    }
+
+    public int getTotal_fats() {
+        return total_fats;
+    }
+
+    public int getTotal_carbohydrates() {
+        return total_carbohydrates;
+    }
+
+    public List<FoodIdQuantity> getProducts_id() {
+        return products_id;
+    }
+
+    public int getAuthor_id() {
+        return author_id;
+    }
+
+    //Setter
+
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setTotal_calories(int total_calories) {
+        this.total_calories = total_calories;
+    }
+
+    public void setTotal_proteins(int total_proteins) {
+        this.total_proteins = total_proteins;
+    }
+
+    public void setTotal_fats(int total_fats) {
+        this.total_fats = total_fats;
+    }
+
+    public void setTotal_carbohydrates(int total_carbohydrates) {
+        this.total_carbohydrates = total_carbohydrates;
+    }
+
+    public void setLikes(int likes) {
+        this.likes = likes;
     }
 }

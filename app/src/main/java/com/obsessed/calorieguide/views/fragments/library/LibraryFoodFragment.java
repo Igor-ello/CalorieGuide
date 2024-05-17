@@ -8,16 +8,19 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.SearchView;
 
+import com.obsessed.calorieguide.AppDatabase;
 import com.obsessed.calorieguide.R;
 import com.obsessed.calorieguide.data.Data;
 import com.obsessed.calorieguide.data.Func;
 import com.obsessed.calorieguide.databinding.FragmentFoodLibraryBinding;
+import com.obsessed.calorieguide.local.dao.FoodDao;
 import com.obsessed.calorieguide.network.food.FoodCall;
 import com.obsessed.calorieguide.network.food.callbacks.CallbackLikeFood;
 import com.obsessed.calorieguide.network.food.Food;
@@ -25,9 +28,16 @@ import com.obsessed.calorieguide.network.food.callbacks.CallbackGetAllFood;
 import com.obsessed.calorieguide.network.food.callbacks.CallbackSearchFood;
 
 import java.util.ArrayList;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 
 public class LibraryFoodFragment extends Fragment implements CallbackGetAllFood, CallbackLikeFood, CallbackSearchFood {
     FragmentFoodLibraryBinding binding;
+    // Флаг для проверки первого запуска
+    private boolean isFirstLaunch = true;
+    // Executor для выполнения операций в фоне
+    private final Executor executor = Executors.newSingleThreadExecutor();
+
 
     public LibraryFoodFragment() {
         // Required empty public constructor
@@ -52,13 +62,27 @@ public class LibraryFoodFragment extends Fragment implements CallbackGetAllFood,
         super.onViewCreated(view, savedInstanceState);
         binding = FragmentFoodLibraryBinding.bind(view);
 
-        //Подгрузка данных
-        requireActivity().runOnUiThread(() -> {
+        if (isFirstLaunch) {
+            Log.d("LibraryFoodFragment", "First launch");
+            //Подгрузка данных из удаленной базы данных
+            isFirstLaunch = false;
             FoodCall call = new FoodCall();
-            if(Data.getInstance().getUser() != null)
-                call.getAllFood(Data.getInstance().getUser().getId(), this);
-            else call.getAllFood(this);
-        });
+
+            requireActivity().runOnUiThread(() -> {
+                if (Data.getInstance().getUser() != null)
+                    call.getAllFood(Data.getInstance().getUser().getId(), this);
+                else call.getAllFood(this);
+            });
+        } else {
+            Log.d("LibraryFoodFragment", "Not first launch");
+            //Подгрузка данных из локальной базы данных
+            executor.execute(() -> {
+                AppDatabase db = AppDatabase.getInstance(requireContext());
+                FoodDao foodDao = db.foodDao();
+                ArrayList<Food> foodList = (ArrayList<Food>) foodDao.getAllFood();
+                requireActivity().runOnUiThread(() -> notFirstLaunch(foodList));
+            });
+        }
 
         //Поиск фруктов в библиотеке
         binding.searchAndAdd.search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -89,9 +113,26 @@ public class LibraryFoodFragment extends Fragment implements CallbackGetAllFood,
         });
     }
 
+    public void notFirstLaunch(ArrayList<Food> foodList) {
+        Log.d("LibraryFoodFragment", "Not first launch: " + foodList.size());
+        new AllFoodReceived(requireContext(), requireView(), binding, foodList, this)
+                .onAllFoodReceived();
+    }
+
     @Override
     public void onAllFoodReceived(ArrayList<Food> foodList) {
+        Log.d("LibraryFoodFragment", "All food received: " + foodList.size());
+
         if (isAdded()) { // Проверяем, привязан ли фрагмент к активности
+            executor.execute(() -> {
+                // Вставка или обновление данных в локальной базе данных
+                AppDatabase db = AppDatabase.getInstance(requireContext());
+                FoodDao foodDao = db.foodDao();
+                for (Food food : foodList) {
+                    foodDao.insert(food); // Используйте insert или update в зависимости от ваших требований
+                }
+            });
+
             new AllFoodReceived(requireContext(), requireView(), binding, foodList, this)
                     .onAllFoodReceived();
         }

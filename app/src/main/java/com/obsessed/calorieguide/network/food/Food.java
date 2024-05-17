@@ -1,10 +1,15 @@
 package com.obsessed.calorieguide.network.food;
 
 
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 
+@Entity(tableName = "food_table")
 public class Food {
+    @PrimaryKey(autoGenerate = true)
     private int id;
     private String food_name;
     private String description;
@@ -61,6 +66,10 @@ public class Food {
         return id;
     }
 
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public String getFoodName() {
         return food_name;
     }
@@ -89,6 +98,10 @@ public class Food {
         return author_id;
     }
 
+    public void setLikes(int likes) {
+        this.likes = likes;
+    }
+
     public int getLikes() {
         return likes;
     }
@@ -102,5 +115,15 @@ public class Food {
     }
     public void setIsLiked(boolean isLiked) {
         this.isLiked = isLiked;
+    }
+
+    //Getters
+
+    public String getFood_name() {
+        return food_name;
+    }
+
+    public int getAuthor_id() {
+        return author_id;
     }
 }

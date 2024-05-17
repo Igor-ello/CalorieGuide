@@ -1,6 +1,11 @@
 package com.obsessed.calorieguide.network.meal;
 
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
+@Entity(tableName = "food_id_quantity")
 public class FoodIdQuantity {
+    @PrimaryKey(autoGenerate = true)
     int product_id;
     int quantity;
 

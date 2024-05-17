@@ -1,27 +1,33 @@
 package com.obsessed.calorieguide.network.user;
 
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
 import java.util.Arrays;
 
+@Entity(tableName = "user_table")
 public class User {
-    int id;
-    String user_name;
-    String surname;
-    String email;
-    String password;
-    String BearerToken;
-    byte[] picture;
-    int lunch_id;
-    int breakfast_id;
-    int dinner_id;
-    int calories_goal;
-    int carbohydrates_goal;
-    int fats_goal;
-    int proteins_goal;
-    int calories_current;
-    int carbonates_current = 0;
-    int fats_current = 0;
-    int proteins_current = 0;
+    @PrimaryKey(autoGenerate = true)
+    public int id;
+    public String user_name;
+    public String surname;
+    public String email;
+    public String password;
+    public String BearerToken;
+    public byte[] picture;
+    public int lunch_id;
+    public int breakfast_id;
+    public int dinner_id;
+    public int calories_goal;
+    public int carbohydrates_goal;
+    public int fats_goal;
+    public int proteins_goal;
+    public int calories_current;
+    public int carbonates_current = 0;
+    public int fats_current = 0;
+    public int proteins_current = 0;
 
+    public User() {}
 
     public User(int id, String name, String surname, String email, String password, String BearerToken) {
         this.id = id;
