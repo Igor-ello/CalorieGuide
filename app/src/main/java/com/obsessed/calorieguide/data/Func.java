@@ -2,8 +2,6 @@ package com.obsessed.calorieguide.data;
 
 import android.widget.ImageView;
 
-import androidx.core.content.ContextCompat;
-
 import com.obsessed.calorieguide.R;
 
 public class Func {
