@@ -12,10 +12,10 @@ import com.obsessed.calorieguide.R;
 import com.obsessed.calorieguide.databinding.FragmentFoodLibraryBinding;
 import com.obsessed.calorieguide.views.adapters.food.FoodAdapterV1;
 import com.obsessed.calorieguide.views.adapters.food.FoodAdapterV2;
-import com.obsessed.calorieguide.data.Data;
-import com.obsessed.calorieguide.network.food.FoodCallWithToken;
-import com.obsessed.calorieguide.network.food.callbacks.CallbackLikeFood;
-import com.obsessed.calorieguide.network.food.Food;
+import com.obsessed.calorieguide.tools.Data;
+import com.obsessed.calorieguide.data.remote.network.food.FoodCallWithToken;
+import com.obsessed.calorieguide.data.remote.network.food.callbacks.CallbackLikeFood;
+import com.obsessed.calorieguide.data.models.Food;
 
 import java.util.ArrayList;
 
@@ -49,14 +49,14 @@ public class AllFoodReceived {
 
         // Установка слушателя в адаптере
         foodAdapter.setOnFoodClickListener(food -> {
-            Log.d("FoodAdapter", "Clicked on food in FoodAdapterV1: " + food.getFoodName());
+            Log.d("FoodAdapter", "Clicked on food in FoodAdapterV1: " + food.getFood_name());
             Bundle args = new Bundle();
             args.putInt("food_id", food.getId());
             Navigation.findNavController(view).navigate(R.id.action_libraryFoodFragment_to_editFoodFragment, args);
         });
 
         foodAdapter.setOnLikeFoodClickListener((food, imageView) -> {
-            Log.d("FoodAdapter", "Clicked on like for food in FoodAdapterV1: " + food.getFoodName());
+            Log.d("FoodAdapter", "Clicked on like for food in FoodAdapterV1: " + food.getFood_name());
             FoodCallWithToken call = new FoodCallWithToken(Data.getInstance().getUser().getBearerToken());
             call.likeFood(Data.getInstance().getUser().getId(), food, imageView, callback);
         });
@@ -69,14 +69,14 @@ public class AllFoodReceived {
 
         // Установка слушателя в адаптере
         foodAdapter.setOnFoodClickListener(food -> {
-            Log.d("FoodAdapter", "Clicked on food in FoodAdapterV2: " + food.getFoodName());
+            Log.d("FoodAdapter", "Clicked on food in FoodAdapterV2: " + food.getFood_name());
             Bundle args = new Bundle();
             args.putInt("food_id", food.getId());
             Navigation.findNavController(view).navigate(R.id.action_libraryFoodFragment_to_editFoodFragment, args);
         });
 
         foodAdapter.setOnLikeFoodClickListener((food, imageView)-> {
-            Log.d("FoodAdapter", "Clicked on like for food in FoodAdapterV2: " + food.getFoodName());
+            Log.d("FoodAdapter", "Clicked on like for food in FoodAdapterV2: " + food.getFood_name());
             FoodCallWithToken call = new FoodCallWithToken(Data.getInstance().getUser().getBearerToken());
             call.likeFood(Data.getInstance().getUser().getId(), food, imageView, callback);
         });

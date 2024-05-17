@@ -7,8 +7,8 @@ import android.content.SharedPreferences;
 import android.util.Log;
 
 import com.google.gson.Gson;
-import com.obsessed.calorieguide.data.Data;
-import com.obsessed.calorieguide.network.user.User;
+import com.obsessed.calorieguide.tools.Data;
+import com.obsessed.calorieguide.data.models.User;
 
 public class ShPrefs {
     public static void saveData(User user, int adapterType, Context context) {

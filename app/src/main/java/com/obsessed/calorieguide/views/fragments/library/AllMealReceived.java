@@ -11,10 +11,10 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import com.obsessed.calorieguide.R;
 import com.obsessed.calorieguide.databinding.FragmentMealLibraryBinding;
 import com.obsessed.calorieguide.views.adapters.meal.MealAdapter;
-import com.obsessed.calorieguide.data.Data;
-import com.obsessed.calorieguide.network.meal.callbacks.CallbackLikeMeal;
-import com.obsessed.calorieguide.network.meal.Meal;
-import com.obsessed.calorieguide.network.meal.MealCallWithToken;
+import com.obsessed.calorieguide.tools.Data;
+import com.obsessed.calorieguide.data.remote.network.meal.callbacks.CallbackLikeMeal;
+import com.obsessed.calorieguide.data.models.Meal;
+import com.obsessed.calorieguide.data.remote.network.meal.MealCallWithToken;
 
 import java.util.ArrayList;
 
@@ -40,14 +40,14 @@ public class AllMealReceived {
 
         // Установка слушателя в адаптере
         mealAdapter.setOnMealClickListener(meal -> {
-            Log.d("IntakeAdapter", "Clicked on meal in IntakeAdapter: " + meal.getMealName());
+            Log.d("IntakeAdapter", "Clicked on meal in IntakeAdapter: " + meal.getMeal_name());
             Bundle args = new Bundle();
             args.putInt("meal_id", meal.getId());
             Navigation.findNavController(view).navigate(R.id.action_libraryMealFragment_to_editMealFragment, args);
         });
 
         mealAdapter.setOnLikeMealClickListener((meal, imageView) -> {
-            Log.d("IntakeAdapter", "Clicked on like for meal in IntakeAdapter: " + meal.getMealName());
+            Log.d("IntakeAdapter", "Clicked on like for meal in IntakeAdapter: " + meal.getMeal_name());
             MealCallWithToken mealCallWithToken = new MealCallWithToken(Data.getInstance().getUser().getBearerToken());
             mealCallWithToken.likeMeal(Data.getInstance().getUser().getId(), meal, imageView, callback);
         });

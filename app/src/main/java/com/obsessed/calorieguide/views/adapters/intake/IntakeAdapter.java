@@ -11,8 +11,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.obsessed.calorieguide.R;
 import com.obsessed.calorieguide.databinding.ObjectItemBinding;
-import com.obsessed.calorieguide.network.food.Food;
-import com.obsessed.calorieguide.network.meal.Meal;
+import com.obsessed.calorieguide.data.models.Food;
+import com.obsessed.calorieguide.data.models.Meal;
 
 import java.util.ArrayList;
 
@@ -42,14 +42,14 @@ public class IntakeAdapter extends RecyclerView.Adapter<IntakeAdapter.IntakeHold
 
             if(object instanceof Food) {
                 Food food = (Food) object;
-                binding.tvName.setText(food.getFoodName());
+                binding.tvName.setText(food.getFood_name());
                 imageData = food.getPicture();
-                Log.d("ObjectAdapter", food.getFoodName());
+                Log.d("ObjectAdapter", food.getFood_name());
             } else if(object instanceof Meal) {
                 Meal meal = (Meal) object;
-                binding.tvName.setText(meal.getMealName());
+                binding.tvName.setText(meal.getMeal_name());
                 imageData = meal.getPicture();
-                Log.d("ObjectAdapter", meal.getMealName());
+                Log.d("ObjectAdapter", meal.getMeal_name());
             } else
                 binding.tvName.setText("NULL!!!");
 

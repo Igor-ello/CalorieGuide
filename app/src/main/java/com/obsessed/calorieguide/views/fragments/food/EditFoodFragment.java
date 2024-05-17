@@ -23,13 +23,13 @@ import android.widget.Toast;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.obsessed.calorieguide.MainActivityApp;
 import com.obsessed.calorieguide.R;
-import com.obsessed.calorieguide.network.food.FoodCallWithToken;
+import com.obsessed.calorieguide.data.remote.network.food.FoodCallWithToken;
 import com.obsessed.calorieguide.tools.convert.FillClass;
 import com.obsessed.calorieguide.tools.convert.ResizedBitmap;
-import com.obsessed.calorieguide.data.Data;
-import com.obsessed.calorieguide.network.food.callbacks.CallbackGetFoodById;
-import com.obsessed.calorieguide.network.food.Food;
-import com.obsessed.calorieguide.network.food.FoodCall;
+import com.obsessed.calorieguide.tools.Data;
+import com.obsessed.calorieguide.data.remote.network.food.callbacks.CallbackGetFoodById;
+import com.obsessed.calorieguide.data.models.Food;
+import com.obsessed.calorieguide.data.remote.network.food.FoodCall;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;

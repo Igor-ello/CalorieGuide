@@ -14,7 +14,7 @@ import com.obsessed.calorieguide.R;
 import com.obsessed.calorieguide.databinding.FoodItemV1Binding;
 import com.obsessed.calorieguide.views.adapters.food.listeners.OnFoodClickListener;
 import com.obsessed.calorieguide.views.adapters.food.listeners.OnLikeFoodClickListener;
-import com.obsessed.calorieguide.network.food.Food;
+import com.obsessed.calorieguide.data.models.Food;
 
 import java.util.ArrayList;
 
@@ -46,9 +46,9 @@ public class FoodAdapterV1 extends RecyclerView.Adapter<FoodAdapterV1.FoodHolder
         }
 
         public void bind(Food food) {
-            binding.tvName.setText(food.getFoodName());
+            binding.tvName.setText(food.getFood_name());
             binding.btLikeV1.setImageResource(food.getIsLiked()? R.drawable.like_active : R.drawable.like_not_active);
-            Log.d("FoodAdapter", "Name: " + food.getFoodName() + " like: " + food.getIsLiked());
+            Log.d("FoodAdapter", "Name: " + food.getFood_name() + " like: " + food.getIsLiked());
 
             if (food.getPicture() != null) {
                 byte[] imageData = food.getPicture();

@@ -2,12 +2,12 @@ package com.obsessed.calorieguide.tools.convert;
 
 import android.widget.EditText;
 
-import com.obsessed.calorieguide.data.Data;
-import com.obsessed.calorieguide.network.food.Food;
-import com.obsessed.calorieguide.network.meal.FoodIdQuantity;
-import com.obsessed.calorieguide.network.meal.Meal;
-import com.obsessed.calorieguide.network.user.RegistrationRequest;
-import com.obsessed.calorieguide.network.user.User;
+import com.obsessed.calorieguide.tools.Data;
+import com.obsessed.calorieguide.data.models.Food;
+import com.obsessed.calorieguide.data.remote.network.meal.FoodIdQuantity;
+import com.obsessed.calorieguide.data.models.Meal;
+import com.obsessed.calorieguide.data.remote.network.user.RegistrationRequest;
+import com.obsessed.calorieguide.data.models.User;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,14 +39,14 @@ public class FillClass {
 
     public static RegistrationRequest fillRegistrationRequest(User user) {
         RegistrationRequest registrationRequest = new RegistrationRequest(
-                user.getName(),
+                user.getUser_name(),
                 user.getSurname(),
                 user.getEmail(),
                 user.getPassword(),
-                user.getCaloriesGoal(),
-                user.getCarbonatesGoal(),
-                user.getProteinsGoal(),
-                user.getFatsGoal()
+                user.getCalories_goal(),
+                user.getCarbohydrates_goal(),
+                user.getProteins_goal(),
+                user.getFats_goal()
         );
         return registrationRequest;
     }

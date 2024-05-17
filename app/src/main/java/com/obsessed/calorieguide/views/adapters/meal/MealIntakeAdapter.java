@@ -14,7 +14,7 @@ import com.obsessed.calorieguide.databinding.MealItemLikesBinding;
 import com.obsessed.calorieguide.views.adapters.meal.listeners.OnAddMealClickListener;
 import com.obsessed.calorieguide.views.adapters.meal.listeners.OnLikeMealClickListener;
 import com.obsessed.calorieguide.views.adapters.meal.listeners.OnMealClickListener;
-import com.obsessed.calorieguide.network.meal.Meal;
+import com.obsessed.calorieguide.data.models.Meal;
 
 import java.util.ArrayList;
 
@@ -51,8 +51,8 @@ public class MealIntakeAdapter extends RecyclerView.Adapter<MealIntakeAdapter.Me
         }
 
         public void bind(Meal meal) {
-            binding.tvName.setText(meal.getMealName());
-            binding.tvCalories.setText(String.valueOf(meal.getTotalCalories()));
+            binding.tvName.setText(meal.getMeal_name());
+            binding.tvCalories.setText(String.valueOf(meal.getTotal_calories()));
             binding.btLike.setImageResource(meal.getIsLiked()? R.drawable.like_active : R.drawable.like_not_active);
             binding.btAdd.setImageResource(R.drawable.add);
 
