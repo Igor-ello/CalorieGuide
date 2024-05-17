@@ -1,4 +1,4 @@
-package com.obsessed.calorieguide.network.food;
+package com.obsessed.calorieguide.data.models;
 
 
 import androidx.room.Entity;
@@ -62,52 +62,75 @@ public class Food {
                 '}';
     }
 
+    //Getters and Setters
     public int getId() {
         return id;
     }
-
     public void setId(int id) {
         this.id = id;
     }
 
-    public String getFoodName() {
+    public String getFood_name() {
         return food_name;
+    }
+    public void setFood_name(String food_name) {
+        this.food_name = food_name;
     }
 
     public String getDescription() {
         return description;
     }
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
     public int getCalories() {
         return calories;
+    }
+    public void setCalories(int calories) {
+        this.calories = calories;
     }
 
     public int getProteins() {
         return proteins;
     }
+    public void setProteins(int proteins) {
+        this.proteins = proteins;
+    }
 
     public int getCarbohydrates() {
         return carbohydrates;
+    }
+    public void setCarbohydrates(int carbohydrates) {
+        this.carbohydrates = carbohydrates;
     }
 
     public int getFats() {
         return fats;
     }
+    public void setFats(int fats) {
+        this.fats = fats;
+    }
 
-    public int getAuthorId() {
+    public int getAuthor_id() {
         return author_id;
+    }
+    public void setAuthor_id(int author_id) {
+        this.author_id = author_id;
     }
 
     public void setLikes(int likes) {
         this.likes = likes;
     }
-
     public int getLikes() {
         return likes;
     }
 
     public byte[] getPicture() {
         return picture;
+    }
+    public void setPicture(byte[] picture) {
+        this.picture = picture;
     }
 
     public boolean getIsLiked() {
@@ -117,13 +140,4 @@ public class Food {
         this.isLiked = isLiked;
     }
 
-    //Getters
-
-    public String getFood_name() {
-        return food_name;
-    }
-
-    public int getAuthor_id() {
-        return author_id;
-    }
 }

@@ -1,10 +1,11 @@
-package com.obsessed.calorieguide.network.meal;
+package com.obsessed.calorieguide.data.models;
 
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 import androidx.room.TypeConverters;
 
-import com.obsessed.calorieguide.data.models.room.Converters;
+import com.obsessed.calorieguide.data.local.room.Converters;
+import com.obsessed.calorieguide.network.meal.FoodIdQuantity;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -60,48 +61,85 @@ public class Meal {
         return arrayList;
     }
 
+    //Getters and Setters
     public int getId() {
         return id;
     }
+    public void setId(int id) {
+        this.id = id;
+    }
 
-    public String getMealName() {
+    public String getMeal_name() {
         return meal_name;
     }
+    public void setMeal_name(String meal_name) {
+        this.meal_name = meal_name;
+    }
 
-    public int getTotalCalories() {
+    public int getTotal_calories() {
         return total_calories;
     }
+    public void setTotal_calories(int total_calories) {
+        this.total_calories = total_calories;
+    }
 
-    public int getTotalProteins() {
+    public int getTotal_proteins() {
         return total_proteins;
     }
+    public void setTotal_proteins(int total_proteins) {
+        this.total_proteins = total_proteins;
+    }
 
-    public int getTotalFats() {
+    public int getTotal_fats() {
         return total_fats;
     }
-
-    public int getTotalCarbohydrates() {
-        return total_carbohydrates;
+    public void setTotal_fats(int total_fats) {
+        this.total_fats = total_fats;
     }
 
+    public int getTotal_carbohydrates() {
+        return total_carbohydrates;
+    }
+    public void setTotal_carbohydrates(int total_carbohydrates) {
+        this.total_carbohydrates = total_carbohydrates;
+    }
+
+    public List<FoodIdQuantity> getProducts_id() {
+        return products_id;
+    }
     public List<FoodIdQuantity> getFoodIdQuantities() {
         return products_id;
     }
+    public void setFoodIdQuantities(List<FoodIdQuantity> products_id) {
+        this.products_id = products_id;
+    }
 
-    public int getAuthorId() {
+    public int getAuthor_id() {
         return author_id;
+    }
+    public void setAuthor_id(int author_id) {
+        this.author_id = author_id;
     }
 
     public String getDescription() {
         return description;
     }
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
     public int getLikes() {
         return likes;
     }
+    public void setLikes(int likes) {
+        this.likes = likes;
+    }
 
     public byte[] getPicture() {
         return picture;
+    }
+    public void setPicture(byte[] picture) {
+        this.picture = picture;
     }
 
     public boolean getIsLiked() {
@@ -111,61 +149,4 @@ public class Meal {
         this.isLiked = isLiked;
     }
 
-
-    //Getter
-
-    public String getMeal_name() {
-        return meal_name;
-    }
-
-    public int getTotal_calories() {
-        return total_calories;
-    }
-
-    public int getTotal_proteins() {
-        return total_proteins;
-    }
-
-    public int getTotal_fats() {
-        return total_fats;
-    }
-
-    public int getTotal_carbohydrates() {
-        return total_carbohydrates;
-    }
-
-    public List<FoodIdQuantity> getProducts_id() {
-        return products_id;
-    }
-
-    public int getAuthor_id() {
-        return author_id;
-    }
-
-    //Setter
-
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public void setTotal_calories(int total_calories) {
-        this.total_calories = total_calories;
-    }
-
-    public void setTotal_proteins(int total_proteins) {
-        this.total_proteins = total_proteins;
-    }
-
-    public void setTotal_fats(int total_fats) {
-        this.total_fats = total_fats;
-    }
-
-    public void setTotal_carbohydrates(int total_carbohydrates) {
-        this.total_carbohydrates = total_carbohydrates;
-    }
-
-    public void setLikes(int likes) {
-        this.likes = likes;
-    }
 }
