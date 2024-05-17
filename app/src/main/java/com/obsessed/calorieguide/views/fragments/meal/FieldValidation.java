@@ -9,9 +9,9 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.obsessed.calorieguide.R;
-import com.obsessed.calorieguide.network.food.Food;
-import com.obsessed.calorieguide.network.meal.FoodIdQuantity;
-import com.obsessed.calorieguide.network.meal.Meal;
+import com.obsessed.calorieguide.data.models.Food;
+import com.obsessed.calorieguide.data.remote.network.meal.FoodIdQuantity;
+import com.obsessed.calorieguide.data.models.Meal;
 import com.obsessed.calorieguide.tools.ViewFactory;
 
 import java.util.ArrayList;
@@ -58,7 +58,7 @@ public class FieldValidation {
 
         foodNames = new ArrayList<>();
         for (Food food : foodList) {
-            foodNames.add(food.getFoodName());
+            foodNames.add(food.getFood_name());
         }
 
         int numberOfElements = Integer.parseInt(etNumberOfIng.getText().toString());

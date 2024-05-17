@@ -15,17 +15,17 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.SearchView;
 
-import com.obsessed.calorieguide.AppDatabase;
+import com.obsessed.calorieguide.data.local.room.AppDatabase;
 import com.obsessed.calorieguide.R;
-import com.obsessed.calorieguide.data.Data;
-import com.obsessed.calorieguide.data.Func;
+import com.obsessed.calorieguide.tools.Data;
+import com.obsessed.calorieguide.tools.Func;
 import com.obsessed.calorieguide.databinding.FragmentFoodLibraryBinding;
-import com.obsessed.calorieguide.local.dao.FoodDao;
-import com.obsessed.calorieguide.network.food.FoodCall;
-import com.obsessed.calorieguide.network.food.callbacks.CallbackLikeFood;
-import com.obsessed.calorieguide.network.food.Food;
-import com.obsessed.calorieguide.network.food.callbacks.CallbackGetAllFood;
-import com.obsessed.calorieguide.network.food.callbacks.CallbackSearchFood;
+import com.obsessed.calorieguide.data.local.dao.FoodDao;
+import com.obsessed.calorieguide.data.remote.network.food.FoodCall;
+import com.obsessed.calorieguide.data.remote.network.food.callbacks.CallbackLikeFood;
+import com.obsessed.calorieguide.data.models.Food;
+import com.obsessed.calorieguide.data.remote.network.food.callbacks.CallbackGetAllFood;
+import com.obsessed.calorieguide.data.remote.network.food.callbacks.CallbackSearchFood;
 
 import java.util.ArrayList;
 import java.util.concurrent.Executor;

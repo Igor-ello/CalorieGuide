@@ -6,10 +6,10 @@ import android.widget.ProgressBar;
 
 import androidx.fragment.app.FragmentActivity;
 
-import com.obsessed.calorieguide.data.Data;
-import com.obsessed.calorieguide.data.DayFunc;
+import com.obsessed.calorieguide.tools.Data;
+import com.obsessed.calorieguide.tools.DayFunc;
 import com.obsessed.calorieguide.databinding.FragmentMainBinding;
-import com.obsessed.calorieguide.network.user.User;
+import com.obsessed.calorieguide.data.models.User;
 
 public class Stats {
     private static Stats uniqueInstance;
@@ -42,36 +42,36 @@ public class Stats {
     }
 
     private static void updateValues() {
-        user.setCaloriesCurrent(DayFunc.getCalories());
-        user.setCarbohydratesCurrent(DayFunc.getCarbohydrates());
-        user.setProteinsCurrent(DayFunc.getProteins());
-        user.setFatsCurrent(DayFunc.getFats());
+        user.setCalories_current(DayFunc.getCalories());
+        user.setCarbohydrates_current(DayFunc.getCarbohydrates());
+        user.setProteins_current(DayFunc.getProteins());
+        user.setFats_current(DayFunc.getFats());
     }
 
     private void initCalories() {
-        binding.stats.tvCaloriesTotal.setText(String.valueOf(user.getCaloriesCurrent()));
-        binding.stats.tvCaloriesLeft.setText(String.valueOf(user.getCaloriesGoal() - user.getCaloriesCurrent()));
-        binding.stats.tvCaloriesGoal.setText(String.valueOf(user.getCaloriesGoal()));
+        binding.stats.tvCaloriesTotal.setText(String.valueOf(user.getCalories_current()));
+        binding.stats.tvCaloriesLeft.setText(String.valueOf(user.getCalories_goal() - user.getCalories_current()));
+        binding.stats.tvCaloriesGoal.setText(String.valueOf(user.getCalories_goal()));
     }
 
     public void initCPF() {
-        binding.statsCpf.tvCarb.setText(user.getCarbohydratesCurrent() + "/" + user.getCarbonatesGoal() + "g");
-        binding.statsCpf.tvProteins.setText(user.getProteinsCurrent() + "/" + user.getProteinsGoal() + "g");
-        binding.statsCpf.tvFats.setText(user.getFatsCurrent() + "/" + user.getFatsGoal() + "g");
+        binding.statsCpf.tvCarb.setText(user.getCarbohydrates_current() + "/" + user.getCarbohydrates_goal() + "g");
+        binding.statsCpf.tvProteins.setText(user.getProteins_current() + "/" + user.getProteins_goal() + "g");
+        binding.statsCpf.tvFats.setText(user.getFats_current() + "/" + user.getFats_goal() + "g");
     }
 
     private void initPrsBar() {
-        updateProgressAnimated(binding.stats.prgBar, user.getCaloriesCurrent() * 100 / (user.getCaloriesGoal()+1));
-        binding.stats.prgBar.setProgress( (int) (user.getCaloriesCurrent() * 100 / (user.getCaloriesGoal()+1)));
+        updateProgressAnimated(binding.stats.prgBar, user.getCalories_current() * 100 / (user.getCalories_goal()+1));
+        binding.stats.prgBar.setProgress( (int) (user.getCalories_current() * 100 / (user.getCalories_goal()+1)));
 
-        updateProgressAnimated(binding.statsCpf.prgBarCarb, user.getCarbohydratesCurrent() * 100 / (user.getCarbonatesGoal()+1));
-        binding.statsCpf.prgBarCarb.setProgress( (int) (user.getCarbohydratesCurrent() * 100 / (user.getCarbonatesGoal()+1)));
+        updateProgressAnimated(binding.statsCpf.prgBarCarb, user.getCarbohydrates_current() * 100 / (user.getCarbohydrates_goal()+1));
+        binding.statsCpf.prgBarCarb.setProgress( (int) (user.getCarbohydrates_current() * 100 / (user.getCarbohydrates_goal()+1)));
 
-        updateProgressAnimated(binding.statsCpf.prgBarProteins, user.getProteinsCurrent() * 100 / (user.getProteinsGoal()+1));
-        binding.statsCpf.prgBarProteins.setProgress( (int) (user.getProteinsCurrent() * 100 / (user.getProteinsGoal()+1)));
+        updateProgressAnimated(binding.statsCpf.prgBarProteins, user.getProteins_current() * 100 / (user.getProteins_goal()+1));
+        binding.statsCpf.prgBarProteins.setProgress( (int) (user.getProteins_current() * 100 / (user.getProteins_goal()+1)));
 
-        updateProgressAnimated(binding.statsCpf.prgBarFats, user.getFatsCurrent() * 100 / (user.getFatsGoal()+1));
-        binding.statsCpf.prgBarFats.setProgress( (int) (user.getFatsCurrent() * 100 / (user.getFatsGoal()+1)));
+        updateProgressAnimated(binding.statsCpf.prgBarFats, user.getFats_current() * 100 / (user.getFats_goal()+1));
+        binding.statsCpf.prgBarFats.setProgress( (int) (user.getFats_current() * 100 / (user.getFats_goal()+1)));
     }
 
     private static void updateProgressAnimated(ProgressBar progressBar, int newProgress) {

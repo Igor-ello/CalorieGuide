@@ -4,7 +4,7 @@ import android.view.View;
 import android.widget.EditText;
 
 import com.obsessed.calorieguide.R;
-import com.obsessed.calorieguide.network.food.Food;
+import com.obsessed.calorieguide.data.models.Food;
 
 import java.util.ArrayList;
 

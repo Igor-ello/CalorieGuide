@@ -5,7 +5,7 @@ import androidx.room.PrimaryKey;
 import androidx.room.TypeConverters;
 
 import com.obsessed.calorieguide.data.local.room.Converters;
-import com.obsessed.calorieguide.network.meal.FoodIdQuantity;
+import com.obsessed.calorieguide.data.remote.network.meal.FoodIdQuantity;
 
 import java.util.ArrayList;
 import java.util.Arrays;

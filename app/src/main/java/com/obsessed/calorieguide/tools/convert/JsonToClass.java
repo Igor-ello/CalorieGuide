@@ -1,7 +1,7 @@
 package com.obsessed.calorieguide.tools.convert;
 
 import com.google.gson.JsonObject;
-import com.obsessed.calorieguide.network.user.User;
+import com.obsessed.calorieguide.data.models.User;
 
 public class JsonToClass {
     public static User getUser(JsonObject jsonObject) {

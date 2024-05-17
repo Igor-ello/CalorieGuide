@@ -15,14 +15,14 @@ import android.widget.ImageView;
 import android.widget.SearchView;
 
 import com.obsessed.calorieguide.R;
-import com.obsessed.calorieguide.data.Data;
-import com.obsessed.calorieguide.data.Func;
+import com.obsessed.calorieguide.tools.Data;
+import com.obsessed.calorieguide.tools.Func;
 import com.obsessed.calorieguide.databinding.FragmentMealLibraryBinding;
-import com.obsessed.calorieguide.network.meal.callbacks.CallbackGetAllMeal;
-import com.obsessed.calorieguide.network.meal.callbacks.CallbackLikeMeal;
-import com.obsessed.calorieguide.network.meal.Meal;
-import com.obsessed.calorieguide.network.meal.MealCall;
-import com.obsessed.calorieguide.network.meal.callbacks.CallbackSearchMeal;
+import com.obsessed.calorieguide.data.remote.network.meal.callbacks.CallbackGetAllMeal;
+import com.obsessed.calorieguide.data.remote.network.meal.callbacks.CallbackLikeMeal;
+import com.obsessed.calorieguide.data.models.Meal;
+import com.obsessed.calorieguide.data.remote.network.meal.MealCall;
+import com.obsessed.calorieguide.data.remote.network.meal.callbacks.CallbackSearchMeal;
 
 import java.util.ArrayList;
 

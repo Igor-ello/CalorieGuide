@@ -13,7 +13,7 @@ import com.obsessed.calorieguide.R;
 import com.obsessed.calorieguide.databinding.FoodItemV2Binding;
 import com.obsessed.calorieguide.views.adapters.food.listeners.OnFoodClickListener;
 import com.obsessed.calorieguide.views.adapters.food.listeners.OnLikeFoodClickListener;
-import com.obsessed.calorieguide.network.food.Food;
+import com.obsessed.calorieguide.data.models.Food;
 
 import java.util.ArrayList;
 
@@ -45,7 +45,7 @@ public class FoodAdapterV2 extends RecyclerView.Adapter<FoodAdapterV2.FoodHolder
         }
 
         public void bind(Food food) {
-            binding.tvName.setText(food.getFoodName());
+            binding.tvName.setText(food.getFood_name());
             binding.tvCalories.setText(String.valueOf(food.getCalories()));
             binding.tvProteins.setText("p: " + food.getProteins());
             binding.tvCarbohydrates.setText("c: " + food.getCarbohydrates());

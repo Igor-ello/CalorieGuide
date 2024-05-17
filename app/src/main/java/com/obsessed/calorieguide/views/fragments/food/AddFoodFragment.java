@@ -22,9 +22,9 @@ import android.widget.Toast;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.obsessed.calorieguide.MainActivityApp;
 import com.obsessed.calorieguide.R;
-import com.obsessed.calorieguide.network.food.FoodCallWithToken;
+import com.obsessed.calorieguide.data.remote.network.food.FoodCallWithToken;
 import com.obsessed.calorieguide.tools.convert.FillClass;
-import com.obsessed.calorieguide.data.Data;
+import com.obsessed.calorieguide.tools.Data;
 import com.obsessed.calorieguide.tools.convert.ResizedBitmap;
 
 import java.io.ByteArrayOutputStream;

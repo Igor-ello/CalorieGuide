@@ -12,10 +12,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.obsessed.calorieguide.R;
 import com.obsessed.calorieguide.databinding.FragmentMainBinding;
 import com.obsessed.calorieguide.views.adapters.intake.IntakeAdapter;
-import com.obsessed.calorieguide.data.Data;
-import com.obsessed.calorieguide.data.Day;
-import com.obsessed.calorieguide.network.food.Food;
-import com.obsessed.calorieguide.network.meal.Meal;
+import com.obsessed.calorieguide.tools.Data;
+import com.obsessed.calorieguide.tools.Day;
+import com.obsessed.calorieguide.data.models.Food;
+import com.obsessed.calorieguide.data.models.Meal;
 
 public class Intakes {
     private static Intakes uniqueInstance;

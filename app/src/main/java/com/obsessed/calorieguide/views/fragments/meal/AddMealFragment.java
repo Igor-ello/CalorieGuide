@@ -22,12 +22,12 @@ import android.widget.Toast;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.obsessed.calorieguide.MainActivityApp;
 import com.obsessed.calorieguide.R;
-import com.obsessed.calorieguide.data.Data;
-import com.obsessed.calorieguide.network.food.FoodCall;
-import com.obsessed.calorieguide.network.food.callbacks.CallbackGetAllFood;
-import com.obsessed.calorieguide.network.food.Food;
-import com.obsessed.calorieguide.network.meal.FoodIdQuantity;
-import com.obsessed.calorieguide.network.meal.MealCallWithToken;
+import com.obsessed.calorieguide.tools.Data;
+import com.obsessed.calorieguide.data.remote.network.food.FoodCall;
+import com.obsessed.calorieguide.data.remote.network.food.callbacks.CallbackGetAllFood;
+import com.obsessed.calorieguide.data.models.Food;
+import com.obsessed.calorieguide.data.remote.network.meal.FoodIdQuantity;
+import com.obsessed.calorieguide.data.remote.network.meal.MealCallWithToken;
 import com.obsessed.calorieguide.tools.convert.FillClass;
 import com.obsessed.calorieguide.tools.convert.ResizedBitmap;
 

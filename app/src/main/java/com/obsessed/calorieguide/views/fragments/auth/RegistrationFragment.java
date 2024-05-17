@@ -16,8 +16,8 @@ import android.widget.Toast;
 
 import com.google.gson.JsonObject;
 import com.obsessed.calorieguide.R;
-import com.obsessed.calorieguide.network.user.RegistrationRequest;
-import com.obsessed.calorieguide.network.user.UserCall;
+import com.obsessed.calorieguide.data.remote.network.user.RegistrationRequest;
+import com.obsessed.calorieguide.data.remote.network.user.UserCall;
 
 import retrofit2.Call;
 import retrofit2.Callback;

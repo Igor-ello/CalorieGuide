@@ -19,9 +19,9 @@ import com.google.gson.JsonObject;
 import com.obsessed.calorieguide.MainActivityApp;
 import com.obsessed.calorieguide.R;
 import com.obsessed.calorieguide.tools.convert.FillClass;
-import com.obsessed.calorieguide.data.Data;
-import com.obsessed.calorieguide.network.user.User;
-import com.obsessed.calorieguide.network.user.UserCall;
+import com.obsessed.calorieguide.tools.Data;
+import com.obsessed.calorieguide.data.models.User;
+import com.obsessed.calorieguide.data.remote.network.user.UserCall;
 import com.obsessed.calorieguide.tools.save.ShPrefs;
 
 import java.util.ArrayList;
@@ -127,27 +127,27 @@ public class ProfileFragment extends Fragment {
             et.setFocusable(false); // Запретить редактирование
             et.setFocusableInTouchMode(false); // Запретить редактирование по клику
         }
-        etName.setText(user.getName());
+        etName.setText(user.getUser_name());
         etSurname.setText(user.getSurname());
         etEmail.setText(user.getEmail());
         etPassword.setText(user.getPassword());
 
-        etCalories.setText(String.valueOf(user.getCaloriesGoal()));
-        etCarbs.setText(String.valueOf(user.getCarbonatesGoal()));
-        etProteins.setText(String.valueOf(user.getProteinsGoal()));
-        etFats.setText(String.valueOf(user.getFatsGoal()));
+        etCalories.setText(String.valueOf(user.getCalories_goal()));
+        etCarbs.setText(String.valueOf(user.getCarbohydrates_goal()));
+        etProteins.setText(String.valueOf(user.getProteins_goal()));
+        etFats.setText(String.valueOf(user.getFats_goal()));
     }
 
     private void setUserParams() {
-        user.setName(etName.getText().toString().trim());
+        user.setUser_name(etName.getText().toString().trim());
         user.setSurname(etSurname.getText().toString().trim());
         user.setEmail(etEmail.getText().toString().trim());
         user.setPassword(etPassword.getText().toString().trim());
 
-        user.setCaloriesGoal(Integer.parseInt(etCalories.getText().toString().trim()));
-        user.setCarbohydratesGoal(Integer.parseInt(etCarbs.getText().toString().trim()));
-        user.setProteinsGoal(Integer.parseInt(etProteins.getText().toString().trim()));
-        user.setFatsGoal(Integer.parseInt(etFats.getText().toString().trim()));
+        user.setCalories_goal(Integer.parseInt(etCalories.getText().toString().trim()));
+        user.setCarbohydrates_goal(Integer.parseInt(etCarbs.getText().toString().trim()));
+        user.setProteins_goal(Integer.parseInt(etProteins.getText().toString().trim()));
+        user.setFats_goal(Integer.parseInt(etFats.getText().toString().trim()));
     }
 
 

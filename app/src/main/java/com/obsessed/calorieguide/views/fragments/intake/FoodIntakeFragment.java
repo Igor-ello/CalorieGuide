@@ -20,14 +20,14 @@ import com.obsessed.calorieguide.MainActivityApp;
 import com.obsessed.calorieguide.R;
 import com.obsessed.calorieguide.databinding.FragmentFoodLibraryBinding;
 import com.obsessed.calorieguide.views.adapters.food.FoodIntakeAdapter;
-import com.obsessed.calorieguide.data.Data;
-import com.obsessed.calorieguide.data.DayFunc;
-import com.obsessed.calorieguide.data.Func;
-import com.obsessed.calorieguide.network.food.FoodCallWithToken;
-import com.obsessed.calorieguide.network.food.callbacks.CallbackLikeFood;
-import com.obsessed.calorieguide.network.food.callbacks.CallbackSearchFood;
-import com.obsessed.calorieguide.network.food.Food;
-import com.obsessed.calorieguide.network.food.FoodCall;
+import com.obsessed.calorieguide.tools.Data;
+import com.obsessed.calorieguide.tools.DayFunc;
+import com.obsessed.calorieguide.tools.Func;
+import com.obsessed.calorieguide.data.remote.network.food.FoodCallWithToken;
+import com.obsessed.calorieguide.data.remote.network.food.callbacks.CallbackLikeFood;
+import com.obsessed.calorieguide.data.remote.network.food.callbacks.CallbackSearchFood;
+import com.obsessed.calorieguide.data.models.Food;
+import com.obsessed.calorieguide.data.remote.network.food.FoodCall;
 
 import java.util.ArrayList;
 
@@ -94,20 +94,20 @@ public class FoodIntakeFragment extends Fragment implements CallbackSearchFood, 
 
         // Установка слушателя в адаптере
         adapter.setOnFoodClickListener(food -> {
-            Log.d("Adapter", "Clicked on food in FoodIntakeAdapter: " + food.getFoodName());
+            Log.d("Adapter", "Clicked on food in FoodIntakeAdapter: " + food.getFood_name());
             Bundle args = new Bundle();
             args.putInt("food_id", food.getId());
             Navigation.findNavController(requireView()).navigate(R.id.editFoodFragment, args);
         });
 
         adapter.setOnLikeFoodClickListener((food, imageView) -> {
-            Log.d("Adapter", "Clicked on like for food in FoodAdapterLike: " + food.getFoodName());
+            Log.d("Adapter", "Clicked on like for food in FoodAdapterLike: " + food.getFood_name());
             FoodCallWithToken call = new FoodCallWithToken(Data.getInstance().getUser().getBearerToken());
             call.likeFood(Data.getInstance().getUser().getId(), food, imageView, this);
         });
 
         adapter.setOnAddFoodClickListener(food -> {
-            Log.d("Adapter", "Clicked on add for food in FoodIntakeAdapter: " + food.getFoodName());
+            Log.d("Adapter", "Clicked on add for food in FoodIntakeAdapter: " + food.getFood_name());
             DayFunc.addObjectToDay(food, arrayType);
         });
     }

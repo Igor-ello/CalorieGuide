@@ -14,16 +14,16 @@ import androidx.navigation.Navigation;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.obsessed.calorieguide.MainActivityApp;
 import com.obsessed.calorieguide.R;
-import com.obsessed.calorieguide.data.Data;
-import com.obsessed.calorieguide.data.DayFunc;
-import com.obsessed.calorieguide.network.food.FoodCallWithToken;
-import com.obsessed.calorieguide.network.food.callbacks.CallbackGetFoodById;
-import com.obsessed.calorieguide.network.food.Food;
-import com.obsessed.calorieguide.network.food.FoodCall;
-import com.obsessed.calorieguide.network.meal.callbacks.CallbackGetMealById;
-import com.obsessed.calorieguide.network.meal.Meal;
-import com.obsessed.calorieguide.network.meal.MealCallWithToken;
-import com.obsessed.calorieguide.network.meal.MealCall;
+import com.obsessed.calorieguide.tools.Data;
+import com.obsessed.calorieguide.tools.DayFunc;
+import com.obsessed.calorieguide.data.remote.network.food.FoodCallWithToken;
+import com.obsessed.calorieguide.data.remote.network.food.callbacks.CallbackGetFoodById;
+import com.obsessed.calorieguide.data.models.Food;
+import com.obsessed.calorieguide.data.remote.network.food.FoodCall;
+import com.obsessed.calorieguide.data.remote.network.meal.callbacks.CallbackGetMealById;
+import com.obsessed.calorieguide.data.models.Meal;
+import com.obsessed.calorieguide.data.remote.network.meal.MealCallWithToken;
+import com.obsessed.calorieguide.data.remote.network.meal.MealCall;
 
 public class ObjectActions extends Fragment implements CallbackGetMealById, CallbackGetFoodById {
     private static final String ARG_OBJECT_ID = "object_id";
