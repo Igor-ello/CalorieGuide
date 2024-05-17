@@ -3,8 +3,11 @@ package com.obsessed.calorieguide.data.remote.api;
 import com.google.gson.JsonObject;
 import com.obsessed.calorieguide.data.models.Meal;
 
+import java.util.List;
+
 import okhttp3.RequestBody;
 import retrofit2.Call;
+import retrofit2.Callback;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
 import retrofit2.http.GET;
@@ -30,4 +33,8 @@ public interface MealApi {
     Call<JsonObject> deleteMeal(@Path("meal_id") int mealId);
     @POST("/meals/search")
     Call<JsonObject> searchMeal(@Body RequestBody requestBody);
+
+    //For repo
+    @POST("/meals")
+    Call<JsonObject> getAllMealsLive(Callback<List<Meal>> callback);
 }
