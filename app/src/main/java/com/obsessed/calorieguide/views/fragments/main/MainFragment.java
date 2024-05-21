@@ -21,10 +21,11 @@ import com.obsessed.calorieguide.databinding.FragmentMainBinding;
 import com.obsessed.calorieguide.data.remote.network.meal.callbacks.CallbackGetMealById;
 import com.obsessed.calorieguide.data.models.Meal;
 import com.obsessed.calorieguide.data.remote.network.meal.MealCall;
+import com.obsessed.calorieguide.tools.save.CallbackLoadData;
 import com.obsessed.calorieguide.tools.save.ShPrefs;
 
 
-public class MainFragment extends Fragment {
+public class MainFragment extends Fragment implements CallbackLoadData {
     FragmentMainBinding binding;
 
     public MainFragment() {
@@ -53,14 +54,7 @@ public class MainFragment extends Fragment {
         binding = FragmentMainBinding.bind(view);
 
         // Загрузка данных из хранилища
-        ShPrefs.loadData(requireContext());
-
-        // Проверка пользователя на наличие авторизации
-        checkUserLogin();
-
-        // Инициализация для отображения данных
-        Stats.getInstance().init(binding, requireActivity());
-
+        ShPrefs.loadData(requireContext(), this);
     }
 
     private boolean checkUserLogin() {
@@ -77,9 +71,12 @@ public class MainFragment extends Fragment {
         }
     }
 
-//    @Override
-//    public void onMealByIdReceived(Meal meal) {
-//        Intakes.getInstance().init(binding, requireContext());
-//        Stats.getInstance().update();
-//    }
+    @Override
+    public void onLoadData() {
+        // Проверка пользователя на наличие авторизации
+        checkUserLogin();
+
+        // Инициализация для отображения данных
+        Stats.getInstance().init(binding, requireActivity());
+    }
 }

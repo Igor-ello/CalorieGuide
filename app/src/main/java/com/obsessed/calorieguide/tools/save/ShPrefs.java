@@ -18,7 +18,7 @@ public class ShPrefs {
         SharedPreferences.Editor editor = sharedPreferences.edit();
 
         // Сохранение данных
-        if (user!= null) {
+        if (user != null) {
             editor.putInt("user_id", user.getId()); // Сохранение user_id
         }
         editor.putInt("adapter_type", adapterType); // Сохранение adapterType
@@ -27,7 +27,7 @@ public class ShPrefs {
         Log.d("ShPrefs", "SAVE Data"); // Выводим данные в лог
     }
 
-    public static void loadData(Context context) {
+    public static void loadData(Context context, CallbackLoadData callback) {
         SharedPreferences sharedPreferences = context.getSharedPreferences("myPrefs", MODE_PRIVATE);
 
         // Получение данных
@@ -39,8 +39,9 @@ public class ShPrefs {
 
         Executors.newSingleThreadExecutor().execute(() -> {
             Data.getInstance().setUser(db.userDao().getUserById(userId));
+            Data.getInstance().setAdapterType(adapterType);
+            callback.onLoadData();
         });
-        Data.getInstance().setAdapterType(adapterType);
 
         Log.d("ShPrefs", "LOAD Data");
     }
@@ -49,12 +50,12 @@ public class ShPrefs {
         SharedPreferences sharedPreferences = context.getSharedPreferences("myPrefs", MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
 
-        // Сохранение данных
+        // CLEAR DATA
         editor.putInt("user_id", -1); // Сохранение user
         editor.putInt("adapter_type", 1); // Сохранение adapterType
         editor.apply();
 
-        loadData(context);
+        loadData(context, null);
 
         Log.d("ShPrefs", "DROP Data"); // Выводим данные в лог
     }
