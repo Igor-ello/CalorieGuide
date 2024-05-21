@@ -1,6 +1,5 @@
 package com.obsessed.calorieguide.data.local.dao;
 
-import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
@@ -27,5 +26,5 @@ public interface MealDao {
     void deleteAllMeals();
 
     @Query("SELECT * FROM meal_table")
-    List<Meal> getAllMeals();
+    List<Meal> getAllMeal();
 }

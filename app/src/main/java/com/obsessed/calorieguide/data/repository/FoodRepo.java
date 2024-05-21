@@ -29,30 +29,23 @@ import retrofit2.Response;
 
 public class FoodRepo {
     private final FoodDao foodDao;
-    //private final FoodApi foodApi;
-    private final Executor executor;
     private Runnable updateRunnable;
-    private final Handler handler = new Handler(Looper.getMainLooper());
+    private final Handler handler;
 
     public FoodRepo(FoodDao foodDao) {
         this.foodDao = foodDao;
-        this.executor = Executors.newSingleThreadExecutor();
+        handler = new Handler(Looper.getMainLooper());
     }
 
     public void startPeriodicRefresh(CallbackGetAllFood callback) {
-        updateRunnable = new Runnable() {
-            @Override
-            public void run() {
-                FoodCall call = new FoodCall();
-                if (Data.getInstance().getUser() != null)
-                    call.getAllFood(Data.getInstance().getUser().getId(), callback);
-                else call.getAllFood(callback);
-                handler.postDelayed(this, 300000); // 300000 ms = 5 minutes
-            }
+        updateRunnable = () -> {
+            FoodCall call = new FoodCall();
+            if (Data.getInstance().getUser() != null)
+                call.getAllFood(Data.getInstance().getUser().getId(), callback);
+            else call.getAllFood(callback);
         };
         handler.post(updateRunnable);
     }
-
 
     private void insertFood(Food food) {
         // Вставляем данные о еде в локальную базу данных

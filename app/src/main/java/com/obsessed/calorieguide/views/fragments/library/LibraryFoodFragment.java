@@ -36,17 +36,16 @@ public class LibraryFoodFragment extends Fragment implements CallbackGetAllFood,
     private FragmentFoodLibraryBinding binding;
     private AppDatabase db;
     private FoodDao foodDao;
-    private final Executor executor = Executors.newSingleThreadExecutor();
+    private final Executor executor;
 
 
     public LibraryFoodFragment() {
-        // Required empty public constructor
+        executor = Executors.newSingleThreadExecutor();
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         db = AppDatabase.getInstance(requireContext());
         foodDao = db.foodDao();
     }
@@ -103,15 +102,13 @@ public class LibraryFoodFragment extends Fragment implements CallbackGetAllFood,
     }
 
     public void showAllFood(ArrayList<Food> foodList) {
-        Log.d("AllFoodReceived", "Size: " + foodList.size());
+        Log.d("Received", "Size: " + foodList.size());
         new AllFoodReceived(requireContext(), requireView(), binding, foodList, this)
                 .onAllFoodReceived();
     }
 
     @Override
     public void onAllFoodReceived(ArrayList<Food> foodList) {
-        Log.d("LibraryFoodFragment", "All food received: " + foodList.size());
-
         if (isAdded()) { // Проверяем, привязан ли фрагмент к активности
             // Вставка или обновление данных в локальной базе данных
             executor.execute(() -> {
@@ -119,7 +116,6 @@ public class LibraryFoodFragment extends Fragment implements CallbackGetAllFood,
                     foodDao.insert(food);
                 }
             });
-
             showAllFood(foodList);
         }
     }
