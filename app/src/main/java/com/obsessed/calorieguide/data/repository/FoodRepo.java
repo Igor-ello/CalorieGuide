@@ -4,7 +4,7 @@ import android.os.Handler;
 import android.os.Looper;
 
 import com.obsessed.calorieguide.data.local.dao.FoodDao;
-import com.obsessed.calorieguide.data.models.Food;
+import com.obsessed.calorieguide.data.models.food.Food;
 import com.obsessed.calorieguide.data.remote.network.food.FoodCall;
 import com.obsessed.calorieguide.data.remote.network.food.callbacks.CallbackGetAllFood;
 import com.obsessed.calorieguide.tools.Data;

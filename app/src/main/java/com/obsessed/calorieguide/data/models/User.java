@@ -38,6 +38,20 @@ public class User {
         this.BearerToken = BearerToken;
     }
 
+    public User(int id, String user_name, String surname, String email, String password, String bearerToken, int calories_goal, int carbohydrates_goal, int fats_goal, int proteins_goal) {
+        this.id = id;
+        this.user_name = user_name;
+        this.surname = surname;
+        this.email = email;
+        this.password = password;
+        BearerToken = bearerToken;
+        //TODO this.picture = picture;
+        this.calories_goal = calories_goal;
+        this.carbohydrates_goal = carbohydrates_goal;
+        this.fats_goal = fats_goal;
+        this.proteins_goal = proteins_goal;
+    }
+
     @Override
     public String toString() {
         return "User{" +

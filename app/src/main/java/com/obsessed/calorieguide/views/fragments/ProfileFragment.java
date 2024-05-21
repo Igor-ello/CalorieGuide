@@ -7,7 +7,6 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,24 +14,15 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.gson.JsonObject;
 import com.obsessed.calorieguide.MainActivityApp;
 import com.obsessed.calorieguide.R;
 import com.obsessed.calorieguide.data.local.room.AppDatabase;
-import com.obsessed.calorieguide.data.models.Food;
-import com.obsessed.calorieguide.data.repository.FoodRepo;
 import com.obsessed.calorieguide.data.repository.UserRepo;
-import com.obsessed.calorieguide.tools.convert.FillClass;
 import com.obsessed.calorieguide.tools.Data;
 import com.obsessed.calorieguide.data.models.User;
-import com.obsessed.calorieguide.data.remote.network.user.UserCall;
 import com.obsessed.calorieguide.tools.save.ShPrefs;
 
 import java.util.ArrayList;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class ProfileFragment extends Fragment {
     ArrayList<EditText> userParams;

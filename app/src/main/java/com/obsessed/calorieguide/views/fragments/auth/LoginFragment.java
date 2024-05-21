@@ -15,7 +15,9 @@ import android.widget.Toast;
 
 import com.obsessed.calorieguide.MainActivityAuth;
 import com.obsessed.calorieguide.R;
+import com.obsessed.calorieguide.data.local.room.AppDatabase;
 import com.obsessed.calorieguide.data.remote.network.user.callbacks.CallbackUserAuth;
+import com.obsessed.calorieguide.data.repository.UserRepo;
 import com.obsessed.calorieguide.tools.Data;
 import com.obsessed.calorieguide.data.models.User;
 import com.obsessed.calorieguide.data.remote.network.user.UserCall;
@@ -74,6 +76,9 @@ public class LoginFragment extends Fragment implements CallbackUserAuth {
 
     @Override
     public void onSuccess(User user) {
+        AppDatabase db = AppDatabase.getInstance(requireContext());
+        UserRepo userRepo = new UserRepo(db.userDao());
+        userRepo.refreshUser(user);
         ShPrefs.saveData(user, Data.getInstance().getAdapterType(), requireContext());
 
         Toast.makeText(requireContext(), "Welcome!", Toast.LENGTH_SHORT).show();

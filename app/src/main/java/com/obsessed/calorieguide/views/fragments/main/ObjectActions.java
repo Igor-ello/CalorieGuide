@@ -14,11 +14,12 @@ import androidx.navigation.Navigation;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.obsessed.calorieguide.MainActivityApp;
 import com.obsessed.calorieguide.R;
+import com.obsessed.calorieguide.data.models.day.Intake;
 import com.obsessed.calorieguide.tools.Data;
 import com.obsessed.calorieguide.tools.DayFunc;
 import com.obsessed.calorieguide.data.remote.network.food.FoodCallWithToken;
 import com.obsessed.calorieguide.data.remote.network.food.callbacks.CallbackGetFoodById;
-import com.obsessed.calorieguide.data.models.Food;
+import com.obsessed.calorieguide.data.models.food.Food;
 import com.obsessed.calorieguide.data.remote.network.food.FoodCall;
 import com.obsessed.calorieguide.data.remote.network.meal.callbacks.CallbackGetMealById;
 import com.obsessed.calorieguide.data.models.Meal;
@@ -32,7 +33,7 @@ public class ObjectActions extends Fragment implements CallbackGetMealById, Call
     private static final String ARG_POS_IN_ARRAY = "pos_in_array";
     private int objectId, posInArray;
     private String objectType, arrayType;
-    private Object object;
+    private Intake object;
 
     public ObjectActions() {
         // Required empty public constructor

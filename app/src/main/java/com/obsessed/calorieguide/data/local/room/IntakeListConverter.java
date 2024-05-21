@@ -4,20 +4,21 @@ import androidx.room.TypeConverter;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.obsessed.calorieguide.data.models.food.FoodIdQuantity;
+import com.obsessed.calorieguide.data.models.day.Intake;
 
 import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.List;
 
-public class Converters {
+public class IntakeListConverter {
     @TypeConverter
-    public static List<FoodIdQuantity> fromString(String value) {
-        Type listType = new TypeToken<List<FoodIdQuantity>>() {}.getType();
+    public static ArrayList<Intake> fromString(String value) {
+        Type listType = new TypeToken<ArrayList<Intake>>() {}.getType();
         return new Gson().fromJson(value, listType);
     }
 
     @TypeConverter
-    public static String fromList(List<FoodIdQuantity> list) {
+    public static String fromList(ArrayList<Intake> list) {
         Gson gson = new Gson();
         return gson.toJson(list);
     }

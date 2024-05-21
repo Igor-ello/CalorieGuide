@@ -18,7 +18,6 @@ import android.widget.SearchView;
 import com.obsessed.calorieguide.R;
 import com.obsessed.calorieguide.data.local.dao.MealDao;
 import com.obsessed.calorieguide.data.local.room.AppDatabase;
-import com.obsessed.calorieguide.data.models.Food;
 import com.obsessed.calorieguide.data.repository.MealRepo;
 import com.obsessed.calorieguide.tools.Data;
 import com.obsessed.calorieguide.tools.Func;

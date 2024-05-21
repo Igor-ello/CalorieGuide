@@ -73,10 +73,13 @@ public class MainFragment extends Fragment implements CallbackLoadData {
 
     @Override
     public void onLoadData() {
+        Log.d("MainFragment", "Loading data");
         // Проверка пользователя на наличие авторизации
         checkUserLogin();
-
+        Log.d("MainFragment", Data.getInstance().getUser().toString());
+        Log.d("MainFragment", Data.getInstance().getDay().toString());
         // Инициализация для отображения данных
         Stats.getInstance().init(binding, requireActivity());
+        Stats.getInstance().update();
     }
 }

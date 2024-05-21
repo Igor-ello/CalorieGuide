@@ -5,7 +5,8 @@ import androidx.room.PrimaryKey;
 import androidx.room.TypeConverters;
 
 import com.obsessed.calorieguide.data.local.room.Converters;
-import com.obsessed.calorieguide.data.remote.network.meal.FoodIdQuantity;
+import com.obsessed.calorieguide.data.models.day.Intake;
+import com.obsessed.calorieguide.data.models.food.FoodIdQuantity;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -13,20 +14,14 @@ import java.util.List;
 
 @Entity(tableName = "meal_table")
 @TypeConverters({Converters.class})
-public class Meal {
-    @PrimaryKey(autoGenerate = true)
-    private int id;
+public class Meal extends Intake {
     private String meal_name;
+    private List<FoodIdQuantity> products_id;
     private int total_calories;
     private int total_proteins;
     private int total_fats;
     private int total_carbohydrates;
-    private List<FoodIdQuantity> products_id;
-    private int author_id;
-    private String description;
-    private int likes;
-    private byte[] picture;
-    private boolean isLiked;
+
 
     public Meal(String meal_name, List<FoodIdQuantity> products_id, int author_id, String description, byte[] picture) {
         this.meal_name = meal_name;
@@ -62,13 +57,6 @@ public class Meal {
     }
 
     //Getters and Setters
-    public int getId() {
-        return id;
-    }
-    public void setId(int id) {
-        this.id = id;
-    }
-
     public String getMeal_name() {
         return meal_name;
     }
@@ -112,41 +100,6 @@ public class Meal {
     }
     public void setFoodIdQuantities(List<FoodIdQuantity> products_id) {
         this.products_id = products_id;
-    }
-
-    public int getAuthor_id() {
-        return author_id;
-    }
-    public void setAuthor_id(int author_id) {
-        this.author_id = author_id;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public int getLikes() {
-        return likes;
-    }
-    public void setLikes(int likes) {
-        this.likes = likes;
-    }
-
-    public byte[] getPicture() {
-        return picture;
-    }
-    public void setPicture(byte[] picture) {
-        this.picture = picture;
-    }
-
-    public boolean getIsLiked() {
-        return isLiked;
-    }
-    public void setIsLiked(boolean isLiked) {
-        this.isLiked = isLiked;
     }
 
 }

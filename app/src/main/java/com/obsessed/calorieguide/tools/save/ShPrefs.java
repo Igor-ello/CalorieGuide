@@ -6,7 +6,10 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
 
+import com.obsessed.calorieguide.data.local.dao.DayDao;
 import com.obsessed.calorieguide.data.local.room.AppDatabase;
+import com.obsessed.calorieguide.data.models.day.Day;
+import com.obsessed.calorieguide.data.repository.DayRepo;
 import com.obsessed.calorieguide.tools.Data;
 import com.obsessed.calorieguide.data.models.User;
 
@@ -17,9 +20,14 @@ public class ShPrefs {
         SharedPreferences sharedPreferences = context.getSharedPreferences("myPrefs", MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
 
+        Day day = Data.getInstance().getDay();
+
         // Сохранение данных
         if (user != null) {
             editor.putInt("user_id", user.getId()); // Сохранение user_id
+        }
+        if (day != null) {
+            editor.putInt("day_id", day.getId()); // Сохранение day_id
         }
         editor.putInt("adapter_type", adapterType); // Сохранение adapterType
         editor.apply();
@@ -32,13 +40,17 @@ public class ShPrefs {
 
         // Получение данных
         int userId = sharedPreferences.getInt("user_id", -1); // Получение user
+        int dayId = sharedPreferences.getInt("day_id", -1); // Получение day
         int adapterType = sharedPreferences.getInt("adapter_type", 1); // Получение adapterType
 
         // Загрузка данных
         AppDatabase db = AppDatabase.getInstance(context);
+//        DayRepo repo = new DayRepo(db.dayDao());
+//        repo.refreshDay();
 
         Executors.newSingleThreadExecutor().execute(() -> {
             Data.getInstance().setUser(db.userDao().getUserById(userId));
+            Data.getInstance().setDay(db.dayDao().getDayById(1));
             Data.getInstance().setAdapterType(adapterType);
             callback.onLoadData();
         });
@@ -52,6 +64,7 @@ public class ShPrefs {
 
         // CLEAR DATA
         editor.putInt("user_id", -1); // Сохранение user
+        editor.putInt("day_id", -1); // Сохранение day
         editor.putInt("adapter_type", 1); // Сохранение adapterType
         editor.apply();
 

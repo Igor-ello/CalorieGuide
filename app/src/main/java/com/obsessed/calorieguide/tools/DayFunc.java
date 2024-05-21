@@ -1,12 +1,14 @@
 package com.obsessed.calorieguide.tools;
 
-import com.obsessed.calorieguide.data.models.Food;
+import com.obsessed.calorieguide.data.models.day.Day;
+import com.obsessed.calorieguide.data.models.day.Intake;
+import com.obsessed.calorieguide.data.models.food.Food;
 import com.obsessed.calorieguide.data.models.Meal;
 
 public class DayFunc {
     private static Day day = Data.getInstance().getDay();
 
-    public static void addObjectToDay(Object object, String arrayType) {
+    public static void addObjectToDay(Intake object, String arrayType) {
         if (arrayType.equals("breakfast")) {
             day.addBreakfast(object);
         } else if (arrayType.equals("lunch")) {

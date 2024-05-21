@@ -13,8 +13,8 @@ import com.obsessed.calorieguide.R;
 import com.obsessed.calorieguide.databinding.FragmentMainBinding;
 import com.obsessed.calorieguide.views.adapters.intake.IntakeAdapter;
 import com.obsessed.calorieguide.tools.Data;
-import com.obsessed.calorieguide.tools.Day;
-import com.obsessed.calorieguide.data.models.Food;
+import com.obsessed.calorieguide.data.models.day.Day;
+import com.obsessed.calorieguide.data.models.food.Food;
 import com.obsessed.calorieguide.data.models.Meal;
 
 public class Intakes {
@@ -114,17 +114,17 @@ public class Intakes {
     private void setAdapterListeners(){
         // Установка слушателя в адаптере
         adapterBreakfast.setOnObjClickListener(obj -> {
-            Bundle args = createBundle(obj, "breakfast", Day.getInstance().posInArray(obj, "breakfast"));
+            Bundle args = createBundle(obj, "breakfast", Data.getInstance().getDay().posInArray(obj, "breakfast"));
             Navigation.findNavController(binding.getRoot()).navigate(R.id.action_mainFragment_to_objectActions, args);
         });
 
         adapterLunch.setOnObjClickListener(obj -> {
-            Bundle args = createBundle(obj, "lunch", Day.getInstance().posInArray(obj, "lunch"));
+            Bundle args = createBundle(obj, "lunch", Data.getInstance().getDay().posInArray(obj, "lunch"));
             Navigation.findNavController(binding.getRoot()).navigate(R.id.action_mainFragment_to_objectActions, args);
         });
 
         adapterDinner.setOnObjClickListener(obj -> {
-            Bundle args = createBundle(obj, "dinner", Day.getInstance().posInArray(obj, "dinner"));
+            Bundle args = createBundle(obj, "dinner", Data.getInstance().getDay().posInArray(obj, "dinner"));
             Navigation.findNavController(binding.getRoot()).navigate(R.id.action_mainFragment_to_objectActions, args);
         });
     }

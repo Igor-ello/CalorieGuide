@@ -15,7 +15,7 @@ import com.obsessed.calorieguide.views.adapters.food.FoodAdapterV2;
 import com.obsessed.calorieguide.tools.Data;
 import com.obsessed.calorieguide.data.remote.network.food.FoodCallWithToken;
 import com.obsessed.calorieguide.data.remote.network.food.callbacks.CallbackLikeFood;
-import com.obsessed.calorieguide.data.models.Food;
+import com.obsessed.calorieguide.data.models.food.Food;
 
 import java.util.ArrayList;
 

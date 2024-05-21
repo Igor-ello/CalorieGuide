@@ -26,7 +26,7 @@ import com.obsessed.calorieguide.tools.Func;
 import com.obsessed.calorieguide.data.remote.network.food.FoodCallWithToken;
 import com.obsessed.calorieguide.data.remote.network.food.callbacks.CallbackLikeFood;
 import com.obsessed.calorieguide.data.remote.network.food.callbacks.CallbackSearchFood;
-import com.obsessed.calorieguide.data.models.Food;
+import com.obsessed.calorieguide.data.models.food.Food;
 import com.obsessed.calorieguide.data.remote.network.food.FoodCall;
 
 import java.util.ArrayList;
