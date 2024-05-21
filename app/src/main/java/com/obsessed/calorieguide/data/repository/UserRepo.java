@@ -1,6 +1,8 @@
 package com.obsessed.calorieguide.data.repository;
 
 
+import android.util.Log;
+
 import com.obsessed.calorieguide.data.local.dao.UserDao;
 import com.obsessed.calorieguide.data.models.User;
 import com.obsessed.calorieguide.data.remote.network.user.UserCall;
@@ -21,6 +23,7 @@ public class UserRepo {
             UserCall call = new UserCall(user.getBearerToken());
             call.updateUser(user.getId(), FillClass.fillRegistrationRequest(user));
 
+            Log.d("UserRepo", user.toString());
             userDao.insert(user);
         });
     }

@@ -7,29 +7,23 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.google.gson.JsonObject;
 import com.obsessed.calorieguide.MainActivityAuth;
 import com.obsessed.calorieguide.R;
-import com.obsessed.calorieguide.tools.convert.JsonToClass;
+import com.obsessed.calorieguide.data.remote.network.user.callbacks.CallbackUserAuth;
 import com.obsessed.calorieguide.tools.Data;
 import com.obsessed.calorieguide.data.models.User;
 import com.obsessed.calorieguide.data.remote.network.user.UserCall;
 import com.obsessed.calorieguide.data.remote.network.user.AuthRequest;
 import com.obsessed.calorieguide.tools.save.ShPrefs;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
-
-public class LoginFragment extends Fragment {
+public class LoginFragment extends Fragment implements CallbackUserAuth {
 
     public LoginFragment() {
         // Required empty public constructor
@@ -61,9 +55,9 @@ public class LoginFragment extends Fragment {
             String password = edPassword.getText().toString().trim();
 
             if(username.isEmpty() || password.isEmpty()) {
-                Toast.makeText(requireContext(), "Введите все данные", Toast.LENGTH_SHORT).show();
+                Toast.makeText(requireContext(), "Please fill all fields!", Toast.LENGTH_SHORT).show();
             } else {
-                authRequest(view, username, password);
+                authRequest(username, password);
             }
         });
 
@@ -72,37 +66,26 @@ public class LoginFragment extends Fragment {
         });
     }
 
-    private void authRequest(View view, String username, String password) {
+    private void authRequest(String username, String password) {
         AuthRequest authRequest = new AuthRequest(username, password);
-        UserCall userCall = new UserCall();
-        Call<JsonObject> call = userCall.authUser(authRequest);
-        call.enqueue(new Callback<JsonObject>() {
-            @Override
-            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
-                if (response.isSuccessful()) {
-                    JsonObject jsonObject = response.body();
-                    Log.d("Call", "Authentication successful");
+        UserCall call = new UserCall();
+        call.authUser(authRequest, this);
+    }
 
-                    if (jsonObject!= null) {
-                        User user = JsonToClass.getUser(jsonObject);
-                        ShPrefs.saveData(user, Data.getInstance().getAdapterType(), requireContext());
+    @Override
+    public void onSuccess(User user) {
+        ShPrefs.saveData(user, Data.getInstance().getAdapterType(), requireContext());
 
-                        Toast.makeText(requireContext(), "Welcome!", Toast.LENGTH_SHORT).show();
+        Toast.makeText(requireContext(), "Welcome!", Toast.LENGTH_SHORT).show();
 
-                        // Вернуться на главную activity
-                        if (getActivity() != null && getActivity() instanceof MainActivityAuth) {
-                            getActivity().finish(); // Закрываем активность
-                        }
-                    }
-                } else {
-                    Log.e("Call", "Authentication failed; Response: " + response.code());
-                }
-            }
+        // Вернуться на главную activity
+        if (getActivity() != null && getActivity() instanceof MainActivityAuth) {
+            getActivity().finish(); // Закрываем активность
+        }
+    }
 
-            @Override
-            public void onFailure(Call<JsonObject> call, Throwable t) {
-                Log.e("Call", "Authentication error: " + t.getMessage());
-            }
-        });
+    @Override
+    public void onFailure() {
+        Toast.makeText(requireContext(), "Try again!", Toast.LENGTH_SHORT).show();
     }
 }

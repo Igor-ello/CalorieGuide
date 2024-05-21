@@ -24,7 +24,7 @@ import com.obsessed.calorieguide.data.remote.network.meal.MealCall;
 import com.obsessed.calorieguide.tools.save.ShPrefs;
 
 
-public class MainFragment extends Fragment implements CallbackGetMealById {
+public class MainFragment extends Fragment {
     FragmentMainBinding binding;
 
     public MainFragment() {
@@ -56,20 +56,14 @@ public class MainFragment extends Fragment implements CallbackGetMealById {
         ShPrefs.loadData(requireContext());
 
         // Проверка пользователя на наличие авторизации
-        checkUserLogin(view);
+        checkUserLogin();
 
         // Инициализация для отображения данных
         Stats.getInstance().init(binding, requireActivity());
 
-        //Подгрузка данных
-        requireActivity().runOnUiThread(() -> {
-            int mealId = 2;
-            MealCall mealCall = new MealCall();
-            mealCall.getMealById(mealId, this);
-        });
     }
 
-    private boolean checkUserLogin(View view) {
+    private boolean checkUserLogin() {
         Log.d("MainFragment", "Checking user login status");
         if (Data.getInstance().getUser() == null) {
             Log.d("MainFragment", "User not logged in, navigating to login fragment");
@@ -83,9 +77,9 @@ public class MainFragment extends Fragment implements CallbackGetMealById {
         }
     }
 
-    @Override
-    public void onMealByIdReceived(Meal meal) {
-        Intakes.getInstance().init(binding, requireContext());
-        Stats.getInstance().update();
-    }
+//    @Override
+//    public void onMealByIdReceived(Meal meal) {
+//        Intakes.getInstance().init(binding, requireContext());
+//        Stats.getInstance().update();
+//    }
 }
