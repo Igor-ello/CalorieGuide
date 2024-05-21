@@ -9,6 +9,8 @@ import com.obsessed.calorieguide.data.remote.api.UserApi;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -58,8 +60,23 @@ public class UserCall {
         return userApi.registerUser(registrationRequest);
     }
 
-    public Call<JsonObject> updateUser(int userId, RegistrationRequest registrationRequest) {
-        return userApi.updateUser(userId, registrationRequest);
+    public void updateUser(int userId, RegistrationRequest registrationRequest) {
+        Call<JsonObject> call = userApi.updateUser(userId, registrationRequest);
+        call.enqueue(new Callback<JsonObject>() {
+            @Override
+            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+                if (response.isSuccessful()) {
+                    Log.d("Call", "Request updateUser successful");
+                } else {
+                    Log.e("Call", "Request updateUser failed; Response: " + response.code());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<JsonObject> call, Throwable t) {
+                Log.e("Call", "ERROR in updateUser Call: " + t.getMessage());
+            }
+        });
     }
 
     public Call<JsonObject> deleteUser(int userId) {

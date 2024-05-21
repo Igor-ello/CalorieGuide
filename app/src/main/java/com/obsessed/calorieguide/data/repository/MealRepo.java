@@ -3,22 +3,11 @@ package com.obsessed.calorieguide.data.repository;
 import android.os.Handler;
 import android.os.Looper;
 
-import androidx.lifecycle.LiveData;
-
 import com.obsessed.calorieguide.data.local.dao.MealDao;
-import com.obsessed.calorieguide.data.models.Food;
 import com.obsessed.calorieguide.data.models.Meal;
-import com.obsessed.calorieguide.data.remote.api.MealApi;
-import com.obsessed.calorieguide.data.remote.network.food.FoodCall;
 import com.obsessed.calorieguide.data.remote.network.meal.MealCall;
 import com.obsessed.calorieguide.data.remote.network.meal.callbacks.CallbackGetAllMeal;
 import com.obsessed.calorieguide.tools.Data;
-
-import java.util.List;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class MealRepo {
     private MealDao mealDao;

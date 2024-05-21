@@ -64,8 +64,8 @@ public class LibraryFoodFragment extends Fragment implements CallbackGetAllFood,
         super.onViewCreated(view, savedInstanceState);
         binding = FragmentFoodLibraryBinding.bind(view);
 
-        FoodRepo foodRepo = new FoodRepo(db.foodDao());
-        foodRepo.startPeriodicRefresh(this);
+        FoodRepo foodRepo = new FoodRepo(foodDao);
+        foodRepo.refreshFood(this);
         executor.execute(() -> {
             ArrayList<Food> foodList = (ArrayList<Food>) foodDao.getAllFood();
             requireActivity().runOnUiThread(() -> showAllFood(foodList));

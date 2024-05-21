@@ -63,7 +63,7 @@ public class LibraryMealFragment extends Fragment implements CallbackGetAllMeal,
         super.onViewCreated(view, savedInstanceState);
         binding = FragmentMealLibraryBinding.bind(view);
 
-        MealRepo mealRepo = new MealRepo(db.mealDao());
+        MealRepo mealRepo = new MealRepo(mealDao);
         mealRepo.refreshMeal(this);
         executor.execute(() -> {
             ArrayList<Meal> mealList = (ArrayList<Meal>) mealDao.getAllMeal();

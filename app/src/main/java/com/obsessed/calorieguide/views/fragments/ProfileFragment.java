@@ -18,6 +18,10 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.gson.JsonObject;
 import com.obsessed.calorieguide.MainActivityApp;
 import com.obsessed.calorieguide.R;
+import com.obsessed.calorieguide.data.local.room.AppDatabase;
+import com.obsessed.calorieguide.data.models.Food;
+import com.obsessed.calorieguide.data.repository.FoodRepo;
+import com.obsessed.calorieguide.data.repository.UserRepo;
 import com.obsessed.calorieguide.tools.convert.FillClass;
 import com.obsessed.calorieguide.tools.Data;
 import com.obsessed.calorieguide.data.models.User;
@@ -152,23 +156,8 @@ public class ProfileFragment extends Fragment {
 
 
     private void updateUserRequest(User user) {
-        UserCall userCall = new UserCall(user.getBearerToken());
-        Call<JsonObject> call = userCall.updateUser(user.getId(), FillClass.fillRegistrationRequest(user));
-
-        call.enqueue(new Callback<JsonObject>() {
-            @Override
-            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
-                if (response.isSuccessful()) {
-                    Log.d("Call", "Request updateUser successful");
-                } else {
-                    Log.e("Call", "Request updateUser failed; Response: " + response.code());
-                }
-            }
-
-            @Override
-            public void onFailure(Call<JsonObject> call, Throwable t) {
-                Log.e("Call", "ERROR in updateUser Call: " + t.getMessage());
-            }
-        });
+        AppDatabase db = AppDatabase.getInstance(requireContext());
+        UserRepo userRepo = new UserRepo(db.userDao());
+        userRepo.refreshUser(user);
     }
 }
