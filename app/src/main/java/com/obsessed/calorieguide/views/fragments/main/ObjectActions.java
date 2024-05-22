@@ -14,7 +14,9 @@ import androidx.navigation.Navigation;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.obsessed.calorieguide.MainActivityApp;
 import com.obsessed.calorieguide.R;
+import com.obsessed.calorieguide.data.local.room.AppDatabase;
 import com.obsessed.calorieguide.data.models.day.Intake;
+import com.obsessed.calorieguide.data.repository.DayRepo;
 import com.obsessed.calorieguide.tools.Data;
 import com.obsessed.calorieguide.tools.DayFunc;
 import com.obsessed.calorieguide.data.remote.network.food.FoodCallWithToken;
@@ -96,6 +98,10 @@ public class ObjectActions extends Fragment implements CallbackGetMealById, Call
         view.findViewById(R.id.btDeleteObject).setOnClickListener(v -> {
             if(object != null) {
                 DayFunc.deleteObjectFromDay(posInArray, arrayType);
+
+                AppDatabase db = AppDatabase.getInstance(requireContext());
+                DayRepo dayRepo = new DayRepo(db.dayDao());
+                dayRepo.refreshDay();
             }
             Navigation.findNavController(view).popBackStack();
         });
