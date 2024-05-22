@@ -25,7 +25,7 @@ import com.obsessed.calorieguide.tools.save.CallbackLoadData;
 import com.obsessed.calorieguide.tools.save.ShPrefs;
 
 
-public class MainFragment extends Fragment implements CallbackLoadData {
+public class MainFragment extends Fragment implements CallbackLoadData, CallbackGetMealById {
     FragmentMainBinding binding;
 
     public MainFragment() {
@@ -55,6 +55,13 @@ public class MainFragment extends Fragment implements CallbackLoadData {
 
         // Загрузка данных из хранилища
         ShPrefs.loadData(requireContext(), this);
+
+        //Подгрузка данных
+        requireActivity().runOnUiThread(() -> {
+            int mealId = 2;
+            MealCall mealCall = new MealCall();
+            mealCall.getMealById(mealId, this);
+        });
     }
 
     private boolean checkUserLogin() {
@@ -63,6 +70,7 @@ public class MainFragment extends Fragment implements CallbackLoadData {
             Log.d("MainFragment", "User not logged in, navigating to login fragment");
             if (getActivity() != null && getActivity() instanceof MainActivityApp) {
                 startActivity(new Intent(getActivity(), MainActivityAuth.class));
+                getActivity().finish();
             }
             return false;
         } else {
@@ -75,11 +83,17 @@ public class MainFragment extends Fragment implements CallbackLoadData {
     public void onLoadData() {
         Log.d("MainFragment", "Loading data");
         // Проверка пользователя на наличие авторизации
-        checkUserLogin();
-        Log.d("MainFragment", Data.getInstance().getUser().toString());
-        Log.d("MainFragment", Data.getInstance().getDay().toString());
-        // Инициализация для отображения данных
-        Stats.getInstance().init(binding, requireActivity());
-        Stats.getInstance().update();
+        if(checkUserLogin()) {
+            // Инициализация для отображения данных
+            Stats.getInstance().init(binding, requireActivity());
+        }
+    }
+
+    @Override
+    public void onMealByIdReceived(Meal meal) {
+        if(checkUserLogin()) {
+            Intakes.getInstance().init(binding, requireContext());
+            Stats.getInstance().update();
+        }
     }
 }

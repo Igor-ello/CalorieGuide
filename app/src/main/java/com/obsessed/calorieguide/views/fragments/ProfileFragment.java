@@ -7,6 +7,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -146,8 +147,10 @@ public class ProfileFragment extends Fragment {
 
 
     private void updateUserRequest(User user) {
+        Log.d("UserInfo", "ProfileFragment: updateUserRequest: " + user.toString());
+
         AppDatabase db = AppDatabase.getInstance(requireContext());
         UserRepo userRepo = new UserRepo(db.userDao());
-        userRepo.refreshUser(user);
+        userRepo.refreshUser(user, null);
     }
 }

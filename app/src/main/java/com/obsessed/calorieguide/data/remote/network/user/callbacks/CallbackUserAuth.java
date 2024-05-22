@@ -3,6 +3,6 @@ package com.obsessed.calorieguide.data.remote.network.user.callbacks;
 import com.obsessed.calorieguide.data.models.User;
 
 public interface CallbackUserAuth {
-    void onSuccess(User user);
-    void onFailure();
+    void onUserAuthSuccess(User user);
+    void onUserAuthFailure();
 }

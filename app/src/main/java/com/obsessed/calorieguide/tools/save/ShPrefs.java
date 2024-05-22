@@ -45,13 +45,24 @@ public class ShPrefs {
 
         // Загрузка данных
         AppDatabase db = AppDatabase.getInstance(context);
-//        DayRepo repo = new DayRepo(db.dayDao());
-//        repo.refreshDay();
+        DayRepo repo = new DayRepo(db.dayDao());
+        repo.newDay();
 
         Executors.newSingleThreadExecutor().execute(() -> {
             Data.getInstance().setUser(db.userDao().getUserById(userId));
+            if (Data.getInstance().getUser() == null)
+                Log.d("SPInfo", "User: null");
+            else
+                Log.d("SPInfo", "User: " + db.userDao().getUserById(userId).toString());
+
             Data.getInstance().setDay(db.dayDao().getDayById(1));
+            if (Data.getInstance().getDay() == null)
+                Log.d("SPInfo", "Day: null");
+            else
+                Log.d("SPInfo", "Day: " + db.dayDao().getDayById(1).toString());
+
             Data.getInstance().setAdapterType(adapterType);
+            Log.d("SPInfo", "AdapterType: " + adapterType);
             callback.onLoadData();
         });
 

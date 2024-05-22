@@ -14,9 +14,9 @@ public class JsonToClass {
                 jsonObject.get("BearerToken").getAsString(),
                 //TODO jsonObject.get("picture").getAsByte(),
                 jsonObject.get("calories_goal").getAsInt(),
-                jsonObject.get("fats_goal").getAsInt(),
+                jsonObject.get("carbohydrates_goal").getAsInt(),
                 jsonObject.get("proteins_goal").getAsInt(),
-                jsonObject.get("carbohydrates_goal").getAsInt()
+                jsonObject.get("fats_goal").getAsInt()
                 );
         return user;
     }

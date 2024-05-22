@@ -18,6 +18,8 @@ import android.widget.SearchView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.obsessed.calorieguide.MainActivityApp;
 import com.obsessed.calorieguide.R;
+import com.obsessed.calorieguide.data.local.room.AppDatabase;
+import com.obsessed.calorieguide.data.repository.DayRepo;
 import com.obsessed.calorieguide.databinding.FragmentFoodLibraryBinding;
 import com.obsessed.calorieguide.views.adapters.food.FoodIntakeAdapter;
 import com.obsessed.calorieguide.tools.Data;
@@ -109,6 +111,10 @@ public class FoodIntakeFragment extends Fragment implements CallbackSearchFood, 
         adapter.setOnAddFoodClickListener(food -> {
             Log.d("Adapter", "Clicked on add for food in FoodIntakeAdapter: " + food.getFood_name());
             DayFunc.addObjectToDay(food, arrayType);
+
+            AppDatabase db = AppDatabase.getInstance(requireContext());
+            DayRepo dayRepo = new DayRepo(db.dayDao());
+            dayRepo.refreshDay();
         });
     }
 

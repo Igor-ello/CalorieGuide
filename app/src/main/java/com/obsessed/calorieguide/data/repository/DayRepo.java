@@ -7,6 +7,7 @@ import com.obsessed.calorieguide.data.local.dao.UserDao;
 import com.obsessed.calorieguide.data.models.User;
 import com.obsessed.calorieguide.data.models.day.Day;
 import com.obsessed.calorieguide.data.remote.network.user.UserCall;
+import com.obsessed.calorieguide.tools.Data;
 import com.obsessed.calorieguide.tools.convert.FillClass;
 
 import java.util.ArrayList;
@@ -20,6 +21,12 @@ public class DayRepo {
     }
 
     public void refreshDay() {
+        Executors.newSingleThreadExecutor().execute(() ->{
+            dayDao.insert(Data.getInstance().getDay());
+        });
+    }
+
+    public void newDay() {
         Executors.newSingleThreadExecutor().execute(() ->{
             dayDao.insert(new Day(new ArrayList<>(), new ArrayList<>(), new ArrayList<>()));
         });

@@ -1,5 +1,6 @@
 package com.obsessed.calorieguide.views.fragments.auth;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -7,16 +8,19 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.obsessed.calorieguide.MainActivityApp;
 import com.obsessed.calorieguide.MainActivityAuth;
 import com.obsessed.calorieguide.R;
 import com.obsessed.calorieguide.data.local.room.AppDatabase;
 import com.obsessed.calorieguide.data.remote.network.user.callbacks.CallbackUserAuth;
+import com.obsessed.calorieguide.data.repository.CallbackRefreshUser;
 import com.obsessed.calorieguide.data.repository.UserRepo;
 import com.obsessed.calorieguide.tools.Data;
 import com.obsessed.calorieguide.data.models.User;
@@ -25,7 +29,7 @@ import com.obsessed.calorieguide.data.remote.network.user.AuthRequest;
 import com.obsessed.calorieguide.tools.save.ShPrefs;
 
 
-public class LoginFragment extends Fragment implements CallbackUserAuth {
+public class LoginFragment extends Fragment implements CallbackUserAuth, CallbackRefreshUser {
 
     public LoginFragment() {
         // Required empty public constructor
@@ -75,22 +79,23 @@ public class LoginFragment extends Fragment implements CallbackUserAuth {
     }
 
     @Override
-    public void onSuccess(User user) {
+    public void onUserAuthSuccess(User user) {
         AppDatabase db = AppDatabase.getInstance(requireContext());
         UserRepo userRepo = new UserRepo(db.userDao());
-        userRepo.refreshUser(user);
+        userRepo.refreshUser(user, this);
         ShPrefs.saveData(user, Data.getInstance().getAdapterType(), requireContext());
-
-        Toast.makeText(requireContext(), "Welcome!", Toast.LENGTH_SHORT).show();
-
-        // Вернуться на главную activity
-        if (getActivity() != null && getActivity() instanceof MainActivityAuth) {
-            getActivity().finish(); // Закрываем активность
-        }
     }
 
     @Override
-    public void onFailure() {
+    public void onUserAuthFailure() {
         Toast.makeText(requireContext(), "Try again!", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onRefreshUser() {
+        if (getActivity() != null && getActivity() instanceof MainActivityAuth) {
+            startActivity(new Intent(getActivity(), MainActivityApp.class));
+            getActivity().finish(); // Закрываем активность
+        }
     }
 }

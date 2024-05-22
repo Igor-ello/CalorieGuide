@@ -1,18 +1,12 @@
 package com.obsessed.calorieguide.data.remote.network.user;
 
 import android.util.Log;
-import android.widget.Toast;
-
-import androidx.navigation.Navigation;
 
 import com.google.gson.JsonObject;
-import com.obsessed.calorieguide.MainActivityAuth;
-import com.obsessed.calorieguide.data.models.User;
 import com.obsessed.calorieguide.data.remote.network.user.callbacks.CallbackUserAuth;
 import com.obsessed.calorieguide.tools.Data;
 import com.obsessed.calorieguide.data.remote.api.UserApi;
 import com.obsessed.calorieguide.tools.convert.JsonToClass;
-import com.obsessed.calorieguide.tools.save.ShPrefs;
 
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -69,11 +63,13 @@ public class UserCall {
                     JsonObject jsonObject = response.body();
                     Log.d("Call", "Authentication successful");
 
-                    if (jsonObject!= null) {
-                        callback.onSuccess(JsonToClass.getUser(jsonObject));
+                    if (jsonObject != null) {
+                        Log.d("ClInfo", "Response:" + jsonObject.toString());
+                        Log.d("ClInfo", "Response before conversion:" + JsonToClass.getUser(jsonObject).toString());
+                        callback.onUserAuthSuccess(JsonToClass.getUser(jsonObject));
                     }
                 } else {
-                    callback.onFailure();
+                    callback.onUserAuthFailure();
                     Log.e("Call", "Authentication failed; Response: " + response.code());
                 }
             }

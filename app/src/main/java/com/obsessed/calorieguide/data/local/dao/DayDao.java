@@ -33,15 +33,4 @@ public interface DayDao {
 
     @Query("SELECT * FROM day_table WHERE id = :id")
     Day getDayById(int id);
-
-//    @Query("SELECT * FROM day_table WHERE breakfast IS NOT NULL")
-//    ArrayList<Intake> getBreakfast();
-//
-//    // Методы для работы с обедом
-//    @Query("SELECT * FROM day_table WHERE lunch IS NOT NULL")
-//    ArrayList<Intake> getLunch();
-//
-//    // Методы для работы с ужином
-//    @Query("SELECT * FROM day_table WHERE dinner IS NOT NULL")
-//    ArrayList<Intake> getDinner();
 }

@@ -18,13 +18,16 @@ public class UserRepo {
         this.userDao = userDao;
     }
 
-    public void refreshUser(User user) {
+    public void refreshUser(User user, CallbackRefreshUser callback) {
         Executors.newSingleThreadExecutor().execute(() ->{
             UserCall call = new UserCall(user.getBearerToken());
             call.updateUser(user.getId(), FillClass.fillRegistrationRequest(user));
 
-            Log.d("UserRepo", user.toString());
+            Log.d("UserInfo", "UserRepo: updateUserRequest: " + user.toString());
             userDao.insert(user);
+
+            if(callback!= null)
+                callback.onRefreshUser();
         });
     }
 }

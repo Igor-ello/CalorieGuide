@@ -66,12 +66,21 @@ public class Day {
 
     // Add
     public void addBreakfast(Intake breakfast) {
+        if (this.breakfast == null) {
+            this.breakfast = new ArrayList<>();
+        }
         this.breakfast.add(breakfast);
     }
     public void addLunch(Intake lunch) {
+        if (this.lunch == null) {
+            this.lunch = new ArrayList<>();
+        }
         this.lunch.add(lunch);
     }
     public void addDinner(Intake dinner) {
+        if (this.dinner == null) {
+            this.dinner = new ArrayList<>();
+        }
         this.dinner.add(dinner);
     }
 
