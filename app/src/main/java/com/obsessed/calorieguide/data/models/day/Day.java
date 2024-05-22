@@ -29,9 +29,9 @@ public class Day {
     public String toString() {
         return "Day{" +
                 "id=" + id +
-                ", breakfast=" + breakfast +
-                ", lunch=" + lunch +
-                ", dinner=" + dinner +
+                ", breakfast=" + breakfast.size() +
+                ", lunch=" + lunch.size() +
+                ", dinner=" + dinner.size() +
                 '}';
     }
 

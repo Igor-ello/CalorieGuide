@@ -109,7 +109,7 @@ public class FoodIntakeFragment extends Fragment implements CallbackSearchFood, 
         });
 
         adapter.setOnAddFoodClickListener(food -> {
-            Log.d("Adapter", "Clicked on add for food in FoodIntakeAdapter: " + food.getFood_name());
+            Log.d("Adapter", "Clicked on add for food in FoodIntakeAdapter: " + food.getFood_name() + "; ArrayType: " + arrayType);
             DayFunc.addObjectToDay(food, arrayType);
 
             AppDatabase db = AppDatabase.getInstance(requireContext());

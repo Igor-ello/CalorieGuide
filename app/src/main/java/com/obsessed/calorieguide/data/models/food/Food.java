@@ -56,7 +56,7 @@ public class Food extends Intake {
                 ", fats=" + fats +
                 ", author_id=" + author_id +
                 ", likes=" + likes +
-                ", picture=" + Arrays.toString(picture) +
+                ", picture=" + (picture != null ? "exists" : "null") +
                 ", isLiked=" + isLiked +
                 '}';
     }

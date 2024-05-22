@@ -45,12 +45,10 @@ public class IntakeAdapter extends RecyclerView.Adapter<IntakeAdapter.IntakeHold
                 Food food = (Food) object;
                 binding.tvName.setText(food.getFood_name());
                 imageData = food.getPicture();
-                Log.d("ObjectAdapter", food.getFood_name());
             } else if(object instanceof Meal) {
                 Meal meal = (Meal) object;
                 binding.tvName.setText(meal.getMeal_name());
                 imageData = meal.getPicture();
-                Log.d("ObjectAdapter", meal.getMeal_name());
             } else
                 binding.tvName.setText("NULL!!!");
 

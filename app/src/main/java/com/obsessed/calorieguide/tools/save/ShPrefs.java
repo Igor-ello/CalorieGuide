@@ -48,23 +48,29 @@ public class ShPrefs {
         DayRepo repo = new DayRepo(db.dayDao());
         repo.newDay();
 
-        Executors.newSingleThreadExecutor().execute(() -> {
-            Data.getInstance().setUser(db.userDao().getUserById(userId));
-            if (Data.getInstance().getUser() == null)
-                Log.d("SPInfo", "User: null");
-            else
-                Log.d("SPInfo", "User: " + db.userDao().getUserById(userId).toString());
+        try {
+            Executors.newSingleThreadExecutor().execute(() -> {
+                Log.d("SPInfo", "Start load data");
+                Data.getInstance().setUser(db.userDao().getUserById(userId));
+                if (Data.getInstance().getUser() == null)
+                    Log.d("SPInfo", "User: null");
+                else
+                    Log.d("SPInfo", "User: " + Data.getInstance().getUser().toString());
 
-            Data.getInstance().setDay(db.dayDao().getDayById(1));
-            if (Data.getInstance().getDay() == null)
-                Log.d("SPInfo", "Day: null");
-            else
-                Log.d("SPInfo", "Day: " + db.dayDao().getDayById(1).toString());
+                Data.getInstance().setDay(db.dayDao().getDayById(1));
+                if (Data.getInstance().getDay() == null)
+                    Log.d("SPInfo", "Day: null");
+                else
+                    Log.d("SPInfo", "Day: " + Data.getInstance().getDay().toString());
 
-            Data.getInstance().setAdapterType(adapterType);
-            Log.d("SPInfo", "AdapterType: " + adapterType);
-            callback.onLoadData();
-        });
+                Data.getInstance().setAdapterType(adapterType);
+                Log.d("SPInfo", "AdapterType: " + adapterType);
+                callback.onLoadData();
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
 
         Log.d("ShPrefs", "LOAD Data");
     }

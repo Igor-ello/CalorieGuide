@@ -60,8 +60,8 @@ public class User {
                 ", surname='" + surname + '\'' +
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
-                ", BearerToken='" + BearerToken + '\'' +
-                ", picture=" + Arrays.toString(picture) +
+                ", BearerToken=" + (BearerToken != null ? "exists" : "null") +
+                ", picture=" + (picture != null ? "exists" : "null") +
                 ", lunch_id=" + lunch_id +
                 ", breakfast_id=" + breakfast_id +
                 ", dinner_id=" + dinner_id +

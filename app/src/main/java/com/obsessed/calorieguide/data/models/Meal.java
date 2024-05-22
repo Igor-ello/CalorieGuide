@@ -49,7 +49,7 @@ public class Meal extends Intake {
                 ", author_id=" + author_id +
                 ", description='" + description + '\'' +
                 ", likes=" + likes +
-                ", picture=" + Arrays.toString(picture) +
+                ", picture=" + (picture != null ? "exists" : "null") +
                 ", isLiked=" + isLiked +
                 '}';
     }
@@ -103,8 +103,8 @@ public class Meal extends Intake {
     public List<FoodIdQuantity> getFoodIdQuantities() {
         return products_id;
     }
-    public void setFoodIdQuantities(List<FoodIdQuantity> products_id) {
+
+    public void setProducts_id(List<FoodIdQuantity> products_id) {
         this.products_id = products_id;
     }
-
 }

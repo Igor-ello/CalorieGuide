@@ -18,6 +18,8 @@ import android.widget.SearchView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.obsessed.calorieguide.MainActivityApp;
 import com.obsessed.calorieguide.R;
+import com.obsessed.calorieguide.data.local.room.AppDatabase;
+import com.obsessed.calorieguide.data.repository.DayRepo;
 import com.obsessed.calorieguide.databinding.FragmentMealLibraryBinding;
 import com.obsessed.calorieguide.views.adapters.meal.MealIntakeAdapter;
 import com.obsessed.calorieguide.tools.Data;
@@ -30,7 +32,6 @@ import com.obsessed.calorieguide.data.models.Meal;
 import com.obsessed.calorieguide.data.remote.network.meal.MealCallWithToken;
 
 import java.util.ArrayList;
-
 
 public class MealIntakeFragment extends Fragment implements CallbackSearchMeal, CallbackLikeMeal {
     FragmentMealLibraryBinding binding;
@@ -54,7 +55,7 @@ public class MealIntakeFragment extends Fragment implements CallbackSearchMeal, 
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_meal_library, container, false);
         ((BottomNavigationView)((MainActivityApp) getActivity()).findViewById(R.id.bottomNV)).setVisibility(view.GONE);
-        return inflater.inflate(R.layout.fragment_meal_library, container, false);
+        return view;
     }
 
     @Override
@@ -108,8 +109,12 @@ public class MealIntakeFragment extends Fragment implements CallbackSearchMeal, 
         });
 
         adapter.setOnAddMealClickListener(meal -> {
-            Log.d("Adapter", "Clicked on add for meal in MealIntakeAdapter: " + meal.getMeal_name());
+            Log.d("Adapter", "Clicked on add for meal in MealIntakeAdapter: " + meal.getMeal_name() + "; ArrayType: " + arrayType);
             DayFunc.addObjectToDay(meal, arrayType);
+
+            AppDatabase db = AppDatabase.getInstance(requireContext());
+            DayRepo dayRepo = new DayRepo(db.dayDao());
+            dayRepo.refreshDay();
         });
     }
 
