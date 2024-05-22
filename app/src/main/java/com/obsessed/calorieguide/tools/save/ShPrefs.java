@@ -50,6 +50,14 @@ public class ShPrefs {
         DayRepo repo = new DayRepo(db.dayDao());
 
         Executors.newSingleThreadExecutor().execute(() -> {
+            Log.d("SPInfo", "Start load data");
+
+            Data.getInstance().setUser(db.userDao().getUserById(userId));
+            if (Data.getInstance().getUser() == null)
+                Log.d("SPInfo", "User: null");
+            else
+                Log.d("SPInfo", "User: " + Data.getInstance().getUser().toString());
+
             if (savedDayOfMonth != currentDayOfMonth) {
                 Data.getInstance().setDay(repo.getNewDay());
                 Log.d("ShPrefs", "New day");
@@ -60,13 +68,6 @@ public class ShPrefs {
                 else
                     Log.d("SPInfo", "Day: " + Data.getInstance().getDay().toString());
             }
-
-            Log.d("SPInfo", "Start load data");
-            Data.getInstance().setUser(db.userDao().getUserById(userId));
-            if (Data.getInstance().getUser() == null)
-                Log.d("SPInfo", "User: null");
-            else
-                Log.d("SPInfo", "User: " + Data.getInstance().getUser().toString());
 
             Data.getInstance().setAdapterType(adapterType);
             Log.d("SPInfo", "AdapterType: " + adapterType);
