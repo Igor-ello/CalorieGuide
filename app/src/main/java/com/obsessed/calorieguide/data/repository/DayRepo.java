@@ -23,7 +23,7 @@ public class DayRepo {
         });
     }
 
-    public void deleteDay(int dayId) {
+    public void deleteDayBuId(int dayId) {
         Executors.newSingleThreadExecutor().execute(() ->{
             dayDao.deleteById(dayId);
         });
@@ -35,9 +35,12 @@ public class DayRepo {
         });
     }
 
-    public void newDay() {
-        Executors.newSingleThreadExecutor().execute(() ->{
-            dayDao.insert(new Day(new ArrayList<>(), new ArrayList<>(), new ArrayList<>()));
-        });
+    public Day getNewDay() {
+        dayDao.insert(new Day(new ArrayList<>(), new ArrayList<>(), new ArrayList<>()));
+        return getLastDay();
+    }
+
+    public Day getLastDay() {
+        return dayDao.getLastDay();
     }
 }

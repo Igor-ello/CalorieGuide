@@ -12,7 +12,6 @@ import com.obsessed.calorieguide.data.repository.DayRepo;
 import com.obsessed.calorieguide.tools.Data;
 import com.obsessed.calorieguide.data.models.User;
 
-import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.concurrent.Executors;
 
@@ -48,31 +47,26 @@ public class ShPrefs {
         int adapterType = sharedPreferences.getInt("adapter_type", 1); // Получение adapterType
 
         AppDatabase db = AppDatabase.getInstance(context);
-        if (savedDayOfMonth != currentDayOfMonth) {
-            DayRepo repo = new DayRepo(db.dayDao());
-            repo.deleteAllDays();
-            dayId = -1;
-        }
-
-        // Если первый запуск в текущем дне
-        if (dayId == -1 && userId != -1) {
-            DayRepo repo = new DayRepo(db.dayDao());
-            repo.newDay();
-        }
+        DayRepo repo = new DayRepo(db.dayDao());
 
         Executors.newSingleThreadExecutor().execute(() -> {
+            if (savedDayOfMonth != currentDayOfMonth) {
+                Data.getInstance().setDay(repo.getNewDay());
+                Log.d("ShPrefs", "New day");
+            } else {
+                Data.getInstance().setDay(repo.getLastDay());
+                if (Data.getInstance().getDay() == null)
+                    Log.d("SPInfo", "Day: null");
+                else
+                    Log.d("SPInfo", "Day: " + Data.getInstance().getDay().toString());
+            }
+
             Log.d("SPInfo", "Start load data");
             Data.getInstance().setUser(db.userDao().getUserById(userId));
             if (Data.getInstance().getUser() == null)
                 Log.d("SPInfo", "User: null");
             else
                 Log.d("SPInfo", "User: " + Data.getInstance().getUser().toString());
-
-            Data.getInstance().setDay(db.dayDao().getDayById(1));
-            if (Data.getInstance().getDay() == null)
-                Log.d("SPInfo", "Day: null");
-            else
-                Log.d("SPInfo", "Day: " + Data.getInstance().getDay().toString());
 
             Data.getInstance().setAdapterType(adapterType);
             Log.d("SPInfo", "AdapterType: " + adapterType);

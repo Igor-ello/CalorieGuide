@@ -21,7 +21,6 @@ public class Intakes {
     private static Intakes uniqueInstance;
     private FragmentMainBinding binding;
     private Context context;
-    private static Day day;
     private static IntakeAdapter adapterBreakfast;
     private static IntakeAdapter adapterLunch;
     private static IntakeAdapter adapterDinner;
@@ -31,7 +30,6 @@ public class Intakes {
     public static Intakes getInstance() {
         if (uniqueInstance == null) {
             uniqueInstance = new Intakes();
-            day = Data.getInstance().getDay();
 
             // Создаем адаптер и устанавливаем его для каждого приема пищи
             adapterBreakfast = new IntakeAdapter();
@@ -59,6 +57,7 @@ public class Intakes {
     }
 
     private void initArrayListsForAdapters() {
+        Day day = Data.getInstance().getDay();
         // Установка списка объектов для каждого приема пищи
         adapterBreakfast.objArrayList = day.getBreakfast();
         setLM(context, binding.intakeBreakfast.rcView);

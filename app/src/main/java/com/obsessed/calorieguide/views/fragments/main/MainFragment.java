@@ -77,10 +77,12 @@ public class MainFragment extends Fragment implements CallbackLoadData {
         Log.d("MainFragment", "Loading data");
         // Проверка пользователя на наличие авторизации
         if(checkUserLogin()) {
-            // Инициализация для отображения данных
-            Stats.getInstance().init(binding, requireActivity());
-            Stats.getInstance().update();
-            Intakes.getInstance().init(binding, requireContext());
+            requireActivity().runOnUiThread(()  -> {
+                // Инициализация для отображения данных
+                Stats.getInstance().init(binding, requireActivity());
+                Stats.getInstance().update();
+                Intakes.getInstance().init(binding, requireContext());
+            });
         }
     }
 }

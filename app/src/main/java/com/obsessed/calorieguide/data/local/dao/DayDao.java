@@ -25,6 +25,9 @@ public interface DayDao {
     @Delete
     void delete(Day day);
 
+    @Query("SELECT * FROM day_table ORDER BY id DESC LIMIT 1")
+    Day getLastDay();
+
     @Query("DELETE FROM day_table WHERE id = :id")
     void deleteById(int id);
 
