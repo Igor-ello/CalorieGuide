@@ -25,6 +25,9 @@ public interface DayDao {
     @Delete
     void delete(Day day);
 
+    @Query("DELETE FROM day_table WHERE id = :id")
+    void deleteById(int id);
+
     @Query("DELETE FROM day_table")
     void deleteAllDays();
 

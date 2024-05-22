@@ -6,13 +6,14 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
 
-import com.obsessed.calorieguide.data.local.dao.DayDao;
 import com.obsessed.calorieguide.data.local.room.AppDatabase;
 import com.obsessed.calorieguide.data.models.day.Day;
 import com.obsessed.calorieguide.data.repository.DayRepo;
 import com.obsessed.calorieguide.tools.Data;
 import com.obsessed.calorieguide.data.models.User;
 
+import java.time.LocalDate;
+import java.util.Calendar;
 import java.util.concurrent.Executors;
 
 public class ShPrefs {
@@ -29,6 +30,7 @@ public class ShPrefs {
         if (day != null) {
             editor.putInt("day_id", day.getId()); // Сохранение day_id
         }
+        editor.putInt("day_of_month", Calendar.getInstance().get(Calendar.DAY_OF_MONTH)); // Сохранение day_of_month
         editor.putInt("adapter_type", adapterType); // Сохранение adapterType
         editor.apply();
 
@@ -41,36 +43,43 @@ public class ShPrefs {
         // Получение данных
         int userId = sharedPreferences.getInt("user_id", -1); // Получение user
         int dayId = sharedPreferences.getInt("day_id", -1); // Получение day
+        int savedDayOfMonth = sharedPreferences.getInt("day_of_month", -1); // Получение day_of_month
+        int currentDayOfMonth = Calendar.getInstance().get(Calendar.DAY_OF_MONTH);
         int adapterType = sharedPreferences.getInt("adapter_type", 1); // Получение adapterType
 
-        // Загрузка данных
         AppDatabase db = AppDatabase.getInstance(context);
-        DayRepo repo = new DayRepo(db.dayDao());
-        repo.newDay();
-
-        try {
-            Executors.newSingleThreadExecutor().execute(() -> {
-                Log.d("SPInfo", "Start load data");
-                Data.getInstance().setUser(db.userDao().getUserById(userId));
-                if (Data.getInstance().getUser() == null)
-                    Log.d("SPInfo", "User: null");
-                else
-                    Log.d("SPInfo", "User: " + Data.getInstance().getUser().toString());
-
-                Data.getInstance().setDay(db.dayDao().getDayById(1));
-                if (Data.getInstance().getDay() == null)
-                    Log.d("SPInfo", "Day: null");
-                else
-                    Log.d("SPInfo", "Day: " + Data.getInstance().getDay().toString());
-
-                Data.getInstance().setAdapterType(adapterType);
-                Log.d("SPInfo", "AdapterType: " + adapterType);
-                callback.onLoadData();
-            });
-        } catch (Exception e) {
-            e.printStackTrace();
+        if (savedDayOfMonth != currentDayOfMonth) {
+            DayRepo repo = new DayRepo(db.dayDao());
+            repo.deleteAllDays();
+            dayId = -1;
         }
 
+        // Если первый запуск в текущем дне
+        if (dayId == -1 && userId != -1) {
+            DayRepo repo = new DayRepo(db.dayDao());
+            repo.newDay();
+        }
+
+        Executors.newSingleThreadExecutor().execute(() -> {
+            Log.d("SPInfo", "Start load data");
+            Data.getInstance().setUser(db.userDao().getUserById(userId));
+            if (Data.getInstance().getUser() == null)
+                Log.d("SPInfo", "User: null");
+            else
+                Log.d("SPInfo", "User: " + Data.getInstance().getUser().toString());
+
+            Data.getInstance().setDay(db.dayDao().getDayById(1));
+            if (Data.getInstance().getDay() == null)
+                Log.d("SPInfo", "Day: null");
+            else
+                Log.d("SPInfo", "Day: " + Data.getInstance().getDay().toString());
+
+            Data.getInstance().setAdapterType(adapterType);
+            Log.d("SPInfo", "AdapterType: " + adapterType);
+
+            if (callback != null)
+                callback.onLoadData();
+        });
 
         Log.d("ShPrefs", "LOAD Data");
     }
@@ -83,6 +92,7 @@ public class ShPrefs {
         editor.putInt("user_id", -1); // Сохранение user
         editor.putInt("day_id", -1); // Сохранение day
         editor.putInt("adapter_type", 1); // Сохранение adapterType
+        editor.putInt("day_of_month", Calendar.getInstance().get(Calendar.DAY_OF_MONTH)); // Сохранение day_of_month
         editor.apply();
 
         loadData(context, null);
