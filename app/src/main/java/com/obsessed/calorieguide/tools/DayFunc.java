@@ -1,5 +1,7 @@
 package com.obsessed.calorieguide.tools;
 
+import android.util.Log;
+
 import com.obsessed.calorieguide.data.models.day.Day;
 import com.obsessed.calorieguide.data.models.day.Intake;
 import com.obsessed.calorieguide.data.models.food.Food;
@@ -11,6 +13,7 @@ public class DayFunc {
     public static void addObjectToDay(Intake object, String arrayType) {
         if (arrayType.equals("breakfast")) {
             day.addBreakfast(object);
+            Log.d("DayRepo", "Breakfast");
         } else if (arrayType.equals("lunch")) {
             day.addLunch(object);
         } else if (arrayType.equals("dinner")) {

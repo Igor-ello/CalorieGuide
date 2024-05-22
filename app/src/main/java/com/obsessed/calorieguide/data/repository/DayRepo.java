@@ -22,6 +22,7 @@ public class DayRepo {
 
     public void refreshDay() {
         Executors.newSingleThreadExecutor().execute(() ->{
+            Log.d("DayRepo", "RefreshDay: " + Data.getInstance().getDay().toString());
             dayDao.insert(Data.getInstance().getDay());
         });
     }

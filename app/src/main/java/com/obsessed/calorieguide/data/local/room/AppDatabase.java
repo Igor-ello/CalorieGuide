@@ -17,7 +17,7 @@ import com.obsessed.calorieguide.data.models.Meal;
 import com.obsessed.calorieguide.data.models.User;
 import com.obsessed.calorieguide.data.models.day.Day;
 
-@Database(entities = {Meal.class, FoodIdQuantity.class, Food.class, User.class, Intake.class, Day.class}, version = 5)
+@Database(entities = {Meal.class, FoodIdQuantity.class, Food.class, User.class, Intake.class, Day.class}, version = 6)
 public abstract class AppDatabase extends RoomDatabase {
     private static AppDatabase instance;
 

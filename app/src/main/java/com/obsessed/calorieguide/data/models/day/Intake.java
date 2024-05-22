@@ -3,8 +3,12 @@ package com.obsessed.calorieguide.data.models.day;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import com.google.gson.annotations.SerializedName;
+
 @Entity(tableName = "intake_table")
 public abstract class Intake {
+    @SerializedName("type")
+    protected String type;
     @PrimaryKey(autoGenerate = true)
     protected int id;
     protected String description;
@@ -62,5 +66,12 @@ public abstract class Intake {
     }
     public void setIsLiked(boolean liked) {
         isLiked = liked;
+    }
+
+    public String getType() {
+        return type;
+    }
+    public void setType(String type) {
+        this.type = type;
     }
 }

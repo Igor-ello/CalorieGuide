@@ -16,8 +16,12 @@ public class Food extends Intake {
     private int carbohydrates;
     private int fats;
 
+    public Food() {
+        this.type = "food";
+    }
 
     public Food(String food_name, String description, int calories, int proteins, int carbohydrates, int fats, int author_id, byte[] picture) {
+        this.type = "food";
         this.food_name = food_name;
         this.description = description;
         this.calories = calories;
@@ -43,6 +47,7 @@ public class Food extends Intake {
     public String toString() {
         return "Food{" +
                 "id=" + id +
+                ", type='" + type + '\'' +
                 ", food_name='" + food_name + '\'' +
                 ", description='" + description + '\'' +
                 ", calories=" + calories +
