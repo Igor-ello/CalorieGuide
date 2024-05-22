@@ -1,4 +1,4 @@
-package com.obsessed.calorieguide.views.fragments.main;
+package com.obsessed.calorieguide.views.fragments;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -28,7 +28,7 @@ import com.obsessed.calorieguide.data.models.Meal;
 import com.obsessed.calorieguide.data.remote.network.meal.MealCallWithToken;
 import com.obsessed.calorieguide.data.remote.network.meal.MealCall;
 
-public class ObjectActions extends Fragment implements CallbackGetMealById, CallbackGetFoodById {
+public class ObjectActionsFragment extends Fragment implements CallbackGetMealById, CallbackGetFoodById {
     private static final String ARG_OBJECT_ID = "object_id";
     private static final String ARG_OBJECT_TYPE = "object_type";
     private static final String ARG_ARRAY_TYPE = "array_type";
@@ -37,7 +37,7 @@ public class ObjectActions extends Fragment implements CallbackGetMealById, Call
     private String objectType, arrayType;
     private Intake object;
 
-    public ObjectActions() {
+    public ObjectActionsFragment() {
         // Required empty public constructor
     }
 

@@ -91,7 +91,7 @@
         tools:layout="@layout/fragment_edit_meal" />
     <fragment
         android:id="@+id/objectActions"
-        android:name="com.obsessed.calorieguide.views.fragments.main.ObjectActions"
+        android:name="com.obsessed.calorieguide.views.fragments.ObjectActionsFragment"
         android:label="ObjectActions"
         tools:layout="@layout/object_actions"/>
     <fragment
