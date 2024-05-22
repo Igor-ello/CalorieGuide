@@ -21,10 +21,11 @@ import com.obsessed.calorieguide.databinding.FragmentMainBinding;
 import com.obsessed.calorieguide.data.remote.network.meal.callbacks.CallbackGetMealById;
 import com.obsessed.calorieguide.data.models.Meal;
 import com.obsessed.calorieguide.data.remote.network.meal.MealCall;
+import com.obsessed.calorieguide.tools.save.CallbackLoadData;
 import com.obsessed.calorieguide.tools.save.ShPrefs;
 
 
-public class MainFragment extends Fragment implements CallbackGetMealById {
+public class MainFragment extends Fragment implements CallbackLoadData {
     FragmentMainBinding binding;
 
     public MainFragment() {
@@ -53,28 +54,16 @@ public class MainFragment extends Fragment implements CallbackGetMealById {
         binding = FragmentMainBinding.bind(view);
 
         // Загрузка данных из хранилища
-        ShPrefs.loadData(requireContext());
-
-        // Проверка пользователя на наличие авторизации
-        checkUserLogin(view);
-
-        // Инициализация для отображения данных
-        Stats.getInstance().init(binding, requireActivity());
-
-        //Подгрузка данных
-        requireActivity().runOnUiThread(() -> {
-            int mealId = 2;
-            MealCall mealCall = new MealCall();
-            mealCall.getMealById(mealId, this);
-        });
+        ShPrefs.loadData(requireContext(), this);
     }
 
-    private boolean checkUserLogin(View view) {
+    private boolean checkUserLogin() {
         Log.d("MainFragment", "Checking user login status");
         if (Data.getInstance().getUser() == null) {
             Log.d("MainFragment", "User not logged in, navigating to login fragment");
             if (getActivity() != null && getActivity() instanceof MainActivityApp) {
                 startActivity(new Intent(getActivity(), MainActivityAuth.class));
+                getActivity().finish();
             }
             return false;
         } else {
@@ -84,8 +73,16 @@ public class MainFragment extends Fragment implements CallbackGetMealById {
     }
 
     @Override
-    public void onMealByIdReceived(Meal meal) {
-        Intakes.getInstance().init(binding, requireContext());
-        Stats.getInstance().update();
+    public void onLoadData() {
+        Log.d("MainFragment", "Loading data");
+        // Проверка пользователя на наличие авторизации
+        if(checkUserLogin()) {
+            requireActivity().runOnUiThread(()  -> {
+                // Инициализация для отображения данных
+                Stats.getInstance().init(binding, requireActivity());
+                Stats.getInstance().update();
+                Intakes.getInstance().init(binding, requireContext());
+            });
+        }
     }
 }

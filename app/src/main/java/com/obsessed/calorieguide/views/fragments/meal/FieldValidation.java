@@ -9,8 +9,8 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.obsessed.calorieguide.R;
-import com.obsessed.calorieguide.data.models.Food;
-import com.obsessed.calorieguide.data.remote.network.meal.FoodIdQuantity;
+import com.obsessed.calorieguide.data.models.food.Food;
+import com.obsessed.calorieguide.data.models.food.FoodIdQuantity;
 import com.obsessed.calorieguide.data.models.Meal;
 import com.obsessed.calorieguide.tools.ViewFactory;
 

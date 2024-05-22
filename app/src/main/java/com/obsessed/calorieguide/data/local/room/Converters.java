@@ -4,7 +4,7 @@ import androidx.room.TypeConverter;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.obsessed.calorieguide.data.remote.network.meal.FoodIdQuantity;
+import com.obsessed.calorieguide.data.models.food.FoodIdQuantity;
 
 import java.lang.reflect.Type;
 import java.util.List;

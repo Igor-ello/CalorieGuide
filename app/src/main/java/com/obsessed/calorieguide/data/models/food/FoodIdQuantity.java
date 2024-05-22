@@ -1,4 +1,4 @@
-package com.obsessed.calorieguide.data.remote.network.meal;
+package com.obsessed.calorieguide.data.models.food;
 
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;

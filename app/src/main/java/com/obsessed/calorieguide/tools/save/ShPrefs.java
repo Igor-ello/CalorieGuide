@@ -6,41 +6,74 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
 
-import com.google.gson.Gson;
+import com.obsessed.calorieguide.data.local.room.AppDatabase;
+import com.obsessed.calorieguide.data.models.day.Day;
+import com.obsessed.calorieguide.data.repository.DayRepo;
 import com.obsessed.calorieguide.tools.Data;
 import com.obsessed.calorieguide.data.models.User;
+
+import java.util.Calendar;
+import java.util.concurrent.Executors;
 
 public class ShPrefs {
     public static void saveData(User user, int adapterType, Context context) {
         SharedPreferences sharedPreferences = context.getSharedPreferences("myPrefs", MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
 
-        // Сериализация объекта User в строку JSON
-        Gson gson = new Gson();
-        String userJson = gson.toJson(user);
+        Day day = Data.getInstance().getDay();
 
         // Сохранение данных
-        editor.putString("user", userJson); // Сохранение user
-        editor.putInt("adapterType", adapterType); // Сохранение adapterType
+        if (user != null) {
+            editor.putInt("user_id", user.getId()); // Сохранение user_id
+        }
+        if (day != null) {
+            editor.putInt("day_id", day.getId()); // Сохранение day_id
+        }
+        editor.putInt("day_of_month", Calendar.getInstance().get(Calendar.DAY_OF_MONTH)); // Сохранение day_of_month
+        editor.putInt("adapter_type", adapterType); // Сохранение adapterType
         editor.apply();
 
         Log.d("ShPrefs", "SAVE Data"); // Выводим данные в лог
     }
 
-    public static void loadData(Context context) {
+    public static void loadData(Context context, CallbackLoadData callback) {
         SharedPreferences sharedPreferences = context.getSharedPreferences("myPrefs", MODE_PRIVATE);
 
         // Получение данных
-        String userJson = sharedPreferences.getString("user", null); // Получение user
-        int adapterType = sharedPreferences.getInt("adapterType", 1); // Получение adapterType
+        int userId = sharedPreferences.getInt("user_id", -1); // Получение user
+        int dayId = sharedPreferences.getInt("day_id", -1); // Получение day
+        int savedDayOfMonth = sharedPreferences.getInt("day_of_month", -1); // Получение day_of_month
+        int currentDayOfMonth = Calendar.getInstance().get(Calendar.DAY_OF_MONTH);
+        int adapterType = sharedPreferences.getInt("adapter_type", 1); // Получение adapterType
 
-        // Десериализация строки JSON обратно в объект User
-        Gson gson = new Gson();
-        User user = gson.fromJson(userJson, User.class);
+        AppDatabase db = AppDatabase.getInstance(context);
+        DayRepo repo = new DayRepo(db.dayDao());
 
-        // Загрузка данных
-        Data.getInstance().setUser(user);
-        Data.getInstance().setAdapterType(adapterType);
+        Executors.newSingleThreadExecutor().execute(() -> {
+            if (savedDayOfMonth != currentDayOfMonth) {
+                Data.getInstance().setDay(repo.getNewDay());
+                Log.d("ShPrefs", "New day");
+            } else {
+                Data.getInstance().setDay(repo.getLastDay());
+                if (Data.getInstance().getDay() == null)
+                    Log.d("SPInfo", "Day: null");
+                else
+                    Log.d("SPInfo", "Day: " + Data.getInstance().getDay().toString());
+            }
+
+            Log.d("SPInfo", "Start load data");
+            Data.getInstance().setUser(db.userDao().getUserById(userId));
+            if (Data.getInstance().getUser() == null)
+                Log.d("SPInfo", "User: null");
+            else
+                Log.d("SPInfo", "User: " + Data.getInstance().getUser().toString());
+
+            Data.getInstance().setAdapterType(adapterType);
+            Log.d("SPInfo", "AdapterType: " + adapterType);
+
+            if (callback != null)
+                callback.onLoadData();
+        });
 
         Log.d("ShPrefs", "LOAD Data");
     }
@@ -49,12 +82,14 @@ public class ShPrefs {
         SharedPreferences sharedPreferences = context.getSharedPreferences("myPrefs", MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
 
-        // Сохранение данных
-        editor.putString("user", null); // Сохранение user
-        editor.putInt("adapterType", 1); // Сохранение adapterType
+        // CLEAR DATA
+        editor.putInt("user_id", -1); // Сохранение user
+        editor.putInt("day_id", -1); // Сохранение day
+        editor.putInt("adapter_type", 1); // Сохранение adapterType
+        editor.putInt("day_of_month", Calendar.getInstance().get(Calendar.DAY_OF_MONTH)); // Сохранение day_of_month
         editor.apply();
 
-        loadData(context);
+        loadData(context, null);
 
         Log.d("ShPrefs", "DROP Data"); // Выводим данные в лог
     }

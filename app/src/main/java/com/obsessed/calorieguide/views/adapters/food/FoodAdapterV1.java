@@ -14,7 +14,7 @@ import com.obsessed.calorieguide.R;
 import com.obsessed.calorieguide.databinding.FoodItemV1Binding;
 import com.obsessed.calorieguide.views.adapters.food.listeners.OnFoodClickListener;
 import com.obsessed.calorieguide.views.adapters.food.listeners.OnLikeFoodClickListener;
-import com.obsessed.calorieguide.data.models.Food;
+import com.obsessed.calorieguide.data.models.food.Food;
 
 import java.util.ArrayList;
 

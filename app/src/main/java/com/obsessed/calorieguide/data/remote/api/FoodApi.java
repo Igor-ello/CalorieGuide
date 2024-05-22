@@ -1,7 +1,7 @@
 package com.obsessed.calorieguide.data.remote.api;
 
 import com.google.gson.JsonObject;
-import com.obsessed.calorieguide.data.models.Food;
+import com.obsessed.calorieguide.data.models.food.Food;
 
 import java.util.List;
 

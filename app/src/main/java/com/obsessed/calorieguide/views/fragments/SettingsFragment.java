@@ -59,10 +59,10 @@ public class SettingsFragment extends Fragment implements CompoundButton.OnCheck
         });
 
         view.findViewById(R.id.btLogout).setOnClickListener(v -> {
-            // При выходе из аккаунта сбрасываем данные
-            ShPrefs.dropData(requireContext());
+            //ShPrefs.dropData(requireContext());
             if (getActivity() != null && getActivity() instanceof MainActivityApp) {
                 startActivity(new Intent(getActivity(), MainActivityAuth.class));
+                getActivity().finish();
             }
         });
 
@@ -106,7 +106,7 @@ public class SettingsFragment extends Fragment implements CompoundButton.OnCheck
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
                 if (response.isSuccessful()) {
                     Log.d("Call", "Authentication successful!");
-                    ShPrefs.dropData(requireContext());
+                    //ShPrefs.dropData(requireContext());
                     Navigation.findNavController(view).popBackStack();
                     Navigation.findNavController(view).navigate(R.id.loginFragment);
                 } else {

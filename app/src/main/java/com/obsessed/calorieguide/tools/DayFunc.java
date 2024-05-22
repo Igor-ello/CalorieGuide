@@ -1,22 +1,31 @@
 package com.obsessed.calorieguide.tools;
 
-import com.obsessed.calorieguide.data.models.Food;
+import android.util.Log;
+
+import com.obsessed.calorieguide.data.models.day.Day;
+import com.obsessed.calorieguide.data.models.day.Intake;
+import com.obsessed.calorieguide.data.models.food.Food;
 import com.obsessed.calorieguide.data.models.Meal;
 
 public class DayFunc {
-    private static Day day = Data.getInstance().getDay();
+    private static Day day;
 
-    public static void addObjectToDay(Object object, String arrayType) {
+    public static void addObjectToDay(Intake object, String arrayType) {
+        day = Data.getInstance().getDay();
         if (arrayType.equals("breakfast")) {
             day.addBreakfast(object);
+            Log.d("DayFunc", "Add to breakfast");
         } else if (arrayType.equals("lunch")) {
             day.addLunch(object);
+            Log.d("DayFunc", "Add to lunch");
         } else if (arrayType.equals("dinner")) {
             day.addDinner(object);
-        }
+            Log.d("DayFunc", "Add to dinner");
+        } else Log.d("DayFunc", "Invalid array type");
     }
 
     public static void deleteObjectFromDay(int posInArray, String arrayType) {
+        day = Data.getInstance().getDay();
         if (arrayType.equals("breakfast")) {
             day.deleteByIdBreakfast(posInArray);
         } else if (arrayType.equals("lunch")) {
@@ -28,6 +37,7 @@ public class DayFunc {
 
     // Get
     public static int getCalories() {
+        day = Data.getInstance().getDay();
         int sum = 0;
         for(Object obj : day.getAllArray()) {
             if (obj instanceof Food)
@@ -39,6 +49,7 @@ public class DayFunc {
     }
 
     public static int getCarbohydrates() {
+        day = Data.getInstance().getDay();
         int sum = 0;
         for(Object obj : day.getAllArray()) {
             if (obj instanceof Food)
@@ -50,6 +61,7 @@ public class DayFunc {
     }
 
     public static int getProteins() {
+        day = Data.getInstance().getDay();
         int sum = 0;
         for(Object obj : day.getAllArray()) {
             if (obj instanceof Food)
@@ -61,6 +73,7 @@ public class DayFunc {
     }
 
     public static int getFats() {
+        day = Data.getInstance().getDay();
         int sum = 0;
         for(Object obj : day.getAllArray()) {
             if (obj instanceof Food)

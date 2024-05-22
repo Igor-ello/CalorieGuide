@@ -66,26 +66,10 @@ public class RegistrationFragment extends Fragment {
 
     private void registerRequest(View view, String name, String surname, String email, String password) {
         RegistrationRequest registerRequest = new RegistrationRequest(name, surname, email, password,
-                2000, 250, 90, 60);
+                2000, 250, 90, 60); // TODO: Change the values according to your needs
         UserCall userCall = new UserCall();
-        Call<JsonObject> call = userCall.registerUser(registerRequest);
-        call.enqueue(new Callback<JsonObject>() {
-            @Override
-            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
-                if (response.isSuccessful()) {
-                    Log.d("Call", "Authentication successful");
-                    Toast.makeText(requireContext(), "Successful!", Toast.LENGTH_SHORT).show();
-
-                    Navigation.findNavController(view).popBackStack();
-                } else {
-                    Log.e("Call", "Authentication failed; Response: " + response.code());
-                }
-            }
-
-            @Override
-            public void onFailure(Call<JsonObject> call, Throwable t) {
-                Log.e("Call", "Authentication error: " + t.getMessage());
-            }
-        });
+        userCall.registerUser(registerRequest);
+        Toast.makeText(requireContext(), "Successful!", Toast.LENGTH_SHORT).show();
+        Navigation.findNavController(view).popBackStack();
     }
 }
