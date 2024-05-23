@@ -51,6 +51,7 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textSize">@dimen/text_size</item>
         <item name="android:textColor">@color/text_color</item>
+        <item name="android:maxHeight">@dimen/edit_text_max_size</item>
     </style>
 
     <style name="ButtonStyle">

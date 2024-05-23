@@ -79,15 +79,30 @@ public class AddMealFragment extends Fragment implements CallbackGetAllFood {
 
         // Отправка на сервер введенных данных
         requireView().findViewById(R.id.btSave).setOnClickListener(v -> {
-            ArrayList<EditText> etList = fieldValidation.getEtList();
-            ArrayList<FoodIdQuantity> foodIdQuantities = fieldValidation.getFoodIdQuantities();
-            if(etList != null){
+            ArrayList<EditText> etList;
+            ArrayList<FoodIdQuantity> foodIdQuantities;
+            try {
+                etList = fieldValidation.getEtList();
+            }
+            catch (NullPointerException | IllegalArgumentException e) {
+                return;
+            }
+			if(etList != null){
+                try {
+                    foodIdQuantities = fieldValidation.getFoodIdQuantities();
+                } catch (NullPointerException e) {
+                    Toast.makeText(requireContext(), "Please, fill in all fields", Toast.LENGTH_SHORT).show();
+                    return;
+                } catch (NumberFormatException e) {
+                    Toast.makeText(requireContext(), "You can't enter more than 50 or less than 1", Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 MealCallWithToken mealCallWithToken = new MealCallWithToken(Data.getInstance().getUser().getBearerToken());
                 mealCallWithToken.postMeal(FillClass.fillMeal(etList, byteArray, foodIdQuantities));
 
                 Navigation.findNavController(view).popBackStack();
             } else {
-                Toast.makeText(requireContext(), "Fill in all the fields", Toast.LENGTH_SHORT).show();
+                Toast.makeText(requireContext(), "Fill in all fields", Toast.LENGTH_SHORT).show();
             }
         });
     }

@@ -75,8 +75,13 @@ public class AddFoodFragment extends Fragment {
             ArrayList<EditText> etList = fieldValidation.getValues();
             if(etList != null){
                 FoodCallWithToken call = new FoodCallWithToken(Data.getInstance().getUser().getBearerToken());
-                call.postFood(FillClass.fillFood(etList, byteArray));
-
+                try {
+                    call.postFood(FillClass.fillFood(etList, byteArray));
+                }
+                catch (NumberFormatException e) {
+                    Toast.makeText(getContext(), "Invalid values", Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 Navigation.findNavController(view).popBackStack();
             } else {
                 Toast.makeText(requireContext(), "Fill in all the fields", Toast.LENGTH_SHORT).show();

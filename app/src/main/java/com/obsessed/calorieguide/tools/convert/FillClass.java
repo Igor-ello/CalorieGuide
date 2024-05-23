@@ -14,16 +14,20 @@ import java.util.List;
 
 public class FillClass {
     public static Food fillFood(ArrayList<EditText> etList, byte[] byteArray) {
-        Food food = new Food(
-                etList.get(0).getText().toString(),
-                etList.get(1).getText().toString(),
-                Integer.parseInt(etList.get(2).getText().toString()),
-                Integer.parseInt(etList.get(3).getText().toString()),
-                Integer.parseInt(etList.get(4).getText().toString()),
-                Integer.parseInt(etList.get(5).getText().toString()),
-                Data.getInstance().getUser().getId(),
-                byteArray);
-        return food;
+        try {
+            return new Food(
+                    etList.get(0).getText().toString(),
+                    etList.get(1).getText().toString(),
+                    Integer.parseInt(etList.get(2).getText().toString()),
+                    Integer.parseInt(etList.get(3).getText().toString()),
+                    Integer.parseInt(etList.get(4).getText().toString()),
+                    Integer.parseInt(etList.get(5).getText().toString()),
+                    Data.getInstance().getUser().getId(),
+                    byteArray);
+        }
+        catch (Exception e) {
+            throw new NumberFormatException();
+        }
     }
 
     public static Meal fillMeal(ArrayList<EditText> etList, byte[] byteArray, List<FoodIdQuantity> foodIdQuantities) {
