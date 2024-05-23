@@ -6,12 +6,12 @@ import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
-import com.obsessed.calorieguide.tools.Data;
+import com.obsessed.calorieguide.data.local.Data;
 import com.obsessed.calorieguide.data.models.Meal;
 import com.obsessed.calorieguide.data.remote.api.MealApi;
-import com.obsessed.calorieguide.data.remote.network.meal.callbacks.CallbackGetAllMeal;
-import com.obsessed.calorieguide.data.remote.network.meal.callbacks.CallbackGetMealById;
-import com.obsessed.calorieguide.data.remote.network.meal.callbacks.CallbackSearchMeal;
+import com.obsessed.calorieguide.data.callback.meal.CallbackGetAllMeal;
+import com.obsessed.calorieguide.data.callback.meal.CallbackGetMealById;
+import com.obsessed.calorieguide.data.callback.meal.CallbackSearchMeal;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -108,40 +108,14 @@ public class MealCall {
         });
     }
 
-
-    public void getAllMeal(CallbackGetAllMeal callback) {
-        Call<JsonObject> call = mealApi.getAllMeals();
-        call.enqueue(new Callback<JsonObject>() {
-            @Override
-            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
-                if (response.isSuccessful()) {
-
-                    JsonObject jsonObject = response.body();
-                    if (jsonObject != null && jsonObject.has("meals")) {
-                        JsonArray mealsArray = jsonObject.getAsJsonArray("meals");
-                        ArrayList<Meal> allMeals = new Gson().fromJson(mealsArray, new TypeToken<List<Meal>>() {}.getType());
-                        callback.onAllMealReceived(allMeals);
-
-                        Log.d("Call", "Response getAllMeal is successful!");
-                    } else {
-                        Log.d("Call", "No meals found in response!");
-                    }
-                } else {
-                    Log.e("Call", "Request getAllMeal failed. Response code: " + response.code());
-                }
-            }
-            @Override
-            public void onFailure(Call<JsonObject> call, Throwable t) {
-                Log.e("Call", "ERROR in getAllMeal call: " + t.getMessage());
-            }
-        });
-    }
-
-    public void getAllMeal(int userId, CallbackGetAllMeal callback) {
+    public void getAllMeal(String sort, int userId, int twoDecade, CallbackGetAllMeal callback) {
         JsonObject requestObject = new JsonObject();
-        requestObject.addProperty("sort", "likesDesc");
-        requestObject.addProperty("two-decade", 1);
-        requestObject.addProperty("user_id", userId);
+        if (sort != null)
+            requestObject.addProperty("sort", "likesDesc");
+        if (twoDecade != 0)
+            requestObject.addProperty("two-decade", twoDecade);
+        if (sort!= null)
+            requestObject.addProperty("user_id", userId);
 
         Gson gson = new Gson();
         String json = gson.toJson(requestObject);
@@ -157,7 +131,9 @@ public class MealCall {
                     if (jsonObject != null && jsonObject.has("meals")) {
                         JsonArray mealsArray = jsonObject.getAsJsonArray("meals");
                         ArrayList<Meal> allMeals = new Gson().fromJson(mealsArray, new TypeToken<List<Meal>>() {}.getType());
-                        callback.onAllMealReceived(allMeals);
+
+                        if (callback!= null)
+                            callback.onAllMealReceived(allMeals);
 
                         Log.d("Call", "Response getAllMeal is successful!");
                     } else {

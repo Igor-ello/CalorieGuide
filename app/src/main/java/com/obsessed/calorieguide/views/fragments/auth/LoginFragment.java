@@ -8,7 +8,6 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,14 +18,14 @@ import com.obsessed.calorieguide.MainActivityApp;
 import com.obsessed.calorieguide.MainActivityAuth;
 import com.obsessed.calorieguide.R;
 import com.obsessed.calorieguide.data.local.room.AppDatabase;
-import com.obsessed.calorieguide.data.remote.network.user.callbacks.CallbackUserAuth;
-import com.obsessed.calorieguide.data.repository.CallbackRefreshUser;
+import com.obsessed.calorieguide.data.callback.user.CallbackUserAuth;
+import com.obsessed.calorieguide.data.callback.user.CallbackRefreshUser;
 import com.obsessed.calorieguide.data.repository.UserRepo;
-import com.obsessed.calorieguide.tools.Data;
+import com.obsessed.calorieguide.data.local.Data;
 import com.obsessed.calorieguide.data.models.User;
 import com.obsessed.calorieguide.data.remote.network.user.UserCall;
 import com.obsessed.calorieguide.data.remote.network.user.AuthRequest;
-import com.obsessed.calorieguide.tools.save.ShPrefs;
+import com.obsessed.calorieguide.data.local.load.ShPrefs;
 
 
 public class LoginFragment extends Fragment implements CallbackUserAuth, CallbackRefreshUser {

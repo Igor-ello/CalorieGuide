@@ -1,19 +1,17 @@
 package com.obsessed.calorieguide.data.models;
 
 import androidx.room.Entity;
-import androidx.room.PrimaryKey;
 import androidx.room.TypeConverters;
 
-import com.obsessed.calorieguide.data.local.room.Converters;
+import com.obsessed.calorieguide.data.local.room.converters.FoodIdQuantityConverter;
 import com.obsessed.calorieguide.data.models.day.Intake;
 import com.obsessed.calorieguide.data.models.food.FoodIdQuantity;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 @Entity(tableName = "meal_table")
-@TypeConverters({Converters.class})
+@TypeConverters({FoodIdQuantityConverter.class})
 public class Meal extends Intake {
     private String meal_name;
     private List<FoodIdQuantity> products_id;

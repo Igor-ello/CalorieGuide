@@ -22,12 +22,12 @@ import com.obsessed.calorieguide.data.local.room.AppDatabase;
 import com.obsessed.calorieguide.data.repository.DayRepo;
 import com.obsessed.calorieguide.databinding.FragmentFoodLibraryBinding;
 import com.obsessed.calorieguide.views.adapters.food.FoodIntakeAdapter;
-import com.obsessed.calorieguide.tools.Data;
+import com.obsessed.calorieguide.data.local.Data;
 import com.obsessed.calorieguide.tools.DayFunc;
 import com.obsessed.calorieguide.tools.Func;
 import com.obsessed.calorieguide.data.remote.network.food.FoodCallWithToken;
-import com.obsessed.calorieguide.data.remote.network.food.callbacks.CallbackLikeFood;
-import com.obsessed.calorieguide.data.remote.network.food.callbacks.CallbackSearchFood;
+import com.obsessed.calorieguide.data.callback.food.CallbackLikeFood;
+import com.obsessed.calorieguide.data.callback.food.CallbackSearchFood;
 import com.obsessed.calorieguide.data.models.food.Food;
 import com.obsessed.calorieguide.data.remote.network.food.FoodCall;
 

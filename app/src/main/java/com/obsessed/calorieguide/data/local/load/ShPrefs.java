@@ -1,4 +1,4 @@
-package com.obsessed.calorieguide.tools.save;
+package com.obsessed.calorieguide.data.local.load;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -9,7 +9,7 @@ import android.util.Log;
 import com.obsessed.calorieguide.data.local.room.AppDatabase;
 import com.obsessed.calorieguide.data.models.day.Day;
 import com.obsessed.calorieguide.data.repository.DayRepo;
-import com.obsessed.calorieguide.tools.Data;
+import com.obsessed.calorieguide.data.local.Data;
 import com.obsessed.calorieguide.data.models.User;
 
 import java.util.Calendar;
@@ -50,9 +50,10 @@ public class ShPrefs {
         DayRepo repo = new DayRepo(db.dayDao());
 
         Executors.newSingleThreadExecutor().execute(() -> {
-            if (savedDayOfMonth != currentDayOfMonth) {
+            if (savedDayOfMonth != currentDayOfMonth || dayId == -1) {
+                LoadRemoteData.getInstance().loadAll(context);
                 Data.getInstance().setDay(repo.getNewDay());
-                Log.d("ShPrefs", "New day");
+                Log.d("ShPrefs", "New day and load remote data");
             } else {
                 Data.getInstance().setDay(repo.getLastDay());
                 if (Data.getInstance().getDay() == null)

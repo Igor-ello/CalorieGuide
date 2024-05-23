@@ -6,7 +6,7 @@ import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 import androidx.room.TypeConverters;
 
-import com.obsessed.calorieguide.data.local.room.IntakeListConverter;
+import com.obsessed.calorieguide.data.local.room.converters.IntakeListConverter;
 
 import java.util.ArrayList;
 

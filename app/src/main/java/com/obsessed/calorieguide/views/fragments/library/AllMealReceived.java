@@ -11,8 +11,8 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import com.obsessed.calorieguide.R;
 import com.obsessed.calorieguide.databinding.FragmentMealLibraryBinding;
 import com.obsessed.calorieguide.views.adapters.meal.MealAdapter;
-import com.obsessed.calorieguide.tools.Data;
-import com.obsessed.calorieguide.data.remote.network.meal.callbacks.CallbackLikeMeal;
+import com.obsessed.calorieguide.data.local.Data;
+import com.obsessed.calorieguide.data.callback.meal.CallbackLikeMeal;
 import com.obsessed.calorieguide.data.models.Meal;
 import com.obsessed.calorieguide.data.remote.network.meal.MealCallWithToken;
 

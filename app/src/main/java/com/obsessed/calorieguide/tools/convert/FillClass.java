@@ -2,7 +2,7 @@ package com.obsessed.calorieguide.tools.convert;
 
 import android.widget.EditText;
 
-import com.obsessed.calorieguide.tools.Data;
+import com.obsessed.calorieguide.data.local.Data;
 import com.obsessed.calorieguide.data.models.food.Food;
 import com.obsessed.calorieguide.data.models.food.FoodIdQuantity;
 import com.obsessed.calorieguide.data.models.Meal;

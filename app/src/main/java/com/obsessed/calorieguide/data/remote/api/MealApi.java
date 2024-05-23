@@ -18,8 +18,6 @@ import retrofit2.http.Path;
 public interface MealApi {
     //Meals
     @POST("/meals")
-    Call<JsonObject> getAllMeals();
-    @POST("/meals")
     Call<JsonObject> getAllMeals(@Body RequestBody requestBody);
     @GET("/meals/{meal_id}")
     Call<Meal> getMealById(@Path("meal_id") int mealId);

@@ -5,10 +5,10 @@ import android.widget.ImageView;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-import com.obsessed.calorieguide.tools.Data;
+import com.obsessed.calorieguide.data.local.Data;
 import com.obsessed.calorieguide.data.models.food.Food;
 import com.obsessed.calorieguide.data.remote.api.FoodApi;
-import com.obsessed.calorieguide.data.remote.network.food.callbacks.CallbackLikeFood;
+import com.obsessed.calorieguide.data.callback.food.CallbackLikeFood;
 
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;

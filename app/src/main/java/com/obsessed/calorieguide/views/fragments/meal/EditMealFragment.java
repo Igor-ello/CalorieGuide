@@ -1,5 +1,8 @@
 package com.obsessed.calorieguide.views.fragments.meal;
 
+import static com.obsessed.calorieguide.data.local.Data.SORT_DATE;
+import static com.obsessed.calorieguide.data.local.Data.SORT_LIKE_DESCENDING;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -13,6 +16,7 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,18 +24,17 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.obsessed.calorieguide.MainActivityApp;
 import com.obsessed.calorieguide.R;
-import com.obsessed.calorieguide.tools.Data;
-import com.obsessed.calorieguide.data.remote.network.food.FoodCall;
-import com.obsessed.calorieguide.data.remote.network.food.callbacks.CallbackGetAllFood;
+import com.obsessed.calorieguide.data.local.room.AppDatabase;
+import com.obsessed.calorieguide.data.repository.FoodRepo;
+import com.obsessed.calorieguide.data.local.Data;
+import com.obsessed.calorieguide.data.callback.food.CallbackGetAllFood;
 import com.obsessed.calorieguide.data.models.food.Food;
-import com.obsessed.calorieguide.data.remote.network.meal.callbacks.CallbackGetMealById;
+import com.obsessed.calorieguide.data.callback.meal.CallbackGetMealById;
 import com.obsessed.calorieguide.data.models.food.FoodIdQuantity;
 import com.obsessed.calorieguide.data.models.Meal;
 import com.obsessed.calorieguide.data.remote.network.meal.MealCallWithToken;
-import com.obsessed.calorieguide.data.remote.network.meal.MealCall;
+import com.obsessed.calorieguide.data.repository.MealRepo;
 import com.obsessed.calorieguide.tools.convert.FillClass;
 import com.obsessed.calorieguide.tools.convert.ResizedBitmap;
 
@@ -70,7 +73,7 @@ public class EditMealFragment extends Fragment implements CallbackGetMealById, C
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_edit_meal, container, false);
-        ((BottomNavigationView)((MainActivityApp) getActivity()).findViewById(R.id.bottomNV)).setVisibility(view.GONE);
+        getActivity().findViewById(R.id.bottomNV).setVisibility(view.GONE);
         return view;
     }
 
@@ -82,13 +85,12 @@ public class EditMealFragment extends Fragment implements CallbackGetMealById, C
         init(view);
 
         //Подгрузка данных
-        requireActivity().runOnUiThread(() -> {
-            MealCall mealCall = new MealCall();
-            mealCall.getMealById(mealId, this);
+        AppDatabase db = AppDatabase.getInstance(requireContext());
+        MealRepo mealRepo = new MealRepo(db.mealDao());
+        mealRepo.getMealById(mealId, this);
 
-            FoodCall call = new FoodCall();
-            call.getAllFood(this);
-        });
+        FoodRepo repo = new FoodRepo(db.foodDao());
+        repo.getAllFood(SORT_DATE, 1, 0, this);
 
         view.findViewById(R.id.btDelete).setOnClickListener(v -> {
             MealCallWithToken mealCallWithToken = new MealCallWithToken(Data.getInstance().getUser().getBearerToken());
@@ -143,9 +145,11 @@ public class EditMealFragment extends Fragment implements CallbackGetMealById, C
     }
 
     private void onDataReceived(Meal meal, List<Food> foodList) {
-        if (meal != null && foodList != null) {
-            fieldValidation.setValues(foodList, meal);
-        }
+        requireActivity().runOnUiThread(() -> {
+            if (meal != null && foodList != null) {
+                fieldValidation.setValues(foodList, meal);
+            }
+        });
     }
 
     // Метод для обработки результата выбора изображения из галереи или камеры

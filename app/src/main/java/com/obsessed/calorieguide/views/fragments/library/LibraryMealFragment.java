@@ -1,5 +1,7 @@
 package com.obsessed.calorieguide.views.fragments.library;
 
+import static com.obsessed.calorieguide.data.local.Data.SORT_DATE;
+
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -16,37 +18,31 @@ import android.widget.ImageView;
 import android.widget.SearchView;
 
 import com.obsessed.calorieguide.R;
-import com.obsessed.calorieguide.data.local.dao.MealDao;
 import com.obsessed.calorieguide.data.local.room.AppDatabase;
+import com.obsessed.calorieguide.data.local.Data;
 import com.obsessed.calorieguide.data.repository.MealRepo;
-import com.obsessed.calorieguide.tools.Data;
 import com.obsessed.calorieguide.tools.Func;
 import com.obsessed.calorieguide.databinding.FragmentMealLibraryBinding;
-import com.obsessed.calorieguide.data.remote.network.meal.callbacks.CallbackGetAllMeal;
-import com.obsessed.calorieguide.data.remote.network.meal.callbacks.CallbackLikeMeal;
+import com.obsessed.calorieguide.data.callback.meal.CallbackGetAllMeal;
+import com.obsessed.calorieguide.data.callback.meal.CallbackLikeMeal;
 import com.obsessed.calorieguide.data.models.Meal;
 import com.obsessed.calorieguide.data.remote.network.meal.MealCall;
-import com.obsessed.calorieguide.data.remote.network.meal.callbacks.CallbackSearchMeal;
+import com.obsessed.calorieguide.data.callback.meal.CallbackSearchMeal;
 
 import java.util.ArrayList;
-import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
 public class LibraryMealFragment extends Fragment implements CallbackGetAllMeal, CallbackLikeMeal, CallbackSearchMeal {
     FragmentMealLibraryBinding binding;
     private AppDatabase db;
-    private MealDao mealDao;
-    private final Executor executor;
 
-    public LibraryMealFragment() {
-        executor = Executors.newSingleThreadExecutor();
-    }
+
+    public LibraryMealFragment() {}
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         db = AppDatabase.getInstance(requireContext());
-        mealDao = db.mealDao();
     }
 
     @Override
@@ -62,11 +58,9 @@ public class LibraryMealFragment extends Fragment implements CallbackGetAllMeal,
         super.onViewCreated(view, savedInstanceState);
         binding = FragmentMealLibraryBinding.bind(view);
 
-        MealRepo mealRepo = new MealRepo(mealDao);
-        mealRepo.refreshMeal(this);
-        executor.execute(() -> {
-            ArrayList<Meal> mealList = (ArrayList<Meal>) mealDao.getAllMeal();
-            requireActivity().runOnUiThread(() -> showAllMeal(mealList));
+        Executors.newSingleThreadExecutor().execute(() -> {
+            MealRepo repo = new MealRepo(db.mealDao());
+            repo.getAllMeals(SORT_DATE, 1, 0, this);
         });
 
         //Поиск питания
@@ -97,23 +91,13 @@ public class LibraryMealFragment extends Fragment implements CallbackGetAllMeal,
         });
     }
 
-
-    public void showAllMeal(ArrayList<Meal> mealList) {
-        Log.d("Received", "Size: " + mealList.size());
-        new AllMealReceived(requireContext(), requireView(), binding, mealList, this)
-                .onAllMealReceived();
-    }
-
     @Override
     public void onAllMealReceived(ArrayList<Meal> mealList) {
-        if (isAdded()) { // Проверяем, привязан ли фрагмент к активности
-            executor.execute(() -> {
-                for (Meal meal : mealList) {
-                    mealDao.insert(meal);
-                }
-            });
-            showAllMeal(mealList);
-        }
+        requireActivity().runOnUiThread(() -> {
+            Log.d("Received", "Size: " + mealList.size());
+            new AllMealReceived(requireContext(), requireView(), binding, mealList, this)
+                    .onAllMealReceived();
+        });
     }
 
     @Override

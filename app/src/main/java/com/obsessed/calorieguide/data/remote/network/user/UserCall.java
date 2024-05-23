@@ -3,8 +3,8 @@ package com.obsessed.calorieguide.data.remote.network.user;
 import android.util.Log;
 
 import com.google.gson.JsonObject;
-import com.obsessed.calorieguide.data.remote.network.user.callbacks.CallbackUserAuth;
-import com.obsessed.calorieguide.tools.Data;
+import com.obsessed.calorieguide.data.callback.user.CallbackUserAuth;
+import com.obsessed.calorieguide.data.local.Data;
 import com.obsessed.calorieguide.data.remote.api.UserApi;
 import com.obsessed.calorieguide.tools.convert.JsonToClass;
 

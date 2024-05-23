@@ -2,6 +2,7 @@ package com.obsessed.calorieguide.tools;
 
 import android.util.Log;
 
+import com.obsessed.calorieguide.data.local.Data;
 import com.obsessed.calorieguide.data.models.day.Day;
 import com.obsessed.calorieguide.data.models.day.Intake;
 import com.obsessed.calorieguide.data.models.food.Food;

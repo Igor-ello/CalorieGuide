@@ -16,13 +16,10 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.obsessed.calorieguide.MainActivityApp;
 import com.obsessed.calorieguide.MainActivityAuth;
 import com.obsessed.calorieguide.R;
-import com.obsessed.calorieguide.tools.Data;
+import com.obsessed.calorieguide.data.local.Data;
 import com.obsessed.calorieguide.databinding.FragmentMainBinding;
-import com.obsessed.calorieguide.data.remote.network.meal.callbacks.CallbackGetMealById;
-import com.obsessed.calorieguide.data.models.Meal;
-import com.obsessed.calorieguide.data.remote.network.meal.MealCall;
-import com.obsessed.calorieguide.tools.save.CallbackLoadData;
-import com.obsessed.calorieguide.tools.save.ShPrefs;
+import com.obsessed.calorieguide.data.local.load.CallbackLoadData;
+import com.obsessed.calorieguide.data.local.load.ShPrefs;
 
 
 public class MainFragment extends Fragment implements CallbackLoadData {

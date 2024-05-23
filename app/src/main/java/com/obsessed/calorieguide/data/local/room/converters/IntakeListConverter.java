@@ -1,4 +1,4 @@
-package com.obsessed.calorieguide.data.local.room;
+package com.obsessed.calorieguide.data.local.room.converters;
 
 import androidx.room.TypeConverter;
 
@@ -11,7 +11,6 @@ import com.obsessed.calorieguide.data.models.food.Food;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.List;
 
 public class IntakeListConverter {
     private static Gson gson;
