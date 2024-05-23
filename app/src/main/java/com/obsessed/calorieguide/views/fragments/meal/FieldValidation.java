@@ -62,15 +62,15 @@ public class FieldValidation {
         for (Food food : foodList) {
             foodNames.add(food.getFood_name());
         }
+        int numberOfElements = Integer.parseInt(etNumberOfIng.getText().toString());
         if (etNumberOfIng.getText().toString().isEmpty()) {
             Toast.makeText(context, "Fill in number of ingredients", Toast.LENGTH_SHORT).show();
             return;
         }
-        else if (etNumberOfIng.getText().toString().equals("0")) {
-            Toast.makeText(context, "Number of ingredients can't be 0", Toast.LENGTH_SHORT).show();
+        else if (numberOfElements < 1 || numberOfElements > 25) {
+            Toast.makeText(context, "Number of ingredients must be between 1 and 25", Toast.LENGTH_SHORT).show();
             return;
         }
-        int numberOfElements = Integer.parseInt(etNumberOfIng.getText().toString());
         ArrayAdapter<String> adapter = new ArrayAdapter(context,
                 android.R.layout.simple_spinner_item, foodNames);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -117,12 +117,13 @@ public class FieldValidation {
             if (!et.getText().toString().isEmpty())
                 counter++;
         }
+        int number = Integer.parseInt(etNumberOfIng.getText().toString());
         if (etNumberOfIng.getText().toString().isEmpty()) {
             Toast.makeText(context, "Fill in number of ingredients", Toast.LENGTH_SHORT).show();
             throw new NullPointerException();
         }
-        else if (etNumberOfIng.getText().toString().equals("0")) {
-            Toast.makeText(context, "Number of ingredients can't be 0", Toast.LENGTH_SHORT).show();
+        else if (number < 1 || number > 25) {
+            Toast.makeText(context, "Number of ingredients must be between 1 and 25", Toast.LENGTH_SHORT).show();
             throw new IllegalArgumentException();
         }
         if(counter == etList.size()){

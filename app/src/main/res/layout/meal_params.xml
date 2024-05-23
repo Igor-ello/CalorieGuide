@@ -51,7 +51,7 @@
                 android:id="@+id/etNumberOfIng"
                 style="@style/EditTextStyle"
                 android:inputType="number"
-                android:maxLength="1">
+                android:maxLength="2">
             </EditText>
 
             <Button

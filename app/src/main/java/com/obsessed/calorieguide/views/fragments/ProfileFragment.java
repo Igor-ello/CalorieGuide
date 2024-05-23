@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.obsessed.calorieguide.MainActivityApp;
@@ -77,12 +78,16 @@ public class ProfileFragment extends Fragment {
         });
 
         btSave.setOnClickListener(v -> {
+            try {
+                setUserParams();
+            } catch (NumberFormatException e) {
+                Toast.makeText(getContext(), "Input correct number", Toast.LENGTH_SHORT).show();
+                return;
+            }
             for (EditText et : userParams) {
                 et.setFocusable(false);
                 et.setFocusableInTouchMode(false);
             }
-
-            setUserParams();
             ShPrefs.saveData(user, Data.getInstance().getAdapterType(), requireContext());
             updateUserRequest(user);
 
@@ -138,11 +143,14 @@ public class ProfileFragment extends Fragment {
         user.setSurname(etSurname.getText().toString().trim());
         user.setEmail(etEmail.getText().toString().trim());
         user.setPassword(etPassword.getText().toString().trim());
-
-        user.setCalories_goal(Integer.parseInt(etCalories.getText().toString().trim()));
-        user.setCarbohydrates_goal(Integer.parseInt(etCarbs.getText().toString().trim()));
-        user.setProteins_goal(Integer.parseInt(etProteins.getText().toString().trim()));
-        user.setFats_goal(Integer.parseInt(etFats.getText().toString().trim()));
+        try {
+            user.setCalories_goal(Integer.parseInt(etCalories.getText().toString().trim()));
+            user.setCarbohydrates_goal(Integer.parseInt(etCarbs.getText().toString().trim()));
+            user.setProteins_goal(Integer.parseInt(etProteins.getText().toString().trim()));
+            user.setFats_goal(Integer.parseInt(etFats.getText().toString().trim()));
+        } catch (Exception e) {
+            throw new NumberFormatException();
+        }
     }
 
 
