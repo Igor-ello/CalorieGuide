@@ -12,9 +12,9 @@ import com.obsessed.calorieguide.R;
 import com.obsessed.calorieguide.databinding.FragmentFoodLibraryBinding;
 import com.obsessed.calorieguide.views.adapters.food.FoodAdapterV1;
 import com.obsessed.calorieguide.views.adapters.food.FoodAdapterV2;
-import com.obsessed.calorieguide.tools.Data;
+import com.obsessed.calorieguide.data.local.Data;
 import com.obsessed.calorieguide.data.remote.network.food.FoodCallWithToken;
-import com.obsessed.calorieguide.data.remote.network.food.callbacks.CallbackLikeFood;
+import com.obsessed.calorieguide.data.callback.food.CallbackLikeFood;
 import com.obsessed.calorieguide.data.models.food.Food;
 
 import java.util.ArrayList;
@@ -34,15 +34,21 @@ public class AllFoodReceived {
         this.callback = callback;
     }
 
-    public void onAllFoodReceived() {
-        if (Data.getInstance().getAdapterType() != 2) {
-            isAdapterV1();
-        } else {
-            isAdapterV2();
+    public void allFoodReceived() {
+        try {
+            if (Data.getInstance().getAdapterType() != 2) {
+                isAdapterV1();
+            } else {
+                isAdapterV2();
+            }
+        } catch (Exception e) {
+            Log.e("AllFoodReceived", e.getMessage());
         }
+
     }
 
     private void isAdapterV1() {
+        Log.d("Received", "isAdapterV1" + foodList.toString());
         FoodAdapterV1 foodAdapter = new FoodAdapterV1(foodList);
         binding.rcView.setLayoutManager(new GridLayoutManager(context, 2));
         binding.rcView.setAdapter(foodAdapter);

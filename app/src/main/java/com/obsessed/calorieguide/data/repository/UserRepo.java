@@ -3,6 +3,7 @@ package com.obsessed.calorieguide.data.repository;
 
 import android.util.Log;
 
+import com.obsessed.calorieguide.data.callback.user.CallbackRefreshUser;
 import com.obsessed.calorieguide.data.local.dao.UserDao;
 import com.obsessed.calorieguide.data.models.User;
 import com.obsessed.calorieguide.data.remote.network.user.UserCall;

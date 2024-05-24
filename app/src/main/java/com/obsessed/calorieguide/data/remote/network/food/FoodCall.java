@@ -6,12 +6,12 @@ import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
-import com.obsessed.calorieguide.tools.Data;
+import com.obsessed.calorieguide.data.local.Data;
 import com.obsessed.calorieguide.data.models.food.Food;
 import com.obsessed.calorieguide.data.remote.api.FoodApi;
-import com.obsessed.calorieguide.data.remote.network.food.callbacks.CallbackGetAllFood;
-import com.obsessed.calorieguide.data.remote.network.food.callbacks.CallbackGetFoodById;
-import com.obsessed.calorieguide.data.remote.network.food.callbacks.CallbackSearchFood;
+import com.obsessed.calorieguide.data.callback.food.CallbackGetAllFood;
+import com.obsessed.calorieguide.data.callback.food.CallbackGetFoodById;
+import com.obsessed.calorieguide.data.callback.food.CallbackSearchFood;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -110,40 +110,14 @@ public class FoodCall {
         });
     }
 
-    public void getAllFood(CallbackGetAllFood callback) {
-        Call<JsonObject> call = foodApi.getAllFood(); // JsonObject из библиотеки Gson
-        call.enqueue(new Callback<JsonObject>() {
-            @Override
-            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
-                if (response.isSuccessful()) {
-
-                    JsonObject jsonObject = response.body();
-                    if (jsonObject != null && jsonObject.has("products")) {
-                        JsonArray productsArray = jsonObject.getAsJsonArray("products");
-                        ArrayList<Food> allFood = new Gson().fromJson(productsArray, new TypeToken<List<Food>>() {}.getType());
-                        callback.onAllFoodReceived(allFood);
-
-                        Log.d("Call", "Response getAllFood is successful!");
-                    } else {
-                        Log.d("Call", "No products found in response!");
-                    }
-                } else {
-                    Log.e("Call", "Request getAllFood failed; Response: " + response.code());
-                }
-            }
-
-            @Override
-            public void onFailure(Call<JsonObject> call, Throwable t) {
-                Log.e("Call", "ERROR in getAllFood call: " + t.getMessage());
-            }
-        });
-    }
-
-    public void getAllFood(int userId, CallbackGetAllFood callback) {
+    public void getAllFood(String sort, int userId, int twoDecade, CallbackGetAllFood callback) {
         JsonObject requestObject = new JsonObject();
-        requestObject.addProperty("sort", "likesDesc");
-        requestObject.addProperty("two-decade", 1);
-        requestObject.addProperty("user_id", userId);
+        if (sort != null)
+            requestObject.addProperty("sort", sort);
+        if (twoDecade != 0)
+            requestObject.addProperty("two-decade", twoDecade);
+        if (userId != 0)
+            requestObject.addProperty("user_id", userId);
 
         Gson gson = new Gson();
         String json = gson.toJson(requestObject);
@@ -159,7 +133,9 @@ public class FoodCall {
                     if (jsonObject != null && jsonObject.has("products")) {
                         JsonArray productsArray = jsonObject.getAsJsonArray("products");
                         ArrayList<Food> allFood = new Gson().fromJson(productsArray, new TypeToken<List<Food>>() {}.getType());
-                        callback.onAllFoodReceived(allFood);
+
+                        if (callback!= null)
+                            callback.onAllFoodReceived(allFood);
 
                         Log.d("Call", "Response getAllFood is successful!");
                     } else {

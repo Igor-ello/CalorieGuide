@@ -15,28 +15,30 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.SearchView;
 
-import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.obsessed.calorieguide.MainActivityApp;
 import com.obsessed.calorieguide.R;
+import com.obsessed.calorieguide.data.callback.food.CallbackGetLikedFood;
 import com.obsessed.calorieguide.data.local.room.AppDatabase;
 import com.obsessed.calorieguide.data.repository.DayRepo;
+import com.obsessed.calorieguide.data.repository.FoodRepo;
 import com.obsessed.calorieguide.databinding.FragmentFoodLibraryBinding;
 import com.obsessed.calorieguide.views.adapters.food.FoodIntakeAdapter;
-import com.obsessed.calorieguide.tools.Data;
+import com.obsessed.calorieguide.data.local.Data;
 import com.obsessed.calorieguide.tools.DayFunc;
 import com.obsessed.calorieguide.tools.Func;
 import com.obsessed.calorieguide.data.remote.network.food.FoodCallWithToken;
-import com.obsessed.calorieguide.data.remote.network.food.callbacks.CallbackLikeFood;
-import com.obsessed.calorieguide.data.remote.network.food.callbacks.CallbackSearchFood;
+import com.obsessed.calorieguide.data.callback.food.CallbackLikeFood;
+import com.obsessed.calorieguide.data.callback.food.CallbackSearchFood;
 import com.obsessed.calorieguide.data.models.food.Food;
 import com.obsessed.calorieguide.data.remote.network.food.FoodCall;
+import com.obsessed.calorieguide.views.fragments.library.LibraryFoodFragment;
 
 import java.util.ArrayList;
 
-public class FoodIntakeFragment extends Fragment implements CallbackSearchFood, CallbackLikeFood {
+public class FoodIntakeFragment extends Fragment implements CallbackSearchFood, CallbackLikeFood, CallbackGetLikedFood {
     FragmentFoodLibraryBinding binding;
     private static final String ARG_ARRAY_TYPE = "array_type";
     private String arrayType;
+    private AppDatabase db;
 
     public FoodIntakeFragment() {
         // Required empty public constructor
@@ -48,13 +50,15 @@ public class FoodIntakeFragment extends Fragment implements CallbackSearchFood, 
         if (getArguments()!= null) {
             arrayType = getArguments().getString(ARG_ARRAY_TYPE);
         }
+        db = AppDatabase.getInstance(requireContext());
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_food_library, container, false);
-        ((BottomNavigationView)((MainActivityApp) getActivity()).findViewById(R.id.bottomNV)).setVisibility(view.GONE);
+        getActivity().findViewById(R.id.bottomNV).setVisibility(view.GONE);
         return view;
     }
 
@@ -62,27 +66,30 @@ public class FoodIntakeFragment extends Fragment implements CallbackSearchFood, 
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         binding = FragmentFoodLibraryBinding.bind(view);
+        FoodRepo repo = new FoodRepo(db.foodDao());
 
-        requireActivity().runOnUiThread(() -> {
-            //TODO
-        });
+        repo.getLikedFood(Data.getInstance().getUser().getId(), this);
 
         binding.btToMealLib.setVisibility(View.GONE);
 
         binding.searchAndAdd.search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                // Вызывается при отправке запроса поиска (нажатии Enter или отправке формы)
-                FoodCall call = new FoodCall();
-                call.searchFood(query, Data.getInstance().getUser().getId(), FoodIntakeFragment.this);
+                if (!query.trim().isEmpty()) {
+                    repo.searchFood(query, FoodIntakeFragment.this);
+                } else {
+                    repo.getLikedFood(Data.getInstance().getUser().getId(), FoodIntakeFragment.this);
+                }
                 return true;
             }
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                // Вызывается при изменении текста в строке поиска
-                // Здесь обычно выполняется поиск по мере ввода
-                // В этом примере не обрабатываем изменения текста в реальном времени
+                if (!newText.trim().isEmpty()) {
+                    repo.searchFood(newText, FoodIntakeFragment.this);
+                } else {
+                    repo.getLikedFood(Data.getInstance().getUser().getId(), FoodIntakeFragment.this);
+                }
                 return false;
             }
         });
@@ -90,36 +97,45 @@ public class FoodIntakeFragment extends Fragment implements CallbackSearchFood, 
 
     @Override
     public void foodSearchReceived(ArrayList<Food> foodList) {
-        FoodIntakeAdapter adapter = new FoodIntakeAdapter(foodList);
-        binding.rcView.setLayoutManager(new GridLayoutManager(requireContext(), 1));
-        binding.rcView.setAdapter(adapter);
+        Log.d("Adapter", "FoodSearchReceived: " + foodList.size());
+        requireActivity().runOnUiThread(()  -> {
+            FoodIntakeAdapter adapter = new FoodIntakeAdapter(foodList);
+            binding.rcView.setLayoutManager(new GridLayoutManager(requireContext(), 1));
+            binding.rcView.setAdapter(adapter);
 
-        // Установка слушателя в адаптере
-        adapter.setOnFoodClickListener(food -> {
-            Log.d("Adapter", "Clicked on food in FoodIntakeAdapter: " + food.getFood_name());
-            Bundle args = new Bundle();
-            args.putInt("food_id", food.getId());
-            Navigation.findNavController(requireView()).navigate(R.id.editFoodFragment, args);
-        });
+            // Установка слушателя в адаптере
+            adapter.setOnFoodClickListener(food -> {
+                Log.d("Adapter", "Clicked on food in FoodIntakeAdapter: " + food.getFood_name());
+                Bundle args = new Bundle();
+                args.putInt("food_id", food.getId());
+                Navigation.findNavController(requireView()).navigate(R.id.editFoodFragment, args);
+            });
 
-        adapter.setOnLikeFoodClickListener((food, imageView) -> {
-            Log.d("Adapter", "Clicked on like for food in FoodAdapterLike: " + food.getFood_name());
-            FoodCallWithToken call = new FoodCallWithToken(Data.getInstance().getUser().getBearerToken());
-            call.likeFood(Data.getInstance().getUser().getId(), food, imageView, this);
-        });
+            adapter.setOnLikeFoodClickListener((food, imageView) -> {
+                Log.d("Adapter", "Clicked on like for food in FoodAdapterLike: " + food.getFood_name());
+                FoodCallWithToken call = new FoodCallWithToken(Data.getInstance().getUser().getBearerToken());
+                call.likeFood(Data.getInstance().getUser().getId(), food, imageView, this);
+            });
 
-        adapter.setOnAddFoodClickListener(food -> {
-            Log.d("Adapter", "Clicked on add for food in FoodIntakeAdapter: " + food.getFood_name() + "; ArrayType: " + arrayType);
-            DayFunc.addObjectToDay(food, arrayType);
+            adapter.setOnAddFoodClickListener(food -> {
+                Log.d("Adapter", "Clicked on add for food in FoodIntakeAdapter: " + food.getFood_name() + "; ArrayType: " + arrayType);
+                DayFunc.addObjectToDay(food, arrayType);
 
-            AppDatabase db = AppDatabase.getInstance(requireContext());
-            DayRepo dayRepo = new DayRepo(db.dayDao());
-            dayRepo.refreshDay();
+                AppDatabase db = AppDatabase.getInstance(requireContext());
+                DayRepo dayRepo = new DayRepo(db.dayDao());
+                dayRepo.refreshDay();
+            });
         });
     }
 
     @Override
     public void onLikeFoodSuccess(ImageView imageView, boolean isLiked) {
         Func.setLikeState(imageView, isLiked);
+    }
+
+    @Override
+    public void onLikedFoodReceived(ArrayList<Food> foodArrayList) {
+        Log.d("Adapter", "onLikedFoodReceived: " + foodArrayList.size());
+        foodSearchReceived(foodArrayList);
     }
 }

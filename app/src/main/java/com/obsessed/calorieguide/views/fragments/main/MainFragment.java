@@ -16,16 +16,15 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.obsessed.calorieguide.MainActivityApp;
 import com.obsessed.calorieguide.MainActivityAuth;
 import com.obsessed.calorieguide.R;
-import com.obsessed.calorieguide.tools.Data;
+import com.obsessed.calorieguide.data.callback.user.CallbackRefreshDay;
+import com.obsessed.calorieguide.data.local.Data;
+import com.obsessed.calorieguide.data.local.load.LoadRemoteData;
 import com.obsessed.calorieguide.databinding.FragmentMainBinding;
-import com.obsessed.calorieguide.data.remote.network.meal.callbacks.CallbackGetMealById;
-import com.obsessed.calorieguide.data.models.Meal;
-import com.obsessed.calorieguide.data.remote.network.meal.MealCall;
-import com.obsessed.calorieguide.tools.save.CallbackLoadData;
-import com.obsessed.calorieguide.tools.save.ShPrefs;
+import com.obsessed.calorieguide.data.local.load.CallbackLoadData;
+import com.obsessed.calorieguide.data.local.load.ShPrefs;
 
 
-public class MainFragment extends Fragment implements CallbackLoadData {
+public class MainFragment extends Fragment implements CallbackLoadData, CallbackRefreshDay {
     FragmentMainBinding binding;
 
     public MainFragment() {
@@ -41,7 +40,7 @@ public class MainFragment extends Fragment implements CallbackLoadData {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_main, container, false);
-        BottomNavigationView botNavView = ((BottomNavigationView)((MainActivityApp) getActivity()).findViewById(R.id.bottomNV));
+        BottomNavigationView botNavView = getActivity().findViewById(R.id.bottomNV);
         if (botNavView != null) {
             botNavView.setVisibility(view.VISIBLE);
         }
@@ -55,6 +54,10 @@ public class MainFragment extends Fragment implements CallbackLoadData {
 
         // Загрузка данных из хранилища
         ShPrefs.loadData(requireContext(), this);
+
+        view.findViewById(R.id.btLoop).setOnClickListener(v -> {
+            LoadRemoteData.getInstance(requireContext()).loadAll();
+        });
     }
 
     private boolean checkUserLogin() {
@@ -85,4 +88,11 @@ public class MainFragment extends Fragment implements CallbackLoadData {
             });
         }
     }
+
+    @Override
+    public void onRefreshDay() {
+        Log.d("MainFragment", "Refreshing data" + Data.getInstance().getDay().toString());
+        onLoadData();
+    }
+
 }

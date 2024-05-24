@@ -1,5 +1,7 @@
 package com.obsessed.calorieguide.views.fragments.library;
 
+import static com.obsessed.calorieguide.data.local.Data.SORT_DATE;
+
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -7,47 +9,48 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
+import androidx.recyclerview.widget.GridLayoutManager;
 
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.SearchView;
+import android.widget.Toast;
 
+import com.obsessed.calorieguide.data.callback.food.CallbackLoadFood;
+import com.obsessed.calorieguide.data.local.load.LoadRemoteData;
 import com.obsessed.calorieguide.data.local.room.AppDatabase;
 import com.obsessed.calorieguide.R;
 import com.obsessed.calorieguide.data.repository.FoodRepo;
-import com.obsessed.calorieguide.tools.Data;
 import com.obsessed.calorieguide.tools.Func;
 import com.obsessed.calorieguide.databinding.FragmentFoodLibraryBinding;
-import com.obsessed.calorieguide.data.local.dao.FoodDao;
-import com.obsessed.calorieguide.data.remote.network.food.FoodCall;
-import com.obsessed.calorieguide.data.remote.network.food.callbacks.CallbackLikeFood;
+import com.obsessed.calorieguide.data.callback.food.CallbackLikeFood;
 import com.obsessed.calorieguide.data.models.food.Food;
-import com.obsessed.calorieguide.data.remote.network.food.callbacks.CallbackGetAllFood;
-import com.obsessed.calorieguide.data.remote.network.food.callbacks.CallbackSearchFood;
+import com.obsessed.calorieguide.data.callback.food.CallbackGetAllFood;
+import com.obsessed.calorieguide.data.callback.food.CallbackSearchFood;
+import com.obsessed.calorieguide.views.adapters.food.FoodAdapterV1;
 
 import java.util.ArrayList;
-import java.util.concurrent.Executor;
-import java.util.concurrent.Executors;
 
-public class LibraryFoodFragment extends Fragment implements CallbackGetAllFood, CallbackLikeFood, CallbackSearchFood {
+public class LibraryFoodFragment extends Fragment implements CallbackGetAllFood, CallbackLikeFood, CallbackSearchFood, CallbackLoadFood {
     private FragmentFoodLibraryBinding binding;
     private AppDatabase db;
-    private FoodDao foodDao;
-    private final Executor executor;
+    private FoodRepo repo;
+    private Handler handler;
 
 
-    public LibraryFoodFragment() {
-        executor = Executors.newSingleThreadExecutor();
-    }
+    public LibraryFoodFragment() {}
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         db = AppDatabase.getInstance(requireContext());
-        foodDao = db.foodDao();
+        repo = new FoodRepo(db.foodDao());
+        handler = new Handler(Looper.getMainLooper());
     }
 
     @Override
@@ -64,29 +67,36 @@ public class LibraryFoodFragment extends Fragment implements CallbackGetAllFood,
         super.onViewCreated(view, savedInstanceState);
         binding = FragmentFoodLibraryBinding.bind(view);
 
-        FoodRepo foodRepo = new FoodRepo(foodDao);
-        foodRepo.refreshFood(this);
-        executor.execute(() -> {
-            ArrayList<Food> foodList = (ArrayList<Food>) foodDao.getAllFood();
-            requireActivity().runOnUiThread(() -> showAllFood(foodList));
-        });
-
+        repo.getAllFood(SORT_DATE, 1, this);
 
         //Поиск фруктов в библиотеке
         binding.searchAndAdd.search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                FoodCall call = new FoodCall();
-                call.searchFood(query, Data.getInstance().getUser().getId(), LibraryFoodFragment.this);
+                if (!query.trim().isEmpty()) {
+                    repo.searchFood(query, LibraryFoodFragment.this);
+                } else {
+                    repo.getAllFood(SORT_DATE, 1, LibraryFoodFragment.this);
+                }
                 return true;
             }
 
             @Override
             public boolean onQueryTextChange(String newText) {
+                if (!newText.trim().isEmpty()) {
+                    repo.searchFood(newText, LibraryFoodFragment.this);
+                } else {
+                    repo.getAllFood(SORT_DATE, 1, LibraryFoodFragment.this);
+                }
                 return false;
             }
         });
 
+        binding.swipeRefreshLayout.setOnRefreshListener(() -> {
+            //Обновление списка фруктов из удаленной базы данных
+            LoadRemoteData.getInstance(requireContext()).loadFood(1, this);
+            Func.setTimeLimit(handler, 3000, requireContext(), binding.swipeRefreshLayout);
+        });
 
         //Кнопка для добавления нового фрукта
         view.findViewById(R.id.btAdd).setOnClickListener(v -> {
@@ -101,23 +111,13 @@ public class LibraryFoodFragment extends Fragment implements CallbackGetAllFood,
         });
     }
 
-    public void showAllFood(ArrayList<Food> foodList) {
-        Log.d("Received", "Size: " + foodList.size());
-        new AllFoodReceived(requireContext(), requireView(), binding, foodList, this)
-                .onAllFoodReceived();
-    }
-
     @Override
     public void onAllFoodReceived(ArrayList<Food> foodList) {
-        if (isAdded()) { // Проверяем, привязан ли фрагмент к активности
-            // Вставка или обновление данных в локальной базе данных
-            executor.execute(() -> {
-                for (Food food : foodList) {
-                    foodDao.insert(food);
-                }
-            });
-            showAllFood(foodList);
-        }
+        requireActivity().runOnUiThread(() -> {
+            Log.d("Received", "Size: " + foodList.size());
+            new AllFoodReceived(requireContext(), requireView(), binding, foodList, this)
+                    .allFoodReceived();
+        });
     }
 
     @Override
@@ -127,9 +127,16 @@ public class LibraryFoodFragment extends Fragment implements CallbackGetAllFood,
 
     @Override
     public void foodSearchReceived(ArrayList<Food> foodList) {
-        if (isAdded()) { // Проверяем, привязан ли фрагмент к активности
+        requireActivity().runOnUiThread(() -> {
             new AllFoodReceived(requireContext(), requireView(), binding, foodList, this)
-                    .onAllFoodReceived();
-        }
+                    .allFoodReceived();
+        });
+    }
+
+    @Override
+    public void onLoadFood(ArrayList<Food> foodList) {
+        handler.removeCallbacksAndMessages(null); // Отменяем таймер
+        repo.getAllFood(SORT_DATE, 1, this);
+        binding.swipeRefreshLayout.setRefreshing(false);
     }
 }

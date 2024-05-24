@@ -1,4 +1,4 @@
-package com.obsessed.calorieguide.tools.save;
+package com.obsessed.calorieguide.data.local.load;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -7,9 +7,9 @@ import android.content.SharedPreferences;
 import android.util.Log;
 
 import com.obsessed.calorieguide.data.local.room.AppDatabase;
-import com.obsessed.calorieguide.data.models.day.Day;
+import com.obsessed.calorieguide.data.models.Day;
 import com.obsessed.calorieguide.data.repository.DayRepo;
-import com.obsessed.calorieguide.tools.Data;
+import com.obsessed.calorieguide.data.local.Data;
 import com.obsessed.calorieguide.data.models.User;
 
 import java.util.Calendar;
@@ -50,17 +50,10 @@ public class ShPrefs {
         DayRepo repo = new DayRepo(db.dayDao());
 
         Executors.newSingleThreadExecutor().execute(() -> {
-            Log.d("SPInfo", "Start load data");
-
-            Data.getInstance().setUser(db.userDao().getUserById(userId));
-            if (Data.getInstance().getUser() == null)
-                Log.d("SPInfo", "User: null");
-            else
-                Log.d("SPInfo", "User: " + Data.getInstance().getUser().toString());
-
-            if (savedDayOfMonth != currentDayOfMonth) {
+            if (savedDayOfMonth != currentDayOfMonth || dayId == -1) {
+                LoadRemoteData.getInstance(context).loadAll();
                 Data.getInstance().setDay(repo.getNewDay());
-                Log.d("ShPrefs", "New day");
+                Log.d("ShPrefs", "New day and load remote data");
             } else {
                 Data.getInstance().setDay(repo.getLastDay());
                 if (Data.getInstance().getDay() == null)
@@ -68,6 +61,13 @@ public class ShPrefs {
                 else
                     Log.d("SPInfo", "Day: " + Data.getInstance().getDay().toString());
             }
+
+            Log.d("SPInfo", "Start load data");
+            Data.getInstance().setUser(db.userDao().getUserById(userId));
+            if (Data.getInstance().getUser() == null)
+                Log.d("SPInfo", "User: null");
+            else
+                Log.d("SPInfo", "User: " + Data.getInstance().getUser().toString());
 
             Data.getInstance().setAdapterType(adapterType);
             Log.d("SPInfo", "AdapterType: " + adapterType);

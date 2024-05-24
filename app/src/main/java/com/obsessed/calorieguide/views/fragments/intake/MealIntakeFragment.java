@@ -15,28 +15,28 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.SearchView;
 
-import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.obsessed.calorieguide.MainActivityApp;
 import com.obsessed.calorieguide.R;
+import com.obsessed.calorieguide.data.callback.meal.CallbackGetLikedMeals;
 import com.obsessed.calorieguide.data.local.room.AppDatabase;
 import com.obsessed.calorieguide.data.repository.DayRepo;
+import com.obsessed.calorieguide.data.repository.MealRepo;
 import com.obsessed.calorieguide.databinding.FragmentMealLibraryBinding;
 import com.obsessed.calorieguide.views.adapters.meal.MealIntakeAdapter;
-import com.obsessed.calorieguide.tools.Data;
+import com.obsessed.calorieguide.data.local.Data;
 import com.obsessed.calorieguide.tools.DayFunc;
 import com.obsessed.calorieguide.tools.Func;
-import com.obsessed.calorieguide.data.remote.network.meal.MealCall;
-import com.obsessed.calorieguide.data.remote.network.meal.callbacks.CallbackLikeMeal;
-import com.obsessed.calorieguide.data.remote.network.meal.callbacks.CallbackSearchMeal;
+import com.obsessed.calorieguide.data.callback.meal.CallbackLikeMeal;
+import com.obsessed.calorieguide.data.callback.meal.CallbackSearchMeal;
 import com.obsessed.calorieguide.data.models.Meal;
 import com.obsessed.calorieguide.data.remote.network.meal.MealCallWithToken;
 
 import java.util.ArrayList;
 
-public class MealIntakeFragment extends Fragment implements CallbackSearchMeal, CallbackLikeMeal {
+public class MealIntakeFragment extends Fragment implements CallbackSearchMeal, CallbackLikeMeal, CallbackGetLikedMeals {
     FragmentMealLibraryBinding binding;
     private static final String ARG_ARRAY_TYPE = "array_type";
     private String arrayType;
+    private AppDatabase db;
 
     public MealIntakeFragment() {
         // Required empty public constructor
@@ -48,13 +48,14 @@ public class MealIntakeFragment extends Fragment implements CallbackSearchMeal, 
         if (getArguments()!= null) {
             arrayType = getArguments().getString(ARG_ARRAY_TYPE);
         }
+        db = AppDatabase.getInstance(requireActivity());
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_meal_library, container, false);
-        ((BottomNavigationView)((MainActivityApp) getActivity()).findViewById(R.id.bottomNV)).setVisibility(view.GONE);
+        getActivity().findViewById(R.id.bottomNV).setVisibility(view.GONE);
         return view;
     }
 
@@ -62,27 +63,30 @@ public class MealIntakeFragment extends Fragment implements CallbackSearchMeal, 
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         binding = FragmentMealLibraryBinding.bind(view);
+        MealRepo repo = new MealRepo(db.mealDao());
 
-        requireActivity().runOnUiThread(() -> {
-            //TODO
-        });
+        repo.getLikedMeals(Data.getInstance().getUser().getId(), this);
 
         binding.btToFoodLib.setVisibility(View.GONE);
 
         binding.searchAndAdd.search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                // Вызывается при отправке запроса поиска (нажатии Enter или отправке формы)
-                MealCall call = new MealCall();
-                call.searchMeal(query, Data.getInstance().getUser().getId(), MealIntakeFragment.this);
+                if (!query.trim().isEmpty()) {
+                    repo.searchMeals(query, MealIntakeFragment.this);
+                } else {
+                    repo.getLikedMeals(Data.getInstance().getUser().getId(), MealIntakeFragment.this);
+                }
                 return true;
             }
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                // Вызывается при изменении текста в строке поиска
-                // Здесь обычно выполняется поиск по мере ввода
-                // В этом примере не обрабатываем изменения текста в реальном времени
+                if (!newText.trim().isEmpty()) {
+                    repo.searchMeals(newText, MealIntakeFragment.this);
+                } else {
+                    repo.getLikedMeals(Data.getInstance().getUser().getId(), MealIntakeFragment.this);
+                }
                 return false;
             }
         });
@@ -90,36 +94,43 @@ public class MealIntakeFragment extends Fragment implements CallbackSearchMeal, 
 
     @Override
     public void mealSearchReceived(ArrayList<Meal> mealList) {
-        MealIntakeAdapter adapter = new MealIntakeAdapter(mealList);
-        binding.rcView.setLayoutManager(new GridLayoutManager(requireContext(), 1));
-        binding.rcView.setAdapter(adapter);
+        requireActivity().runOnUiThread(() -> {
+            MealIntakeAdapter adapter = new MealIntakeAdapter(mealList);
+            binding.rcView.setLayoutManager(new GridLayoutManager(requireContext(), 1));
+            binding.rcView.setAdapter(adapter);
 
-        // Установка слушателя в адаптере
-        adapter.setOnMealClickListener(meal -> {
-            Log.d("Adapter", "Clicked on meal in MealIntakeAdapter: " + meal.getMeal_name());
-            Bundle args = new Bundle();
-            args.putInt("meal_id", meal.getId());
-            Navigation.findNavController(requireView()).navigate(R.id.editMealFragment, args);
-        });
+            // Установка слушателя в адаптере
+            adapter.setOnMealClickListener(meal -> {
+                Log.d("Adapter", "Clicked on meal in MealIntakeAdapter: " + meal.getMeal_name());
+                Bundle args = new Bundle();
+                args.putInt("meal_id", meal.getId());
+                Navigation.findNavController(requireView()).navigate(R.id.editMealFragment, args);
+            });
 
-        adapter.setOnLikeMealClickListener((meal, imageView) -> {
-            Log.d("Adapter", "Clicked on like for meal in MealIntakeAdapter: " + meal.getMeal_name());
-            MealCallWithToken call = new MealCallWithToken(Data.getInstance().getUser().getBearerToken());
-            call.likeMeal(Data.getInstance().getUser().getId(), meal, imageView, this);
-        });
+            adapter.setOnLikeMealClickListener((meal, imageView) -> {
+                Log.d("Adapter", "Clicked on like for meal in MealIntakeAdapter: " + meal.getMeal_name());
+                MealCallWithToken call = new MealCallWithToken(Data.getInstance().getUser().getBearerToken());
+                call.likeMeal(Data.getInstance().getUser().getId(), meal, imageView, this);
+            });
 
-        adapter.setOnAddMealClickListener(meal -> {
-            Log.d("Adapter", "Clicked on add for meal in MealIntakeAdapter: " + meal.getMeal_name() + "; ArrayType: " + arrayType);
-            DayFunc.addObjectToDay(meal, arrayType);
+            adapter.setOnAddMealClickListener(meal -> {
+                Log.d("Adapter", "Clicked on add for meal in MealIntakeAdapter: " + meal.getMeal_name() + "; ArrayType: " + arrayType);
+                DayFunc.addObjectToDay(meal, arrayType);
 
-            AppDatabase db = AppDatabase.getInstance(requireContext());
-            DayRepo dayRepo = new DayRepo(db.dayDao());
-            dayRepo.refreshDay();
+                AppDatabase db = AppDatabase.getInstance(requireContext());
+                DayRepo dayRepo = new DayRepo(db.dayDao());
+                dayRepo.refreshDay();
+            });
         });
     }
 
     @Override
     public void onLikeMealSuccess(ImageView imageView, boolean isLiked) {
         Func.setLikeState(imageView, isLiked);
+    }
+
+    @Override
+    public void onLikedMealsReceived(ArrayList<Meal> mealsArrayList) {
+        mealSearchReceived(mealsArrayList);
     }
 }

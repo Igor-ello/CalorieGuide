@@ -1,4 +1,4 @@
-package com.obsessed.calorieguide.data.models.day;
+package com.obsessed.calorieguide.data.models;
 
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;

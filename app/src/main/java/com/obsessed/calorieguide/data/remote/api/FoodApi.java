@@ -21,9 +21,6 @@ public interface FoodApi {
     Call<Food> getFoodById(@Path("id") int foodId);
 
     @POST("products")
-    Call<JsonObject> getAllFood();
-
-    @POST("products")
     Call<JsonObject> getAllFood(@Body RequestBody requestBody);
 
     @POST("/product")

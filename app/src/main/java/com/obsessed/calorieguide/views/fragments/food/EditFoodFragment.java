@@ -23,11 +23,13 @@ import android.widget.Toast;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.obsessed.calorieguide.MainActivityApp;
 import com.obsessed.calorieguide.R;
+import com.obsessed.calorieguide.data.local.room.AppDatabase;
 import com.obsessed.calorieguide.data.remote.network.food.FoodCallWithToken;
+import com.obsessed.calorieguide.data.repository.FoodRepo;
 import com.obsessed.calorieguide.tools.convert.FillClass;
 import com.obsessed.calorieguide.tools.convert.ResizedBitmap;
-import com.obsessed.calorieguide.tools.Data;
-import com.obsessed.calorieguide.data.remote.network.food.callbacks.CallbackGetFoodById;
+import com.obsessed.calorieguide.data.local.Data;
+import com.obsessed.calorieguide.data.callback.food.CallbackGetFoodById;
 import com.obsessed.calorieguide.data.models.food.Food;
 import com.obsessed.calorieguide.data.remote.network.food.FoodCall;
 
@@ -59,7 +61,7 @@ public class EditFoodFragment extends Fragment implements CallbackGetFoodById {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_edit_food, container, false);
-        ((BottomNavigationView)((MainActivityApp) getActivity()).findViewById(R.id.bottomNV)).setVisibility(view.GONE);
+        getActivity().findViewById(R.id.bottomNV).setVisibility(view.GONE);
         return view;
     }
 
@@ -71,10 +73,9 @@ public class EditFoodFragment extends Fragment implements CallbackGetFoodById {
         init(view);
 
         //Подгрузка данных
-        requireActivity().runOnUiThread(() -> {
-            FoodCall call = new FoodCall();
-            call.getFoodById(foodId, this);
-        });
+        AppDatabase db = AppDatabase.getInstance(requireContext());
+        FoodRepo repo = new FoodRepo(db.foodDao());
+        repo.getFoodById(foodId, this);
 
         view.findViewById(R.id.btDelete).setOnClickListener(v -> {
             FoodCallWithToken call = new FoodCallWithToken(Data.getInstance().getUser().getBearerToken());
@@ -106,12 +107,14 @@ public class EditFoodFragment extends Fragment implements CallbackGetFoodById {
 
     @Override
     public void onFoodByIdReceived(Food food) {
-        fieldValidation.setValues(food);
-        if (food.getPicture() != null) {
-            byteArray = food.getPicture();
-            Bitmap bitmap = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
-            imageView.setImageBitmap(bitmap);
-        }
+        requireActivity().runOnUiThread(() -> {
+            fieldValidation.setValues(food);
+            if (food.getPicture() != null) {
+                byteArray = food.getPicture();
+                Bitmap bitmap = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
+                imageView.setImageBitmap(bitmap);
+            }
+        });
     }
 
     private void init(View view){

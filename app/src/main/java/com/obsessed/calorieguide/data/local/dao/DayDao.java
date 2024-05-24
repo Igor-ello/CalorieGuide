@@ -7,11 +7,8 @@ import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 import androidx.room.Update;
 
-import com.obsessed.calorieguide.data.models.day.Day;
-import com.obsessed.calorieguide.data.models.day.Intake;
-import com.obsessed.calorieguide.data.models.food.Food;
+import com.obsessed.calorieguide.data.models.Day;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Dao

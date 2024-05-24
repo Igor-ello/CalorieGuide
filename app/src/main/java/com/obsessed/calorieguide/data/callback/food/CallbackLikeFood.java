@@ -1,4 +1,4 @@
-package com.obsessed.calorieguide.data.remote.network.food.callbacks;
+package com.obsessed.calorieguide.data.callback.food;
 
 import android.widget.ImageView;
 

@@ -1,7 +1,6 @@
 package com.obsessed.calorieguide.views.adapters.intake;
 
 import android.graphics.BitmapFactory;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,7 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.obsessed.calorieguide.R;
-import com.obsessed.calorieguide.data.models.day.Intake;
+import com.obsessed.calorieguide.data.models.Intake;
 import com.obsessed.calorieguide.databinding.ObjectItemBinding;
 import com.obsessed.calorieguide.data.models.food.Food;
 import com.obsessed.calorieguide.data.models.Meal;

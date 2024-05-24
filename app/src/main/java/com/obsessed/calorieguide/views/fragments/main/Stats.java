@@ -6,7 +6,7 @@ import android.widget.ProgressBar;
 
 import androidx.fragment.app.FragmentActivity;
 
-import com.obsessed.calorieguide.tools.Data;
+import com.obsessed.calorieguide.data.local.Data;
 import com.obsessed.calorieguide.tools.DayFunc;
 import com.obsessed.calorieguide.databinding.FragmentMainBinding;
 import com.obsessed.calorieguide.data.models.User;

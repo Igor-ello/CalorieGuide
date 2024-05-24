@@ -1,4 +1,4 @@
-package com.obsessed.calorieguide.data.repository;
+package com.obsessed.calorieguide.data.callback.user;
 
 import com.obsessed.calorieguide.data.models.User;
 

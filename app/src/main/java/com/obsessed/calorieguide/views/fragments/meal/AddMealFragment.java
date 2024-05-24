@@ -1,5 +1,7 @@
 package com.obsessed.calorieguide.views.fragments.meal;
 
+import static com.obsessed.calorieguide.data.local.Data.SORT_LIKE_DESCENDING;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -22,9 +24,10 @@ import android.widget.Toast;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.obsessed.calorieguide.MainActivityApp;
 import com.obsessed.calorieguide.R;
-import com.obsessed.calorieguide.tools.Data;
-import com.obsessed.calorieguide.data.remote.network.food.FoodCall;
-import com.obsessed.calorieguide.data.remote.network.food.callbacks.CallbackGetAllFood;
+import com.obsessed.calorieguide.data.local.room.AppDatabase;
+import com.obsessed.calorieguide.data.repository.FoodRepo;
+import com.obsessed.calorieguide.data.local.Data;
+import com.obsessed.calorieguide.data.callback.food.CallbackGetAllFood;
 import com.obsessed.calorieguide.data.models.food.Food;
 import com.obsessed.calorieguide.data.models.food.FoodIdQuantity;
 import com.obsessed.calorieguide.data.remote.network.meal.MealCallWithToken;
@@ -73,8 +76,9 @@ public class AddMealFragment extends Fragment implements CallbackGetAllFood {
         });
 
         view.findViewById(R.id.btSetNumber).setOnClickListener(v -> {
-            FoodCall call = new FoodCall();
-            call.getAllFood(this);
+            AppDatabase db = AppDatabase.getInstance(requireContext());
+            FoodRepo foodRepo = new FoodRepo(db.foodDao());
+            foodRepo.refreshFood(SORT_LIKE_DESCENDING, 1,this);
         });
 
         // Отправка на сервер введенных данных

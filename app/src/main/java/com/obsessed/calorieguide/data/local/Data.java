@@ -1,11 +1,14 @@
-package com.obsessed.calorieguide.tools;
+package com.obsessed.calorieguide.data.local;
 
-import com.obsessed.calorieguide.data.models.day.Day;
+import com.obsessed.calorieguide.data.models.Day;
 import com.obsessed.calorieguide.data.models.User;
 
 public class Data {
-    static Data uniqueInstance = new Data();
-    static final String BASE_URL = "http://95.174.92.190:8088/";
+    private static Data uniqueInstance = new Data();
+    public static final String BASE_URL = "http://95.174.92.190:8088/";
+    public static final String SORT_LIKE_ASCENDING = "likesAsc";
+    public static final String SORT_LIKE_DESCENDING = "likesDesc";
+    public static final String SORT_DATE = "";
     public static final int PICTURE_SIZE = 250;
     public static final int QUALITY = 100;
 

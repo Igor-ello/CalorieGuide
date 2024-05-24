@@ -22,9 +22,8 @@ import com.google.gson.JsonObject;
 import com.obsessed.calorieguide.MainActivityApp;
 import com.obsessed.calorieguide.MainActivityAuth;
 import com.obsessed.calorieguide.R;
-import com.obsessed.calorieguide.tools.Data;
+import com.obsessed.calorieguide.data.local.Data;
 import com.obsessed.calorieguide.data.remote.network.user.UserCall;
-import com.obsessed.calorieguide.tools.save.ShPrefs;
 
 import retrofit2.Call;
 import retrofit2.Callback;

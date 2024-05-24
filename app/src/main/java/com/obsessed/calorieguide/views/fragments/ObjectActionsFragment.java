@@ -1,4 +1,4 @@
-package com.obsessed.calorieguide.views.fragments;
+package com.obsessed.calorieguide.views.fragments.main;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -14,16 +14,17 @@ import androidx.navigation.Navigation;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.obsessed.calorieguide.MainActivityApp;
 import com.obsessed.calorieguide.R;
+import com.obsessed.calorieguide.data.callback.user.CallbackRefreshDay;
 import com.obsessed.calorieguide.data.local.room.AppDatabase;
-import com.obsessed.calorieguide.data.models.day.Intake;
+import com.obsessed.calorieguide.data.models.Intake;
+import com.obsessed.calorieguide.data.local.Data;
 import com.obsessed.calorieguide.data.repository.DayRepo;
-import com.obsessed.calorieguide.tools.Data;
 import com.obsessed.calorieguide.tools.DayFunc;
 import com.obsessed.calorieguide.data.remote.network.food.FoodCallWithToken;
-import com.obsessed.calorieguide.data.remote.network.food.callbacks.CallbackGetFoodById;
+import com.obsessed.calorieguide.data.callback.food.CallbackGetFoodById;
 import com.obsessed.calorieguide.data.models.food.Food;
 import com.obsessed.calorieguide.data.remote.network.food.FoodCall;
-import com.obsessed.calorieguide.data.remote.network.meal.callbacks.CallbackGetMealById;
+import com.obsessed.calorieguide.data.callback.meal.CallbackGetMealById;
 import com.obsessed.calorieguide.data.models.Meal;
 import com.obsessed.calorieguide.data.remote.network.meal.MealCallWithToken;
 import com.obsessed.calorieguide.data.remote.network.meal.MealCall;
@@ -56,7 +57,7 @@ public class ObjectActionsFragment extends Fragment implements CallbackGetMealBy
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.object_actions, container, false);
-        ((BottomNavigationView)((MainActivityApp) getActivity()).findViewById(R.id.bottomNV)).setVisibility(view.GONE);
+        getActivity().findViewById(R.id.bottomNV).setVisibility(view.GONE);
         return view;
     }
 

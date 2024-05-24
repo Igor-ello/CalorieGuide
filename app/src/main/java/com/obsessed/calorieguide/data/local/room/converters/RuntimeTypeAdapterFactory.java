@@ -1,4 +1,4 @@
-package com.obsessed.calorieguide.data.local.room;
+package com.obsessed.calorieguide.data.local.room.converters;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;

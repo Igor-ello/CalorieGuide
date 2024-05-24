@@ -1,4 +1,4 @@
-package com.obsessed.calorieguide.data.models.day;
+package com.obsessed.calorieguide.data.models;
 
 import android.util.Log;
 
@@ -6,7 +6,8 @@ import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 import androidx.room.TypeConverters;
 
-import com.obsessed.calorieguide.data.local.room.IntakeListConverter;
+import com.obsessed.calorieguide.data.local.room.converters.IntakeListConverter;
+import com.obsessed.calorieguide.data.models.Intake;
 
 import java.util.ArrayList;
 

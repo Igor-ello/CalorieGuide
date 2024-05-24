@@ -2,12 +2,10 @@ package com.obsessed.calorieguide.data.models.food;
 
 
 import androidx.room.Entity;
-import androidx.room.PrimaryKey;
 
-import com.obsessed.calorieguide.data.models.day.Intake;
+import com.obsessed.calorieguide.data.models.Intake;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 @Entity(tableName = "food_table")
 public class Food extends Intake {
