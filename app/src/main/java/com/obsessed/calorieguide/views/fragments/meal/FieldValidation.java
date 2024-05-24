@@ -90,7 +90,7 @@ public class FieldValidation {
             editTextList.add(editText);
             linearLayout.addView(editText);
 
-            if(foodIdQuantityList != null) {
+            if(foodIdQuantityList != null && i < foodIdQuantityList.size()) {
                 spinner.setSelection(findPositionById(foodIdQuantityList.get(i).getProductId()));
                 editText.setText(foodIdQuantityList.get(i).getQuantity() + "");
             }
@@ -106,7 +106,9 @@ public class FieldValidation {
             etList.get(i).setText(meal.getValues().get(i).toString());
         }
         List<FoodIdQuantity> foodIdQuantities = meal.getFoodIdQuantities();
-        etNumberOfIng.setText(String.valueOf(foodIdQuantities.size()));
+        if (etNumberOfIng.getText().toString().isEmpty()) {
+            etNumberOfIng.setText(String.valueOf(foodIdQuantities.size()));
+        }
         fillLnFood(foodList, foodIdQuantities);
     }
 

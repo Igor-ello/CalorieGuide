@@ -104,6 +104,11 @@ public class EditMealFragment extends Fragment implements CallbackGetMealById, C
             startActivityForResult(galleryIntent, GALLERY_REQUEST_CODE);
         });
 
+        view.findViewById(R.id.btSetNumber).setOnClickListener(v -> {
+            FoodCall call = new FoodCall();
+            call.getAllFood(this);
+        });
+
         // Отправка на сервер введенных данных
         requireView().findViewById(R.id.btSave).setOnClickListener(v -> {
             ArrayList<EditText> etList;
