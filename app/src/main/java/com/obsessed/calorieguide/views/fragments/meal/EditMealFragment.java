@@ -113,8 +113,7 @@ public class EditMealFragment extends Fragment implements CallbackGetMealById, C
         });
 
         view.findViewById(R.id.btSetNumber).setOnClickListener(v -> {
-            FoodCall call = new FoodCall();
-            call.getAllFood(this);
+            repo.getAllFood(SORT_LIKE_DESCENDING, 1, this);
         });
 
         // Отправка на сервер введенных данных

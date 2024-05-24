@@ -23,6 +23,7 @@ import com.obsessed.calorieguide.MainActivityApp;
 import com.obsessed.calorieguide.MainActivityAuth;
 import com.obsessed.calorieguide.R;
 import com.obsessed.calorieguide.data.local.Data;
+import com.obsessed.calorieguide.data.local.load.ShPrefs;
 import com.obsessed.calorieguide.data.remote.network.user.UserCall;
 
 import retrofit2.Call;
@@ -105,7 +106,7 @@ public class SettingsFragment extends Fragment implements CompoundButton.OnCheck
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
                 if (response.isSuccessful()) {
                     Log.d("Call", "Authentication successful!");
-                    //ShPrefs.dropData(requireContext());
+                    ShPrefs.dropData(requireContext());
                     Navigation.findNavController(view).popBackStack();
                     Navigation.findNavController(view).navigate(R.id.loginFragment);
                 } else {
