@@ -1,4 +1,4 @@
-package com.obsessed.calorieguide.data.repository.async_task;
+package com.obsessed.calorieguide.data.repository.async_task.food;
 
 import android.os.AsyncTask;
 
@@ -11,16 +11,14 @@ import java.util.List;
 
 public class GetAllFoodTask extends AsyncTask<Void, Void, List<Food>> {
     private final FoodDao foodDao;
-    private final ArrayList<Food> foodArrayList;
     private final String sortType;
     private final int twoDecade;
     private final int userId;
     private Exception exception;
     private CallbackGetAllFood callback;
 
-    public GetAllFoodTask(FoodDao foodDao, ArrayList<Food> foodArrayList, String sortType, int twoDecade, int userId, CallbackGetAllFood callback) {
+    public GetAllFoodTask(FoodDao foodDao, String sortType, int twoDecade, int userId, CallbackGetAllFood callback) {
         this.foodDao = foodDao;
-        this.foodArrayList = foodArrayList;
         this.sortType = sortType;
         this.twoDecade = twoDecade;
         this.userId = userId;
@@ -63,12 +61,11 @@ public class GetAllFoodTask extends AsyncTask<Void, Void, List<Food>> {
     }
 
     @Override
-    protected void onPostExecute(List<Food> food) {
+    protected void onPostExecute(List<Food> foodList) {
         if (exception != null) {
             // Handle the error
         } else {
-            foodArrayList.addAll(food);
-            callback.onAllFoodReceived(foodArrayList);
+            callback.onAllFoodReceived(new ArrayList<>(foodList));
         }
     }
 }

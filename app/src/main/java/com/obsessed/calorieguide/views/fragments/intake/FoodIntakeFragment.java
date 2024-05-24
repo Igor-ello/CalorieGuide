@@ -20,6 +20,7 @@ import com.obsessed.calorieguide.MainActivityApp;
 import com.obsessed.calorieguide.R;
 import com.obsessed.calorieguide.data.local.room.AppDatabase;
 import com.obsessed.calorieguide.data.repository.DayRepo;
+import com.obsessed.calorieguide.data.repository.FoodRepo;
 import com.obsessed.calorieguide.databinding.FragmentFoodLibraryBinding;
 import com.obsessed.calorieguide.views.adapters.food.FoodIntakeAdapter;
 import com.obsessed.calorieguide.data.local.Data;
@@ -37,6 +38,7 @@ public class FoodIntakeFragment extends Fragment implements CallbackSearchFood, 
     FragmentFoodLibraryBinding binding;
     private static final String ARG_ARRAY_TYPE = "array_type";
     private String arrayType;
+    AppDatabase db;
 
     public FoodIntakeFragment() {
         // Required empty public constructor
@@ -48,13 +50,15 @@ public class FoodIntakeFragment extends Fragment implements CallbackSearchFood, 
         if (getArguments()!= null) {
             arrayType = getArguments().getString(ARG_ARRAY_TYPE);
         }
+        db = AppDatabase.getInstance(requireContext());
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_food_library, container, false);
-        ((BottomNavigationView)((MainActivityApp) getActivity()).findViewById(R.id.bottomNV)).setVisibility(view.GONE);
+        getActivity().findViewById(R.id.bottomNV).setVisibility(view.GONE);
         return view;
     }
 
@@ -62,6 +66,7 @@ public class FoodIntakeFragment extends Fragment implements CallbackSearchFood, 
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         binding = FragmentFoodLibraryBinding.bind(view);
+        FoodRepo repo = new FoodRepo(db.foodDao());
 
         requireActivity().runOnUiThread(() -> {
             //TODO
@@ -73,16 +78,13 @@ public class FoodIntakeFragment extends Fragment implements CallbackSearchFood, 
             @Override
             public boolean onQueryTextSubmit(String query) {
                 // Вызывается при отправке запроса поиска (нажатии Enter или отправке формы)
-                FoodCall call = new FoodCall();
-                call.searchFood(query, Data.getInstance().getUser().getId(), FoodIntakeFragment.this);
+                repo.searchFood(query, Data.getInstance().getUser().getId(), FoodIntakeFragment.this);
                 return true;
             }
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                // Вызывается при изменении текста в строке поиска
-                // Здесь обычно выполняется поиск по мере ввода
-                // В этом примере не обрабатываем изменения текста в реальном времени
+                repo.searchFood(newText, Data.getInstance().getUser().getId(), FoodIntakeFragment.this);
                 return false;
             }
         });
@@ -90,6 +92,7 @@ public class FoodIntakeFragment extends Fragment implements CallbackSearchFood, 
 
     @Override
     public void foodSearchReceived(ArrayList<Food> foodList) {
+        Log.d("Adapter", "FoodSearchReceived: " + foodList.size());
         FoodIntakeAdapter adapter = new FoodIntakeAdapter(foodList);
         binding.rcView.setLayoutManager(new GridLayoutManager(requireContext(), 1));
         binding.rcView.setAdapter(adapter);

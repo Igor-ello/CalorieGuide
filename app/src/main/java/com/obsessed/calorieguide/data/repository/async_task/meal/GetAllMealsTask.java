@@ -1,4 +1,4 @@
-package com.obsessed.calorieguide.data.repository.async_task;
+package com.obsessed.calorieguide.data.repository.async_task.meal;
 
 import android.os.AsyncTask;
 
@@ -11,16 +11,14 @@ import java.util.List;
 
 public class GetAllMealsTask extends AsyncTask<Void, Void, List<Meal>> {
     private final MealDao mealDao;
-    private final ArrayList<Meal> mealsArrayList;
     private final String sortType;
     private final int twoDecade;
     private final int userId;
     private Exception exception;
     CallbackGetAllMeal callback;
 
-    public GetAllMealsTask(MealDao mealDao, ArrayList<Meal> mealsArrayList, String sortType, int twoDecade, int userId,  CallbackGetAllMeal callback) {
+    public GetAllMealsTask(MealDao mealDao, String sortType, int twoDecade, int userId,  CallbackGetAllMeal callback) {
         this.mealDao = mealDao;
-        this.mealsArrayList = mealsArrayList;
         this.sortType = sortType;
         this.twoDecade = twoDecade;
         this.userId = userId;
@@ -63,12 +61,11 @@ public class GetAllMealsTask extends AsyncTask<Void, Void, List<Meal>> {
     }
 
     @Override
-    protected void onPostExecute(List<Meal> meals) {
+    protected void onPostExecute(List<Meal> mealList) {
         if (exception != null) {
             // Handle the error
         } else {
-            mealsArrayList.addAll(meals);
-            callback.onAllMealReceived(mealsArrayList);
+            callback.onAllMealReceived(new ArrayList<>(mealList));
         }
     }
 }

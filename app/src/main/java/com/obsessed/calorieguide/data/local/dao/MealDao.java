@@ -45,4 +45,10 @@ public interface MealDao {
 
     @Query("SELECT EXISTS (SELECT 1 FROM meal_table WHERE author_id = :userId AND id = :mealId)")
     boolean doesUserLikeMeal(int userId, int mealId);
+
+    @Query("SELECT * FROM meal_table WHERE meal_name LIKE '%' || :word || '%' ORDER BY meal_name LIKE '%' || :word || '%' DESC, likes DESC")
+    List<Meal> searchMealsByName(String word);
+
+    @Query("SELECT * FROM meal_table WHERE description LIKE '%' || :word || '%' ORDER BY description LIKE '%' || :word || '%' DESC, likes DESC")
+    List<Meal> searchMealsByDescription(String word);
 }

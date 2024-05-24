@@ -58,22 +58,20 @@ public class LibraryMealFragment extends Fragment implements CallbackGetAllMeal,
         super.onViewCreated(view, savedInstanceState);
         binding = FragmentMealLibraryBinding.bind(view);
 
-        Executors.newSingleThreadExecutor().execute(() -> {
-            MealRepo repo = new MealRepo(db.mealDao());
-            repo.getAllMeals(SORT_DATE, 1, 0, this);
-        });
+        MealRepo repo = new MealRepo(db.mealDao());
+        repo.getAllMeals(SORT_DATE, 1, 0, this);
 
         //Поиск питания
         binding.searchAndAdd.search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                MealCall call = new MealCall();
-                call.searchMeal(query, Data.getInstance().getUser().getId(), LibraryMealFragment.this);
+                repo.searchMeals(query, Data.getInstance().getUser().getId(), LibraryMealFragment.this);
                 return true;
             }
 
             @Override
             public boolean onQueryTextChange(String newText) {
+                repo.searchMeals(newText, Data.getInstance().getUser().getId(), LibraryMealFragment.this);
                 return false;
             }
         });

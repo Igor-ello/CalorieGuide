@@ -3,20 +3,16 @@ package com.obsessed.calorieguide.data.repository;
 import android.os.Handler;
 import android.os.Looper;
 
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
-
 import com.obsessed.calorieguide.data.callback.meal.CallbackGetMealById;
+import com.obsessed.calorieguide.data.callback.meal.CallbackSearchMeal;
 import com.obsessed.calorieguide.data.local.dao.MealDao;
-import com.obsessed.calorieguide.data.models.Meal;
 import com.obsessed.calorieguide.data.remote.network.meal.MealCall;
 import com.obsessed.calorieguide.data.callback.meal.CallbackGetAllMeal;
 import com.obsessed.calorieguide.data.local.Data;
-import com.obsessed.calorieguide.data.repository.async_task.GetAllMealsTask;
+import com.obsessed.calorieguide.data.repository.async_task.meal.GetAllMealsTask;
+import com.obsessed.calorieguide.data.repository.async_task.meal.SearchMealsTask;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.concurrent.Executors;
 
 public class MealRepo {
@@ -39,7 +35,11 @@ public class MealRepo {
     }
 
     public void getAllMeals(String sortType, int twoDecade, int userId, CallbackGetAllMeal callback) {
-        new GetAllMealsTask(mealDao, new ArrayList<>(), sortType, twoDecade, userId, callback).execute();
+        new GetAllMealsTask(mealDao, sortType, twoDecade, userId, callback).execute();
+    }
+
+    public void searchMeals(String word, int userId, CallbackSearchMeal callback) {
+        new SearchMealsTask(mealDao, word, userId, 1, callback).execute();
     }
 
     public void getMealById(int id, CallbackGetMealById callback) {

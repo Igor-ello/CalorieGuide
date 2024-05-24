@@ -28,6 +28,7 @@ import com.obsessed.calorieguide.data.callback.food.CallbackLikeFood;
 import com.obsessed.calorieguide.data.models.food.Food;
 import com.obsessed.calorieguide.data.callback.food.CallbackGetAllFood;
 import com.obsessed.calorieguide.data.callback.food.CallbackSearchFood;
+import com.obsessed.calorieguide.views.fragments.intake.FoodIntakeFragment;
 
 import java.util.ArrayList;
 import java.util.concurrent.Executors;
@@ -66,13 +67,13 @@ public class LibraryFoodFragment extends Fragment implements CallbackGetAllFood,
         binding.searchAndAdd.search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                FoodCall call = new FoodCall();
-                call.searchFood(query, Data.getInstance().getUser().getId(), LibraryFoodFragment.this);
+                repo.searchFood(query, Data.getInstance().getUser().getId(),  LibraryFoodFragment.this);
                 return true;
             }
 
             @Override
             public boolean onQueryTextChange(String newText) {
+                repo.searchFood(newText, Data.getInstance().getUser().getId(), LibraryFoodFragment.this);
                 return false;
             }
         });

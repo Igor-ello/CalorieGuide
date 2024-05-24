@@ -4,12 +4,15 @@ import android.os.Handler;
 import android.os.Looper;
 
 import com.obsessed.calorieguide.data.callback.food.CallbackGetFoodById;
+import com.obsessed.calorieguide.data.callback.food.CallbackSearchFood;
+import com.obsessed.calorieguide.data.callback.meal.CallbackGetAllMeal;
 import com.obsessed.calorieguide.data.local.dao.FoodDao;
-import com.obsessed.calorieguide.data.models.food.Food;
 import com.obsessed.calorieguide.data.remote.network.food.FoodCall;
 import com.obsessed.calorieguide.data.callback.food.CallbackGetAllFood;
 import com.obsessed.calorieguide.data.local.Data;
-import com.obsessed.calorieguide.data.repository.async_task.GetAllFoodTask;
+import com.obsessed.calorieguide.data.repository.async_task.food.GetAllFoodTask;
+import com.obsessed.calorieguide.data.repository.async_task.food.SearchFoodTask;
+import com.obsessed.calorieguide.data.repository.async_task.meal.SearchMealsTask;
 
 import java.util.ArrayList;
 import java.util.concurrent.Executors;
@@ -34,7 +37,11 @@ public class FoodRepo {
     }
 
     public void getAllFood(String sortType, int twoDecade, int userId, CallbackGetAllFood callback) {
-        new GetAllFoodTask(foodDao, new ArrayList<>(), sortType, twoDecade, userId, callback).execute();
+        new GetAllFoodTask(foodDao, sortType, twoDecade, userId, callback).execute();
+    }
+
+    public void searchFood(String word, int userId, CallbackSearchFood callback) {
+        new SearchFoodTask(foodDao, word, userId, 1, callback).execute();
     }
 
     public void getFoodById(int id, CallbackGetFoodById callback) {

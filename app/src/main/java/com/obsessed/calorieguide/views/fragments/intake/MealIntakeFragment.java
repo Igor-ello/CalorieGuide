@@ -20,6 +20,7 @@ import com.obsessed.calorieguide.MainActivityApp;
 import com.obsessed.calorieguide.R;
 import com.obsessed.calorieguide.data.local.room.AppDatabase;
 import com.obsessed.calorieguide.data.repository.DayRepo;
+import com.obsessed.calorieguide.data.repository.MealRepo;
 import com.obsessed.calorieguide.databinding.FragmentMealLibraryBinding;
 import com.obsessed.calorieguide.views.adapters.meal.MealIntakeAdapter;
 import com.obsessed.calorieguide.data.local.Data;
@@ -37,6 +38,7 @@ public class MealIntakeFragment extends Fragment implements CallbackSearchMeal, 
     FragmentMealLibraryBinding binding;
     private static final String ARG_ARRAY_TYPE = "array_type";
     private String arrayType;
+    private AppDatabase db;
 
     public MealIntakeFragment() {
         // Required empty public constructor
@@ -48,13 +50,14 @@ public class MealIntakeFragment extends Fragment implements CallbackSearchMeal, 
         if (getArguments()!= null) {
             arrayType = getArguments().getString(ARG_ARRAY_TYPE);
         }
+        db = AppDatabase.getInstance(requireActivity());
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_meal_library, container, false);
-        ((BottomNavigationView)((MainActivityApp) getActivity()).findViewById(R.id.bottomNV)).setVisibility(view.GONE);
+        getActivity().findViewById(R.id.bottomNV).setVisibility(view.GONE);
         return view;
     }
 
@@ -62,6 +65,7 @@ public class MealIntakeFragment extends Fragment implements CallbackSearchMeal, 
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         binding = FragmentMealLibraryBinding.bind(view);
+        MealRepo repo = new MealRepo(db.mealDao());
 
         requireActivity().runOnUiThread(() -> {
             //TODO
@@ -73,16 +77,15 @@ public class MealIntakeFragment extends Fragment implements CallbackSearchMeal, 
             @Override
             public boolean onQueryTextSubmit(String query) {
                 // Вызывается при отправке запроса поиска (нажатии Enter или отправке формы)
-                MealCall call = new MealCall();
-                call.searchMeal(query, Data.getInstance().getUser().getId(), MealIntakeFragment.this);
+//                MealCall call = new MealCall();
+//                call.searchMeal(query, Data.getInstance().getUser().getId(), MealIntakeFragment.this);
+                repo.searchMeals(query, Data.getInstance().getUser().getId(), MealIntakeFragment.this);
                 return true;
             }
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                // Вызывается при изменении текста в строке поиска
-                // Здесь обычно выполняется поиск по мере ввода
-                // В этом примере не обрабатываем изменения текста в реальном времени
+                repo.searchMeals(newText, Data.getInstance().getUser().getId(), MealIntakeFragment.this);
                 return false;
             }
         });
