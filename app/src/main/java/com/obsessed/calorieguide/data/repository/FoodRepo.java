@@ -4,9 +4,12 @@ import android.os.Handler;
 import android.os.Looper;
 
 import com.obsessed.calorieguide.data.callback.food.CallbackGetFoodById;
+import com.obsessed.calorieguide.data.callback.food.CallbackGetLikedFood;
+import com.obsessed.calorieguide.data.callback.food.CallbackLikeFood;
 import com.obsessed.calorieguide.data.callback.food.CallbackSearchFood;
 import com.obsessed.calorieguide.data.callback.meal.CallbackGetAllMeal;
 import com.obsessed.calorieguide.data.local.dao.FoodDao;
+import com.obsessed.calorieguide.data.models.food.Food;
 import com.obsessed.calorieguide.data.remote.network.food.FoodCall;
 import com.obsessed.calorieguide.data.callback.food.CallbackGetAllFood;
 import com.obsessed.calorieguide.data.local.Data;
@@ -47,6 +50,12 @@ public class FoodRepo {
     public void getFoodById(int id, CallbackGetFoodById callback) {
         Executors.newSingleThreadExecutor().execute(() -> {
             callback.onFoodByIdReceived(foodDao.getFoodById(id));
+        });
+    }
+
+    public void getLikedFood(int userId, CallbackGetLikedFood callback) {
+        Executors.newSingleThreadExecutor().execute(() -> {
+            callback.onLikedFoodReceived((ArrayList<Food>) foodDao.getLikedFood(userId));
         });
     }
 }

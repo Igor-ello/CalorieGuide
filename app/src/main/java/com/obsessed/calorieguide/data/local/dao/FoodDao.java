@@ -52,5 +52,7 @@ public interface FoodDao {
     @Query("SELECT * FROM food_table WHERE description LIKE '%' || :word || '%' ORDER BY description LIKE '%' || :word || '%' DESC, likes DESC")
     List<Food> searchFoodByDescription(String word);
 
+    @Query("SELECT * FROM food_table WHERE isLiked = 1 AND author_id = :userId")
+    List<Food> getLikedFood(int userId);
 }
 

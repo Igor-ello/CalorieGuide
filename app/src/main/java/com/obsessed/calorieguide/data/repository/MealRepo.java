@@ -3,9 +3,12 @@ package com.obsessed.calorieguide.data.repository;
 import android.os.Handler;
 import android.os.Looper;
 
+import com.obsessed.calorieguide.data.callback.meal.CallbackGetLikedMeals;
 import com.obsessed.calorieguide.data.callback.meal.CallbackGetMealById;
 import com.obsessed.calorieguide.data.callback.meal.CallbackSearchMeal;
 import com.obsessed.calorieguide.data.local.dao.MealDao;
+import com.obsessed.calorieguide.data.models.Meal;
+import com.obsessed.calorieguide.data.models.food.Food;
 import com.obsessed.calorieguide.data.remote.network.meal.MealCall;
 import com.obsessed.calorieguide.data.callback.meal.CallbackGetAllMeal;
 import com.obsessed.calorieguide.data.local.Data;
@@ -45,6 +48,12 @@ public class MealRepo {
     public void getMealById(int id, CallbackGetMealById callback) {
         Executors.newSingleThreadExecutor().execute(() -> {
             callback.onMealByIdReceived(mealDao.getMealById(id));
+        });
+    }
+
+    public void getLikedMeals(int userId, CallbackGetLikedMeals callback) {
+        Executors.newSingleThreadExecutor().execute(() -> {
+            callback.onLikedMealsReceived((ArrayList<Meal>) mealDao.getLikedMeals(userId));
         });
     }
 }

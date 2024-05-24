@@ -18,6 +18,7 @@ import android.widget.SearchView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.obsessed.calorieguide.MainActivityApp;
 import com.obsessed.calorieguide.R;
+import com.obsessed.calorieguide.data.callback.food.CallbackGetLikedFood;
 import com.obsessed.calorieguide.data.local.room.AppDatabase;
 import com.obsessed.calorieguide.data.repository.DayRepo;
 import com.obsessed.calorieguide.data.repository.FoodRepo;
@@ -34,7 +35,7 @@ import com.obsessed.calorieguide.data.remote.network.food.FoodCall;
 
 import java.util.ArrayList;
 
-public class FoodIntakeFragment extends Fragment implements CallbackSearchFood, CallbackLikeFood {
+public class FoodIntakeFragment extends Fragment implements CallbackSearchFood, CallbackLikeFood, CallbackGetLikedFood {
     FragmentFoodLibraryBinding binding;
     private static final String ARG_ARRAY_TYPE = "array_type";
     private String arrayType;
@@ -68,9 +69,7 @@ public class FoodIntakeFragment extends Fragment implements CallbackSearchFood, 
         binding = FragmentFoodLibraryBinding.bind(view);
         FoodRepo repo = new FoodRepo(db.foodDao());
 
-        requireActivity().runOnUiThread(() -> {
-            //TODO
-        });
+        repo.getLikedFood(Data.getInstance().getUser().getId(), this);
 
         binding.btToMealLib.setVisibility(View.GONE);
 
@@ -93,36 +92,43 @@ public class FoodIntakeFragment extends Fragment implements CallbackSearchFood, 
     @Override
     public void foodSearchReceived(ArrayList<Food> foodList) {
         Log.d("Adapter", "FoodSearchReceived: " + foodList.size());
-        FoodIntakeAdapter adapter = new FoodIntakeAdapter(foodList);
-        binding.rcView.setLayoutManager(new GridLayoutManager(requireContext(), 1));
-        binding.rcView.setAdapter(adapter);
+        requireActivity().runOnUiThread(()  -> {
+            FoodIntakeAdapter adapter = new FoodIntakeAdapter(foodList);
+            binding.rcView.setLayoutManager(new GridLayoutManager(requireContext(), 1));
+            binding.rcView.setAdapter(adapter);
 
-        // Установка слушателя в адаптере
-        adapter.setOnFoodClickListener(food -> {
-            Log.d("Adapter", "Clicked on food in FoodIntakeAdapter: " + food.getFood_name());
-            Bundle args = new Bundle();
-            args.putInt("food_id", food.getId());
-            Navigation.findNavController(requireView()).navigate(R.id.editFoodFragment, args);
-        });
+            // Установка слушателя в адаптере
+            adapter.setOnFoodClickListener(food -> {
+                Log.d("Adapter", "Clicked on food in FoodIntakeAdapter: " + food.getFood_name());
+                Bundle args = new Bundle();
+                args.putInt("food_id", food.getId());
+                Navigation.findNavController(requireView()).navigate(R.id.editFoodFragment, args);
+            });
 
-        adapter.setOnLikeFoodClickListener((food, imageView) -> {
-            Log.d("Adapter", "Clicked on like for food in FoodAdapterLike: " + food.getFood_name());
-            FoodCallWithToken call = new FoodCallWithToken(Data.getInstance().getUser().getBearerToken());
-            call.likeFood(Data.getInstance().getUser().getId(), food, imageView, this);
-        });
+            adapter.setOnLikeFoodClickListener((food, imageView) -> {
+                Log.d("Adapter", "Clicked on like for food in FoodAdapterLike: " + food.getFood_name());
+                FoodCallWithToken call = new FoodCallWithToken(Data.getInstance().getUser().getBearerToken());
+                call.likeFood(Data.getInstance().getUser().getId(), food, imageView, this);
+            });
 
-        adapter.setOnAddFoodClickListener(food -> {
-            Log.d("Adapter", "Clicked on add for food in FoodIntakeAdapter: " + food.getFood_name() + "; ArrayType: " + arrayType);
-            DayFunc.addObjectToDay(food, arrayType);
+            adapter.setOnAddFoodClickListener(food -> {
+                Log.d("Adapter", "Clicked on add for food in FoodIntakeAdapter: " + food.getFood_name() + "; ArrayType: " + arrayType);
+                DayFunc.addObjectToDay(food, arrayType);
 
-            AppDatabase db = AppDatabase.getInstance(requireContext());
-            DayRepo dayRepo = new DayRepo(db.dayDao());
-            dayRepo.refreshDay();
+                AppDatabase db = AppDatabase.getInstance(requireContext());
+                DayRepo dayRepo = new DayRepo(db.dayDao());
+                dayRepo.refreshDay();
+            });
         });
     }
 
     @Override
     public void onLikeFoodSuccess(ImageView imageView, boolean isLiked) {
         Func.setLikeState(imageView, isLiked);
+    }
+
+    @Override
+    public void onLikedFoodReceived(ArrayList<Food> foodArrayList) {
+        foodSearchReceived(foodArrayList);
     }
 }
