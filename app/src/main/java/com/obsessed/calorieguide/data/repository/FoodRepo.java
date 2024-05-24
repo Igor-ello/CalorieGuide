@@ -5,9 +5,7 @@ import android.os.Looper;
 
 import com.obsessed.calorieguide.data.callback.food.CallbackGetFoodById;
 import com.obsessed.calorieguide.data.callback.food.CallbackGetLikedFood;
-import com.obsessed.calorieguide.data.callback.food.CallbackLikeFood;
 import com.obsessed.calorieguide.data.callback.food.CallbackSearchFood;
-import com.obsessed.calorieguide.data.callback.meal.CallbackGetAllMeal;
 import com.obsessed.calorieguide.data.local.dao.FoodDao;
 import com.obsessed.calorieguide.data.models.food.Food;
 import com.obsessed.calorieguide.data.remote.network.food.FoodCall;
@@ -15,7 +13,6 @@ import com.obsessed.calorieguide.data.callback.food.CallbackGetAllFood;
 import com.obsessed.calorieguide.data.local.Data;
 import com.obsessed.calorieguide.data.repository.async_task.food.GetAllFoodTask;
 import com.obsessed.calorieguide.data.repository.async_task.food.SearchFoodTask;
-import com.obsessed.calorieguide.data.repository.async_task.meal.SearchMealsTask;
 
 import java.util.ArrayList;
 import java.util.concurrent.Executors;
@@ -39,11 +36,13 @@ public class FoodRepo {
         handler.post(runnable);
     }
 
-    public void getAllFood(String sortType, int twoDecade, int userId, CallbackGetAllFood callback) {
+    public void getAllFood(String sortType, int twoDecade, CallbackGetAllFood callback) {
+        int userId = Data.getInstance().getUser().getId();
         new GetAllFoodTask(foodDao, sortType, twoDecade, userId, callback).execute();
     }
 
-    public void searchFood(String word, int userId, CallbackSearchFood callback) {
+    public void searchFood(String word, CallbackSearchFood callback) {
+        int userId = Data.getInstance().getUser().getId();
         new SearchFoodTask(foodDao, word, userId, 1, callback).execute();
     }
 
@@ -55,7 +54,7 @@ public class FoodRepo {
 
     public void getLikedFood(int userId, CallbackGetLikedFood callback) {
         Executors.newSingleThreadExecutor().execute(() -> {
-            callback.onLikedFoodReceived((ArrayList<Food>) foodDao.getLikedFood(userId));
+            callback.onLikedFoodReceived((ArrayList<Food>) foodDao.getFoodByLikes());
         });
     }
 }

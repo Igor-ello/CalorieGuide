@@ -90,7 +90,7 @@ public class EditMealFragment extends Fragment implements CallbackGetMealById, C
         mealRepo.getMealById(mealId, this);
 
         FoodRepo repo = new FoodRepo(db.foodDao());
-        repo.getAllFood(SORT_DATE, 1, 0, this);
+        repo.getAllFood(SORT_DATE, 1,  this);
 
         view.findViewById(R.id.btDelete).setOnClickListener(v -> {
             MealCallWithToken mealCallWithToken = new MealCallWithToken(Data.getInstance().getUser().getBearerToken());

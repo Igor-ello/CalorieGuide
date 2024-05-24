@@ -13,7 +13,7 @@ import com.obsessed.calorieguide.R;
 import com.obsessed.calorieguide.databinding.FragmentMainBinding;
 import com.obsessed.calorieguide.views.adapters.intake.IntakeAdapter;
 import com.obsessed.calorieguide.data.local.Data;
-import com.obsessed.calorieguide.data.models.day.Day;
+import com.obsessed.calorieguide.data.models.Day;
 import com.obsessed.calorieguide.data.models.food.Food;
 import com.obsessed.calorieguide.data.models.Meal;
 

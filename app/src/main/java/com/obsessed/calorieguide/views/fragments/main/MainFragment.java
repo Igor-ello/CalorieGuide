@@ -17,6 +17,7 @@ import com.obsessed.calorieguide.MainActivityApp;
 import com.obsessed.calorieguide.MainActivityAuth;
 import com.obsessed.calorieguide.R;
 import com.obsessed.calorieguide.data.local.Data;
+import com.obsessed.calorieguide.data.local.load.LoadRemoteData;
 import com.obsessed.calorieguide.databinding.FragmentMainBinding;
 import com.obsessed.calorieguide.data.local.load.CallbackLoadData;
 import com.obsessed.calorieguide.data.local.load.ShPrefs;
@@ -52,6 +53,10 @@ public class MainFragment extends Fragment implements CallbackLoadData {
 
         // Загрузка данных из хранилища
         ShPrefs.loadData(requireContext(), this);
+
+        view.findViewById(R.id.btLoop).setOnClickListener(v -> {
+            LoadRemoteData.getInstance().loadAll(requireContext());
+        });
     }
 
     private boolean checkUserLogin() {

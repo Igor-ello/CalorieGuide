@@ -44,9 +44,6 @@ public class SearchMealsTask extends AsyncTask<Void, Void, List<Meal>> {
                 boolean nameSimilarity = Algorithm.getInstance().isSimilar(meal.getMeal_name(), word, maxDifference);
                 if (nameSimilarity) {
                     if (!includedIds.contains(meal.getId())) {
-                        if (userId != 0) {
-                            meal.setIsLiked(mealDao.doesUserLikeMeal(userId, meal.getId()));
-                        }
                         result.add(meal);
                         includedIds.add(meal.getId());
                     }
@@ -57,9 +54,6 @@ public class SearchMealsTask extends AsyncTask<Void, Void, List<Meal>> {
                 boolean nameSimilarity = Algorithm.getInstance().isSimilar(meal.getMeal_name(), word, maxDifference);
                 if (nameSimilarity) {
                     if (!includedIds.contains(meal.getId())) {
-                        if (userId != 0) {
-                            meal.setIsLiked(mealDao.doesUserLikeMeal(userId, meal.getId()));
-                        }
                         result.add(meal);
                         includedIds.add(meal.getId());
                     }

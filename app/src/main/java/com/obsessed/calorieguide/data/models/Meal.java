@@ -4,7 +4,6 @@ import androidx.room.Entity;
 import androidx.room.TypeConverters;
 
 import com.obsessed.calorieguide.data.local.room.converters.FoodIdQuantityConverter;
-import com.obsessed.calorieguide.data.models.day.Intake;
 import com.obsessed.calorieguide.data.models.food.FoodIdQuantity;
 
 import java.util.ArrayList;

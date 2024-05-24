@@ -33,7 +33,7 @@ public class AllMealReceived {
         this.callback = callback;
     }
 
-    public void onAllMealReceived() {
+    public void allMealReceived() {
         MealAdapter mealAdapter = new MealAdapter(mealList);
         binding.rcView.setLayoutManager(new GridLayoutManager(context, 1));
         binding.rcView.setAdapter(mealAdapter);

@@ -18,6 +18,7 @@ import android.widget.SearchView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.obsessed.calorieguide.MainActivityApp;
 import com.obsessed.calorieguide.R;
+import com.obsessed.calorieguide.data.callback.food.CallbackGetAllFood;
 import com.obsessed.calorieguide.data.callback.food.CallbackGetLikedFood;
 import com.obsessed.calorieguide.data.local.room.AppDatabase;
 import com.obsessed.calorieguide.data.repository.DayRepo;
@@ -77,13 +78,13 @@ public class FoodIntakeFragment extends Fragment implements CallbackSearchFood, 
             @Override
             public boolean onQueryTextSubmit(String query) {
                 // Вызывается при отправке запроса поиска (нажатии Enter или отправке формы)
-                repo.searchFood(query, Data.getInstance().getUser().getId(), FoodIntakeFragment.this);
+                repo.searchFood(query, FoodIntakeFragment.this);
                 return true;
             }
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                repo.searchFood(newText, Data.getInstance().getUser().getId(), FoodIntakeFragment.this);
+                repo.searchFood(newText, FoodIntakeFragment.this);
                 return false;
             }
         });
@@ -129,6 +130,7 @@ public class FoodIntakeFragment extends Fragment implements CallbackSearchFood, 
 
     @Override
     public void onLikedFoodReceived(ArrayList<Food> foodArrayList) {
+        Log.d("Adapter", "onLikedFoodReceived: " + foodArrayList.size());
         foodSearchReceived(foodArrayList);
     }
 }

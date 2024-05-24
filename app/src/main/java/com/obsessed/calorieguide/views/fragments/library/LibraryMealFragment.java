@@ -19,18 +19,15 @@ import android.widget.SearchView;
 
 import com.obsessed.calorieguide.R;
 import com.obsessed.calorieguide.data.local.room.AppDatabase;
-import com.obsessed.calorieguide.data.local.Data;
 import com.obsessed.calorieguide.data.repository.MealRepo;
 import com.obsessed.calorieguide.tools.Func;
 import com.obsessed.calorieguide.databinding.FragmentMealLibraryBinding;
 import com.obsessed.calorieguide.data.callback.meal.CallbackGetAllMeal;
 import com.obsessed.calorieguide.data.callback.meal.CallbackLikeMeal;
 import com.obsessed.calorieguide.data.models.Meal;
-import com.obsessed.calorieguide.data.remote.network.meal.MealCall;
 import com.obsessed.calorieguide.data.callback.meal.CallbackSearchMeal;
 
 import java.util.ArrayList;
-import java.util.concurrent.Executors;
 
 public class LibraryMealFragment extends Fragment implements CallbackGetAllMeal, CallbackLikeMeal, CallbackSearchMeal {
     FragmentMealLibraryBinding binding;
@@ -59,19 +56,27 @@ public class LibraryMealFragment extends Fragment implements CallbackGetAllMeal,
         binding = FragmentMealLibraryBinding.bind(view);
 
         MealRepo repo = new MealRepo(db.mealDao());
-        repo.getAllMeals(SORT_DATE, 1, 0, this);
+        repo.getAllMeals(SORT_DATE, 1, this);
 
         //Поиск питания
         binding.searchAndAdd.search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                repo.searchMeals(query, Data.getInstance().getUser().getId(), LibraryMealFragment.this);
+                if (!query.trim().isEmpty()) {
+                    repo.searchMeals(query, LibraryMealFragment.this);
+                } else {
+                    repo.getAllMeals(SORT_DATE, 1,  LibraryMealFragment.this);
+                }
                 return true;
             }
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                repo.searchMeals(newText, Data.getInstance().getUser().getId(), LibraryMealFragment.this);
+                if (!newText.trim().isEmpty()) {
+                    repo.searchMeals(newText, LibraryMealFragment.this);
+                } else {
+                    repo.getAllMeals(SORT_DATE, 1,  LibraryMealFragment.this);
+                }
                 return false;
             }
         });
@@ -94,7 +99,7 @@ public class LibraryMealFragment extends Fragment implements CallbackGetAllMeal,
         requireActivity().runOnUiThread(() -> {
             Log.d("Received", "Size: " + mealList.size());
             new AllMealReceived(requireContext(), requireView(), binding, mealList, this)
-                    .onAllMealReceived();
+                    .allMealReceived();
         });
     }
 
@@ -107,7 +112,7 @@ public class LibraryMealFragment extends Fragment implements CallbackGetAllMeal,
     public void mealSearchReceived(ArrayList<Meal> mealList) {
         if (isAdded()) { // Проверяем, привязан ли фрагмент к активности
             new AllMealReceived(requireContext(), requireView(), binding, mealList, this)
-                    .onAllMealReceived();
+                    .allMealReceived();
         }
     }
 }

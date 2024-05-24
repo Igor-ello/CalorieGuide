@@ -31,6 +31,9 @@ public interface FoodDao {
     @Query("SELECT * FROM food_table WHERE id = :id")
     Food getFoodById(int id);
 
+    @Query("SELECT * FROM food_table WHERE isLiked = 1")
+    List<Food> getFoodByLikes();
+
     @Query("SELECT * FROM food_table ORDER BY likes ASC LIMIT :limit OFFSET :offset")
     List<Food> getFoodByLikesAsc(int offset, int limit);
 
@@ -43,16 +46,13 @@ public interface FoodDao {
     @Query("SELECT * FROM food_table ORDER BY id DESC LIMIT :limit OFFSET :offset")
     List<Food> getFoodFromNewest(int offset, int limit);
 
-    @Query("SELECT EXISTS (SELECT 1 FROM food_table WHERE author_id = :userId AND id = :foodId)")
-    boolean doesUserLikeFood(int userId, int foodId);
+    @Query("SELECT EXISTS (SELECT 1 FROM food_table WHERE id = :foodId AND isLiked = 1)")
+    boolean doesUserLikeFood(int foodId);
 
     @Query("SELECT * FROM food_table WHERE food_name LIKE '%' || :word || '%' ORDER BY food_name LIKE '%' || :word || '%' DESC, likes DESC")
     List<Food> searchFoodByName(String word);
 
     @Query("SELECT * FROM food_table WHERE description LIKE '%' || :word || '%' ORDER BY description LIKE '%' || :word || '%' DESC, likes DESC")
     List<Food> searchFoodByDescription(String word);
-
-    @Query("SELECT * FROM food_table WHERE isLiked = 1 AND author_id = :userId")
-    List<Food> getLikedFood(int userId);
 }
 

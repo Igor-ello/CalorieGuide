@@ -78,13 +78,13 @@ public class MealIntakeFragment extends Fragment implements CallbackSearchMeal, 
                 // Вызывается при отправке запроса поиска (нажатии Enter или отправке формы)
 //                MealCall call = new MealCall();
 //                call.searchMeal(query, Data.getInstance().getUser().getId(), MealIntakeFragment.this);
-                repo.searchMeals(query, Data.getInstance().getUser().getId(), MealIntakeFragment.this);
+                repo.searchMeals(query, MealIntakeFragment.this);
                 return true;
             }
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                repo.searchMeals(newText, Data.getInstance().getUser().getId(), MealIntakeFragment.this);
+                repo.searchMeals(newText, MealIntakeFragment.this);
                 return false;
             }
         });

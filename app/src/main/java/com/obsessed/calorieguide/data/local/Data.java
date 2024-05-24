@@ -1,6 +1,6 @@
 package com.obsessed.calorieguide.data.local;
 
-import com.obsessed.calorieguide.data.models.day.Day;
+import com.obsessed.calorieguide.data.models.Day;
 import com.obsessed.calorieguide.data.models.User;
 
 public class Data {

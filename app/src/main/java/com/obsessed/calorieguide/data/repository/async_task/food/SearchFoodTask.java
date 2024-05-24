@@ -42,9 +42,6 @@ public class SearchFoodTask extends AsyncTask<Void, Void, List<Food>> {
                 if (nameSimilarity) {
                     // Проверяем, был ли продукт уже добавлен в результаты
                     if (!result.contains(food)) {
-                        if (userId != 0) {
-                            food.setIsLiked(foodDao.doesUserLikeFood(userId, food.getId()));
-                        }
                         result.add(food);
                     }
                 }
@@ -57,9 +54,6 @@ public class SearchFoodTask extends AsyncTask<Void, Void, List<Food>> {
                 if (descriptionSimilarity) {
                     // Проверяем, был ли продукт уже добавлен в результаты
                     if (!result.contains(food)) {
-                        if (userId != 0) {
-                            food.setIsLiked(foodDao.doesUserLikeFood(userId, food.getId()));
-                        }
                         result.add(food);
                     }
                 }

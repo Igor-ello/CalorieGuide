@@ -7,7 +7,7 @@ import android.content.SharedPreferences;
 import android.util.Log;
 
 import com.obsessed.calorieguide.data.local.room.AppDatabase;
-import com.obsessed.calorieguide.data.models.day.Day;
+import com.obsessed.calorieguide.data.models.Day;
 import com.obsessed.calorieguide.data.repository.DayRepo;
 import com.obsessed.calorieguide.data.local.Data;
 import com.obsessed.calorieguide.data.models.User;

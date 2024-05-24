@@ -19,19 +19,15 @@ import android.widget.SearchView;
 
 import com.obsessed.calorieguide.data.local.room.AppDatabase;
 import com.obsessed.calorieguide.R;
-import com.obsessed.calorieguide.data.local.Data;
 import com.obsessed.calorieguide.data.repository.FoodRepo;
 import com.obsessed.calorieguide.tools.Func;
 import com.obsessed.calorieguide.databinding.FragmentFoodLibraryBinding;
-import com.obsessed.calorieguide.data.remote.network.food.FoodCall;
 import com.obsessed.calorieguide.data.callback.food.CallbackLikeFood;
 import com.obsessed.calorieguide.data.models.food.Food;
 import com.obsessed.calorieguide.data.callback.food.CallbackGetAllFood;
 import com.obsessed.calorieguide.data.callback.food.CallbackSearchFood;
-import com.obsessed.calorieguide.views.fragments.intake.FoodIntakeFragment;
 
 import java.util.ArrayList;
-import java.util.concurrent.Executors;
 
 public class LibraryFoodFragment extends Fragment implements CallbackGetAllFood, CallbackLikeFood, CallbackSearchFood {
     private FragmentFoodLibraryBinding binding;
@@ -61,19 +57,27 @@ public class LibraryFoodFragment extends Fragment implements CallbackGetAllFood,
         binding = FragmentFoodLibraryBinding.bind(view);
 
         FoodRepo repo = new FoodRepo(db.foodDao());
-        repo.getAllFood(SORT_DATE, 1, 0, this);
+        repo.getAllFood(SORT_DATE, 1, this);
 
         //Поиск фруктов в библиотеке
         binding.searchAndAdd.search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                repo.searchFood(query, Data.getInstance().getUser().getId(),  LibraryFoodFragment.this);
+                if (!query.trim().isEmpty()) {
+                    repo.searchFood(query, LibraryFoodFragment.this);
+                } else {
+                    repo.getAllFood(SORT_DATE, 1, LibraryFoodFragment.this);
+                }
                 return true;
             }
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                repo.searchFood(newText, Data.getInstance().getUser().getId(), LibraryFoodFragment.this);
+                if (!newText.trim().isEmpty()) {
+                    repo.searchFood(newText, LibraryFoodFragment.this);
+                } else {
+                    repo.getAllFood(SORT_DATE, 1, LibraryFoodFragment.this);
+                }
                 return false;
             }
         });
@@ -97,7 +101,7 @@ public class LibraryFoodFragment extends Fragment implements CallbackGetAllFood,
         requireActivity().runOnUiThread(() -> {
             Log.d("Received", "Size: " + foodList.size());
             new AllFoodReceived(requireContext(), requireView(), binding, foodList, this)
-                    .onAllFoodReceived();
+                    .allFoodReceived();
         });
     }
 
@@ -108,9 +112,9 @@ public class LibraryFoodFragment extends Fragment implements CallbackGetAllFood,
 
     @Override
     public void foodSearchReceived(ArrayList<Food> foodList) {
-        if (isAdded()) { // Проверяем, привязан ли фрагмент к активности
+        requireActivity().runOnUiThread(() -> {
             new AllFoodReceived(requireContext(), requireView(), binding, foodList, this)
-                    .onAllFoodReceived();
-        }
+                    .allFoodReceived();
+        });
     }
 }

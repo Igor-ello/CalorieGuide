@@ -1,6 +1,7 @@
 package com.obsessed.calorieguide.data.repository.async_task.food;
 
 import android.os.AsyncTask;
+import android.util.Log;
 
 import com.obsessed.calorieguide.data.callback.food.CallbackGetAllFood;
 import com.obsessed.calorieguide.data.local.dao.FoodDao;
@@ -46,13 +47,6 @@ public class GetAllFoodTask extends AsyncTask<Void, Void, List<Food>> {
                 default:
                     foodList = foodDao.getFoodFromNewest(offset, limit);
                     break;
-            }
-
-            if (userId != 0 && foodList != null) {
-                for (Food food : foodList) {
-                    boolean isLiked = foodDao.doesUserLikeFood(userId, food.getId());
-                    food.setIsLiked(isLiked);
-                }
             }
         } catch (Exception e) {
             this.exception = e;

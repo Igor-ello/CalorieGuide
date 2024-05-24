@@ -6,7 +6,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import com.obsessed.calorieguide.data.models.Meal;
-import com.obsessed.calorieguide.data.models.day.Intake;
+import com.obsessed.calorieguide.data.models.Intake;
 import com.obsessed.calorieguide.data.models.food.Food;
 
 import java.lang.reflect.Type;

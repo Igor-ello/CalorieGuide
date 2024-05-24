@@ -34,15 +34,21 @@ public class AllFoodReceived {
         this.callback = callback;
     }
 
-    public void onAllFoodReceived() {
-        if (Data.getInstance().getAdapterType() != 2) {
-            isAdapterV1();
-        } else {
-            isAdapterV2();
+    public void allFoodReceived() {
+        try {
+            if (Data.getInstance().getAdapterType() != 2) {
+                isAdapterV1();
+            } else {
+                isAdapterV2();
+            }
+        } catch (Exception e) {
+            Log.e("AllFoodReceived", e.getMessage());
         }
+
     }
 
     private void isAdapterV1() {
+        Log.d("Received", "isAdapterV1" + foodList.toString());
         FoodAdapterV1 foodAdapter = new FoodAdapterV1(foodList);
         binding.rcView.setLayoutManager(new GridLayoutManager(context, 2));
         binding.rcView.setAdapter(foodAdapter);

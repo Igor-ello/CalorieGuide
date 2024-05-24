@@ -37,11 +37,13 @@ public class MealRepo {
         handler.post(runnable);
     }
 
-    public void getAllMeals(String sortType, int twoDecade, int userId, CallbackGetAllMeal callback) {
+    public void getAllMeals(String sortType, int twoDecade, CallbackGetAllMeal callback) {
+        int userId = Data.getInstance().getUser().getId();
         new GetAllMealsTask(mealDao, sortType, twoDecade, userId, callback).execute();
     }
 
-    public void searchMeals(String word, int userId, CallbackSearchMeal callback) {
+    public void searchMeals(String word, CallbackSearchMeal callback) {
+        int userId = Data.getInstance().getUser().getId();
         new SearchMealsTask(mealDao, word, userId, 1, callback).execute();
     }
 

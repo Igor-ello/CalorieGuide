@@ -47,13 +47,6 @@ public class GetAllMealsTask extends AsyncTask<Void, Void, List<Meal>> {
                     meals = mealDao.getMealsFromNewest(offset, limit);
                     break;
             }
-
-            if (userId != 0 && meals != null) {
-                for (Meal meal : meals) {
-                    boolean isLiked = mealDao.doesUserLikeMeal(userId, meal.getId());
-                    meal.setIsLiked(isLiked);
-                }
-            }
         } catch (Exception e) {
             this.exception = e;
         }

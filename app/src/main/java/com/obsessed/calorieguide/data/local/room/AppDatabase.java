@@ -10,12 +10,12 @@ import com.obsessed.calorieguide.data.local.dao.DayDao;
 import com.obsessed.calorieguide.data.local.dao.FoodDao;
 import com.obsessed.calorieguide.data.local.dao.MealDao;
 import com.obsessed.calorieguide.data.local.dao.UserDao;
-import com.obsessed.calorieguide.data.models.day.Intake;
+import com.obsessed.calorieguide.data.models.Intake;
 import com.obsessed.calorieguide.data.models.food.Food;
 import com.obsessed.calorieguide.data.models.food.FoodIdQuantity;
 import com.obsessed.calorieguide.data.models.Meal;
 import com.obsessed.calorieguide.data.models.User;
-import com.obsessed.calorieguide.data.models.day.Day;
+import com.obsessed.calorieguide.data.models.Day;
 
 @Database(entities = {Meal.class, FoodIdQuantity.class, Food.class, User.class, Intake.class, Day.class}, version = 6)
 public abstract class AppDatabase extends RoomDatabase {
