@@ -37,6 +37,7 @@ public class LibraryMealFragment extends Fragment implements CallbackGetAllMeal,
     private AppDatabase db;
     private MealDao mealDao;
     private final Executor executor;
+    NavController navController;
 
     public LibraryMealFragment() {
         executor = Executors.newSingleThreadExecutor();
@@ -60,7 +61,10 @@ public class LibraryMealFragment extends Fragment implements CallbackGetAllMeal,
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        navController = Navigation.findNavController(requireView());
         binding = FragmentMealLibraryBinding.bind(view);
+
+        binding.arrowBack.arrowBack.setVisibility(View.GONE);
 
         MealRepo mealRepo = new MealRepo(mealDao);
         mealRepo.refreshMeal(this);
@@ -86,13 +90,11 @@ public class LibraryMealFragment extends Fragment implements CallbackGetAllMeal,
 
         //Кнопка для добавления нового питания
         view.findViewById(R.id.btAdd).setOnClickListener(v -> {
-            NavController navController = Navigation.findNavController(requireView());
             navController.navigate(R.id.action_libraryMealFragment_to_addMealFragment);
         });
 
         //Кнопка для перехода в food library
         view.findViewById(R.id.btToFoodLib).setOnClickListener(v -> {
-           NavController navController = Navigation.findNavController(requireView());
            navController.popBackStack();
         });
     }

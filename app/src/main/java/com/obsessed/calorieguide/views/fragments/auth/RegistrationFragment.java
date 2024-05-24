@@ -5,6 +5,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
 import android.util.Log;
@@ -26,6 +27,8 @@ import retrofit2.Response;
 
 public class RegistrationFragment extends Fragment {
 
+    NavController navController;
+
     public RegistrationFragment() {
         // Required empty public constructor
     }
@@ -45,6 +48,8 @@ public class RegistrationFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        navController = Navigation.findNavController(view);
+
         EditText etName = view.findViewById(R.id.etName);
         EditText etSurname = view.findViewById(R.id.etSurname);
         EditText etEmail = view.findViewById(R.id.etEmail);
@@ -53,6 +58,10 @@ public class RegistrationFragment extends Fragment {
         EditText etCarbs = view.findViewById(R.id.etCarbs);
         EditText etProteins = view.findViewById(R.id.etProteins);
         EditText etFats = view.findViewById(R.id.etFats);
+
+        view.findViewById(R.id.arrow_back).setOnClickListener(v -> {
+            navController.popBackStack();
+        });
 
         view.findViewById(R.id.btSend).setOnClickListener(v -> {
             String name = etName.getText().toString().trim();
@@ -87,6 +96,6 @@ public class RegistrationFragment extends Fragment {
         UserCall userCall = new UserCall();
         userCall.registerUser(registerRequest);
         Toast.makeText(requireContext(), "Successful!", Toast.LENGTH_SHORT).show();
-        Navigation.findNavController(view).popBackStack();
+        navController.popBackStack();
     }
 }

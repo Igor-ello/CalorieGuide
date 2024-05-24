@@ -63,6 +63,10 @@ public class FoodIntakeFragment extends Fragment implements CallbackSearchFood, 
         super.onViewCreated(view, savedInstanceState);
         binding = FragmentFoodLibraryBinding.bind(view);
 
+        binding.arrowBack.arrowBack.setOnClickListener(v -> {
+            Navigation.findNavController(view).popBackStack();
+        });
+
         requireActivity().runOnUiThread(() -> {
             //TODO
         });

@@ -37,6 +37,7 @@ public class LibraryFoodFragment extends Fragment implements CallbackGetAllFood,
     private AppDatabase db;
     private FoodDao foodDao;
     private final Executor executor;
+    NavController navController;
 
 
     public LibraryFoodFragment() {
@@ -62,7 +63,10 @@ public class LibraryFoodFragment extends Fragment implements CallbackGetAllFood,
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        navController = Navigation.findNavController(requireView());
         binding = FragmentFoodLibraryBinding.bind(view);
+
+        binding.arrowBack.arrowBack.setVisibility(View.GONE);
 
         FoodRepo foodRepo = new FoodRepo(foodDao);
         foodRepo.refreshFood(this);
@@ -90,13 +94,11 @@ public class LibraryFoodFragment extends Fragment implements CallbackGetAllFood,
 
         //Кнопка для добавления нового фрукта
         view.findViewById(R.id.btAdd).setOnClickListener(v -> {
-            NavController navController = Navigation.findNavController(requireView());
             navController.navigate(R.id.action_libraryFoodFragment_to_addFoodFragment);
         });
 
         //Кнопка для перехода в meal library
         view.findViewById(R.id.btToMealLib).setOnClickListener(v -> {
-            NavController navController = Navigation.findNavController(view);
             navController.navigate(R.id.action_libraryFoodFragment_to_libraryMealFragment);
         });
     }

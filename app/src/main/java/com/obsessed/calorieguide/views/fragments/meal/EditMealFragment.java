@@ -10,6 +10,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
 import android.provider.MediaStore;
@@ -48,6 +49,7 @@ public class EditMealFragment extends Fragment implements CallbackGetMealById, C
     private int mealId;
     FieldValidation fieldValidation;
     ImageView imageView;
+    NavController navController;
 
     //Data received from the server
     Meal meal = null;
@@ -80,6 +82,10 @@ public class EditMealFragment extends Fragment implements CallbackGetMealById, C
 
         // Инициализируем поля
         init(view);
+
+        view.findViewById(R.id.arrow_back).setOnClickListener(v -> {
+            navController.popBackStack();
+        });
 
         //Подгрузка данных
         requireActivity().runOnUiThread(() -> {
@@ -142,6 +148,7 @@ public class EditMealFragment extends Fragment implements CallbackGetMealById, C
     void init(View view){
         imageView = view.findViewById(R.id.image);
         fieldValidation = new FieldValidation(requireContext(), requireView());
+        navController = Navigation.findNavController(view);
     }
 
     @Override

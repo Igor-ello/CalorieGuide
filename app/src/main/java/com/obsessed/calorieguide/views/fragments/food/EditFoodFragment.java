@@ -10,6 +10,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
 import android.provider.MediaStore;
@@ -42,6 +43,7 @@ public class EditFoodFragment extends Fragment implements CallbackGetFoodById {
     ImageView imageView;
     byte[] byteArray;
     FieldValidation fieldValidation;
+    NavController navController;
 
     public EditFoodFragment() {
         // Required empty public constructor
@@ -69,6 +71,10 @@ public class EditFoodFragment extends Fragment implements CallbackGetFoodById {
 
         // Инициализируем поля
         init(view);
+
+        view.findViewById(R.id.arrow_back).setOnClickListener(v -> {
+            navController.popBackStack();
+        });
 
         //Подгрузка данных
         requireActivity().runOnUiThread(() -> {
@@ -123,6 +129,7 @@ public class EditFoodFragment extends Fragment implements CallbackGetFoodById {
     private void init(View view){
         imageView = view.findViewById(R.id.image);
         fieldValidation = new FieldValidation(requireView());
+        navController = Navigation.findNavController(view);
     }
 
     // Метод для обработки результата выбора изображения из галереи или камеры
