@@ -15,8 +15,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.SearchView;
 
-import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.obsessed.calorieguide.MainActivityApp;
 import com.obsessed.calorieguide.R;
 import com.obsessed.calorieguide.data.callback.meal.CallbackGetLikedMeals;
 import com.obsessed.calorieguide.data.local.room.AppDatabase;
@@ -27,7 +25,6 @@ import com.obsessed.calorieguide.views.adapters.meal.MealIntakeAdapter;
 import com.obsessed.calorieguide.data.local.Data;
 import com.obsessed.calorieguide.tools.DayFunc;
 import com.obsessed.calorieguide.tools.Func;
-import com.obsessed.calorieguide.data.remote.network.meal.MealCall;
 import com.obsessed.calorieguide.data.callback.meal.CallbackLikeMeal;
 import com.obsessed.calorieguide.data.callback.meal.CallbackSearchMeal;
 import com.obsessed.calorieguide.data.models.Meal;
@@ -75,16 +72,21 @@ public class MealIntakeFragment extends Fragment implements CallbackSearchMeal, 
         binding.searchAndAdd.search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                // Вызывается при отправке запроса поиска (нажатии Enter или отправке формы)
-//                MealCall call = new MealCall();
-//                call.searchMeal(query, Data.getInstance().getUser().getId(), MealIntakeFragment.this);
-                repo.searchMeals(query, MealIntakeFragment.this);
+                if (!query.trim().isEmpty()) {
+                    repo.searchMeals(query, MealIntakeFragment.this);
+                } else {
+                    repo.getLikedMeals(Data.getInstance().getUser().getId(), MealIntakeFragment.this);
+                }
                 return true;
             }
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                repo.searchMeals(newText, MealIntakeFragment.this);
+                if (!newText.trim().isEmpty()) {
+                    repo.searchMeals(newText, MealIntakeFragment.this);
+                } else {
+                    repo.getLikedMeals(Data.getInstance().getUser().getId(), MealIntakeFragment.this);
+                }
                 return false;
             }
         });

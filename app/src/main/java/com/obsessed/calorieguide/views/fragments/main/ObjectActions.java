@@ -14,6 +14,7 @@ import androidx.navigation.Navigation;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.obsessed.calorieguide.MainActivityApp;
 import com.obsessed.calorieguide.R;
+import com.obsessed.calorieguide.data.callback.user.CallbackRefreshDay;
 import com.obsessed.calorieguide.data.local.room.AppDatabase;
 import com.obsessed.calorieguide.data.models.Intake;
 import com.obsessed.calorieguide.data.local.Data;
@@ -56,7 +57,7 @@ public class ObjectActions extends Fragment implements CallbackGetMealById, Call
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.object_actions, container, false);
-        ((BottomNavigationView)((MainActivityApp) getActivity()).findViewById(R.id.bottomNV)).setVisibility(view.GONE);
+        getActivity().findViewById(R.id.bottomNV).setVisibility(view.GONE);
         return view;
     }
 

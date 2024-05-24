@@ -5,6 +5,7 @@ import android.os.Looper;
 
 import com.obsessed.calorieguide.data.callback.food.CallbackGetFoodById;
 import com.obsessed.calorieguide.data.callback.food.CallbackGetLikedFood;
+import com.obsessed.calorieguide.data.callback.food.CallbackLoadFood;
 import com.obsessed.calorieguide.data.callback.food.CallbackSearchFood;
 import com.obsessed.calorieguide.data.local.dao.FoodDao;
 import com.obsessed.calorieguide.data.models.food.Food;

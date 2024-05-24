@@ -15,10 +15,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.SearchView;
 
-import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.obsessed.calorieguide.MainActivityApp;
 import com.obsessed.calorieguide.R;
-import com.obsessed.calorieguide.data.callback.food.CallbackGetAllFood;
 import com.obsessed.calorieguide.data.callback.food.CallbackGetLikedFood;
 import com.obsessed.calorieguide.data.local.room.AppDatabase;
 import com.obsessed.calorieguide.data.repository.DayRepo;
@@ -33,6 +30,7 @@ import com.obsessed.calorieguide.data.callback.food.CallbackLikeFood;
 import com.obsessed.calorieguide.data.callback.food.CallbackSearchFood;
 import com.obsessed.calorieguide.data.models.food.Food;
 import com.obsessed.calorieguide.data.remote.network.food.FoodCall;
+import com.obsessed.calorieguide.views.fragments.library.LibraryFoodFragment;
 
 import java.util.ArrayList;
 
@@ -40,7 +38,7 @@ public class FoodIntakeFragment extends Fragment implements CallbackSearchFood, 
     FragmentFoodLibraryBinding binding;
     private static final String ARG_ARRAY_TYPE = "array_type";
     private String arrayType;
-    AppDatabase db;
+    private AppDatabase db;
 
     public FoodIntakeFragment() {
         // Required empty public constructor
@@ -77,14 +75,21 @@ public class FoodIntakeFragment extends Fragment implements CallbackSearchFood, 
         binding.searchAndAdd.search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                // Вызывается при отправке запроса поиска (нажатии Enter или отправке формы)
-                repo.searchFood(query, FoodIntakeFragment.this);
+                if (!query.trim().isEmpty()) {
+                    repo.searchFood(query, FoodIntakeFragment.this);
+                } else {
+                    repo.getLikedFood(Data.getInstance().getUser().getId(), FoodIntakeFragment.this);
+                }
                 return true;
             }
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                repo.searchFood(newText, FoodIntakeFragment.this);
+                if (!newText.trim().isEmpty()) {
+                    repo.searchFood(newText, FoodIntakeFragment.this);
+                } else {
+                    repo.getLikedFood(Data.getInstance().getUser().getId(), FoodIntakeFragment.this);
+                }
                 return false;
             }
         });

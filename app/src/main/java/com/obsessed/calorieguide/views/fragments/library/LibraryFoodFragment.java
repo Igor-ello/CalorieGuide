@@ -9,14 +9,20 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
+import androidx.recyclerview.widget.GridLayoutManager;
 
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.SearchView;
+import android.widget.Toast;
 
+import com.obsessed.calorieguide.data.callback.food.CallbackLoadFood;
+import com.obsessed.calorieguide.data.local.load.LoadRemoteData;
 import com.obsessed.calorieguide.data.local.room.AppDatabase;
 import com.obsessed.calorieguide.R;
 import com.obsessed.calorieguide.data.repository.FoodRepo;
@@ -26,12 +32,15 @@ import com.obsessed.calorieguide.data.callback.food.CallbackLikeFood;
 import com.obsessed.calorieguide.data.models.food.Food;
 import com.obsessed.calorieguide.data.callback.food.CallbackGetAllFood;
 import com.obsessed.calorieguide.data.callback.food.CallbackSearchFood;
+import com.obsessed.calorieguide.views.adapters.food.FoodAdapterV1;
 
 import java.util.ArrayList;
 
-public class LibraryFoodFragment extends Fragment implements CallbackGetAllFood, CallbackLikeFood, CallbackSearchFood {
+public class LibraryFoodFragment extends Fragment implements CallbackGetAllFood, CallbackLikeFood, CallbackSearchFood, CallbackLoadFood {
     private FragmentFoodLibraryBinding binding;
     private AppDatabase db;
+    private FoodRepo repo;
+    private Handler handler;
 
 
     public LibraryFoodFragment() {}
@@ -40,6 +49,8 @@ public class LibraryFoodFragment extends Fragment implements CallbackGetAllFood,
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         db = AppDatabase.getInstance(requireContext());
+        repo = new FoodRepo(db.foodDao());
+        handler = new Handler(Looper.getMainLooper());
     }
 
     @Override
@@ -56,7 +67,6 @@ public class LibraryFoodFragment extends Fragment implements CallbackGetAllFood,
         super.onViewCreated(view, savedInstanceState);
         binding = FragmentFoodLibraryBinding.bind(view);
 
-        FoodRepo repo = new FoodRepo(db.foodDao());
         repo.getAllFood(SORT_DATE, 1, this);
 
         //Поиск фруктов в библиотеке
@@ -82,6 +92,11 @@ public class LibraryFoodFragment extends Fragment implements CallbackGetAllFood,
             }
         });
 
+        binding.swipeRefreshLayout.setOnRefreshListener(() -> {
+            //Обновление списка фруктов из удаленной базы данных
+            LoadRemoteData.getInstance(requireContext()).loadFood(1, this);
+            Func.setTimeLimit(handler, 3000, requireContext(), binding.swipeRefreshLayout);
+        });
 
         //Кнопка для добавления нового фрукта
         view.findViewById(R.id.btAdd).setOnClickListener(v -> {
@@ -116,5 +131,12 @@ public class LibraryFoodFragment extends Fragment implements CallbackGetAllFood,
             new AllFoodReceived(requireContext(), requireView(), binding, foodList, this)
                     .allFoodReceived();
         });
+    }
+
+    @Override
+    public void onLoadFood(ArrayList<Food> foodList) {
+        handler.removeCallbacksAndMessages(null); // Отменяем таймер
+        repo.getAllFood(SORT_DATE, 1, this);
+        binding.swipeRefreshLayout.setRefreshing(false);
     }
 }

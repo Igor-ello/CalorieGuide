@@ -10,15 +10,21 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.SearchView;
+import android.widget.Toast;
 
 import com.obsessed.calorieguide.R;
+import com.obsessed.calorieguide.data.callback.meal.CallbackLoadMeal;
+import com.obsessed.calorieguide.data.local.load.LoadRemoteData;
 import com.obsessed.calorieguide.data.local.room.AppDatabase;
+import com.obsessed.calorieguide.data.repository.FoodRepo;
 import com.obsessed.calorieguide.data.repository.MealRepo;
 import com.obsessed.calorieguide.tools.Func;
 import com.obsessed.calorieguide.databinding.FragmentMealLibraryBinding;
@@ -29,9 +35,11 @@ import com.obsessed.calorieguide.data.callback.meal.CallbackSearchMeal;
 
 import java.util.ArrayList;
 
-public class LibraryMealFragment extends Fragment implements CallbackGetAllMeal, CallbackLikeMeal, CallbackSearchMeal {
-    FragmentMealLibraryBinding binding;
+public class LibraryMealFragment extends Fragment implements CallbackGetAllMeal, CallbackLikeMeal, CallbackSearchMeal, CallbackLoadMeal {
+    private FragmentMealLibraryBinding binding;
     private AppDatabase db;
+    MealRepo repo;
+    private Handler handler;
 
 
     public LibraryMealFragment() {}
@@ -40,6 +48,8 @@ public class LibraryMealFragment extends Fragment implements CallbackGetAllMeal,
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         db = AppDatabase.getInstance(requireContext());
+        repo = new MealRepo(db.mealDao());
+        handler = new Handler(Looper.getMainLooper());
     }
 
     @Override
@@ -55,7 +65,6 @@ public class LibraryMealFragment extends Fragment implements CallbackGetAllMeal,
         super.onViewCreated(view, savedInstanceState);
         binding = FragmentMealLibraryBinding.bind(view);
 
-        MealRepo repo = new MealRepo(db.mealDao());
         repo.getAllMeals(SORT_DATE, 1, this);
 
         //Поиск питания
@@ -79,6 +88,12 @@ public class LibraryMealFragment extends Fragment implements CallbackGetAllMeal,
                 }
                 return false;
             }
+        });
+
+        binding.swipeRefreshLayout.setOnRefreshListener(() -> {
+            //Обновление списка фруктов из удаленной базы данных
+            LoadRemoteData.getInstance(requireContext()).loadMeal(1, this);
+            Func.setTimeLimit(handler, 3000, requireContext(), binding.swipeRefreshLayout);
         });
 
         //Кнопка для добавления нового питания
@@ -114,5 +129,12 @@ public class LibraryMealFragment extends Fragment implements CallbackGetAllMeal,
             new AllMealReceived(requireContext(), requireView(), binding, mealList, this)
                     .allMealReceived();
         }
+    }
+
+    @Override
+    public void onLoadMeal(ArrayList<Meal> mealList) {
+        handler.removeCallbacksAndMessages(null); // Отменяем таймер
+        repo.getAllMeals(SORT_DATE, 1, this);
+        binding.swipeRefreshLayout.setRefreshing(false);
     }
 }

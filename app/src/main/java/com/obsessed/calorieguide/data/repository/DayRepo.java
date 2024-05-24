@@ -1,5 +1,6 @@
 package com.obsessed.calorieguide.data.repository;
 
+import android.content.Context;
 import android.util.Log;
 
 import com.obsessed.calorieguide.data.local.dao.DayDao;
@@ -19,6 +20,7 @@ public class DayRepo {
     public void refreshDay() {
         Executors.newSingleThreadExecutor().execute(() ->{
             dayDao.insert(Data.getInstance().getDay());
+
             Log.d("DayRepo", "RefreshDay: " + Data.getInstance().getDay().toString());
         });
     }

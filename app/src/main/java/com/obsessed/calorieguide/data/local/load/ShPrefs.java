@@ -51,7 +51,7 @@ public class ShPrefs {
 
         Executors.newSingleThreadExecutor().execute(() -> {
             if (savedDayOfMonth != currentDayOfMonth || dayId == -1) {
-                LoadRemoteData.getInstance().loadAll(context);
+                LoadRemoteData.getInstance(context).loadAll();
                 Data.getInstance().setDay(repo.getNewDay());
                 Log.d("ShPrefs", "New day and load remote data");
             } else {
