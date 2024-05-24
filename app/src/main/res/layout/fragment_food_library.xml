@@ -17,6 +17,9 @@
             android:layout_height="wrap_content"
             android:layout_margin="5dp">
 
+            <include layout="@layout/arrow_back"
+                android:id="@+id/arrow_back"></include>
+
             <TextView
                 style="@style/TextHeaderStyle"
                 android:text="@string/fragment_food_library_header">

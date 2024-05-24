@@ -11,6 +11,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
 import android.provider.MediaStore;
@@ -43,6 +44,7 @@ public class AddMealFragment extends Fragment implements CallbackGetAllFood {
     byte[] byteArray;
     FieldValidation fieldValidation;
     ImageView imageView;
+    NavController navController;
 
     public AddMealFragment() {
         // Required empty public constructor
@@ -68,6 +70,10 @@ public class AddMealFragment extends Fragment implements CallbackGetAllFood {
         // Инициализируем поля
         init(view);
 
+        view.findViewById(R.id.arrow_back).setOnClickListener(v -> {
+            navController.popBackStack();
+        });
+
         // Подгрузка изображения из галереи или камеры
         imageView.setOnClickListener(v -> {
             Intent galleryIntent = new Intent(Intent.ACTION_PICK,
@@ -83,15 +89,30 @@ public class AddMealFragment extends Fragment implements CallbackGetAllFood {
 
         // Отправка на сервер введенных данных
         requireView().findViewById(R.id.btSave).setOnClickListener(v -> {
-            ArrayList<EditText> etList = fieldValidation.getEtList();
-            ArrayList<FoodIdQuantity> foodIdQuantities = fieldValidation.getFoodIdQuantities();
-            if(etList != null){
+            ArrayList<EditText> etList;
+            ArrayList<FoodIdQuantity> foodIdQuantities;
+            try {
+                etList = fieldValidation.getEtList();
+            }
+            catch (NullPointerException | IllegalArgumentException e) {
+                return;
+            }
+			if(etList != null){
+                try {
+                    foodIdQuantities = fieldValidation.getFoodIdQuantities();
+                } catch (NullPointerException e) {
+                    Toast.makeText(requireContext(), "Please, fill in all fields", Toast.LENGTH_SHORT).show();
+                    return;
+                } catch (NumberFormatException e) {
+                    Toast.makeText(requireContext(), "You can't enter more than 50 or less than 1", Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 MealCallWithToken mealCallWithToken = new MealCallWithToken(Data.getInstance().getUser().getBearerToken());
                 mealCallWithToken.postMeal(FillClass.fillMeal(etList, byteArray, foodIdQuantities));
 
                 Navigation.findNavController(view).popBackStack();
             } else {
-                Toast.makeText(requireContext(), "Fill in all the fields", Toast.LENGTH_SHORT).show();
+                Toast.makeText(requireContext(), "Fill in all fields", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -99,6 +120,7 @@ public class AddMealFragment extends Fragment implements CallbackGetAllFood {
     void init(View view){
         imageView = view.findViewById(R.id.image);
         fieldValidation = new FieldValidation(requireContext(), requireView());
+        navController = Navigation.findNavController(view);
     }
 
     @Override

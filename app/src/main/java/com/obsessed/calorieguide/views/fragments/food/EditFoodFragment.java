@@ -10,6 +10,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
 import android.provider.MediaStore;
@@ -44,6 +45,7 @@ public class EditFoodFragment extends Fragment implements CallbackGetFoodById {
     ImageView imageView;
     byte[] byteArray;
     FieldValidation fieldValidation;
+    NavController navController;
 
     public EditFoodFragment() {
         // Required empty public constructor
@@ -72,6 +74,10 @@ public class EditFoodFragment extends Fragment implements CallbackGetFoodById {
         // Инициализируем поля
         init(view);
 
+        view.findViewById(R.id.arrow_back).setOnClickListener(v -> {
+            navController.popBackStack();
+        });
+
         //Подгрузка данных
         AppDatabase db = AppDatabase.getInstance(requireContext());
         FoodRepo repo = new FoodRepo(db.foodDao());
@@ -96,7 +102,13 @@ public class EditFoodFragment extends Fragment implements CallbackGetFoodById {
             ArrayList<EditText> etList = fieldValidation.getValues();
             if(etList != null){
                 FoodCallWithToken call = new FoodCallWithToken(Data.getInstance().getUser().getBearerToken());
-                call.updateFood(foodId, FillClass.fillFood(etList, byteArray));
+                try {
+                    call.updateFood(foodId, FillClass.fillFood(etList, byteArray));
+                }
+                catch (NumberFormatException e) {
+                    Toast.makeText(requireContext(), "Invalid values", Toast.LENGTH_SHORT).show();
+                    return;
+                }
 
                 Navigation.findNavController(view).popBackStack();
             } else {
@@ -120,6 +132,7 @@ public class EditFoodFragment extends Fragment implements CallbackGetFoodById {
     private void init(View view){
         imageView = view.findViewById(R.id.image);
         fieldValidation = new FieldValidation(requireView());
+        navController = Navigation.findNavController(view);
     }
 
     // Метод для обработки результата выбора изображения из галереи или камеры

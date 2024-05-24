@@ -13,6 +13,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
 import android.provider.MediaStore;
@@ -51,6 +52,7 @@ public class EditMealFragment extends Fragment implements CallbackGetMealById, C
     private int mealId;
     FieldValidation fieldValidation;
     ImageView imageView;
+    NavController navController;
 
     //Data received from the server
     Meal meal = null;
@@ -84,6 +86,10 @@ public class EditMealFragment extends Fragment implements CallbackGetMealById, C
         // Инициализируем поля
         init(view);
 
+        view.findViewById(R.id.arrow_back).setOnClickListener(v -> {
+            navController.popBackStack();
+        });
+
         //Подгрузка данных
         AppDatabase db = AppDatabase.getInstance(requireContext());
         MealRepo mealRepo = new MealRepo(db.mealDao());
@@ -106,17 +112,37 @@ public class EditMealFragment extends Fragment implements CallbackGetMealById, C
             startActivityForResult(galleryIntent, GALLERY_REQUEST_CODE);
         });
 
+        view.findViewById(R.id.btSetNumber).setOnClickListener(v -> {
+            FoodCall call = new FoodCall();
+            call.getAllFood(this);
+        });
+
         // Отправка на сервер введенных данных
         requireView().findViewById(R.id.btSave).setOnClickListener(v -> {
-            ArrayList<EditText> etList = fieldValidation.getEtList();
-            ArrayList<FoodIdQuantity> foodIdQuantities = fieldValidation.getFoodIdQuantities();
+            ArrayList<EditText> etList;
+            ArrayList<FoodIdQuantity> foodIdQuantities;
+            try {
+                etList = fieldValidation.getEtList();
+            }
+            catch (IllegalArgumentException | NullPointerException e) {
+                return;
+            }
             if(etList != null){
+                try {
+                    foodIdQuantities = fieldValidation.getFoodIdQuantities();
+                } catch (NullPointerException e) {
+                    Toast.makeText(requireContext(), "Please, fill in all fields", Toast.LENGTH_SHORT).show();
+                    return;
+                } catch (NumberFormatException e) {
+                    Toast.makeText(requireContext(), "You can't enter more than 50 or less than 1", Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 MealCallWithToken mealCallWithToken = new MealCallWithToken(Data.getInstance().getUser().getBearerToken());
                 mealCallWithToken.updateMeal(mealId, FillClass.fillMeal(etList, byteArray, foodIdQuantities));
 
                 Navigation.findNavController(view).popBackStack();
             } else {
-                Toast.makeText(requireContext(), "Fill in all the fields", Toast.LENGTH_SHORT).show();
+                Toast.makeText(requireContext(), "Fill in all fields", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -124,6 +150,7 @@ public class EditMealFragment extends Fragment implements CallbackGetMealById, C
     void init(View view){
         imageView = view.findViewById(R.id.image);
         fieldValidation = new FieldValidation(requireContext(), requireView());
+        navController = Navigation.findNavController(view);
     }
 
     @Override

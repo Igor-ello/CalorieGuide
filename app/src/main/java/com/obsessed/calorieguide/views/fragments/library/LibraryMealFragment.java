@@ -38,8 +38,9 @@ import java.util.ArrayList;
 public class LibraryMealFragment extends Fragment implements CallbackGetAllMeal, CallbackLikeMeal, CallbackSearchMeal, CallbackLoadMeal {
     private FragmentMealLibraryBinding binding;
     private AppDatabase db;
-    MealRepo repo;
+    private MealRepo repo;
     private Handler handler;
+    NavController navController;
 
 
     public LibraryMealFragment() {}
@@ -64,8 +65,11 @@ public class LibraryMealFragment extends Fragment implements CallbackGetAllMeal,
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         binding = FragmentMealLibraryBinding.bind(view);
+        navController = Navigation.findNavController(requireView());
 
         repo.getAllMeals(SORT_DATE, 1, this);
+
+        binding.arrowBack.arrowBack.setVisibility(View.GONE);
 
         //Поиск питания
         binding.searchAndAdd.search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -98,13 +102,11 @@ public class LibraryMealFragment extends Fragment implements CallbackGetAllMeal,
 
         //Кнопка для добавления нового питания
         view.findViewById(R.id.btAdd).setOnClickListener(v -> {
-            NavController navController = Navigation.findNavController(requireView());
             navController.navigate(R.id.action_libraryMealFragment_to_addMealFragment);
         });
 
         //Кнопка для перехода в food library
         view.findViewById(R.id.btToFoodLib).setOnClickListener(v -> {
-           NavController navController = Navigation.findNavController(requireView());
            navController.popBackStack();
         });
     }

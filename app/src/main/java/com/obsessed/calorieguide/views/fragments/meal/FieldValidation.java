@@ -1,7 +1,9 @@
 package com.obsessed.calorieguide.views.fragments.meal;
 
 import android.content.Context;
+import android.text.InputFilter;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -60,8 +62,15 @@ public class FieldValidation {
         for (Food food : foodList) {
             foodNames.add(food.getFood_name());
         }
-
         int numberOfElements = Integer.parseInt(etNumberOfIng.getText().toString());
+        if (etNumberOfIng.getText().toString().isEmpty()) {
+            Toast.makeText(context, "Fill in number of ingredients", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        else if (numberOfElements < 1 || numberOfElements > 25) {
+            Toast.makeText(context, "Number of ingredients must be between 1 and 25", Toast.LENGTH_SHORT).show();
+            return;
+        }
         ArrayAdapter<String> adapter = new ArrayAdapter(context,
                 android.R.layout.simple_spinner_item, foodNames);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -76,10 +85,12 @@ public class FieldValidation {
             spinnerList.add(spinner);
             linearLayout.addView(spinner);
 
+            editText.setInputType(EditorInfo.TYPE_CLASS_NUMBER);
+            editText.setFilters(new InputFilter[]{new InputFilter.LengthFilter(2)});
             editTextList.add(editText);
             linearLayout.addView(editText);
 
-            if(foodIdQuantityList != null) {
+            if(foodIdQuantityList != null && i < foodIdQuantityList.size()) {
                 spinner.setSelection(findPositionById(foodIdQuantityList.get(i).getProductId()));
                 editText.setText(foodIdQuantityList.get(i).getQuantity() + "");
             }
@@ -95,7 +106,9 @@ public class FieldValidation {
             etList.get(i).setText(meal.getValues().get(i).toString());
         }
         List<FoodIdQuantity> foodIdQuantities = meal.getFoodIdQuantities();
-        etNumberOfIng.setText(String.valueOf(foodIdQuantities.size()));
+        if (etNumberOfIng.getText().toString().isEmpty()) {
+            etNumberOfIng.setText(String.valueOf(foodIdQuantities.size()));
+        }
         fillLnFood(foodList, foodIdQuantities);
     }
 
@@ -105,6 +118,15 @@ public class FieldValidation {
             et.setText(et.getText().toString().trim());
             if (!et.getText().toString().isEmpty())
                 counter++;
+        }
+        int number = Integer.parseInt(etNumberOfIng.getText().toString());
+        if (etNumberOfIng.getText().toString().isEmpty()) {
+            Toast.makeText(context, "Fill in number of ingredients", Toast.LENGTH_SHORT).show();
+            throw new NullPointerException();
+        }
+        else if (number < 1 || number > 25) {
+            Toast.makeText(context, "Number of ingredients must be between 1 and 25", Toast.LENGTH_SHORT).show();
+            throw new IllegalArgumentException();
         }
         if(counter == etList.size()){
             return etList;
@@ -126,13 +148,15 @@ public class FieldValidation {
                 // Проверка на пустое значение в EditText
                 String editTextValue = editText.getText().toString().trim();
                 if (editTextValue.isEmpty()) {
-                    // Вывод Toast о пустом поле
-                    Toast.makeText(context, "Пожалуйста, заполните все поля", Toast.LENGTH_SHORT).show();
                     // Очищаем список и выходим из метода
                     foodIdQuantities.clear();
-                    return foodIdQuantities;
+                    throw new NullPointerException();
                 }
-
+                if (Integer.parseInt(editTextValue) > 50 || Integer.parseInt(editTextValue) < 1) {
+                    // Очищаем список и выходим из метода
+                    foodIdQuantities.clear();
+                    throw new NumberFormatException();
+				}
                 // Получаем выбранное значение из Spinner и текст из EditText
                 int productId = foodList.get(spinner.getSelectedItemPosition()).getId();
                 int quantity = Integer.parseInt(editTextValue);

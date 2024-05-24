@@ -58,7 +58,7 @@ public class SettingsFragment extends Fragment implements CompoundButton.OnCheck
         });
 
         view.findViewById(R.id.btLogout).setOnClickListener(v -> {
-            //ShPrefs.dropData(requireContext());
+            ShPrefs.dropData(requireContext());
             if (getActivity() != null && getActivity() instanceof MainActivityApp) {
                 startActivity(new Intent(getActivity(), MainActivityAuth.class));
                 getActivity().finish();

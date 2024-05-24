@@ -13,7 +13,8 @@
 
     <EditText
         android:id="@+id/etName"
-        style="@style/EditTextStyle">
+        style="@style/EditTextStyle"
+        android:maxLength="@integer/name_length">
     </EditText>
 
     <TextView
@@ -24,7 +25,8 @@
 
     <EditText
         android:id="@+id/etSurname"
-        style="@style/EditTextStyle">
+        style="@style/EditTextStyle"
+        android:maxLength="@integer/name_length">
     </EditText>
 
     <TextView
@@ -35,7 +37,8 @@
 
     <EditText
         android:id="@+id/etEmail"
-        style="@style/EditTextStyle">
+        style="@style/EditTextStyle"
+        android:maxLength="@integer/name_length">
     </EditText>
 
     <TextView
@@ -47,7 +50,8 @@
     <EditText
         android:id="@+id/etPassword"
         style="@style/EditTextStyle"
-        android:inputType="textPassword">
+        android:inputType="textPassword"
+        android:maxLength="20">
     </EditText>
 
     <TextView
@@ -59,7 +63,8 @@
     <EditText
         android:id="@+id/etCalories"
         style="@style/EditTextStyle"
-        android:inputType="number">
+        android:inputType="number"
+        android:maxLength="@integer/numbers_length">
     </EditText>
 
     <TextView
@@ -71,7 +76,8 @@
     <EditText
         android:id="@+id/etCarbs"
         style="@style/EditTextStyle"
-        android:inputType="number">
+        android:inputType="number"
+        android:maxLength="@integer/numbers_length">
     </EditText>
 
     <TextView
@@ -83,7 +89,8 @@
     <EditText
         android:id="@+id/etProteins"
         style="@style/EditTextStyle"
-        android:inputType="number">
+        android:inputType="number"
+        android:maxLength="@integer/numbers_length">
     </EditText>
 
     <TextView
@@ -95,7 +102,8 @@
     <EditText
         android:id="@+id/etFats"
         style="@style/EditTextStyle"
-        android:inputType="number">
+        android:inputType="number"
+        android:maxLength="@integer/numbers_length">
     </EditText>
 
 </LinearLayout>

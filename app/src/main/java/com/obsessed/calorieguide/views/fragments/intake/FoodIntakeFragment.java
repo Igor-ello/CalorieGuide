@@ -70,6 +70,10 @@ public class FoodIntakeFragment extends Fragment implements CallbackSearchFood, 
 
         repo.getLikedFood(Data.getInstance().getUser().getId(), this);
 
+        binding.arrowBack.arrowBack.setOnClickListener(v -> {
+            Navigation.findNavController(view).popBackStack();
+        });
+
         binding.btToMealLib.setVisibility(View.GONE);
 
         binding.searchAndAdd.search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {

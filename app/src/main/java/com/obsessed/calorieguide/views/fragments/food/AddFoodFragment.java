@@ -9,6 +9,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
 import android.provider.MediaStore;
@@ -38,6 +39,7 @@ public class AddFoodFragment extends Fragment {
     ImageView imageView;
     byte[] byteArray;
     FieldValidation fieldValidation;
+    NavController navController;
 
     public AddFoodFragment() {
         // Required empty public constructor
@@ -63,6 +65,10 @@ public class AddFoodFragment extends Fragment {
         // Инициализируем поля
         init(view);
 
+        view.findViewById(R.id.arrow_back).setOnClickListener(v -> {
+            navController.popBackStack();
+        });
+
         // Подгрузка изображения из галереи или камеры
         imageView.setOnClickListener(v -> {
             Intent galleryIntent = new Intent(Intent.ACTION_PICK,
@@ -75,8 +81,13 @@ public class AddFoodFragment extends Fragment {
             ArrayList<EditText> etList = fieldValidation.getValues();
             if(etList != null){
                 FoodCallWithToken call = new FoodCallWithToken(Data.getInstance().getUser().getBearerToken());
-                call.postFood(FillClass.fillFood(etList, byteArray));
-
+                try {
+                    call.postFood(FillClass.fillFood(etList, byteArray));
+                }
+                catch (NumberFormatException e) {
+                    Toast.makeText(getContext(), "Invalid values", Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 Navigation.findNavController(view).popBackStack();
             } else {
                 Toast.makeText(requireContext(), "Fill in all the fields", Toast.LENGTH_SHORT).show();
@@ -87,6 +98,7 @@ public class AddFoodFragment extends Fragment {
     private void init(View view){
         imageView = view.findViewById(R.id.image);
         fieldValidation = new FieldValidation(requireView());
+        navController = Navigation.findNavController(view);
     }
 
     // Метод для обработки результата выбора изображения из галереи или камеры
