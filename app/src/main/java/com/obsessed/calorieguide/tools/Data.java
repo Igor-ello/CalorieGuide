@@ -6,8 +6,8 @@ import com.obsessed.calorieguide.data.models.User;
 public class Data {
     static Data uniqueInstance = new Data();
     static final String BASE_URL = "http://95.174.92.190:8088/";
-    static final int PICTURE_SIZE = 250;
-    static final int QUALITY = 100;
+    public static final int PICTURE_SIZE = 250;
+    public static final int QUALITY = 100;
 
     //For shared preference
     private Day day = null;
@@ -25,14 +25,6 @@ public class Data {
 
     public String getBaseUrl() {
         return BASE_URL;
-    }
-
-    public int getPictureSize() {
-        return PICTURE_SIZE;
-    }
-
-    public int getQuality() {
-        return QUALITY;
     }
 
     //For shared preference

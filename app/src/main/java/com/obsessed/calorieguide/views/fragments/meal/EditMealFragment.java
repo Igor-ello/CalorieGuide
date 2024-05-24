@@ -163,15 +163,15 @@ public class EditMealFragment extends Fragment implements CallbackGetMealById, C
 
                 // Уменьшаем размер Bitmap
                 Bitmap resizedBitmap = ResizedBitmap.getResizedBitmap(originalBitmap,
-                        Data.getInstance().getPictureSize(),
-                        Data.getInstance().getPictureSize());
+                        Data.getInstance().PICTURE_SIZE,
+                        Data.getInstance().PICTURE_SIZE);
 
                 // Устанавливаем уменьшенное изображение в ImageView
                 imageView.setImageBitmap(resizedBitmap);
 
                 // Сохраняем уменьшенное изображение в бинарный файл
                 ByteArrayOutputStream stream = new ByteArrayOutputStream();
-                resizedBitmap.compress(Bitmap.CompressFormat.JPEG, Data.getInstance().getQuality(), stream);
+                resizedBitmap.compress(Bitmap.CompressFormat.JPEG, Data.getInstance().QUALITY, stream);
                 byteArray = stream.toByteArray();
             } catch (IOException e) {
                 e.printStackTrace();
