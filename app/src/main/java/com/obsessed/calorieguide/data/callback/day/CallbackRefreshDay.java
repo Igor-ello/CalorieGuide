@@ -1,4 +1,4 @@
-package com.obsessed.calorieguide.data.callback.user;
+package com.obsessed.calorieguide.data.callback.day;
 
 public interface CallbackRefreshDay {
     void onRefreshDay();

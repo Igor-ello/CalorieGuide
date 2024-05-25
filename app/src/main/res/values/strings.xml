@@ -23,4 +23,5 @@
     <string name="fragment_profile_header">Profile</string>
     <string name="fragment_settings_header">Settings</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="loading">Loading</string>
 </resources>

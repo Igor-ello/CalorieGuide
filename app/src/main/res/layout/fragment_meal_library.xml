@@ -6,7 +6,12 @@
     tools:context=".views.fragments.library.LibraryMealFragment"
     android:layout_margin="@dimen/margin_default2">
 
+    <include layout="@layout/loading"
+        android:id="@+id/loading"
+        android:visibility="gone"/>
+
     <LinearLayout
+        android:id="@+id/lnMain"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"

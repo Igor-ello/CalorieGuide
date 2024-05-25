@@ -38,6 +38,7 @@ public class FoodRepo {
     }
 
     public void getAllFood(String sortType, int twoDecade, CallbackGetAllFood callback) {
+
         int userId = Data.getInstance().getUser().getId();
         new GetAllFoodTask(foodDao, sortType, twoDecade, userId, callback).execute();
     }

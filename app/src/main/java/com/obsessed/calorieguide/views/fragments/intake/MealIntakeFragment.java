@@ -16,6 +16,7 @@ import android.widget.ImageView;
 import android.widget.SearchView;
 
 import com.obsessed.calorieguide.R;
+import com.obsessed.calorieguide.data.callback.day.CallbackRefreshDay;
 import com.obsessed.calorieguide.data.callback.meal.CallbackGetLikedMeals;
 import com.obsessed.calorieguide.data.local.room.AppDatabase;
 import com.obsessed.calorieguide.data.repository.DayRepo;
@@ -32,7 +33,7 @@ import com.obsessed.calorieguide.data.remote.network.meal.MealCallWithToken;
 
 import java.util.ArrayList;
 
-public class MealIntakeFragment extends Fragment implements CallbackSearchMeal, CallbackLikeMeal, CallbackGetLikedMeals {
+public class MealIntakeFragment extends Fragment implements CallbackSearchMeal, CallbackLikeMeal, CallbackGetLikedMeals, CallbackRefreshDay {
     FragmentMealLibraryBinding binding;
     private static final String ARG_ARRAY_TYPE = "array_type";
     private String arrayType;
@@ -121,9 +122,12 @@ public class MealIntakeFragment extends Fragment implements CallbackSearchMeal, 
                 Log.d("Adapter", "Clicked on add for meal in MealIntakeAdapter: " + meal.getMeal_name() + "; ArrayType: " + arrayType);
                 DayFunc.addObjectToDay(meal, arrayType);
 
+                requireView().findViewById(R.id.loading).setVisibility(View.VISIBLE);
+                requireView().findViewById(R.id.lnMain).setVisibility(View.GONE);
+
                 AppDatabase db = AppDatabase.getInstance(requireContext());
                 DayRepo dayRepo = new DayRepo(db.dayDao());
-                dayRepo.refreshDay();
+                dayRepo.refreshDay(this);
             });
         });
     }
@@ -136,5 +140,13 @@ public class MealIntakeFragment extends Fragment implements CallbackSearchMeal, 
     @Override
     public void onLikedMealsReceived(ArrayList<Meal> mealsArrayList) {
         mealSearchReceived(mealsArrayList);
+    }
+
+    @Override
+    public void onRefreshDay() {
+        requireActivity().runOnUiThread(() -> {
+            requireView().findViewById(R.id.loading).setVisibility(View.GONE);
+            requireView().findViewById(R.id.lnMain).setVisibility(View.VISIBLE);
+        });
     }
 }

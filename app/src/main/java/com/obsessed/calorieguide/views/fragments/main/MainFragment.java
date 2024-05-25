@@ -16,7 +16,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.obsessed.calorieguide.MainActivityApp;
 import com.obsessed.calorieguide.MainActivityAuth;
 import com.obsessed.calorieguide.R;
-import com.obsessed.calorieguide.data.callback.user.CallbackRefreshDay;
+import com.obsessed.calorieguide.data.callback.day.CallbackRefreshDay;
 import com.obsessed.calorieguide.data.local.Data;
 import com.obsessed.calorieguide.data.local.load.LoadRemoteData;
 import com.obsessed.calorieguide.databinding.FragmentMainBinding;
@@ -26,6 +26,7 @@ import com.obsessed.calorieguide.data.local.load.ShPrefs;
 
 public class MainFragment extends Fragment implements CallbackLoadData, CallbackRefreshDay {
     FragmentMainBinding binding;
+    BottomNavigationView botNavView;
 
     public MainFragment() {
         // Required empty public constructor
@@ -40,7 +41,7 @@ public class MainFragment extends Fragment implements CallbackLoadData, Callback
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_main, container, false);
-        BottomNavigationView botNavView = getActivity().findViewById(R.id.bottomNV);
+        botNavView = getActivity().findViewById(R.id.bottomNV);
         if (botNavView != null) {
             botNavView.setVisibility(view.VISIBLE);
         }
@@ -51,7 +52,9 @@ public class MainFragment extends Fragment implements CallbackLoadData, Callback
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         binding = FragmentMainBinding.bind(view);
-
+        view.findViewById(R.id.lnMain).setVisibility(View.GONE);
+        view.findViewById(R.id.loading).setVisibility(View.VISIBLE);
+       // botNavView.setVisibility(View.GONE);
         // Загрузка данных из хранилища
         ShPrefs.loadData(requireContext(), this);
 
@@ -79,7 +82,7 @@ public class MainFragment extends Fragment implements CallbackLoadData, Callback
     public void onLoadData() {
         Log.d("MainFragment", "Loading data");
         // Проверка пользователя на наличие авторизации
-        if(checkUserLogin()) {
+        if(checkUserLogin() && isAdded()) {
             requireActivity().runOnUiThread(()  -> {
                 // Инициализация для отображения данных
                 Stats.getInstance().init(binding, requireActivity());
@@ -87,6 +90,11 @@ public class MainFragment extends Fragment implements CallbackLoadData, Callback
                 Intakes.getInstance().init(binding, requireContext());
             });
         }
+        requireActivity().runOnUiThread(() -> {
+            requireView().findViewById(R.id.lnMain).setVisibility(View.VISIBLE);
+            requireView().findViewById(R.id.loading).setVisibility(View.GONE);
+           // botNavView.setVisibility(View.VISIBLE);
+        });
     }
 
     @Override

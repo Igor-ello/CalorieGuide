@@ -6,7 +6,13 @@
     android:layout_height="match_parent"
     tools:context=".views.fragments.main.MainFragment">
 
+    <include
+        layout="@layout/loading"
+        android:id="@+id/loading"
+        android:visibility="gone"/>
+
     <ScrollView
+        android:id="@+id/lnMain"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginBottom="@dimen/margin_end_default">
@@ -48,18 +54,5 @@
     </LinearLayout>
 
     </ScrollView>
-
-<!--    <FrameLayout-->
-<!--        android:id="@+id/objectActions"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="match_parent"-->
-<!--        android:background="@drawable/background_gray"-->
-<!--        android:clickable="true"-->
-<!--        android:visibility="gone">-->
-
-<!--        <include-->
-<!--            android:id="@+id/objectActionsLayout"-->
-<!--            layout="@layout/object_actions" />-->
-<!--    </FrameLayout>-->
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

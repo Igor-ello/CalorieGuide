@@ -102,6 +102,8 @@ public class EditMealFragment extends Fragment implements CallbackGetMealById, C
             MealCallWithToken mealCallWithToken = new MealCallWithToken(Data.getInstance().getUser().getBearerToken());
             mealCallWithToken.deleteMeal(mealId);
 
+            //TODO: Реализовать удаление из базы локальной синхронно с удалённой
+
             Navigation.findNavController(view).popBackStack();
         });
 

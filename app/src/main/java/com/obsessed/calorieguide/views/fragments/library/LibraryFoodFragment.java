@@ -115,11 +115,13 @@ public class LibraryFoodFragment extends Fragment implements CallbackGetAllFood,
 
     @Override
     public void onAllFoodReceived(ArrayList<Food> foodList) {
-        requireActivity().runOnUiThread(() -> {
-            Log.d("Received", "Size: " + foodList.size());
-            new AllFoodReceived(requireContext(), requireView(), binding, foodList, this)
-                    .allFoodReceived();
-        });
+        if (isAdded()) {
+            requireActivity().runOnUiThread(() -> {
+                Log.d("Received", "Size: " + foodList.size());
+                new AllFoodReceived(requireContext(), requireView(), binding, foodList, this)
+                        .allFoodReceived();
+            });
+        }
     }
 
     @Override

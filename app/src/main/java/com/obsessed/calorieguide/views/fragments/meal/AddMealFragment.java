@@ -59,7 +59,7 @@ public class AddMealFragment extends Fragment implements CallbackGetAllFood {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_add_meal, container, false);
-        ((BottomNavigationView)((MainActivityApp) getActivity()).findViewById(R.id.bottomNV)).setVisibility(view.GONE);
+        getActivity().findViewById(R.id.bottomNV).setVisibility(view.GONE);
         return view;
     }
 
@@ -84,7 +84,7 @@ public class AddMealFragment extends Fragment implements CallbackGetAllFood {
         view.findViewById(R.id.btSetNumber).setOnClickListener(v -> {
             AppDatabase db = AppDatabase.getInstance(requireContext());
             FoodRepo foodRepo = new FoodRepo(db.foodDao());
-            foodRepo.refreshFood(SORT_LIKE_DESCENDING, 1,this);
+            foodRepo.getAllFood(SORT_LIKE_DESCENDING, 1,this);
         });
 
         // Отправка на сервер введенных данных

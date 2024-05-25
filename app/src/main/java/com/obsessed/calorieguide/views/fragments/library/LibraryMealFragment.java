@@ -97,7 +97,7 @@ public class LibraryMealFragment extends Fragment implements CallbackGetAllMeal,
         binding.swipeRefreshLayout.setOnRefreshListener(() -> {
             //Обновление списка фруктов из удаленной базы данных
             LoadRemoteData.getInstance(requireContext()).loadMeal(1, this);
-            Func.setTimeLimit(handler, 3000, requireContext(), binding.swipeRefreshLayout);
+            Func.setTimeLimit(handler, 6000, requireContext(), binding.swipeRefreshLayout);
         });
 
         //Кнопка для добавления нового питания
@@ -113,11 +113,13 @@ public class LibraryMealFragment extends Fragment implements CallbackGetAllMeal,
 
     @Override
     public void onAllMealReceived(ArrayList<Meal> mealList) {
-        requireActivity().runOnUiThread(() -> {
-            Log.d("Received", "Size: " + mealList.size());
-            new AllMealReceived(requireContext(), requireView(), binding, mealList, this)
-                    .allMealReceived();
-        });
+        if (isAdded()) {
+            requireActivity().runOnUiThread(() -> {
+                Log.d("Received", "Size: " + mealList.size());
+                new AllMealReceived(requireContext(), requireView(), binding, mealList, this)
+                        .allMealReceived();
+            });
+        }
     }
 
     @Override
