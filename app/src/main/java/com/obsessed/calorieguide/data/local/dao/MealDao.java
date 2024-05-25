@@ -54,4 +54,7 @@ public interface MealDao {
 
     @Query("SELECT * FROM meal_table WHERE isLiked = 1 AND author_id = :userId")
     List<Meal> getLikedMeals(int userId);
+
+    @Query("DELETE FROM meal_table WHERE id = :mealId")
+    int deleteMealById(int mealId);
 }

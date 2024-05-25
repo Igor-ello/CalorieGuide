@@ -1,5 +1,6 @@
 package com.obsessed.calorieguide.views.fragments.meal;
 
+import static com.obsessed.calorieguide.data.local.Data.DELAY_DEFAULT;
 import static com.obsessed.calorieguide.data.local.Data.SORT_DATE;
 import static com.obsessed.calorieguide.data.local.Data.SORT_LIKE_DESCENDING;
 
@@ -16,8 +17,9 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
+import android.os.Handler;
+import android.os.Looper;
 import android.provider.MediaStore;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,16 +28,18 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.obsessed.calorieguide.R;
+import com.obsessed.calorieguide.data.callback.food.CallbackGetAllFood;
+import com.obsessed.calorieguide.data.callback.meal.CallbackDeleteMealById;
 import com.obsessed.calorieguide.data.local.room.AppDatabase;
 import com.obsessed.calorieguide.data.repository.FoodRepo;
 import com.obsessed.calorieguide.data.local.Data;
-import com.obsessed.calorieguide.data.callback.food.CallbackGetAllFood;
 import com.obsessed.calorieguide.data.models.food.Food;
 import com.obsessed.calorieguide.data.callback.meal.CallbackGetMealById;
 import com.obsessed.calorieguide.data.models.food.FoodIdQuantity;
 import com.obsessed.calorieguide.data.models.Meal;
 import com.obsessed.calorieguide.data.remote.network.meal.MealCallWithToken;
 import com.obsessed.calorieguide.data.repository.MealRepo;
+import com.obsessed.calorieguide.tools.Func;
 import com.obsessed.calorieguide.tools.convert.FillClass;
 import com.obsessed.calorieguide.tools.convert.ResizedBitmap;
 
@@ -45,7 +49,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class EditMealFragment extends Fragment implements CallbackGetMealById, CallbackGetAllFood {
+public class EditMealFragment extends Fragment implements CallbackGetMealById, CallbackGetAllFood, CallbackDeleteMealById {
     private static final int GALLERY_REQUEST_CODE = 100;
     byte[] byteArray;
     private static final String ARG_MEAL_ID = "meal_id";
@@ -53,6 +57,8 @@ public class EditMealFragment extends Fragment implements CallbackGetMealById, C
     FieldValidation fieldValidation;
     ImageView imageView;
     NavController navController;
+    AppDatabase db;
+    Handler handler;
 
     //Data received from the server
     Meal meal = null;
@@ -69,6 +75,8 @@ public class EditMealFragment extends Fragment implements CallbackGetMealById, C
         if (getArguments() != null) {
             mealId = getArguments().getInt(ARG_MEAL_ID);
         }
+        db = AppDatabase.getInstance(requireContext());
+        handler = new Handler(Looper.getMainLooper());
     }
 
     @Override
@@ -100,11 +108,12 @@ public class EditMealFragment extends Fragment implements CallbackGetMealById, C
 
         view.findViewById(R.id.btDelete).setOnClickListener(v -> {
             MealCallWithToken mealCallWithToken = new MealCallWithToken(Data.getInstance().getUser().getBearerToken());
-            mealCallWithToken.deleteMeal(mealId);
+            mealCallWithToken.deleteMealById(mealId, this);
 
-            //TODO: Реализовать удаление из базы локальной синхронно с удалённой
-
-            Navigation.findNavController(view).popBackStack();
+            requireView().findViewById(R.id.lnMain).setVisibility(View.GONE);
+            requireView().findViewById(R.id.arrow_back).setVisibility(View.GONE);
+            requireView().findViewById(R.id.loading).setVisibility(View.VISIBLE);
+            Func.setTimeLimitLoading(handler, DELAY_DEFAULT, requireContext(), view, requireActivity());
         });
 
         // Подгрузка изображения из галереи или камеры
@@ -209,5 +218,19 @@ public class EditMealFragment extends Fragment implements CallbackGetMealById, C
                 e.printStackTrace();
             }
         }
+    }
+
+    @Override
+    public void onRemoteDeleteMealById() {
+        handler.removeCallbacksAndMessages(null); // Отменяем таймер
+        MealRepo repo = new MealRepo(db.mealDao());
+        repo.deleteMealById(mealId, this);
+    }
+
+    @Override
+    public void onLocalDeleteMealById() {
+        requireActivity().runOnUiThread(() -> {
+            Navigation.findNavController(requireView()).popBackStack();
+        });
     }
 }

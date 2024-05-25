@@ -5,6 +5,7 @@ import android.widget.ImageView;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import com.obsessed.calorieguide.data.callback.food.CallbackDeleteFoodById;
 import com.obsessed.calorieguide.data.local.Data;
 import com.obsessed.calorieguide.data.models.food.Food;
 import com.obsessed.calorieguide.data.remote.api.FoodApi;
@@ -100,12 +101,15 @@ public class FoodCallWithToken {
         });
     }
 
-    public void deleteFood(int foodId) {
+    public void deleteFood(int foodId, CallbackDeleteFoodById callback) {
         Call<JsonObject> call = foodApi.deleteFood(foodId);
         call.enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
                 if (response.isSuccessful()) {
+                    if (callback != null) {
+                        callback.onRemoteDeleteFoodById();
+                    }
                     Log.d("Call", "Request deleteFood successful.");
                 } else {
                     Log.e("Call", "Request deleteFood failed. Response code: " + response.code());

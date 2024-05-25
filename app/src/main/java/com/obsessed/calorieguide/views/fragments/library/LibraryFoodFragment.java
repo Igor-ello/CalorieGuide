@@ -1,5 +1,6 @@
 package com.obsessed.calorieguide.views.fragments.library;
 
+import static com.obsessed.calorieguide.data.local.Data.DELAY_LONG;
 import static com.obsessed.calorieguide.data.local.Data.SORT_DATE;
 
 import android.os.Bundle;
@@ -9,7 +10,6 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
-import androidx.recyclerview.widget.GridLayoutManager;
 
 import android.os.Handler;
 import android.os.Looper;
@@ -19,8 +19,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.SearchView;
-import android.widget.Toast;
 
+import com.obsessed.calorieguide.data.callback.food.CallbackGetAllFood;
 import com.obsessed.calorieguide.data.callback.food.CallbackLoadFood;
 import com.obsessed.calorieguide.data.local.load.LoadRemoteData;
 import com.obsessed.calorieguide.data.local.room.AppDatabase;
@@ -30,9 +30,7 @@ import com.obsessed.calorieguide.tools.Func;
 import com.obsessed.calorieguide.databinding.FragmentFoodLibraryBinding;
 import com.obsessed.calorieguide.data.callback.food.CallbackLikeFood;
 import com.obsessed.calorieguide.data.models.food.Food;
-import com.obsessed.calorieguide.data.callback.food.CallbackGetAllFood;
 import com.obsessed.calorieguide.data.callback.food.CallbackSearchFood;
-import com.obsessed.calorieguide.views.adapters.food.FoodAdapterV1;
 
 import java.util.ArrayList;
 
@@ -96,10 +94,10 @@ public class LibraryFoodFragment extends Fragment implements CallbackGetAllFood,
             }
         });
 
+        //Обновление списка фруктов из удаленной базы данных
         binding.swipeRefreshLayout.setOnRefreshListener(() -> {
-            //Обновление списка фруктов из удаленной базы данных
             LoadRemoteData.getInstance(requireContext()).loadFood(1, this);
-            Func.setTimeLimit(handler, 3000, requireContext(), binding.swipeRefreshLayout);
+            Func.setTimeLimitRefLn(handler, DELAY_LONG, requireContext(), binding.swipeRefreshLayout);
         });
 
         //Кнопка для добавления нового фрукта
@@ -111,6 +109,20 @@ public class LibraryFoodFragment extends Fragment implements CallbackGetAllFood,
         view.findViewById(R.id.btToMealLib).setOnClickListener(v -> {
             navController.navigate(R.id.action_libraryFoodFragment_to_libraryMealFragment);
         });
+    }
+
+    @Override
+    public void onLoadFood(ArrayList<Food> foodList) {
+        handler.removeCallbacksAndMessages(null); // Отменяем таймер
+        binding.swipeRefreshLayout.setRefreshing(false);
+
+        if (isAdded()) {
+            requireActivity().runOnUiThread(() -> {
+                Log.d("Received", "Size: " + foodList.size());
+                new AllFoodReceived(requireContext(), requireView(), binding, foodList, this)
+                        .allFoodReceived();
+            });
+        }
     }
 
     @Override
@@ -135,12 +147,5 @@ public class LibraryFoodFragment extends Fragment implements CallbackGetAllFood,
             new AllFoodReceived(requireContext(), requireView(), binding, foodList, this)
                     .allFoodReceived();
         });
-    }
-
-    @Override
-    public void onLoadFood(ArrayList<Food> foodList) {
-        handler.removeCallbacksAndMessages(null); // Отменяем таймер
-        repo.getAllFood(SORT_DATE, 1, this);
-        binding.swipeRefreshLayout.setRefreshing(false);
     }
 }

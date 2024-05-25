@@ -3,14 +3,15 @@ package com.obsessed.calorieguide.data.repository;
 import android.os.Handler;
 import android.os.Looper;
 
+import com.obsessed.calorieguide.data.callback.food.CallbackDeleteAllFood;
+import com.obsessed.calorieguide.data.callback.food.CallbackDeleteFoodById;
+import com.obsessed.calorieguide.data.callback.food.CallbackGetAllFood;
 import com.obsessed.calorieguide.data.callback.food.CallbackGetFoodById;
 import com.obsessed.calorieguide.data.callback.food.CallbackGetLikedFood;
-import com.obsessed.calorieguide.data.callback.food.CallbackLoadFood;
 import com.obsessed.calorieguide.data.callback.food.CallbackSearchFood;
 import com.obsessed.calorieguide.data.local.dao.FoodDao;
 import com.obsessed.calorieguide.data.models.food.Food;
 import com.obsessed.calorieguide.data.remote.network.food.FoodCall;
-import com.obsessed.calorieguide.data.callback.food.CallbackGetAllFood;
 import com.obsessed.calorieguide.data.local.Data;
 import com.obsessed.calorieguide.data.repository.async_task.food.GetAllFoodTask;
 import com.obsessed.calorieguide.data.repository.async_task.food.SearchFoodTask;
@@ -27,7 +28,7 @@ public class FoodRepo {
         handler = new Handler(Looper.getMainLooper());
     }
 
-    public void refreshFood(String sort, int twoDecade, CallbackGetAllFood callback) {
+    public void getAllFoodFromServer(String sort, int twoDecade, CallbackGetAllFood callback) {
         Runnable runnable = () -> {
             FoodCall call = new FoodCall();
             if (Data.getInstance().getUser() != null)
@@ -38,7 +39,6 @@ public class FoodRepo {
     }
 
     public void getAllFood(String sortType, int twoDecade, CallbackGetAllFood callback) {
-
         int userId = Data.getInstance().getUser().getId();
         new GetAllFoodTask(foodDao, sortType, twoDecade, userId, callback).execute();
     }
@@ -57,6 +57,20 @@ public class FoodRepo {
     public void getLikedFood(int userId, CallbackGetLikedFood callback) {
         Executors.newSingleThreadExecutor().execute(() -> {
             callback.onLikedFoodReceived((ArrayList<Food>) foodDao.getFoodByLikes());
+        });
+    }
+
+    public void deleteFoodById(int id, CallbackDeleteFoodById callback) {
+        Executors.newSingleThreadExecutor().execute(() -> {
+            foodDao.deleteFoodById(id);
+            callback.onLocalDeleteFoodById();
+        });
+    }
+
+    public void deleteAllFood(CallbackDeleteAllFood callback) {
+        Executors.newSingleThreadExecutor().execute(() -> {
+            foodDao.deleteAllFood();
+            callback.onDeleteAllFood();
         });
     }
 }

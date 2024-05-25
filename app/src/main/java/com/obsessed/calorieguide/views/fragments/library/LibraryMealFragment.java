@@ -1,5 +1,6 @@
 package com.obsessed.calorieguide.views.fragments.library;
 
+import static com.obsessed.calorieguide.data.local.Data.DELAY_LONG;
 import static com.obsessed.calorieguide.data.local.Data.SORT_DATE;
 
 import android.os.Bundle;
@@ -18,13 +19,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.SearchView;
-import android.widget.Toast;
 
 import com.obsessed.calorieguide.R;
 import com.obsessed.calorieguide.data.callback.meal.CallbackLoadMeal;
 import com.obsessed.calorieguide.data.local.load.LoadRemoteData;
 import com.obsessed.calorieguide.data.local.room.AppDatabase;
-import com.obsessed.calorieguide.data.repository.FoodRepo;
 import com.obsessed.calorieguide.data.repository.MealRepo;
 import com.obsessed.calorieguide.tools.Func;
 import com.obsessed.calorieguide.databinding.FragmentMealLibraryBinding;
@@ -34,6 +33,7 @@ import com.obsessed.calorieguide.data.models.Meal;
 import com.obsessed.calorieguide.data.callback.meal.CallbackSearchMeal;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class LibraryMealFragment extends Fragment implements CallbackGetAllMeal, CallbackLikeMeal, CallbackSearchMeal, CallbackLoadMeal {
     private FragmentMealLibraryBinding binding;
@@ -97,7 +97,7 @@ public class LibraryMealFragment extends Fragment implements CallbackGetAllMeal,
         binding.swipeRefreshLayout.setOnRefreshListener(() -> {
             //Обновление списка фруктов из удаленной базы данных
             LoadRemoteData.getInstance(requireContext()).loadMeal(1, this);
-            Func.setTimeLimit(handler, 6000, requireContext(), binding.swipeRefreshLayout);
+            Func.setTimeLimitRefLn(handler, DELAY_LONG, requireContext(), binding.swipeRefreshLayout);
         });
 
         //Кнопка для добавления нового питания

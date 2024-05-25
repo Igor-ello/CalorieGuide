@@ -25,6 +25,7 @@ public interface FoodDao {
     @Query("DELETE FROM food_table")
     void deleteAllFood();
 
+
     @Query("SELECT * FROM food_table")
     List<Food> getAllFood();
 
@@ -54,5 +55,8 @@ public interface FoodDao {
 
     @Query("SELECT * FROM food_table WHERE description LIKE '%' || :word || '%' ORDER BY description LIKE '%' || :word || '%' DESC, likes DESC")
     List<Food> searchFoodByDescription(String word);
+
+    @Query("DELETE FROM food_table WHERE id = :foodId")
+    int deleteFoodById(int foodId);
 }
 

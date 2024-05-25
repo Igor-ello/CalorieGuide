@@ -1,7 +1,6 @@
 package com.obsessed.calorieguide.data.repository.async_task.food;
 
 import android.os.AsyncTask;
-import android.util.Log;
 
 import com.obsessed.calorieguide.data.callback.food.CallbackGetAllFood;
 import com.obsessed.calorieguide.data.local.dao.FoodDao;

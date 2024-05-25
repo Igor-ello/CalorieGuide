@@ -4,14 +4,14 @@ import static com.obsessed.calorieguide.data.local.Data.SORT_DATE;
 
 import android.content.Context;
 
+import com.obsessed.calorieguide.data.callback.food.CallbackDeleteAllFood;
+import com.obsessed.calorieguide.data.callback.food.CallbackGetAllFood;
 import com.obsessed.calorieguide.data.callback.food.CallbackLoadFood;
+import com.obsessed.calorieguide.data.callback.meal.CallbackDeleteAllMeals;
 import com.obsessed.calorieguide.data.callback.meal.CallbackLoadMeal;
-import com.obsessed.calorieguide.data.local.dao.FoodDao;
-import com.obsessed.calorieguide.data.local.dao.MealDao;
 import com.obsessed.calorieguide.data.local.room.AppDatabase;
 import com.obsessed.calorieguide.data.models.Meal;
 import com.obsessed.calorieguide.data.models.food.Food;
-import com.obsessed.calorieguide.data.callback.food.CallbackGetAllFood;
 import com.obsessed.calorieguide.data.callback.meal.CallbackGetAllMeal;
 import com.obsessed.calorieguide.data.repository.FoodRepo;
 import com.obsessed.calorieguide.data.repository.MealRepo;
@@ -19,11 +19,13 @@ import com.obsessed.calorieguide.data.repository.MealRepo;
 import java.util.ArrayList;
 import java.util.concurrent.Executors;
 
-public class LoadRemoteData implements CallbackGetAllFood, CallbackGetAllMeal{
+public class LoadRemoteData implements CallbackGetAllFood, CallbackDeleteAllFood, CallbackGetAllMeal, CallbackDeleteAllMeals {
     private static LoadRemoteData instance;
     private static AppDatabase db;
     private static CallbackLoadFood callbackLoadFood;
     private static CallbackLoadMeal callbackLoadMeal;
+    private static ArrayList<Food> foodListRemote;
+    private static ArrayList<Meal> mealListRemote;
 
 
     public static LoadRemoteData getInstance(Context context) {
@@ -41,43 +43,61 @@ public class LoadRemoteData implements CallbackGetAllFood, CallbackGetAllMeal{
 
     public void loadFood(int twoDecade, CallbackLoadFood callback) {
         callbackLoadFood = callback;
-        FoodDao foodDao = db.foodDao();
-        FoodRepo foodRepo = new FoodRepo(foodDao);
-        foodRepo.refreshFood(SORT_DATE, twoDecade,this);
+        foodListRemote = new ArrayList<>();
+
+        FoodRepo foodRepo = new FoodRepo(db.foodDao());
+        foodRepo.getAllFoodFromServer(SORT_DATE, twoDecade,this);
     }
 
     public void loadMeal(int twoDecade, CallbackLoadMeal callback) {
         callbackLoadMeal = callback;
-        MealDao mealDao = db.mealDao();
-        MealRepo mealRepo = new MealRepo(mealDao);
+        mealListRemote = new ArrayList<>();
+
+        MealRepo mealRepo = new MealRepo(db.mealDao());
         mealRepo.refreshMeal(SORT_DATE, twoDecade, this);
     }
 
     @Override
     public void onAllFoodReceived(ArrayList<Food> foodList) {
-        Executors.newSingleThreadExecutor().execute(() -> {
-            for (Food food : foodList) {
-                db.foodDao().insert(food);
-            }
+        foodListRemote = foodList;
+        FoodRepo repo = new FoodRepo(db.foodDao());
+        repo.deleteAllFood(this);
+    }
 
-            if (callbackLoadFood != null) {
-                callbackLoadFood.onLoadFood(foodList);
-            }
-        });
+    @Override
+    public void onDeleteAllFood() {
+        if(foodListRemote!= null) {
+            Executors.newSingleThreadExecutor().execute(() -> {
+                for (Food food : foodListRemote) {
+                    db.foodDao().insert(food);
+                }
+
+                if (callbackLoadFood != null) {
+                    callbackLoadFood.onLoadFood(foodListRemote);
+                }
+            });
+        }
     }
 
     @Override
     public void onAllMealReceived(ArrayList<Meal> mealList) {
-        Executors.newSingleThreadExecutor().execute(() -> {
-            for (Meal meal : mealList) {
-                db.mealDao().insert(meal);
-            }
-
-            if (callbackLoadMeal != null) {
-                callbackLoadMeal.onLoadMeal(mealList);
-            }
-        });
+        mealListRemote = mealList;
+        MealRepo repo = new MealRepo(db.mealDao());
+        repo.deleteAllMeals(this);
     }
 
+    @Override
+    public void onDeleteAllMeals() {
+        if(mealListRemote != null) {
+            Executors.newSingleThreadExecutor().execute(() -> {
+                for (Meal meal : mealListRemote) {
+                    db.mealDao().insert(meal);
+                }
 
+                if (callbackLoadMeal != null) {
+                    callbackLoadMeal.onLoadMeal(mealListRemote);
+                }
+            });
+        }
+    }
 }

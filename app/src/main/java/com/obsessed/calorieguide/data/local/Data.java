@@ -11,6 +11,9 @@ public class Data {
     public static final String SORT_DATE = "";
     public static final int PICTURE_SIZE = 250;
     public static final int QUALITY = 100;
+    public static final int DELAY_DEFAULT = 3000;
+    public static final int DELAY_FAST = 1000;
+    public static final int DELAY_LONG = 6000;
 
     //For shared preference
     private Day day = null;
