@@ -1,5 +1,6 @@
 package com.obsessed.calorieguide.views.fragments.meal;
 
+import static com.obsessed.calorieguide.data.local.Data.DELAY_DEFAULT;
 import static com.obsessed.calorieguide.data.local.Data.SORT_LIKE_DESCENDING;
 
 import android.app.Activity;
@@ -14,6 +15,8 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
+import android.os.Handler;
+import android.os.Looper;
 import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,12 +27,16 @@ import android.widget.Toast;
 
 import com.obsessed.calorieguide.R;
 import com.obsessed.calorieguide.data.callback.food.CallbackGetAllFood;
+import com.obsessed.calorieguide.data.callback.meal.CallbackAddMeal;
 import com.obsessed.calorieguide.data.local.room.AppDatabase;
+import com.obsessed.calorieguide.data.models.Meal;
 import com.obsessed.calorieguide.data.repository.FoodRepo;
 import com.obsessed.calorieguide.data.local.Data;
 import com.obsessed.calorieguide.data.models.food.Food;
 import com.obsessed.calorieguide.data.models.food.FoodIdQuantity;
 import com.obsessed.calorieguide.data.remote.network.meal.MealCallWithToken;
+import com.obsessed.calorieguide.data.repository.MealRepo;
+import com.obsessed.calorieguide.tools.Func;
 import com.obsessed.calorieguide.tools.convert.FillClass;
 import com.obsessed.calorieguide.tools.convert.ResizedBitmap;
 
@@ -37,12 +44,14 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class AddMealFragment extends Fragment implements CallbackGetAllFood {
+public class AddMealFragment extends Fragment implements CallbackGetAllFood, CallbackAddMeal {
     private static final int GALLERY_REQUEST_CODE = 100;
     byte[] byteArray;
     FieldValidation fieldValidation;
     ImageView imageView;
     NavController navController;
+    AppDatabase db;
+    Handler handler;
 
     public AddMealFragment() {
         // Required empty public constructor
@@ -51,6 +60,8 @@ public class AddMealFragment extends Fragment implements CallbackGetAllFood {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        db = AppDatabase.getInstance(requireContext());
+        handler = new Handler(Looper.getMainLooper());
     }
 
     @Override
@@ -106,9 +117,12 @@ public class AddMealFragment extends Fragment implements CallbackGetAllFood {
                     return;
                 }
                 MealCallWithToken mealCallWithToken = new MealCallWithToken(Data.getInstance().getUser().getBearerToken());
-                mealCallWithToken.postMeal(FillClass.fillMeal(etList, byteArray, foodIdQuantities));
+                mealCallWithToken.postMeal(FillClass.fillMeal(etList, byteArray, foodIdQuantities), this);
 
-                Navigation.findNavController(view).popBackStack();
+                requireView().findViewById(R.id.lnMain).setVisibility(View.GONE);
+                requireView().findViewById(R.id.arrow_back).setVisibility(View.GONE);
+                requireView().findViewById(R.id.loading).setVisibility(View.VISIBLE);
+                Func.setTimeLimitLoading(handler, DELAY_DEFAULT, requireContext(), view, requireActivity());
             } else {
                 Toast.makeText(requireContext(), "Fill in all fields", Toast.LENGTH_SHORT).show();
             }
@@ -155,5 +169,19 @@ public class AddMealFragment extends Fragment implements CallbackGetAllFood {
                 e.printStackTrace();
             }
         }
+    }
+
+    @Override
+    public void onAddMealRemote(Meal meal) {
+        handler.removeCallbacksAndMessages(null);
+        MealRepo repo  = new MealRepo(db.mealDao());
+        repo.addMeal(meal, this);
+    }
+
+    @Override
+    public void onAddMealLocal() {
+        requireActivity().runOnUiThread(() -> {
+            Navigation.findNavController(requireView()).popBackStack();
+        });
     }
 }

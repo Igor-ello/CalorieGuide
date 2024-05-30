@@ -1,5 +1,6 @@
 package com.obsessed.calorieguide.data.models.food;
 
+import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
@@ -20,5 +21,14 @@ public class FoodIdQuantity {
 
     public int getQuantity() {
         return quantity;
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return "{" +
+                "\"product_id\":" + product_id +
+                ",\"quantity\":" + quantity +
+                '}';
     }
 }

@@ -30,6 +30,7 @@ import android.widget.Toast;
 import com.obsessed.calorieguide.R;
 import com.obsessed.calorieguide.data.callback.food.CallbackGetAllFood;
 import com.obsessed.calorieguide.data.callback.meal.CallbackDeleteMealById;
+import com.obsessed.calorieguide.data.callback.meal.CallbackUpdateMeal;
 import com.obsessed.calorieguide.data.local.room.AppDatabase;
 import com.obsessed.calorieguide.data.repository.FoodRepo;
 import com.obsessed.calorieguide.data.local.Data;
@@ -47,9 +48,10 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Executors;
 
 
-public class EditMealFragment extends Fragment implements CallbackGetMealById, CallbackGetAllFood, CallbackDeleteMealById {
+public class EditMealFragment extends Fragment implements CallbackGetMealById, CallbackGetAllFood, CallbackDeleteMealById, CallbackUpdateMeal {
     private static final int GALLERY_REQUEST_CODE = 100;
     byte[] byteArray;
     private static final String ARG_MEAL_ID = "meal_id";
@@ -124,7 +126,8 @@ public class EditMealFragment extends Fragment implements CallbackGetMealById, C
         });
 
         view.findViewById(R.id.btSetNumber).setOnClickListener(v -> {
-            repo.getAllFood(SORT_LIKE_DESCENDING, 1, this);
+            //repo.getAllFood(SORT_LIKE_DESCENDING, 1, this);
+            fieldValidation.fillLnFood(foodList, meal.getFoodIdQuantities());
         });
 
         // Отправка на сервер введенных данных
@@ -148,9 +151,12 @@ public class EditMealFragment extends Fragment implements CallbackGetMealById, C
                     return;
                 }
                 MealCallWithToken mealCallWithToken = new MealCallWithToken(Data.getInstance().getUser().getBearerToken());
-                mealCallWithToken.updateMeal(mealId, FillClass.fillMeal(etList, byteArray, foodIdQuantities));
 
-                Navigation.findNavController(view).popBackStack();
+                requireView().findViewById(R.id.lnMain).setVisibility(View.GONE);
+                requireView().findViewById(R.id.arrow_back).setVisibility(View.GONE);
+                requireView().findViewById(R.id.loading).setVisibility(View.VISIBLE);
+                Func.setTimeLimitLoading(handler, DELAY_DEFAULT, requireContext(), view, requireActivity());
+                mealCallWithToken.updateMeal(mealId, FillClass.fillMeal(etList, byteArray, foodIdQuantities), this);
             } else {
                 Toast.makeText(requireContext(), "Fill in all fields", Toast.LENGTH_SHORT).show();
             }
@@ -229,6 +235,20 @@ public class EditMealFragment extends Fragment implements CallbackGetMealById, C
 
     @Override
     public void onLocalDeleteMealById() {
+        requireActivity().runOnUiThread(() -> {
+            Navigation.findNavController(requireView()).popBackStack();
+        });
+    }
+
+    @Override
+    public void onMealUpdatedRemote(Meal meal) {
+        handler.removeCallbacksAndMessages(null);
+        MealRepo repo  = new MealRepo(db.mealDao());
+        repo.updateMeal(meal, this);
+    }
+
+    @Override
+    public void onMealUpdatedLocal() {
         requireActivity().runOnUiThread(() -> {
             Navigation.findNavController(requireView()).popBackStack();
         });

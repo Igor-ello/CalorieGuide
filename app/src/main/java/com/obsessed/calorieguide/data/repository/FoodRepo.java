@@ -3,12 +3,14 @@ package com.obsessed.calorieguide.data.repository;
 import android.os.Handler;
 import android.os.Looper;
 
+import com.obsessed.calorieguide.data.callback.food.CallbackAddFood;
 import com.obsessed.calorieguide.data.callback.food.CallbackDeleteAllFood;
 import com.obsessed.calorieguide.data.callback.food.CallbackDeleteFoodById;
 import com.obsessed.calorieguide.data.callback.food.CallbackGetAllFood;
 import com.obsessed.calorieguide.data.callback.food.CallbackGetFoodById;
 import com.obsessed.calorieguide.data.callback.food.CallbackGetLikedFood;
 import com.obsessed.calorieguide.data.callback.food.CallbackSearchFood;
+import com.obsessed.calorieguide.data.callback.food.CallbackUpdateFood;
 import com.obsessed.calorieguide.data.local.dao.FoodDao;
 import com.obsessed.calorieguide.data.models.food.Food;
 import com.obsessed.calorieguide.data.remote.network.food.FoodCall;
@@ -71,6 +73,31 @@ public class FoodRepo {
         Executors.newSingleThreadExecutor().execute(() -> {
             foodDao.deleteAllFood();
             callback.onDeleteAllFood();
+        });
+    }
+
+    public void updateFood(Food food, CallbackUpdateFood callback)  {
+        Executors.newSingleThreadExecutor().execute(() -> {
+            foodDao.updateFoodById(
+                    food.getId(), food.getFood_name(),
+                    food.getDescription(), food.getCalories(),
+                    food.getProteins(), food.getFats(),
+                    food.getCarbohydrates(), food.getPicture()
+            );
+            callback.onFoodUpdatedLocal();
+        });
+    }
+
+    public void likeFood(int foodId, boolean isLiked, int likes) {
+        Executors.newSingleThreadExecutor().execute(() -> {
+            foodDao.likeFoodById(foodId, isLiked, likes);
+        });
+    }
+
+    public void addFood(Food food, CallbackAddFood callback) {
+        Executors.newSingleThreadExecutor().execute(() -> {
+            foodDao.insert(food);
+            callback.onAddFoodLocal();
         });
     }
 }

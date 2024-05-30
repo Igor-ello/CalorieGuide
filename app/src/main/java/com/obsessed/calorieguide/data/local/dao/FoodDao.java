@@ -58,5 +58,11 @@ public interface FoodDao {
 
     @Query("DELETE FROM food_table WHERE id = :foodId")
     int deleteFoodById(int foodId);
+
+    @Query("UPDATE food_table SET food_name = :foodName, description = :description, calories = :calories, proteins = :proteins, fats = :fats, carbohydrates = :carbohydrates, picture = :picture WHERE id = :id")
+    void updateFoodById(int id, String foodName, String description, int calories, int proteins, int fats, int carbohydrates, byte[] picture);
+
+    @Query("UPDATE food_table SET isLiked = :isLiked, likes = :likes WHERE id = :id")
+    void likeFoodById(int id, boolean isLiked, int likes);
 }
 

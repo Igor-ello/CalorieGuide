@@ -137,8 +137,10 @@ public class FoodIntakeFragment extends Fragment implements CallbackSearchFood, 
     }
 
     @Override
-    public void onLikeFoodSuccess(ImageView imageView, boolean isLiked) {
+    public void onLikeFoodSuccess(ImageView imageView, boolean isLiked, int id, int likes)  {
         Func.setLikeState(imageView, isLiked);
+        FoodRepo repo = new FoodRepo(db.foodDao());
+        repo.likeFood(id, isLiked, likes);
     }
 
     @Override

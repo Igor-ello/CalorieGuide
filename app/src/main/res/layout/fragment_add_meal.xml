@@ -6,9 +6,14 @@
     tools:context=".views.fragments.meal.AddMealFragment"
     android:layout_margin="@dimen/margin_default">
 
+    <include layout="@layout/loading"
+        android:id="@+id/loading"
+        android:visibility="gone"/>
+
     <include layout="@layout/arrow_back"></include>
 
     <LinearLayout
+        android:id="@+id/lnMain"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">

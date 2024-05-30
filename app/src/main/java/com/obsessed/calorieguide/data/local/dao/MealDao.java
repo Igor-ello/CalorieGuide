@@ -8,6 +8,7 @@ import androidx.room.Query;
 import androidx.room.Update;
 
 import com.obsessed.calorieguide.data.models.Meal;
+import com.obsessed.calorieguide.data.models.food.FoodIdQuantity;
 
 import java.util.List;
 
@@ -57,4 +58,10 @@ public interface MealDao {
 
     @Query("DELETE FROM meal_table WHERE id = :mealId")
     int deleteMealById(int mealId);
+
+    @Query("UPDATE meal_table SET description = :description, total_calories  =  :calories, total_proteins  =  :proteins, total_fats   =  :fats, total_carbohydrates   =  :carbohydrates, meal_name = :name, products_id = :productsId, picture = :picture WHERE id  =  :id")
+    void updateMealById(int id, String name, String description, String productsId, int calories, int proteins, int fats, int carbohydrates, byte[] picture);
+
+    @Query("UPDATE meal_table SET isLiked = :isLiked, likes = :likes WHERE id = :id")
+    void likeMealById(int id, boolean isLiked, int likes);
 }

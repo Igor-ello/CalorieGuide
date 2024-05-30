@@ -3,11 +3,13 @@ package com.obsessed.calorieguide.data.repository;
 import android.os.Handler;
 import android.os.Looper;
 
+import com.obsessed.calorieguide.data.callback.meal.CallbackAddMeal;
 import com.obsessed.calorieguide.data.callback.meal.CallbackDeleteAllMeals;
 import com.obsessed.calorieguide.data.callback.meal.CallbackDeleteMealById;
 import com.obsessed.calorieguide.data.callback.meal.CallbackGetLikedMeals;
 import com.obsessed.calorieguide.data.callback.meal.CallbackGetMealById;
 import com.obsessed.calorieguide.data.callback.meal.CallbackSearchMeal;
+import com.obsessed.calorieguide.data.callback.meal.CallbackUpdateMeal;
 import com.obsessed.calorieguide.data.local.dao.MealDao;
 import com.obsessed.calorieguide.data.models.Meal;
 import com.obsessed.calorieguide.data.remote.network.meal.MealCall;
@@ -71,6 +73,32 @@ public class MealRepo {
         Executors.newSingleThreadExecutor().execute(() -> {
             mealDao.deleteAllMeals();
             callback.onDeleteAllMeals();
+        });
+    }
+
+    public void updateMeal(Meal meal, CallbackUpdateMeal callbackUpdateMeal) {
+        Executors.newSingleThreadExecutor().execute(() -> {
+            mealDao.updateMealById(
+                    meal.getId(), meal.getMeal_name(),
+                    meal.getDescription(), meal.getFoodIdQuantities().toString(),
+                    meal.getTotal_calories(), meal.getTotal_fats(),
+                    meal.getTotal_proteins(), meal.getTotal_carbohydrates(),
+                    meal.getPicture()
+            );
+            callbackUpdateMeal.onMealUpdatedLocal();
+        });
+    }
+
+    public void likeMeal(int foodId, boolean isLiked, int likes) {
+        Executors.newSingleThreadExecutor().execute(() -> {
+            mealDao.likeMealById(foodId, isLiked, likes);
+        });
+    }
+
+    public void addMeal(Meal meal, CallbackAddMeal callback) {
+        Executors.newSingleThreadExecutor().execute(() -> {
+            mealDao.insert(meal);
+            callback.onAddMealLocal();
         });
     }
 }

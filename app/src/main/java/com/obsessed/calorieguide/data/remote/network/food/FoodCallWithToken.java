@@ -5,7 +5,9 @@ import android.widget.ImageView;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import com.obsessed.calorieguide.data.callback.food.CallbackAddFood;
 import com.obsessed.calorieguide.data.callback.food.CallbackDeleteFoodById;
+import com.obsessed.calorieguide.data.callback.food.CallbackUpdateFood;
 import com.obsessed.calorieguide.data.local.Data;
 import com.obsessed.calorieguide.data.models.food.Food;
 import com.obsessed.calorieguide.data.remote.api.FoodApi;
@@ -54,7 +56,7 @@ public class FoodCallWithToken {
         foodApi = retrofit.create(FoodApi.class);
     }
 
-    public void postFood(Food food) {
+    public void postFood(Food food, CallbackAddFood callback) {
         Gson gson = new Gson();
         String json = gson.toJson(food); // Преобразуем объект Food в JSON-строку
         RequestBody requestBody = RequestBody.create(MediaType.parse("application/json"), json);
@@ -65,6 +67,7 @@ public class FoodCallWithToken {
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
                 if (response.isSuccessful()) {
+                    callback.onAddFoodRemote(food);
                     Log.d("Call", "Response postFood is successful!");
                 } else {
                     Log.e("Call", "ERROR response postFood is not successful; Response: " + response.code());
@@ -78,7 +81,7 @@ public class FoodCallWithToken {
         });
     }
 
-    public void updateFood(int foodId, Food food) {
+    public void updateFood(int foodId, Food food, CallbackUpdateFood callback) {
         Gson gson = new Gson();
         String json = gson.toJson(food);
         RequestBody requestBody = RequestBody.create(MediaType.parse("application/json"), json);
@@ -88,6 +91,7 @@ public class FoodCallWithToken {
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
                 if (response.isSuccessful()) {
+                    callback.onFoodUpdatedRemote(gson.fromJson(response.body(), Food.class));
                     Log.d("Call", "Request updateFood successful.");
                 } else {
                     Log.e("Call", "Request updateFood failed. Response code: " + response.code());
@@ -142,7 +146,12 @@ public class FoodCallWithToken {
 
                     food.setIsLiked(!food.getIsLiked());
                     if (callback != null) {
-                        callback.onLikeFoodSuccess(imageView, food.getIsLiked());
+                        int likes;
+                        if (food.getIsLiked())
+                            likes = food.getLikes() + 1;
+                        else
+                            likes = food.getLikes()  -  1;
+                        callback.onLikeFoodSuccess(imageView, food.getIsLiked(), food.getId(), likes);
                     }
 
                     Log.d("Call", "Response likeFood is successful!");

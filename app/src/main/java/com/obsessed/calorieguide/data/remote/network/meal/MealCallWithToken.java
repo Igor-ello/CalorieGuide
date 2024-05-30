@@ -5,7 +5,9 @@ import android.widget.ImageView;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import com.obsessed.calorieguide.data.callback.meal.CallbackAddMeal;
 import com.obsessed.calorieguide.data.callback.meal.CallbackDeleteMealById;
+import com.obsessed.calorieguide.data.callback.meal.CallbackUpdateMeal;
 import com.obsessed.calorieguide.data.local.Data;
 import com.obsessed.calorieguide.data.models.Meal;
 import com.obsessed.calorieguide.data.remote.api.MealApi;
@@ -54,7 +56,7 @@ public class MealCallWithToken {
     }
 
 
-    public void postMeal(Meal meal) {
+    public void postMeal(Meal meal, CallbackAddMeal callback) {
         Gson gson = new Gson();
         String json = gson.toJson(meal);
         RequestBody requestBody = RequestBody.create(MediaType.parse("application/json"), json);
@@ -64,6 +66,7 @@ public class MealCallWithToken {
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
                 if (response.isSuccessful()) {
+                    callback.onAddMealRemote(gson.fromJson(response.body(), Meal.class));
                     Log.d("Call", "Response postMeal is successful!");
                 } else {
                     Log.e("Call", "ERROR response postMeal is not successful; Response: " + response.code());
@@ -77,7 +80,7 @@ public class MealCallWithToken {
         });
     }
 
-    public void updateMeal(int mealId, Meal meal) {
+    public void updateMeal(int mealId, Meal meal, CallbackUpdateMeal callback) {
         Gson gson = new Gson();
         String json = gson.toJson(meal);
         RequestBody requestBody = RequestBody.create(MediaType.parse("application/json"), json);
@@ -89,6 +92,7 @@ public class MealCallWithToken {
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
                 if (response.isSuccessful()) {
+                    callback.onMealUpdatedRemote(gson.fromJson(response.body(), Meal.class));
                     Log.d("Call", "Request updateMeal successful.");
                 } else {
                     Log.e("Call", "Request updateMeal failed. Response code: " + response.code());
@@ -121,7 +125,12 @@ public class MealCallWithToken {
 
                     meal.setIsLiked(!meal.getIsLiked());
                     if(callback!= null) {
-                        callback.onLikeMealSuccess(imageView, meal.getIsLiked());
+                        int likes;
+                        if (meal.getIsLiked())
+                            likes = meal.getLikes() + 1;
+                        else
+                            likes = meal.getLikes()  -  1;
+                        callback.onLikeMealSuccess(imageView, meal.getIsLiked(), meal.getId(), likes);
                     }
 
                     Log.d("Call", "Response likeMeal is successful!");
