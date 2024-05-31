@@ -57,10 +57,6 @@ public class MainFragment extends Fragment implements CallbackLoadData, Callback
 
         // Загрузка данных из хранилища
         ShPrefs.loadData(requireContext(), this);
-
-        view.findViewById(R.id.btLoop).setOnClickListener(v -> {
-            LoadRemoteData.getInstance(requireContext()).loadAll();
-        });
     }
 
     private boolean checkUserLogin() {
