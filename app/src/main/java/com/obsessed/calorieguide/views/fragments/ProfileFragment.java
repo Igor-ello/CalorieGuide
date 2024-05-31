@@ -66,7 +66,7 @@ public class ProfileFragment extends Fragment {
 
         //Кнопки
         Button btEdit = view.findViewById(R.id.btEdit);
-        Button btSave = view.findViewById(R.id.btSave);
+        Button btSave = view.findViewById(R.id.btAdd);
 
         btEdit.setOnClickListener(v -> {
             for (EditText et : userParams) {

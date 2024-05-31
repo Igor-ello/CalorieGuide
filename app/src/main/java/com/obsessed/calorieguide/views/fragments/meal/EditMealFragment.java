@@ -2,7 +2,6 @@ package com.obsessed.calorieguide.views.fragments.meal;
 
 import static com.obsessed.calorieguide.data.local.Data.DELAY_DEFAULT;
 import static com.obsessed.calorieguide.data.local.Data.SORT_DATE;
-import static com.obsessed.calorieguide.data.local.Data.SORT_LIKE_DESCENDING;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -48,7 +47,6 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.Executors;
 
 
 public class EditMealFragment extends Fragment implements CallbackGetMealById, CallbackGetAllFood, CallbackDeleteMealById, CallbackUpdateMeal {
@@ -131,7 +129,7 @@ public class EditMealFragment extends Fragment implements CallbackGetMealById, C
         });
 
         // Отправка на сервер введенных данных
-        requireView().findViewById(R.id.btSave).setOnClickListener(v -> {
+        requireView().findViewById(R.id.btAdd).setOnClickListener(v -> {
             ArrayList<EditText> etList;
             ArrayList<FoodIdQuantity> foodIdQuantities;
             try {

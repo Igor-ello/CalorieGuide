@@ -20,12 +20,12 @@ public class FieldValidation {
 
     private void init(View view){
         etList = new ArrayList<>();
-        etList.add(view.findViewById(R.id.edFoodName));
-        etList.add(view.findViewById(R.id.edDescription));
-        etList.add(view.findViewById(R.id.edCalories));
-        etList.add(view.findViewById(R.id.edProteins));
-        etList.add(view.findViewById(R.id.edCarbohydrates));
-        etList.add(view.findViewById(R.id.edFats));
+        etList.add(view.findViewById(R.id.etFoodName));
+        etList.add(view.findViewById(R.id.etDescription));
+        etList.add(view.findViewById(R.id.etCalories));
+        etList.add(view.findViewById(R.id.etProteins));
+        etList.add(view.findViewById(R.id.etCarbohydrates));
+        etList.add(view.findViewById(R.id.etFats));
     }
 
     public void setValues(Food food) {

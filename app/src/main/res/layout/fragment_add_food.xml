@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".views.fragments.food.AddFoodFragment"
     android:layout_margin="@dimen/margin_default">
 
@@ -10,7 +11,7 @@
         android:id="@+id/loading"
         android:visibility="gone"/>
 
-    <include layout="@layout/arrow_back"></include>
+    <include layout="@layout/arrow_back" />
 
     <LinearLayout
         android:id="@+id/lnMain"
@@ -23,7 +24,14 @@
             android:text="@string/fragment_add_food_header">
         </TextView>
 
-        <include layout="@layout/food_params"></include>
+        <include layout="@layout/food_params" />
+
+        <Button
+            android:id="@+id/btAdd"
+            style="@style/ButtonStyle"
+            app:icon="@drawable/add"
+            android:text="@string/add">
+        </Button>
 
     </LinearLayout>
 

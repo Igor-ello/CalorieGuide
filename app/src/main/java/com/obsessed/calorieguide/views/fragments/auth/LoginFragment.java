@@ -79,10 +79,12 @@ public class LoginFragment extends Fragment implements CallbackUserAuth, Callbac
 
     @Override
     public void onUserAuthSuccess(User user) {
-        AppDatabase db = AppDatabase.getInstance(requireContext());
-        UserRepo userRepo = new UserRepo(db.userDao());
-        userRepo.refreshUser(user, this);
-        ShPrefs.saveData(user, Data.getInstance().getAdapterType(), requireContext());
+        if(isAdded()) {
+            AppDatabase db = AppDatabase.getInstance(requireContext());
+            UserRepo userRepo = new UserRepo(db.userDao());
+            userRepo.refreshUser(user, this);
+            ShPrefs.saveData(user, Data.getInstance().getAdapterType(), requireContext());
+        }
     }
 
     @Override

@@ -10,7 +10,7 @@
         android:id="@+id/loading"
         android:visibility="gone"/>
 
-    <include layout="@layout/arrow_back"></include>
+    <include layout="@layout/arrow_back" />
 
     <LinearLayout
         android:id="@+id/lnMain"
@@ -23,13 +23,10 @@
             android:text="@string/fragment_edit_meal_header">
         </TextView>
 
-        <include layout="@layout/meal_params"></include>
+        <include layout="@layout/meal_params" />
 
-        <Button
-            android:id="@+id/btDelete"
-            style="@style/ButtonStyle"
-            android:text="Delete">
-        </Button>
+        <include layout="@layout/bt_save_delete"/>
+
 
     </LinearLayout>
 

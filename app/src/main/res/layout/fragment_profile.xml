@@ -33,7 +33,7 @@
         </Button>
 
         <Button
-            android:id="@+id/btSave"
+            android:id="@+id/btAdd"
             style="@style/ButtonStyle"
             android:text="Save fields"
             android:visibility="gone">

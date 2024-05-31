@@ -97,7 +97,7 @@ public class AddMealFragment extends Fragment implements CallbackGetAllFood, Cal
         });
 
         // Отправка на сервер введенных данных
-        requireView().findViewById(R.id.btSave).setOnClickListener(v -> {
+        requireView().findViewById(R.id.btAdd).setOnClickListener(v -> {
             ArrayList<EditText> etList;
             ArrayList<FoodIdQuantity> foodIdQuantities;
             try {

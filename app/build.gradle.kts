@@ -35,6 +35,9 @@ android {
 }
 
 dependencies {
+    //Material Design
+    implementation ("com.google.android.material:material:1.12.0")
+
     //Room
     implementation ("androidx.room:room-runtime:2.3.0")
     annotationProcessor ("androidx.room:room-compiler:2.3.0")

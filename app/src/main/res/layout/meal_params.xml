@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -20,45 +21,45 @@
                 android:src="@drawable/add">
             </ImageView>
 
-            <TextView
-                style="@style/TextStyle"
-                android:text="Meal name">
-            </TextView>
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/TextInputLayout"
+                android:hint="@string/meal_name">
 
-            <EditText
-                android:id="@+id/etMealName"
-                style="@style/EditTextStyle"
-                android:maxLength="@integer/name_length">
-            </EditText>
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etMealName"
+                    style="@style/TextInputEditText"
+                    android:maxLength="@integer/name_length"/>
 
-            <TextView
-                style="@style/TextStyle"
-                android:text="Description">
-            </TextView>
+            </com.google.android.material.textfield.TextInputLayout>
 
-            <EditText
-                android:id="@+id/etDescription"
-                style="@style/EditTextStyle"
-                android:maxLength="@integer/description_length">
-            </EditText>
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/TextInputLayout"
+                android:hint="@string/description">
 
-            <TextView
-                style="@style/TextStyle"
-                android:text="Number of ingredients">
-            </TextView>
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etDescription"
+                    style="@style/TextInputEditText"
+                    android:maxLength="@integer/description_length"/>
 
-            <EditText
-                android:id="@+id/etNumberOfIng"
-                style="@style/EditTextStyle"
-                android:inputType="number"
-                android:maxLength="2">
-            </EditText>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/TextInputLayout"
+                android:hint="@string/number_of_ingredients">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etNumberOfIng"
+                    style="@style/TextInputEditText"
+                    android:maxLength="2"
+                    android:inputType="number"/>
+
+            </com.google.android.material.textfield.TextInputLayout>
 
             <Button
                 android:id="@+id/btSetNumber"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Set number">
+                style="@style/ButtonStyle"
+                app:icon="@drawable/assignment_add"
+                android:text="@string/set_number">
             </Button>
 
             <LinearLayout
@@ -68,14 +69,8 @@
                 android:orientation="vertical">
             </LinearLayout>
 
-            <Button
-                android:id="@+id/btSave"
-                style="@style/ButtonStyle"
-                android:text="Save">
-            </Button>
-
-
         </LinearLayout>
+
     </ScrollView>
 
 </FrameLayout>

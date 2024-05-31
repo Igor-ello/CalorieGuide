@@ -90,7 +90,7 @@ public class AddFoodFragment extends Fragment implements CallbackAddFood {
         });
 
         // Отправка на сервер введенных данных
-        requireView().findViewById(R.id.btSave).setOnClickListener(v -> {
+        requireView().findViewById(R.id.btAdd).setOnClickListener(v -> {
             ArrayList<EditText> etList = fieldValidation.getValues();
             if(etList != null){
                 FoodCallWithToken call = new FoodCallWithToken(Data.getInstance().getUser().getBearerToken());

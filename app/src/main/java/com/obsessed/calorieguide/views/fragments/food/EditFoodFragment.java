@@ -41,7 +41,6 @@ import com.obsessed.calorieguide.data.models.food.Food;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collections;
 
 public class EditFoodFragment extends Fragment implements CallbackGetFoodById, CallbackDeleteFoodById, CallbackUpdateFood {
     private static final String ARG_FOOD_ID = "food_id";
@@ -109,7 +108,7 @@ public class EditFoodFragment extends Fragment implements CallbackGetFoodById, C
         });
 
         // Отправка на сервер введенных данных
-        requireView().findViewById(R.id.btSave).setOnClickListener(v -> {
+        requireView().findViewById(R.id.btAdd).setOnClickListener(v -> {
             ArrayList<EditText> etList = fieldValidation.getValues();
             if(etList != null){
                 FoodCallWithToken call = new FoodCallWithToken(Data.getInstance().getUser().getBearerToken());
