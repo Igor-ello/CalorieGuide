@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <com.google.android.material.carousel.MaskableFrameLayout android:id="@+id/carousel_item_container"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
+    android:layout_width="100dp"
+    android:layout_height="match_parent"
     android:foreground="?attr/selectableItemBackground"
     app:shapeAppearance="?attr/shapeAppearanceCornerExtraLarge"
     android:padding="5dp"
@@ -33,9 +33,13 @@
 
             <TextView
                 android:id="@+id/tvName"
-                style="@style/TextHeaderStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginBottom="0dp"
-                android:maxLines="2"
+                android:gravity="center"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:maxLines="1"
                 android:fontFamily="sans-serif-condensed">
             </TextView>
 
