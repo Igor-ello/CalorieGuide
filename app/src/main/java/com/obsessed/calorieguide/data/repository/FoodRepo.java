@@ -41,13 +41,11 @@ public class FoodRepo {
     }
 
     public void getAllFood(String sortType, int twoDecade, CallbackGetAllFood callback) {
-        int userId = Data.getInstance().getUser().getId();
-        new GetAllFoodTask(foodDao, sortType, twoDecade, userId, callback).execute();
+        new GetAllFoodTask(foodDao, sortType, twoDecade, callback).execute();
     }
 
     public void searchFood(String word, CallbackSearchFood callback) {
-        int userId = Data.getInstance().getUser().getId();
-        new SearchFoodTask(foodDao, word, userId, 1, callback).execute();
+        new SearchFoodTask(foodDao, word, 1, callback).execute();
     }
 
     public void getFoodById(int id, CallbackGetFoodById callback) {

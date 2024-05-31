@@ -54,7 +54,7 @@ public class MainFragment extends Fragment implements CallbackLoadData, Callback
         binding = FragmentMainBinding.bind(view);
         view.findViewById(R.id.lnMain).setVisibility(View.GONE);
         view.findViewById(R.id.loading).setVisibility(View.VISIBLE);
-       // botNavView.setVisibility(View.GONE);
+
         // Загрузка данных из хранилища
         ShPrefs.loadData(requireContext(), this);
 
@@ -82,19 +82,22 @@ public class MainFragment extends Fragment implements CallbackLoadData, Callback
     public void onLoadData() {
         Log.d("MainFragment", "Loading data");
         // Проверка пользователя на наличие авторизации
-        if(checkUserLogin() && isAdded()) {
-            requireActivity().runOnUiThread(()  -> {
-                // Инициализация для отображения данных
-                Stats.getInstance().init(binding, requireActivity());
-                Stats.getInstance().update();
-                Intakes.getInstance().init(binding, requireContext());
+        if(isAdded()) {
+            if (checkUserLogin()) {
+                requireActivity().runOnUiThread(() -> {
+                    // Инициализация для отображения данных
+                    Stats.getInstance().init(binding, requireActivity());
+                    Stats.getInstance().update();
+                    Intakes.getInstance().init(binding, requireContext());
+                });
+            }
+            requireActivity().runOnUiThread(() -> {
+                requireView().findViewById(R.id.lnMain).setVisibility(View.VISIBLE);
+                requireView().findViewById(R.id.loading).setVisibility(View.GONE);
+//            botNavView = getActivity().findViewById(R.id.bottomNV);
+//            botNavView.setVisibility(View.VISIBLE);
             });
         }
-        requireActivity().runOnUiThread(() -> {
-            requireView().findViewById(R.id.lnMain).setVisibility(View.VISIBLE);
-            requireView().findViewById(R.id.loading).setVisibility(View.GONE);
-           // botNavView.setVisibility(View.VISIBLE);
-        });
     }
 
     @Override

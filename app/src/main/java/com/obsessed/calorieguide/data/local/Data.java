@@ -9,6 +9,7 @@ public class Data {
     public static final String SORT_LIKE_ASCENDING = "likesAsc";
     public static final String SORT_LIKE_DESCENDING = "likesDesc";
     public static final String SORT_DATE = "";
+    public static boolean IS_CAN_BACK = true;
     public static final int PICTURE_SIZE = 250;
     public static final int QUALITY = 100;
     public static final int DELAY_DEFAULT = 3000;

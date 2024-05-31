@@ -13,15 +13,13 @@ public class GetAllFoodTask extends AsyncTask<Void, Void, List<Food>> {
     private final FoodDao foodDao;
     private final String sortType;
     private final int twoDecade;
-    private final int userId;
     private Exception exception;
     private CallbackGetAllFood callback;
 
-    public GetAllFoodTask(FoodDao foodDao, String sortType, int twoDecade, int userId, CallbackGetAllFood callback) {
+    public GetAllFoodTask(FoodDao foodDao, String sortType, int twoDecade, CallbackGetAllFood callback) {
         this.foodDao = foodDao;
         this.sortType = sortType;
         this.twoDecade = twoDecade;
-        this.userId = userId;
         this.callback = callback;
     }
 

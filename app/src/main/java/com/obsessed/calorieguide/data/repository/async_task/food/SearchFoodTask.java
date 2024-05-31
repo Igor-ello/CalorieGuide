@@ -13,15 +13,13 @@ import java.util.List;
 public class SearchFoodTask extends AsyncTask<Void, Void, List<Food>> {
     private final FoodDao foodDao;
     private final String word;
-    private final int userId;
     private final int maxDifference;
     private final CallbackSearchFood callback;
     private Exception exception;
 
-    public SearchFoodTask(FoodDao foodDao, String word, int userId, int maxDifference, CallbackSearchFood callback) {
+    public SearchFoodTask(FoodDao foodDao, String word, int maxDifference, CallbackSearchFood callback) {
         this.foodDao = foodDao;
         this.word = word;
-        this.userId = userId;
         this.maxDifference = maxDifference;
         this.callback = callback;
     }
