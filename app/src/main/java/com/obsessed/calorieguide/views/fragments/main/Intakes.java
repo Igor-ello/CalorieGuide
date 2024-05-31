@@ -9,6 +9,7 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.carousel.CarouselLayoutManager;
 import com.obsessed.calorieguide.R;
 import com.obsessed.calorieguide.databinding.FragmentMainBinding;
 import com.obsessed.calorieguide.views.adapters.intake.IntakeAdapter;
@@ -106,7 +107,7 @@ public class Intakes {
     }
 
     private void setLM(Context context, RecyclerView recyclerView){
-        LinearLayoutManager layoutManager = new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false);
+        CarouselLayoutManager layoutManager = new CarouselLayoutManager();
         recyclerView.setLayoutManager(layoutManager);
     }
 
