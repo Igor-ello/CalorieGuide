@@ -62,12 +62,12 @@ public class FieldValidation {
         for (Food food : foodList) {
             foodNames.add(food.getFood_name());
         }
-        int numberOfElements = Integer.parseInt(etNumberOfIng.getText().toString());
         if (etNumberOfIng.getText().toString().isEmpty()) {
             Toast.makeText(context, "Fill in number of ingredients", Toast.LENGTH_SHORT).show();
             return;
         }
-        else if (numberOfElements < 1 || numberOfElements > 25) {
+        int numberOfElements = Integer.parseInt(etNumberOfIng.getText().toString());
+        if (numberOfElements < 1 || numberOfElements > 25) {
             Toast.makeText(context, "Number of ingredients must be between 1 and 25", Toast.LENGTH_SHORT).show();
             return;
         }
