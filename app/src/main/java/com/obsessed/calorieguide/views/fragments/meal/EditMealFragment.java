@@ -186,11 +186,13 @@ public class EditMealFragment extends Fragment implements CallbackGetMealById, C
     }
 
     private void onDataReceived(Meal meal, List<Food> foodList) {
-        requireActivity().runOnUiThread(() -> {
-            if (meal != null && foodList != null) {
-                fieldValidation.setValues(foodList, meal);
-            }
-        });
+        if(isAdded()) {
+            requireActivity().runOnUiThread(() -> {
+                if (meal != null && foodList != null) {
+                    fieldValidation.setValues(foodList, meal);
+                }
+            });
+        }
     }
 
     // Метод для обработки результата выбора изображения из галереи или камеры
@@ -233,9 +235,11 @@ public class EditMealFragment extends Fragment implements CallbackGetMealById, C
 
     @Override
     public void onLocalDeleteMealById() {
-        requireActivity().runOnUiThread(() -> {
-            Navigation.findNavController(requireView()).popBackStack();
-        });
+        if (isAdded()) {
+            requireActivity().runOnUiThread(() -> {
+                Navigation.findNavController(requireView()).popBackStack();
+            });
+        }
     }
 
     @Override
@@ -247,8 +251,10 @@ public class EditMealFragment extends Fragment implements CallbackGetMealById, C
 
     @Override
     public void onMealUpdatedLocal() {
-        requireActivity().runOnUiThread(() -> {
-            Navigation.findNavController(requireView()).popBackStack();
-        });
+        if(isAdded()) {
+            requireActivity().runOnUiThread(() -> {
+                Navigation.findNavController(requireView()).popBackStack();
+            });
+        }
     }
 }

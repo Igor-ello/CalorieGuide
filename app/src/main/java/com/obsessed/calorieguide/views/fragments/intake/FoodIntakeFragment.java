@@ -151,9 +151,11 @@ public class FoodIntakeFragment extends Fragment implements CallbackSearchFood, 
 
     @Override
     public void onRefreshDay() {
-        requireActivity().runOnUiThread(() -> {
-            requireView().findViewById(R.id.loading).setVisibility(View.GONE);
-            requireView().findViewById(R.id.lnMain).setVisibility(View.VISIBLE);
-        });
+        if(isAdded()) {
+            requireActivity().runOnUiThread(() -> {
+                requireView().findViewById(R.id.loading).setVisibility(View.GONE);
+                requireView().findViewById(R.id.lnMain).setVisibility(View.VISIBLE);
+            });
+        }
     }
 }

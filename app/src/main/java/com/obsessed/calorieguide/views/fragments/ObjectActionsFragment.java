@@ -133,10 +133,12 @@ public class ObjectActionsFragment extends Fragment implements CallbackGetMealBy
 
     @Override
     public void onRefreshDay() {
-        requireActivity().runOnUiThread(() -> {
+        if(isAdded()) {
+            requireActivity().runOnUiThread(() -> {
 //            requireView().findViewById(R.id.loading).setVisibility(View.GONE);
 //            requireView().findViewById(R.id.lnButtons).setVisibility(View.VISIBLE);
-            Navigation.findNavController(requireView()).popBackStack();
-        });
+                Navigation.findNavController(requireView()).popBackStack();
+            });
+        }
     }
 }

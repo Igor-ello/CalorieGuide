@@ -158,8 +158,10 @@ public class AddFoodFragment extends Fragment implements CallbackAddFood {
 
     @Override
     public void onAddFoodLocal() {
-        requireActivity().runOnUiThread(() -> {
-            Navigation.findNavController(requireView()).popBackStack();
-        });
+        if(isAdded()) {
+            requireActivity().runOnUiThread(() -> {
+                Navigation.findNavController(requireView()).popBackStack();
+            });
+        }
     }
 }

@@ -144,9 +144,11 @@ public class LibraryFoodFragment extends Fragment implements CallbackGetAllFood,
 
     @Override
     public void foodSearchReceived(ArrayList<Food> foodList) {
-        requireActivity().runOnUiThread(() -> {
-            new AllFoodReceived(requireContext(), requireView(), binding, foodList, this)
-                    .allFoodReceived();
-        });
+        if(isAdded()){
+            requireActivity().runOnUiThread(() -> {
+                new AllFoodReceived(requireContext(), requireView(), binding, foodList, this)
+                        .allFoodReceived();
+            });
+        }
     }
 }

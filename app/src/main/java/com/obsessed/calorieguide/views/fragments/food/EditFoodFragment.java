@@ -132,14 +132,16 @@ public class EditFoodFragment extends Fragment implements CallbackGetFoodById, C
 
     @Override
     public void onFoodByIdReceived(Food food) {
-        requireActivity().runOnUiThread(() -> {
-            fieldValidation.setValues(food);
-            if (food.getPicture() != null) {
-                byteArray = food.getPicture();
-                Bitmap bitmap = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
-                imageView.setImageBitmap(bitmap);
-            }
-        });
+        if(isAdded()){
+            requireActivity().runOnUiThread(() -> {
+                fieldValidation.setValues(food);
+                if (food.getPicture() != null) {
+                    byteArray = food.getPicture();
+                    Bitmap bitmap = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
+                    imageView.setImageBitmap(bitmap);
+                }
+            });
+        }
     }
 
     private void init(View view){
@@ -188,9 +190,11 @@ public class EditFoodFragment extends Fragment implements CallbackGetFoodById, C
 
     @Override
     public void onLocalDeleteFoodById() {
-        requireActivity().runOnUiThread(() -> {
-            Navigation.findNavController(requireView()).popBackStack();
-        });
+        if(isAdded()) {
+            requireActivity().runOnUiThread(() -> {
+                Navigation.findNavController(requireView()).popBackStack();
+            });
+        }
     }
 
     @Override
@@ -202,8 +206,10 @@ public class EditFoodFragment extends Fragment implements CallbackGetFoodById, C
 
     @Override
     public void onFoodUpdatedLocal() {
-        requireActivity().runOnUiThread(() -> {
-            Navigation.findNavController(requireView()).popBackStack();
-        });
+        if(isAdded()) {
+            requireActivity().runOnUiThread(() -> {
+                Navigation.findNavController(requireView()).popBackStack();
+            });
+        }
     }
 }

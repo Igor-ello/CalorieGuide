@@ -99,37 +99,39 @@ public class MealIntakeFragment extends Fragment implements CallbackSearchMeal, 
 
     @Override
     public void mealSearchReceived(ArrayList<Meal> mealList) {
-        requireActivity().runOnUiThread(() -> {
-            MealIntakeAdapter adapter = new MealIntakeAdapter(mealList);
-            binding.rcView.setLayoutManager(new GridLayoutManager(requireContext(), 1));
-            binding.rcView.setAdapter(adapter);
+        if(isAdded()) {
+            requireActivity().runOnUiThread(() -> {
+                MealIntakeAdapter adapter = new MealIntakeAdapter(mealList);
+                binding.rcView.setLayoutManager(new GridLayoutManager(requireContext(), 1));
+                binding.rcView.setAdapter(adapter);
 
-            // Установка слушателя в адаптере
-            adapter.setOnMealClickListener(meal -> {
-                Log.d("Adapter", "Clicked on meal in MealIntakeAdapter: " + meal.getMeal_name());
-                Bundle args = new Bundle();
-                args.putInt("meal_id", meal.getId());
-                Navigation.findNavController(requireView()).navigate(R.id.editMealFragment, args);
+                // Установка слушателя в адаптере
+                adapter.setOnMealClickListener(meal -> {
+                    Log.d("Adapter", "Clicked on meal in MealIntakeAdapter: " + meal.getMeal_name());
+                    Bundle args = new Bundle();
+                    args.putInt("meal_id", meal.getId());
+                    Navigation.findNavController(requireView()).navigate(R.id.editMealFragment, args);
+                });
+
+                adapter.setOnLikeMealClickListener((meal, imageView) -> {
+                    Log.d("Adapter", "Clicked on like for meal in MealIntakeAdapter: " + meal.getMeal_name());
+                    MealCallWithToken call = new MealCallWithToken(Data.getInstance().getUser().getBearerToken());
+                    call.likeMeal(Data.getInstance().getUser().getId(), meal, imageView, this);
+                });
+
+                adapter.setOnAddMealClickListener(meal -> {
+                    Log.d("Adapter", "Clicked on add for meal in MealIntakeAdapter: " + meal.getMeal_name() + "; ArrayType: " + arrayType);
+                    DayFunc.addObjectToDay(meal, arrayType);
+
+                    requireView().findViewById(R.id.loading).setVisibility(View.VISIBLE);
+                    requireView().findViewById(R.id.lnMain).setVisibility(View.GONE);
+
+                    AppDatabase db = AppDatabase.getInstance(requireContext());
+                    DayRepo dayRepo = new DayRepo(db.dayDao());
+                    dayRepo.refreshDay(this);
+                });
             });
-
-            adapter.setOnLikeMealClickListener((meal, imageView) -> {
-                Log.d("Adapter", "Clicked on like for meal in MealIntakeAdapter: " + meal.getMeal_name());
-                MealCallWithToken call = new MealCallWithToken(Data.getInstance().getUser().getBearerToken());
-                call.likeMeal(Data.getInstance().getUser().getId(), meal, imageView, this);
-            });
-
-            adapter.setOnAddMealClickListener(meal -> {
-                Log.d("Adapter", "Clicked on add for meal in MealIntakeAdapter: " + meal.getMeal_name() + "; ArrayType: " + arrayType);
-                DayFunc.addObjectToDay(meal, arrayType);
-
-                requireView().findViewById(R.id.loading).setVisibility(View.VISIBLE);
-                requireView().findViewById(R.id.lnMain).setVisibility(View.GONE);
-
-                AppDatabase db = AppDatabase.getInstance(requireContext());
-                DayRepo dayRepo = new DayRepo(db.dayDao());
-                dayRepo.refreshDay(this);
-            });
-        });
+        }
     }
 
     @Override
@@ -146,9 +148,11 @@ public class MealIntakeFragment extends Fragment implements CallbackSearchMeal, 
 
     @Override
     public void onRefreshDay() {
-        requireActivity().runOnUiThread(() -> {
-            requireView().findViewById(R.id.loading).setVisibility(View.GONE);
-            requireView().findViewById(R.id.lnMain).setVisibility(View.VISIBLE);
-        });
+        if(isAdded()) {
+            requireActivity().runOnUiThread(() -> {
+                requireView().findViewById(R.id.loading).setVisibility(View.GONE);
+                requireView().findViewById(R.id.lnMain).setVisibility(View.VISIBLE);
+            });
+        }
     }
 }

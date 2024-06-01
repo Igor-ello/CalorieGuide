@@ -180,8 +180,10 @@ public class AddMealFragment extends Fragment implements CallbackGetAllFood, Cal
 
     @Override
     public void onAddMealLocal() {
-        requireActivity().runOnUiThread(() -> {
-            Navigation.findNavController(requireView()).popBackStack();
-        });
+        if(isAdded()) {
+            requireActivity().runOnUiThread(() -> {
+                Navigation.findNavController(requireView()).popBackStack();
+            });
+        }
     }
 }
