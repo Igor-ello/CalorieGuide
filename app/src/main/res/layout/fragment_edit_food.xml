@@ -11,8 +11,6 @@
         android:id="@+id/loading"
         android:visibility="gone"/>
 
-    <include layout="@layout/arrow_back" />
-
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -23,10 +21,19 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <TextView
-                style="@style/TextHeaderStyle"
-                android:text="@string/fragment_edit_food_header">
-            </TextView>
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <include layout="@layout/arrow_back" />
+
+                <TextView
+                    style="@style/TextHeaderStyle"
+                    android:text="@string/fragment_edit_food_header">
+                </TextView>
+
+            </FrameLayout>
+
 
             <include layout="@layout/food_params"/>
 
