@@ -5,7 +5,8 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivityApp">
+    tools:context=".MainActivityApp"
+    android:background="@drawable/background_app_0_5">
 
     <fragment
         android:id="@+id/navHostFragmentApp"

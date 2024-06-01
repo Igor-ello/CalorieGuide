@@ -9,8 +9,8 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.NavigationUI;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.obsessed.calorieguide.data.Data;
-import com.obsessed.calorieguide.tools.save.ShPrefs;
+import com.obsessed.calorieguide.data.local.Data;
+import com.obsessed.calorieguide.data.local.load.ShPrefs;
 
 public class MainActivityApp extends AppCompatActivity {
 

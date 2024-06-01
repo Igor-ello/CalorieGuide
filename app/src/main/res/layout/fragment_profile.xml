@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments.ProfileFragment"
+    tools:context=".views.fragments.ProfileFragment"
     android:layout_margin="@dimen/margin_default">
 
 
@@ -33,7 +33,7 @@
         </Button>
 
         <Button
-            android:id="@+id/btSave"
+            android:id="@+id/btAdd"
             style="@style/ButtonStyle"
             android:text="Save fields"
             android:visibility="gone">

@@ -1,15 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
+
+<com.google.android.material.carousel.MaskableFrameLayout android:id="@+id/carousel_item_container"
+    android:layout_width="100dp"
+    android:layout_height="match_parent"
+    android:foreground="?attr/selectableItemBackground"
+    app:shapeAppearance="?attr/shapeAppearanceCornerExtraLarge"
+    android:padding="5dp"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:padding="5dp">
+    xmlns:tools="http://schemas.android.com/tools">
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:cardCornerRadius="10dp">
+        app:cardCornerRadius="10dp"
+        android:scaleType="centerCrop"
+        tools:ignore="ContentDescription">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -27,13 +33,16 @@
 
             <TextView
                 android:id="@+id/tvName"
-                style="@style/TextHeaderStyle"
                 android:layout_marginBottom="0dp"
-                android:maxLines="2"
+                style="@style/TextStyle"
+                android:gravity="center"
+                android:textSize="18sp"
+                android:maxLines="1"
                 android:fontFamily="sans-serif-condensed">
             </TextView>
+
         </LinearLayout>
 
     </androidx.cardview.widget.CardView>
 
-</FrameLayout>
+</com.google.android.material.carousel.MaskableFrameLayout>

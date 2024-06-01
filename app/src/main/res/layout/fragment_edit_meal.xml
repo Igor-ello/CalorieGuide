@@ -3,26 +3,42 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments.meal.EditMealFragment">
+    tools:context=".views.fragments.meal.EditMealFragment"
+    android:layout_margin="@dimen/margin_default">
 
-    <LinearLayout
+    <include layout="@layout/loading"
+        android:id="@+id/loading"
+        android:visibility="gone"/>
+
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_height="wrap_content">
 
-        <TextView
-            style="@style/TextHeaderStyle"
-            android:text="@string/fragment_edit_meal_header">
-        </TextView>
+        <LinearLayout
+            android:id="@+id/lnMain"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-        <include layout="@layout/meal_params"></include>
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-        <Button
-            android:id="@+id/btDelete"
-            style="@style/ButtonStyle"
-            android:text="Delete">
-        </Button>
+                <include layout="@layout/arrow_back" />
 
-    </LinearLayout>
+                <TextView
+                    style="@style/TextHeaderStyle"
+                    android:text="@string/fragment_edit_meal_header">
+                </TextView>
+
+            </FrameLayout>
+
+            <include layout="@layout/meal_params" />
+
+            <include layout="@layout/bt_save_delete"/>
+
+        </LinearLayout>
+
+    </ScrollView>
 
 </FrameLayout>

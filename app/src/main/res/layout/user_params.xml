@@ -5,97 +5,97 @@
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
-    <TextView
-        style="@style/TextStyle"
-        android:text="Name"
-        android:textStyle="bold">
-    </TextView>
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/TextInputLayout"
+        android:hint="@string/user_name">
 
-    <EditText
-        android:id="@+id/etName"
-        style="@style/EditTextStyle">
-    </EditText>
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etName"
+            style="@style/TextInputEditText"
+            android:maxLength="@integer/name_length"/>
 
-    <TextView
-        style="@style/TextStyle"
-        android:text="Surname"
-        android:textStyle="bold">
-    </TextView>
+    </com.google.android.material.textfield.TextInputLayout>
 
-    <EditText
-        android:id="@+id/etSurname"
-        style="@style/EditTextStyle">
-    </EditText>
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/TextInputLayout"
+        android:hint="@string/user_surname">
 
-    <TextView
-        style="@style/TextStyle"
-        android:text="Email"
-        android:textStyle="bold">
-    </TextView>
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etSurname"
+            style="@style/TextInputEditText"
+            android:maxLength="@integer/name_length"/>
 
-    <EditText
-        android:id="@+id/etEmail"
-        style="@style/EditTextStyle">
-    </EditText>
+    </com.google.android.material.textfield.TextInputLayout>
 
-    <TextView
-        style="@style/TextStyle"
-        android:text="Password"
-        android:textStyle="bold">
-    </TextView>
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/TextInputLayout"
+        android:hint="@string/email">
 
-    <EditText
-        android:id="@+id/etPassword"
-        style="@style/EditTextStyle"
-        android:inputType="textPassword">
-    </EditText>
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etEmail"
+            style="@style/TextInputEditText"
+            android:maxLength="@integer/name_length"/>
 
-    <TextView
-        style="@style/TextStyle"
-        android:text="Calories"
-        android:textStyle="bold">
-    </TextView>
+    </com.google.android.material.textfield.TextInputLayout>
 
-    <EditText
-        android:id="@+id/etCalories"
-        style="@style/EditTextStyle"
-        android:inputType="number">
-    </EditText>
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/TextInputLayout"
+        android:hint="@string/password">
 
-    <TextView
-        style="@style/TextStyle"
-        android:text="Carbohydrates"
-        android:textStyle="bold">
-    </TextView>
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etPassword"
+            style="@style/TextInputEditText"
+            android:inputType="textPassword"
+            android:maxLength="20"/>
 
-    <EditText
-        android:id="@+id/etCarbs"
-        style="@style/EditTextStyle"
-        android:inputType="number">
-    </EditText>
+    </com.google.android.material.textfield.TextInputLayout>
 
-    <TextView
-        style="@style/TextStyle"
-        android:text="Proteins"
-        android:textStyle="bold">
-    </TextView>
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/TextInputLayout"
+        android:hint="@string/calories">
 
-    <EditText
-        android:id="@+id/etProteins"
-        style="@style/EditTextStyle"
-        android:inputType="number">
-    </EditText>
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etCalories"
+            style="@style/TextInputEditText"
+            android:inputType="number"
+            android:maxLength="@integer/numbers_length"/>
 
-    <TextView
-        style="@style/TextStyle"
-        android:text="Fats"
-        android:textStyle="bold">
-    </TextView>
+    </com.google.android.material.textfield.TextInputLayout>
 
-    <EditText
-        android:id="@+id/etFats"
-        style="@style/EditTextStyle"
-        android:inputType="number">
-    </EditText>
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/TextInputLayout"
+        android:hint="@string/carbohydrates">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etCarbs"
+            style="@style/TextInputEditText"
+            android:inputType="number"
+            android:maxLength="@integer/numbers_length"/>
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/TextInputLayout"
+        android:hint="@string/proteins">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etProteins"
+            style="@style/TextInputEditText"
+            android:inputType="number"
+            android:maxLength="@integer/numbers_length"/>
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/TextInputLayout"
+        android:hint="@string/fats">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etFats"
+            style="@style/TextInputEditText"
+            android:inputType="number"
+            android:maxLength="@integer/numbers_length"/>
+
+    </com.google.android.material.textfield.TextInputLayout>
 
 </LinearLayout>

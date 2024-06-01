@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments.LoginFragment"
+    tools:context=".views.fragments.auth.LoginFragment"
     android:layout_margin="@dimen/margin_default">
 
     <LinearLayout
@@ -31,7 +31,8 @@
 
         <EditText
             android:id="@+id/edEmail"
-            style="@style/EditTextStyle">
+            style="@style/EditTextStyle"
+            android:maxLength="@integer/name_length">
         </EditText>
 
         <TextView
@@ -43,7 +44,8 @@
         <EditText
             android:id="@+id/edPassword"
             android:inputType="textPassword"
-            style="@style/EditTextStyle">
+            style="@style/EditTextStyle"
+            android:maxLength="20">
         </EditText>
 
         <Button
@@ -61,7 +63,7 @@
         <Button
             android:id="@+id/btRegistration"
             style="@style/ButtonStyle"
-            android:text="Not Registration Yet?">
+            android:text="Haven't Registered Yet?">
         </Button>
     </FrameLayout>
 

@@ -6,7 +6,13 @@
     android:layout_margin="@dimen/margin_default"
     android:layout_gravity="center">
 
+    <include layout="@layout/loading"
+        android:id="@+id/loading"
+        android:visibility="gone"
+        />
+
     <LinearLayout
+        android:id="@+id/lnMain"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 

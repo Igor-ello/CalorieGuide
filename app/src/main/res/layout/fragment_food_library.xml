@@ -3,19 +3,28 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments.library.LibraryFoodFragment"
-    android:layout_margin="5dp">
+    tools:context=".views.fragments.library.LibraryFoodFragment"
+    android:layout_margin="@dimen/margin_default2">
+
+    <include layout="@layout/loading"
+        android:id="@+id/loading"
+        android:visibility="gone"/>
 
     <LinearLayout
+        android:id="@+id/lnMain"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:layout_marginBottom="50dp">
+        android:layout_marginBottom="@dimen/margin_end_default">
 
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="5dp">
+
+            <include layout="@layout/arrow_back"
+                android:id="@+id/arrow_back">
+            </include>
 
             <TextView
                 style="@style/TextHeaderStyle"
@@ -35,21 +44,30 @@
             android:id="@+id/searchAndAdd"
             layout="@layout/search_and_add"/>
 
-        <ScrollView
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/swipeRefreshLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <LinearLayout
+            <ScrollView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:layout_height="wrap_content">
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rcView"
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-                </androidx.recyclerview.widget.RecyclerView>
-            </LinearLayout>
-        </ScrollView>
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rcView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                    </androidx.recyclerview.widget.RecyclerView>
+
+                </LinearLayout>
+            </ScrollView>
+
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
     </LinearLayout>
 </FrameLayout>

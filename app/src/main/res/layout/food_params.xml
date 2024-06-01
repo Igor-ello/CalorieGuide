@@ -3,95 +3,89 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <ScrollView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+        <ImageView
+            android:id="@+id/image"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:layout_gravity="center_horizontal"
+            android:src="@drawable/add">
+        </ImageView>
 
-            <ImageView
-                android:id="@+id/image"
-                android:layout_width="200dp"
-                android:layout_height="200dp"
-                android:layout_gravity="center_horizontal"
-                android:src="@drawable/add">
-            </ImageView>
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/TextInputLayout"
+            android:hint="@string/food_name">
 
-            <TextView
-                style="@style/TextStyle"
-                android:text="Food name">
-            </TextView>
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etFoodName"
+                style="@style/TextInputEditText"
+                android:maxLength="@integer/name_length"/>
 
-            <EditText
-                android:id="@+id/edFoodName"
-                style="@style/EditTextStyle">
-            </EditText>
+        </com.google.android.material.textfield.TextInputLayout>
 
-            <TextView
-                style="@style/TextStyle"
-                android:text="Description">
-            </TextView>
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/TextInputLayout"
+            android:hint="@string/description">
 
-            <EditText
-                android:id="@+id/edDescription"
-                style="@style/EditTextStyle">
-            </EditText>
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etDescription"
+                style="@style/TextInputEditText"
+                android:maxLength="@integer/description_length"/>
 
-            <TextView
-                style="@style/TextStyle"
-                android:text="Calories">
-            </TextView>
+        </com.google.android.material.textfield.TextInputLayout>
 
-            <EditText
-                android:id="@+id/edCalories"
-                style="@style/EditTextStyle"
-                android:inputType="number">
-            </EditText>
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/TextInputLayout"
+            android:hint="@string/calories">
 
-            <TextView
-                style="@style/TextStyle"
-                android:text="Proteins">
-            </TextView>
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etCalories"
+                style="@style/TextInputEditText"
+                android:maxLength="@integer/numbers_length"
+                android:inputType="number"/>
 
-            <EditText
-                android:id="@+id/edProteins"
-                style="@style/EditTextStyle"
-                android:inputType="number">
-            </EditText>
+        </com.google.android.material.textfield.TextInputLayout>
 
-            <TextView
-                style="@style/TextStyle"
-                android:text="Carbohydrates">
-            </TextView>
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/TextInputLayout"
+            android:hint="@string/proteins">
 
-            <EditText
-                android:id="@+id/edCarbohydrates"
-                style="@style/EditTextStyle"
-                android:inputType="number">
-            </EditText>
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etProteins"
+                style="@style/TextInputEditText"
+                android:maxLength="@integer/numbers_length"
+                android:inputType="number"/>
 
-            <TextView
-                style="@style/TextStyle"
-                android:text="Fats">
-            </TextView>
+        </com.google.android.material.textfield.TextInputLayout>
 
-            <EditText
-                android:id="@+id/edFats"
-                style="@style/EditTextStyle"
-                android:inputType="number">
-            </EditText>
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/TextInputLayout"
+            android:hint="@string/carbohydrates">
 
-            <Button
-                android:id="@+id/btSave"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="Save">
-            </Button>
-        </LinearLayout>
-    </ScrollView>
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etCarbohydrates"
+                style="@style/TextInputEditText"
+                android:maxLength="@integer/numbers_length"
+                android:inputType="number"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/TextInputLayout"
+            android:hint="@string/fats">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etFats"
+                style="@style/TextInputEditText"
+                android:maxLength="@integer/numbers_length"
+                android:inputType="number"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+    </LinearLayout>
 
 </FrameLayout>

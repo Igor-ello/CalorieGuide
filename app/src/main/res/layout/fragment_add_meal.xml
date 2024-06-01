@@ -3,21 +3,48 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments.meal.AddMealFragment"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".views.fragments.meal.AddMealFragment"
     android:layout_margin="@dimen/margin_default">
 
-    <LinearLayout
+    <include layout="@layout/loading"
+        android:id="@+id/loading"
+        android:visibility="gone"/>
+
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_height="wrap_content">
 
-        <TextView
-            style="@style/TextHeaderStyle"
-            android:text="@string/fragment_add_meal_header">
-        </TextView>
+        <LinearLayout
+            android:id="@+id/lnMain"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-        <include layout="@layout/meal_params"></include>
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-    </LinearLayout>
+                <include layout="@layout/arrow_back" />
+
+                <TextView
+                    style="@style/TextHeaderStyle"
+                    android:text="@string/fragment_add_meal_header">
+                </TextView>
+
+            </FrameLayout>
+
+            <include layout="@layout/meal_params" />
+
+            <Button
+                android:id="@+id/btAdd"
+                style="@style/ButtonStyle"
+                app:icon="@drawable/add"
+                android:text="@string/add">
+            </Button>
+
+        </LinearLayout>
+
+    </ScrollView>
 
 </FrameLayout>

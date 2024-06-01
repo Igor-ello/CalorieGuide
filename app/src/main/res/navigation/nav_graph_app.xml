@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/mainFragment"
-        android:name="com.obsessed.calorieguide.fragments.main.MainFragment"
+        android:name="com.obsessed.calorieguide.views.fragments.main.MainFragment"
         android:label="fragment_main"
         tools:layout="@layout/fragment_main" >
         <action
@@ -28,7 +28,7 @@
     </fragment>
     <fragment
         android:id="@+id/profileFragment"
-        android:name="com.obsessed.calorieguide.fragments.ProfileFragment"
+        android:name="com.obsessed.calorieguide.views.fragments.ProfileFragment"
         android:label="fragment_profile"
         tools:layout="@layout/fragment_profile" >
         <action
@@ -37,12 +37,12 @@
     </fragment>
     <fragment
         android:id="@+id/settingsFragment"
-        android:name="com.obsessed.calorieguide.fragments.SettingsFragment"
+        android:name="com.obsessed.calorieguide.views.fragments.SettingsFragment"
         android:label="fragment_settings"
         tools:layout="@layout/fragment_settings" />
     <fragment
         android:id="@+id/libraryFoodFragment"
-        android:name="com.obsessed.calorieguide.fragments.library.LibraryFoodFragment"
+        android:name="com.obsessed.calorieguide.views.fragments.library.LibraryFoodFragment"
         android:label="fragment_library"
         tools:layout="@layout/fragment_food_library" >
         <action
@@ -57,24 +57,24 @@
     </fragment>
     <fragment
         android:id="@+id/addFoodFragment"
-        android:name="com.obsessed.calorieguide.fragments.food.AddFoodFragment"
+        android:name="com.obsessed.calorieguide.views.fragments.food.AddFoodFragment"
         android:label="fragment_add_food"
         tools:layout="@layout/fragment_add_food" />
     <fragment
         android:id="@+id/addMealFragment"
-        android:name="com.obsessed.calorieguide.fragments.meal.AddMealFragment"
+        android:name="com.obsessed.calorieguide.views.fragments.meal.AddMealFragment"
         android:label="fragment_add_meal"
         tools:layout="@layout/fragment_add_meal" />
     <fragment
         android:id="@+id/editFoodFragment"
-        android:name="com.obsessed.calorieguide.fragments.food.EditFoodFragment"
+        android:name="com.obsessed.calorieguide.views.fragments.food.EditFoodFragment"
         android:label="fragment_edit_food"
         tools:layout="@layout/fragment_edit_food" >
         <argument android:name="food" />
     </fragment>
     <fragment
         android:id="@+id/libraryMealFragment"
-        android:name="com.obsessed.calorieguide.fragments.library.LibraryMealFragment"
+        android:name="com.obsessed.calorieguide.views.fragments.library.LibraryMealFragment"
         android:label="fragment_library_meal"
         tools:layout="@layout/fragment_meal_library" >
         <action
@@ -86,22 +86,22 @@
     </fragment>
     <fragment
         android:id="@+id/editMealFragment"
-        android:name="com.obsessed.calorieguide.fragments.meal.EditMealFragment"
+        android:name="com.obsessed.calorieguide.views.fragments.meal.EditMealFragment"
         android:label="fragment_edit_meal"
         tools:layout="@layout/fragment_edit_meal" />
     <fragment
         android:id="@+id/objectActions"
-        android:name="com.obsessed.calorieguide.fragments.ObjectActions"
+        android:name="com.obsessed.calorieguide.views.fragments.ObjectActionsFragment"
         android:label="ObjectActions"
         tools:layout="@layout/object_actions"/>
     <fragment
         android:id="@+id/foodIntakeFragment"
-        android:name="com.obsessed.calorieguide.fragments.FoodIntakeFragment"
+        android:name="com.obsessed.calorieguide.views.fragments.intake.FoodIntakeFragment"
         android:label="fragment_food_intake"
         tools:layout="@layout/fragment_food_library" />
     <fragment
         android:id="@+id/mealIntakeFragment"
-        android:name="com.obsessed.calorieguide.fragments.MealIntakeFragment"
+        android:name="com.obsessed.calorieguide.views.fragments.intake.MealIntakeFragment"
         android:label="fragment_meal_intake"
         tools:layout="@layout/fragment_meal_library" />
 </navigation>
