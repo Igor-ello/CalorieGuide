@@ -23,7 +23,8 @@
             android:layout_margin="5dp">
 
             <include layout="@layout/arrow_back"
-                android:id="@+id/arrow_back"></include>
+                android:id="@+id/arrow_back">
+            </include>
 
             <TextView
                 style="@style/TextHeaderStyle"
@@ -67,5 +68,6 @@
             </ScrollView>
 
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
     </LinearLayout>
 </FrameLayout>

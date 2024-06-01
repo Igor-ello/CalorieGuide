@@ -13,26 +13,32 @@
 
     <include layout="@layout/arrow_back" />
 
-    <LinearLayout
-        android:id="@+id/lnMain"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="wrap_content">
 
-        <TextView
-            style="@style/TextHeaderStyle"
-            android:text="@string/fragment_add_food_header">
-        </TextView>
+        <LinearLayout
+            android:id="@+id/lnMain"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-        <include layout="@layout/food_params" />
+            <TextView
+                style="@style/TextHeaderStyle"
+                android:text="@string/fragment_add_food_header">
+            </TextView>
 
-        <Button
-            android:id="@+id/btAdd"
-            style="@style/ButtonStyle"
-            app:icon="@drawable/add"
-            android:text="@string/add">
-        </Button>
+            <include layout="@layout/food_params" />
 
-    </LinearLayout>
+            <Button
+                android:id="@+id/btAdd"
+                style="@style/ButtonStyle"
+                app:icon="@drawable/add"
+                android:text="@string/add">
+            </Button>
+
+        </LinearLayout>
+
+    </ScrollView>
 
 </FrameLayout>

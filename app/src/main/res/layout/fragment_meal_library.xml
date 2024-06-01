@@ -15,7 +15,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:layout_marginBottom="50dp">
+        android:layout_marginBottom="@dimen/margin_end_default">
 
         <FrameLayout
             android:layout_width="match_parent"
@@ -23,7 +23,8 @@
             android:layout_margin="5dp">
 
             <include layout="@layout/arrow_back"
-                android:id="@+id/arrow_back"></include>
+                android:id="@+id/arrow_back">
+            </include>
 
             <TextView
                 style="@style/TextHeaderStyle"

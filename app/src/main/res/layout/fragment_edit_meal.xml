@@ -12,22 +12,27 @@
 
     <include layout="@layout/arrow_back" />
 
-    <LinearLayout
-        android:id="@+id/lnMain"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_height="wrap_content">
 
-        <TextView
-            style="@style/TextHeaderStyle"
-            android:text="@string/fragment_edit_meal_header">
-        </TextView>
+        <LinearLayout
+            android:id="@+id/lnMain"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-        <include layout="@layout/meal_params" />
+            <TextView
+                style="@style/TextHeaderStyle"
+                android:text="@string/fragment_edit_meal_header">
+            </TextView>
 
-        <include layout="@layout/bt_save_delete"/>
+            <include layout="@layout/meal_params" />
 
+            <include layout="@layout/bt_save_delete"/>
 
-    </LinearLayout>
+        </LinearLayout>
+
+    </ScrollView>
 
 </FrameLayout>
