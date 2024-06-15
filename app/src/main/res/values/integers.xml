@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <integer name="description_length">255</integer>
+    <integer name="description_length">1024</integer>
     <integer name="name_length">128</integer>
     <integer name="numbers_length">10</integer>
 </resources>
