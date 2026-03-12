@@ -5,7 +5,7 @@ import com.obsessed.calorieguide.data.models.User;
 
 public class Data {
     private static Data uniqueInstance = new Data();
-    public static final String BASE_URL = "http://95.174.92.190:8088/";
+    public static final String BASE_URL = "http://158.160.212.231:80/";
     public static final String SORT_LIKE_ASCENDING = "likesAsc";
     public static final String SORT_LIKE_DESCENDING = "likesDesc";
     public static final String SORT_DATE = "";
